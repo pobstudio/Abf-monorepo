@@ -7,3 +7,11 @@ const abi = new utils.Interface([
 
 console.log(abi.getFunction('setApprovalForAll'));
 console.log(abi.getSighash('setApprovalForAll'));
+
+
+const contractMetadata = {
+  "name":  "Abs Brain Fuck",
+  "description": "On-chain generative art written in BrainFuck. Why? Who knows.",
+}
+
+console.log(JSON.stringify(contractMetadata))
