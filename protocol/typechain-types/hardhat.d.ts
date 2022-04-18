@@ -2,149 +2,176 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 import {
   FactoryOptions,
   HardhatEthersHelpers as HardhatEthersHelpersBase,
-} from "@nomiclabs/hardhat-ethers/types";
+} from '@nomiclabs/hardhat-ethers/types';
 
-import * as Contracts from ".";
+import * as Contracts from '.';
 
-declare module "hardhat/types/runtime" {
+declare module 'hardhat/types/runtime' {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "Pausable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'Ownable',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.Ownable__factory>;
+    getContractFactory(
+      name: 'Pausable',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Pausable__factory>;
     getContractFactory(
-      name: "ERC721",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ERC721',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721__factory>;
     getContractFactory(
-      name: "IERC721Metadata",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'IERC721Metadata',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC721Metadata__factory>;
     getContractFactory(
-      name: "IERC721",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'IERC721',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC721__factory>;
     getContractFactory(
-      name: "IERC721Receiver",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'IERC721Receiver',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC721Receiver__factory>;
     getContractFactory(
-      name: "ERC165",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ERC165',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC165__factory>;
     getContractFactory(
-      name: "IERC165",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'IERC165',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
-      name: "BrainFuck",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'BrainFuck',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.BrainFuck__factory>;
     getContractFactory(
-      name: "BrainFuckVM",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'BrainFuckFactory',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.BrainFuckFactory__factory>;
+    getContractFactory(
+      name: 'BrainFuckURIConstructor',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.BrainFuckURIConstructor__factory>;
+    getContractFactory(
+      name: 'BrainFuckVM',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.BrainFuckVM__factory>;
     getContractFactory(
-      name: "ERC721APausable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ERC721APausable',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721APausable__factory>;
     getContractFactory(
-      name: "IBFR",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'IBFR',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IBFR__factory>;
     getContractFactory(
-      name: "DebugBFR",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'DebugBFR',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DebugBFR__factory>;
     getContractFactory(
-      name: "ERC721A",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ERC721A',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721A__factory>;
 
     getContractAt(
-      name: "Pausable",
+      name: 'Ownable',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
+    ): Promise<Contracts.Ownable>;
+    getContractAt(
+      name: 'Pausable',
+      address: string,
+      signer?: ethers.Signer,
     ): Promise<Contracts.Pausable>;
     getContractAt(
-      name: "ERC721",
+      name: 'ERC721',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ERC721>;
     getContractAt(
-      name: "IERC721Metadata",
+      name: 'IERC721Metadata',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.IERC721Metadata>;
     getContractAt(
-      name: "IERC721",
+      name: 'IERC721',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.IERC721>;
     getContractAt(
-      name: "IERC721Receiver",
+      name: 'IERC721Receiver',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.IERC721Receiver>;
     getContractAt(
-      name: "ERC165",
+      name: 'ERC165',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ERC165>;
     getContractAt(
-      name: "IERC165",
+      name: 'IERC165',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.IERC165>;
     getContractAt(
-      name: "BrainFuck",
+      name: 'BrainFuck',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.BrainFuck>;
     getContractAt(
-      name: "BrainFuckVM",
+      name: 'BrainFuckFactory',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
+    ): Promise<Contracts.BrainFuckFactory>;
+    getContractAt(
+      name: 'BrainFuckURIConstructor',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.BrainFuckURIConstructor>;
+    getContractAt(
+      name: 'BrainFuckVM',
+      address: string,
+      signer?: ethers.Signer,
     ): Promise<Contracts.BrainFuckVM>;
     getContractAt(
-      name: "ERC721APausable",
+      name: 'ERC721APausable',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ERC721APausable>;
     getContractAt(
-      name: "IBFR",
+      name: 'IBFR',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.IBFR>;
     getContractAt(
-      name: "DebugBFR",
+      name: 'DebugBFR',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.DebugBFR>;
     getContractAt(
-      name: "ERC721A",
+      name: 'ERC721A',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ERC721A>;
 
     // default types
     getContractFactory(
       name: string,
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<ethers.ContractFactory>;
     getContractFactory(
       abi: any[],
       bytecode: ethers.utils.BytesLike,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<ethers.ContractFactory>;
     getContractAt(
       nameOrAbi: string | any[],
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<ethers.Contract>;
   }
 }

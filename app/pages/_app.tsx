@@ -10,9 +10,10 @@ import { DefaultSeo } from 'next-seo';
 import { ApolloProvider } from '@apollo/client';
 import { AppProvider } from '../contexts/app';
 import { subgraphClient } from '../clients/subgraph';
+import { Toaster } from 'react-hot-toast';
 
-const DEFAULT_TITLE = `TODO By POB - TODO`;
-const DEFAULT_DESCRIPTION = ``;
+const DEFAULT_TITLE = `ABF - Generative art written in BrainFuck`;
+const DEFAULT_DESCRIPTION = `On-chain generative art written by anybody who dared.`;
 
 export default class PobApp extends App {
   render() {
@@ -31,7 +32,7 @@ export default class PobApp extends App {
             url: PROD_LINK,
             title: DEFAULT_TITLE,
             description: DEFAULT_DESCRIPTION,
-            site_name: 'TODO',
+            site_name: 'ABF',
             images: [
               {
                 url: GLOBAL_OG_BANNER,
@@ -66,6 +67,7 @@ export default class PobApp extends App {
             <TransactionsEffect />
             {/** Modals */}
             {/** Fixed Components */}
+            <Toaster position="bottom-right" />
             {/** Component */}
             <Component {...modifiedPageProps} />
           </ApolloProvider>

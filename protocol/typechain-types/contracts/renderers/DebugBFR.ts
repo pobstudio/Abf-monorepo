@@ -9,54 +9,54 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
-} from "../../common";
+} from '../../common';
 
 export interface DebugBFRInterface extends utils.Interface {
   functions: {
-    "additionalMetadataURI()": FunctionFragment;
-    "attributes(bytes)": FunctionFragment;
-    "name()": FunctionFragment;
-    "outSize()": FunctionFragment;
-    "render(bytes)": FunctionFragment;
+    'additionalMetadataURI()': FunctionFragment;
+    'attributes(bytes)': FunctionFragment;
+    'name()': FunctionFragment;
+    'outSize()': FunctionFragment;
+    'render(bytes)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "additionalMetadataURI"
-      | "attributes"
-      | "name"
-      | "outSize"
-      | "render"
+      | 'additionalMetadataURI'
+      | 'attributes'
+      | 'name'
+      | 'outSize'
+      | 'render',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "additionalMetadataURI",
-    values?: undefined
+    functionFragment: 'additionalMetadataURI',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "attributes",
-    values: [BytesLike]
+    functionFragment: 'attributes',
+    values: [BytesLike],
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "outSize", values?: undefined): string;
-  encodeFunctionData(functionFragment: "render", values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'outSize', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'render', values: [BytesLike]): string;
 
   decodeFunctionResult(
-    functionFragment: "additionalMetadataURI",
-    data: BytesLike
+    functionFragment: 'additionalMetadataURI',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "attributes", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "outSize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "render", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
 
   events: {};
 }
@@ -71,15 +71,15 @@ export interface DebugBFR extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -137,12 +137,12 @@ export interface DebugBFR extends BaseContract {
 
   populateTransaction: {
     additionalMetadataURI(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     attributes(
       out: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -151,7 +151,7 @@ export interface DebugBFR extends BaseContract {
 
     render(
       out: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

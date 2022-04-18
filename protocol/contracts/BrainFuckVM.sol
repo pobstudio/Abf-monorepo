@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.4;
 
-contract BrainFuckVM {
+library BrainFuckVM {
   function runBrainFuckCode(bytes calldata code, bytes calldata input, uint outSize) public pure returns (bytes memory out) {
     out = new bytes(outSize);
     bytes memory tape = new bytes(32);
@@ -39,7 +39,7 @@ contract BrainFuckVM {
         }
         // ,
         if (opcode == 0x2C) {
-          tape[ptr] = input[readIndex];
+          tape[ptr] = readIndex < input.length ? input[readIndex] : bytes1(0);
           readIndex++;
         }
         // .

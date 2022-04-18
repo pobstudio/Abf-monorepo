@@ -57,4 +57,4 @@ export const GLOBAL_OG_BANNER = `${PROD_LINK}/assets/og/logo-repeat.png`;
 /**
  * Dimensions
  */
-export const HEADER_HEIGHT = 84;
+export const HEADER_HEIGHT = 144;

@@ -13,268 +13,231 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
   FunctionFragment,
   Result,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
-} from "../common";
-
-export declare namespace BrainFuck {
-  export type GeneratorConfigStruct = {
-    name: string;
-    additionalMetadataURI: string;
-    sourceChaos: BytesLike;
-    code: BytesLike;
-    renderer: string;
-    mintingSupply: BigNumberish;
-    price: BigNumberish;
-  };
-
-  export type GeneratorConfigStructOutput = [
-    string,
-    string,
-    string,
-    string,
-    string,
-    BigNumber,
-    BigNumber
-  ] & {
-    name: string;
-    additionalMetadataURI: string;
-    sourceChaos: string;
-    code: string;
-    renderer: string;
-    mintingSupply: BigNumber;
-    price: BigNumber;
-  };
-}
+} from '../common';
 
 export interface BrainFuckInterface extends utils.Interface {
   functions: {
-    "MAX_MINTING_SUPPLY()": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "brainFuckVM()": FunctionFragment;
-    "contractURI()": FunctionFragment;
-    "createGenerator(address,(string,string,bytes,bytes,address,uint256,uint256))": FunctionFragment;
-    "generatorIndex()": FunctionFragment;
-    "getApproved(uint256)": FunctionFragment;
-    "idToGeneratorConfig(uint256)": FunctionFragment;
-    "idToMintedSupply(uint256)": FunctionFragment;
-    "idToOwner(uint256)": FunctionFragment;
-    "isApprovedForAll(address,address)": FunctionFragment;
-    "mint(uint256,address[])": FunctionFragment;
-    "name()": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
-    "safeTransferFrom(address,address,uint256)": FunctionFragment;
-    "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
-    "setApprovalForAll(address,bool)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "tokenIdToGeneratorId(uint256)": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
+    'additionalMetadataURI()': FunctionFragment;
+    'approve(address,uint256)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'code()': FunctionFragment;
+    'contractURI()': FunctionFragment;
+    'getApproved(uint256)': FunctionFragment;
+    'isApprovedForAll(address,address)': FunctionFragment;
+    'mint(address,uint256)': FunctionFragment;
+    'mintingSupply()': FunctionFragment;
+    'name()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'ownerOf(uint256)': FunctionFragment;
+    'price()': FunctionFragment;
+    'renderer()': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'safeTransferFrom(address,address,uint256)': FunctionFragment;
+    'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
+    'seed()': FunctionFragment;
+    'setApprovalForAll(address,bool)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'tokenURI(uint256)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'transferFrom(address,address,uint256)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "MAX_MINTING_SUPPLY"
-      | "approve"
-      | "balanceOf"
-      | "brainFuckVM"
-      | "contractURI"
-      | "createGenerator"
-      | "generatorIndex"
-      | "getApproved"
-      | "idToGeneratorConfig"
-      | "idToMintedSupply"
-      | "idToOwner"
-      | "isApprovedForAll"
-      | "mint"
-      | "name"
-      | "ownerOf"
-      | "safeTransferFrom(address,address,uint256)"
-      | "safeTransferFrom(address,address,uint256,bytes)"
-      | "setApprovalForAll"
-      | "supportsInterface"
-      | "symbol"
-      | "tokenIdToGeneratorId"
-      | "tokenURI"
-      | "transferFrom"
+      | 'additionalMetadataURI'
+      | 'approve'
+      | 'balanceOf'
+      | 'code'
+      | 'contractURI'
+      | 'getApproved'
+      | 'isApprovedForAll'
+      | 'mint'
+      | 'mintingSupply'
+      | 'name'
+      | 'owner'
+      | 'ownerOf'
+      | 'price'
+      | 'renderer'
+      | 'renounceOwnership'
+      | 'safeTransferFrom(address,address,uint256)'
+      | 'safeTransferFrom(address,address,uint256,bytes)'
+      | 'seed'
+      | 'setApprovalForAll'
+      | 'supportsInterface'
+      | 'symbol'
+      | 'tokenURI'
+      | 'totalSupply'
+      | 'transferFrom'
+      | 'transferOwnership',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "MAX_MINTING_SUPPLY",
-    values?: undefined
+    functionFragment: 'additionalMetadataURI',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "approve",
-    values: [string, BigNumberish]
+    functionFragment: 'approve',
+    values: [string, BigNumberish],
   ): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'code', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "brainFuckVM",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "contractURI",
-    values?: undefined
+    functionFragment: 'contractURI',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "createGenerator",
-    values: [string, BrainFuck.GeneratorConfigStruct]
+    functionFragment: 'getApproved',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "generatorIndex",
-    values?: undefined
+    functionFragment: 'isApprovedForAll',
+    values: [string, string],
   ): string;
   encodeFunctionData(
-    functionFragment: "getApproved",
-    values: [BigNumberish]
+    functionFragment: 'mint',
+    values: [string, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "idToGeneratorConfig",
-    values: [BigNumberish]
+    functionFragment: 'mintingSupply',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'ownerOf',
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(functionFragment: 'price', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'renderer', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "idToMintedSupply",
-    values: [BigNumberish]
+    functionFragment: 'safeTransferFrom(address,address,uint256)',
+    values: [string, string, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "idToOwner",
-    values: [BigNumberish]
+    functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
+    values: [string, string, BigNumberish, BytesLike],
+  ): string;
+  encodeFunctionData(functionFragment: 'seed', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: "isApprovedForAll",
-    values: [string, string]
+    functionFragment: 'supportsInterface',
+    values: [BytesLike],
+  ): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'tokenURI',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "mint",
-    values: [BigNumberish, string[]]
-  ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "ownerOf",
-    values: [BigNumberish]
+    functionFragment: 'totalSupply',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "safeTransferFrom(address,address,uint256)",
-    values: [string, string, BigNumberish]
+    functionFragment: 'transferFrom',
+    values: [string, string, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
-    values: [string, string, BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setApprovalForAll",
-    values: [string, boolean]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "tokenIdToGeneratorId",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tokenURI",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [string, string, BigNumberish]
+    functionFragment: 'transferOwnership',
+    values: [string],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "MAX_MINTING_SUPPLY",
-    data: BytesLike
+    functionFragment: 'additionalMetadataURI',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'code', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "brainFuckVM",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "contractURI",
-    data: BytesLike
+    functionFragment: 'contractURI',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "createGenerator",
-    data: BytesLike
+    functionFragment: 'getApproved',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "generatorIndex",
-    data: BytesLike
+    functionFragment: 'isApprovedForAll',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'mintingSupply',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'price', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renderer', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getApproved",
-    data: BytesLike
+    functionFragment: 'safeTransferFrom(address,address,uint256)',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "idToGeneratorConfig",
-    data: BytesLike
+    functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'seed', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'setApprovalForAll',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "idToMintedSupply",
-    data: BytesLike
+    functionFragment: 'supportsInterface',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "idToOwner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "isApprovedForAll",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "safeTransferFrom(address,address,uint256)",
-    data: BytesLike
+    functionFragment: 'totalSupply',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
-    data: BytesLike
+    functionFragment: 'transferFrom',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setApprovalForAll",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenIdToGeneratorId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "Approval(address,address,uint256)": EventFragment;
-    "ApprovalForAll(address,address,bool)": EventFragment;
-    "CreateGenerator(uint256,string,string,bytes,bytes,address,uint256,uint256)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
+    'Approval(address,address,uint256)': EventFragment;
+    'ApprovalForAll(address,address,bool)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'Transfer(address,address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CreateGenerator"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -301,22 +264,17 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
-export interface CreateGeneratorEventObject {
-  id: BigNumber;
-  name: string;
-  additionalMetadataURI: string;
-  sourceChaos: string;
-  code: string;
-  renderer: string;
-  mintingSupply: BigNumber;
-  price: BigNumber;
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
 }
-export type CreateGeneratorEvent = TypedEvent<
-  [BigNumber, string, string, string, string, string, BigNumber, BigNumber],
-  CreateGeneratorEventObject
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
 >;
 
-export type CreateGeneratorEventFilter = TypedEventFilter<CreateGeneratorEvent>;
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -335,632 +293,562 @@ export interface BrainFuck extends BaseContract {
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BrainFuckInterface;
+  'interface': BrainFuckInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+  'off': OnEvent<this>;
+  'on': OnEvent<this>;
+  'once': OnEvent<this>;
+  'removeListener': OnEvent<this>;
 
-  functions: {
-    MAX_MINTING_SUPPLY(overrides?: CallOverrides): Promise<[BigNumber]>;
+  'functions': {
+    additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    brainFuckVM(overrides?: CallOverrides): Promise<[string]>;
+    code(overrides?: CallOverrides): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
-    createGenerator(
-      owner: string,
-      config: BrainFuck.GeneratorConfigStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    generatorIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
-
-    idToGeneratorConfig(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [string, string, string, string, string, BigNumber, BigNumber] & {
-        name: string;
-        additionalMetadataURI: string;
-        sourceChaos: string;
-        code: string;
-        renderer: string;
-        mintingSupply: BigNumber;
-        price: BigNumber;
-      }
-    >;
-
-    idToMintedSupply(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    idToOwner(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     mint(
-      generatorId: BigNumberish,
-      addresses: string[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      to: string,
+      numMints: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    mintingSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    "safeTransferFrom(address,address,uint256)"(
+    price(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    renderer(overrides?: CallOverrides): Promise<[string]>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    'safeTransferFrom(address,address,uint256)'(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,bytes)'(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    seed(overrides?: CallOverrides): Promise<[string]>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenIdToGeneratorId(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
   };
 
-  MAX_MINTING_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+  additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
   approve(
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  brainFuckVM(overrides?: CallOverrides): Promise<string>;
+  code(overrides?: CallOverrides): Promise<string>;
 
   contractURI(overrides?: CallOverrides): Promise<string>;
 
-  createGenerator(
-    owner: string,
-    config: BrainFuck.GeneratorConfigStruct,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  generatorIndex(overrides?: CallOverrides): Promise<BigNumber>;
-
   getApproved(
     tokenId: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
-
-  idToGeneratorConfig(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [string, string, string, string, string, BigNumber, BigNumber] & {
-      name: string;
-      additionalMetadataURI: string;
-      sourceChaos: string;
-      code: string;
-      renderer: string;
-      mintingSupply: BigNumber;
-      price: BigNumber;
-    }
-  >;
-
-  idToMintedSupply(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  idToOwner(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   isApprovedForAll(
     owner: string,
     operator: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   mint(
-    generatorId: BigNumberish,
-    addresses: string[],
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    to: string,
+    numMints: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
+
+  mintingSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
+  owner(overrides?: CallOverrides): Promise<string>;
+
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  "safeTransferFrom(address,address,uint256)"(
+  price(overrides?: CallOverrides): Promise<BigNumber>;
+
+  renderer(overrides?: CallOverrides): Promise<string>;
+
+  renounceOwnership(
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  'safeTransferFrom(address,address,uint256)'(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  "safeTransferFrom(address,address,uint256,bytes)"(
+  'safeTransferFrom(address,address,uint256,bytes)'(
     from: string,
     to: string,
     tokenId: BigNumberish,
     _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
+
+  seed(overrides?: CallOverrides): Promise<string>;
 
   setApprovalForAll(
     operator: string,
     approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   supportsInterface(
     interfaceId: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenIdToGeneratorId(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  callStatic: {
-    MAX_MINTING_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+  transferOwnership(
+    newOwner: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  'callStatic': {
+    additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    brainFuckVM(overrides?: CallOverrides): Promise<string>;
+    code(overrides?: CallOverrides): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
-    createGenerator(
-      owner: string,
-      config: BrainFuck.GeneratorConfigStruct,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    generatorIndex(overrides?: CallOverrides): Promise<BigNumber>;
-
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
-
-    idToGeneratorConfig(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [string, string, string, string, string, BigNumber, BigNumber] & {
-        name: string;
-        additionalMetadataURI: string;
-        sourceChaos: string;
-        code: string;
-        renderer: string;
-        mintingSupply: BigNumber;
-        price: BigNumber;
-      }
-    >;
-
-    idToMintedSupply(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    idToOwner(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     mint(
-      generatorId: BigNumberish,
-      addresses: string[],
-      overrides?: CallOverrides
+      to: string,
+      numMints: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<void>;
+
+    mintingSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
+    owner(overrides?: CallOverrides): Promise<string>;
+
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    "safeTransferFrom(address,address,uint256)"(
+    price(overrides?: CallOverrides): Promise<BigNumber>;
+
+    renderer(overrides?: CallOverrides): Promise<string>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    'safeTransferFrom(address,address,uint256)'(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,bytes)'(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
+
+    seed(overrides?: CallOverrides): Promise<string>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    tokenIdToGeneratorId(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
-  filters: {
-    "Approval(address,address,uint256)"(
+  'filters': {
+    'Approval(address,address,uint256)'(
       owner?: string | null,
       approved?: string | null,
-      tokenId?: BigNumberish | null
+      tokenId?: BigNumberish | null,
     ): ApprovalEventFilter;
     Approval(
       owner?: string | null,
       approved?: string | null,
-      tokenId?: BigNumberish | null
+      tokenId?: BigNumberish | null,
     ): ApprovalEventFilter;
 
-    "ApprovalForAll(address,address,bool)"(
+    'ApprovalForAll(address,address,bool)'(
       owner?: string | null,
       operator?: string | null,
-      approved?: null
+      approved?: null,
     ): ApprovalForAllEventFilter;
     ApprovalForAll(
       owner?: string | null,
       operator?: string | null,
-      approved?: null
+      approved?: null,
     ): ApprovalForAllEventFilter;
 
-    "CreateGenerator(uint256,string,string,bytes,bytes,address,uint256,uint256)"(
-      id?: BigNumberish | null,
-      name?: null,
-      additionalMetadataURI?: null,
-      sourceChaos?: null,
-      code?: null,
-      renderer?: null,
-      mintingSupply?: null,
-      price?: null
-    ): CreateGeneratorEventFilter;
-    CreateGenerator(
-      id?: BigNumberish | null,
-      name?: null,
-      additionalMetadataURI?: null,
-      sourceChaos?: null,
-      code?: null,
-      renderer?: null,
-      mintingSupply?: null,
-      price?: null
-    ): CreateGeneratorEventFilter;
+    'OwnershipTransferred(address,address)'(
+      previousOwner?: string | null,
+      newOwner?: string | null,
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null,
+    ): OwnershipTransferredEventFilter;
 
-    "Transfer(address,address,uint256)"(
+    'Transfer(address,address,uint256)'(
       from?: string | null,
       to?: string | null,
-      tokenId?: BigNumberish | null
+      tokenId?: BigNumberish | null,
     ): TransferEventFilter;
     Transfer(
       from?: string | null,
       to?: string | null,
-      tokenId?: BigNumberish | null
+      tokenId?: BigNumberish | null,
     ): TransferEventFilter;
   };
 
-  estimateGas: {
-    MAX_MINTING_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+  'estimateGas': {
+    additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    brainFuckVM(overrides?: CallOverrides): Promise<BigNumber>;
+    code(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    createGenerator(
-      owner: string,
-      config: BrainFuck.GeneratorConfigStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    generatorIndex(overrides?: CallOverrides): Promise<BigNumber>;
-
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    idToGeneratorConfig(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    idToMintedSupply(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    idToOwner(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     mint(
-      generatorId: BigNumberish,
-      addresses: string[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      to: string,
+      numMints: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
+
+    mintingSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "safeTransferFrom(address,address,uint256)"(
+    price(overrides?: CallOverrides): Promise<BigNumber>;
+
+    renderer(overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    'safeTransferFrom(address,address,uint256)'(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,bytes)'(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
+
+    seed(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenIdToGeneratorId(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
-    MAX_MINTING_SUPPLY(
-      overrides?: CallOverrides
+  'populateTransaction': {
+    additionalMetadataURI(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
       owner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    brainFuckVM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    code(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    createGenerator(
-      owner: string,
-      config: BrainFuck.GeneratorConfigStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    generatorIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    idToGeneratorConfig(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    idToMintedSupply(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    idToOwner(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     mint(
-      generatorId: BigNumberish,
-      addresses: string[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      to: string,
+      numMints: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    mintingSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "safeTransferFrom(address,address,uint256)"(
+    price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renderer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    'safeTransferFrom(address,address,uint256)'(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,bytes)'(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    seed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenIdToGeneratorId(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

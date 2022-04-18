@@ -105,11 +105,10 @@ export const BlockchainEffect: FC = () => {
         (t) => (
           <span>
             You are on the wrong network. <br />
-            Switch to <b>mainnet</b> to enjoy HASH.
+            Switch to <b>mainnet</b> to enjoy <b>ABF</b>.
           </span>
         ),
         {
-          // icon: '📎',
           duration: 50000,
           style: DEFAULT_TOAST_STYLES,
           id: 'wrong-chain-id',

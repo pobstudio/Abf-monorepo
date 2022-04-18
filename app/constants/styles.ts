@@ -9,8 +9,10 @@ export const BREAKPTS = {
 export type BreakPts = keyof typeof BREAKPTS;
 
 export const DEFAULT_TOAST_STYLES = {
-  border: '1px solid rgba(0,0,0,0.15)',
+  border: '1px solid rgba(0,0,0,0.1)',
+  borderRadius: 0,
   padding: '8px',
   color: 'black',
-  fontSize: 14,
+  fontSize: 12,
+  boxShadow: 'none',
 }; // TODO(dave4506)

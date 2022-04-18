@@ -1,6 +1,11 @@
 import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
-import { BrainFuckVM, BrainFuck, DebugBFR } from '../typechain-types';
+import {
+  BrainFuckVM,
+  BrainFuck,
+  DebugBFR,
+  BrainFuckURIConstructor,
+} from '../typechain-types';
 import { expect } from 'chai';
 
 const TOKEN_ID_ZERO = BigNumber.from(0);
@@ -9,17 +14,13 @@ const ONE_TOKEN_IN_BASE_UNITS = ethers.utils.parseEther('1');
 const ONE_MWEI = ethers.utils.parseUnits('1', 'mwei');
 const ONE_GWEI = ethers.utils.parseUnits('1', 'gwei');
 
-const GENERATOR_INDEX_STEP = 10000;
-const GENERATOR_INDEX_ONE = GENERATOR_INDEX_STEP * 1;
-const GENERATOR_INDEX_TWO = GENERATOR_INDEX_STEP * 2;
-
 const convertToHexStr = (code: string) => {
   let hexStr = '0x';
   for (const c of code) {
-    hexStr += c.charCodeAt(0).toString(16)
+    hexStr += c.charCodeAt(0).toString(16);
   }
-  return hexStr
-}
+  return hexStr;
+};
 
 const convertHexStrToAscii = (hexStr: string) => {
   let asciiStr = '';
@@ -27,13 +28,25 @@ const convertHexStrToAscii = (hexStr: string) => {
     const byte = hexStr.slice(i, i + 2);
     asciiStr += String.fromCharCode(BigNumber.from('0x' + byte).toNumber());
   }
-  return asciiStr 
-}
+  return asciiStr;
+};
+
+const NAME = 'Absolute Brain Fuck';
+const SYMBOL = 'ABF';
+const CODE = convertToHexStr(
+  '>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.',
+);
+const TEST_URI = 'ipfs://test';
+const SEED = '0xab';
+const MINTING_SUPPLY = BigNumber.from(10);
+const PRICE = ethers.utils.parseEther('0.01');
 
 describe('BrainFuck', function () {
   // constant values used in transfer tests
   let brainFuckVM: BrainFuckVM;
   let brainFuck: BrainFuck;
+  let brainFuckURIConstructor: BrainFuckURIConstructor;
+
   let debugBFR: DebugBFR;
   let owner: Signer;
   let artist: Signer;
@@ -52,96 +65,147 @@ describe('BrainFuck', function () {
 
   beforeEach(async function () {
     const DebugBFR = await ethers.getContractFactory('DebugBFR');
-    debugBFR = (await DebugBFR.deploy(
-    )) as DebugBFR;
+    debugBFR = (await DebugBFR.deploy()) as DebugBFR;
     await debugBFR.deployed();
 
     const BrainFuckVM = await ethers.getContractFactory('BrainFuckVM');
-    brainFuckVM = (await BrainFuckVM.deploy(
-    )) as BrainFuckVM;
+    brainFuckVM = (await BrainFuckVM.deploy()) as BrainFuckVM;
     await brainFuckVM.deployed();
 
-    const BrainFuck = await ethers.getContractFactory('BrainFuck');
+    const BrainFuckURIConstructor = await ethers.getContractFactory(
+      'BrainFuckURIConstructor',
+      {
+        libraries: {
+          BrainFuckVM: brainFuckVM.address,
+        },
+      },
+    );
+    brainFuckURIConstructor =
+      (await BrainFuckURIConstructor.deploy()) as BrainFuckURIConstructor;
+    await brainFuckURIConstructor.deployed();
+
+    const BrainFuck = await ethers.getContractFactory('BrainFuck', {
+      libraries: {
+        BrainFuckURIConstructor: brainFuckURIConstructor.address,
+      },
+    });
+
     brainFuck = (await BrainFuck.deploy(
-      'Absolute Brain FucK',
-      'ABF',
-      brainFuckVM.address,
+      NAME,
+      SYMBOL,
+      TEST_URI,
+      SEED,
+      CODE,
+      debugBFR.address,
+      MINTING_SUPPLY,
+      PRICE,
     )) as BrainFuck;
     await brainFuck.deployed();
   });
 
-  describe('createGenerator', () => {
-    it('should create generator config correctly', async function () {
-      const config = {
-        name: "Test Generator",
-        additionalMetadataURI: "ipfs://test",
-        sourceChaos: '0xab',
-        code: "0x00",
-        renderer: debugBFR.address,
-        mintingSupply: 10,
-        price: ZERO
-      }
-      await brainFuck.createGenerator(await owner.getAddress(), config);
-      const returnedConfig = await brainFuck.idToGeneratorConfig(GENERATOR_INDEX_ONE);
-      const returnedOwner = await brainFuck.idToOwner(GENERATOR_INDEX_ONE);
-      expect(returnedOwner).to.eq(await owner.getAddress());
-      expect(returnedConfig.name).to.eq(config.name);
-      expect(returnedConfig.additionalMetadataURI).to.eq(config.additionalMetadataURI);
-      expect(returnedConfig.code).to.eq(config.code);
-      expect(returnedConfig.renderer).to.eq(config.renderer);
-      expect(returnedConfig.mintingSupply.toNumber()).to.eq(config.mintingSupply);
-      expect(returnedConfig.price).to.eq(config.price);
-      expect(returnedConfig.sourceChaos).to.eq(config.sourceChaos);
-
-      const config2 = {
-        name: "Test Generator 2",
-        additionalMetadataURI: "ipfs://test",
-        code: "0x00",
-        sourceChaos: '0x01',
-        renderer: debugBFR.address,
-        mintingSupply: 10,
-        price: ZERO
-      }
-      await brainFuck.createGenerator(await rando.getAddress(), config2);
-      expect(await brainFuck.idToOwner(GENERATOR_INDEX_TWO)).to.eq(await rando.getAddress());
-      expect((await brainFuck.idToGeneratorConfig(GENERATOR_INDEX_TWO)).name).to.eq(config2.name);
+  describe('parameters', () => {
+    it('check parameters are valid', async function () {
+      expect(await brainFuck.name()).to.eq(NAME);
+      expect(await brainFuck.symbol()).to.eq(SYMBOL);
+      expect(await brainFuck.additionalMetadataURI()).to.eq(TEST_URI);
+      expect(await brainFuck.seed()).to.eq(SEED);
+      expect(await brainFuck.code()).to.eq(CODE);
+      expect(await brainFuck.renderer()).to.eq(debugBFR.address);
+      expect(await brainFuck.mintingSupply()).to.eq(MINTING_SUPPLY);
+      expect(await brainFuck.price()).to.eq(PRICE);
     });
-    it('should not create generator if exceeds 10000 supply', async function () {
-      const config = {
-        name: "Test Generator",
-        additionalMetadataURI: "ipfs://test",
-        code: "0x00",
-        sourceChaos: '0x00',
-        renderer: debugBFR.address,
-        mintingSupply: 10000,
-        price: ZERO
-      }
+  });
+
+  describe('contractURI', () => {
+    it('returns correct value', async () => {
+      const contractURIOut = await brainFuck.contractURI();
+      const contractJsonStr = Buffer.from(
+        contractURIOut.slice(29),
+        'base64',
+      ).toString('ascii');
+      const contractMetadata = JSON.parse(contractJsonStr);
+      console.log(contractMetadata);
+      expect(contractMetadata.name).to.eq('Absolute Brain Fuck');
+      expect(contractMetadata.description).to.eq(
+        'On-chain generative art written in the esoteric programming language BrainFuck.',
+      );
+      expect(contractMetadata.external_link).to.eq(
+        `https://abf.dev/project/${brainFuck.address.toLowerCase()}`,
+      );
+    });
+  });
+
+  describe('mint', () => {
+    it('correctly mints for given price', async () => {
+      await brainFuck.mint(await owner.getAddress(), 5, {
+        value: PRICE.mul(5),
+      });
+      await brainFuck.mint(await rando.getAddress(), 5, {
+        value: PRICE.mul(5),
+      });
+      expect(await brainFuck.ownerOf(0)).to.eq(await owner.getAddress());
+      expect(await brainFuck.ownerOf(4)).to.eq(await owner.getAddress());
+      expect(await brainFuck.ownerOf(5)).to.eq(await rando.getAddress());
+      expect(await brainFuck.ownerOf(9)).to.eq(await rando.getAddress());
+    });
+    it('cannot mint if exceeds supply (v1)', async () => {
+      await brainFuck.mint(await owner.getAddress(), 5, {
+        value: PRICE.mul(5),
+      });
+      await brainFuck.mint(await rando.getAddress(), 5, {
+        value: PRICE.mul(5),
+      });
       await expect(
-        brainFuck.createGenerator(await rando.getAddress(), config)
-      ).to.revertedWith('Exceeds max minting mintingSupply');
+        brainFuck.mint(await rando.getAddress(), 1, { value: PRICE.mul(1) }),
+      ).to.revertedWith('exceeded max supply');
+    });
+    it('cannot mint if exceeds supply (v2)', async () => {
+      await brainFuck.mint(await owner.getAddress(), 5, {
+        value: PRICE.mul(5),
+      });
+      await expect(
+        brainFuck.mint(await rando.getAddress(), 6, { value: PRICE.mul(6) }),
+      ).to.revertedWith('exceeded max supply');
+    });
+    it('correctly mints for given price', async () => {
+      const beforeBalance = await owner.getBalance();
+      await brainFuck
+        .connect(rando)
+        .mint(await rando.getAddress(), 10, { value: PRICE.mul(11) });
+      const afterBalance = await owner.getBalance();
+      expect(afterBalance.sub(beforeBalance)).to.eq(PRICE.mul(10));
     });
   });
 
   describe('tokenURI', () => {
     beforeEach(async () => {
-      const config = {
-        name: "Test Generator",
-        additionalMetadataURI: "ipfs://test",
-        code: convertToHexStr('>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.'),
-        renderer: debugBFR.address,
-        sourceChaos: '0x00',
-        mintingSupply: 10,
-        price: ZERO
-      }
-      await brainFuck.createGenerator(await owner.getAddress(), config);
-      await brainFuck.mint(GENERATOR_INDEX_ONE, [await owner.getAddress()]);
+      await brainFuck.mint(await owner.getAddress(), 1, { value: PRICE });
     });
 
     it('should run correctly', async function () {
-      const metadata = await brainFuck.tokenURI(BigNumber.from(GENERATOR_INDEX_ONE).add(1));
-      const metadataJsonStr = Buffer.from(metadata.slice(29),'base64').toString('ascii');
-      console.log('metadataJsonStr', metadataJsonStr)
-      console.log(JSON.parse(metadataJsonStr));
+      const tokenId = 0;
+      const metadataDataURI = await brainFuck.tokenURI(tokenId);
+      const metadataJsonStr = Buffer.from(
+        metadataDataURI.slice(29),
+        'base64',
+      ).toString('ascii');
+      const metadata = JSON.parse(metadataJsonStr);
+      console.log('metadataJsonStr', metadataJsonStr);
+      console.log(metadata);
+      expect(metadata.name).to.eq(`${NAME} #${tokenId}`);
+      expect(metadata.description).to.eq(
+        `Generative art written in BrainFuck.`,
+      );
+      expect(metadata.image).to.eq('Hello, World!'); // running hello world brain fuck code
+      expect(metadata.aspect_ratio).to.eq(1);
+      const rendererAttribute = metadata.attributes.find(
+        (a: any) => a.trait_type === 'Renderer',
+      );
+      expect(rendererAttribute?.value).to.eq('DEBUG');
+      const dataLengthAttribute = metadata.attributes.find(
+        (a: any) => a.trait_type === 'Data Length',
+      );
+      expect(dataLengthAttribute?.value).to.eq(13);
     });
   });
 });

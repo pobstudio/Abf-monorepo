@@ -14,19 +14,35 @@ const ONE_GWEI = ethers.utils.parseUnits('1', 'gwei');
 const convertToHexStr = (code: string) => {
   let hexStr = '0x';
   for (const c of code) {
-    hexStr += c.charCodeAt(0).toString(16)
+    hexStr += c.charCodeAt(0).toString(16);
   }
-  return hexStr
-}
+  return hexStr;
+};
 
 const convertHexStrToAscii = (hexStr: string) => {
+  const prunedHexStr = pruneHexStr(hexStr);
   let asciiStr = '';
+  for (let i = 2; i < prunedHexStr.length; i += 2) {
+    const byte = prunedHexStr.slice(i, i + 2);
+    const asciiChar = String.fromCharCode(
+      BigNumber.from('0x' + byte).toNumber(),
+    );
+    asciiStr += asciiChar;
+  }
+  return asciiStr;
+};
+
+const pruneHexStr = (hexStr: string) => {
+  let prunedHexStr = '0x';
   for (let i = 2; i < hexStr.length; i += 2) {
     const byte = hexStr.slice(i, i + 2);
-    asciiStr += String.fromCharCode(BigNumber.from('0x' + byte).toNumber());
+    if (byte === '00') {
+      continue;
+    }
+    prunedHexStr += byte;
   }
-  return asciiStr 
-}
+  return prunedHexStr;
+};
 
 describe('BrainFuckVM', function () {
   // constant values used in transfer tests
@@ -48,21 +64,34 @@ describe('BrainFuckVM', function () {
 
   beforeEach(async function () {
     const BrainFuckVM = await ethers.getContractFactory('BrainFuckVM');
-    brainFuckVM = (await BrainFuckVM.deploy(
-    )) as BrainFuckVM;
+    brainFuckVM = (await BrainFuckVM.deploy()) as BrainFuckVM;
     await brainFuckVM.deployed();
   });
 
   describe('runBrainFuckCode', () => {
-    it('should run correctly', async function () {
-      const code = convertToHexStr('>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.');
+    it('Hello, World!', async function () {
+      const code = convertToHexStr(
+        '>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.',
+      );
       const input = '0xF3';
-
-      console.log(code);
 
       const out = await brainFuckVM.runBrainFuckCode(code, input, 256);
 
-      console.log(out, convertHexStrToAscii(out))
+      expect(convertHexStrToAscii(out)).to.eq('Hello, World!');
+    });
+    it('reverse string', async function () {
+      const code = convertToHexStr('+[>,]<-[+.<-]');
+      const input = '0x0123456789ABCDEF';
+
+      const out = await brainFuckVM.runBrainFuckCode(code, input, 256);
+
+      expect(pruneHexStr(out)).to.eq('0xefcdab89674523');
+    });
+    it('666', async function () {
+      const code = convertToHexStr('>+++++++++[<++++++>-]<...>++++++++++.');
+      const input = '0x0123456789ABCDEF';
+      const out = await brainFuckVM.runBrainFuckCode(code, input, 256);
+      expect(convertHexStrToAscii(out)).to.eq('666\n');
     });
   });
 });

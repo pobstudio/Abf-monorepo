@@ -10,31 +10,31 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
-} from "../common";
+} from '../common';
 
 export interface BrainFuckVMInterface extends utils.Interface {
   functions: {
-    "runBrainFuckCode(bytes,bytes,uint256)": FunctionFragment;
+    'runBrainFuckCode(bytes,bytes,uint256)': FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "runBrainFuckCode"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: 'runBrainFuckCode'): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "runBrainFuckCode",
-    values: [BytesLike, BytesLike, BigNumberish]
+    functionFragment: 'runBrainFuckCode',
+    values: [BytesLike, BytesLike, BigNumberish],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "runBrainFuckCode",
-    data: BytesLike
+    functionFragment: 'runBrainFuckCode',
+    data: BytesLike,
   ): Result;
 
   events: {};
@@ -50,15 +50,15 @@ export interface BrainFuckVM extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -71,7 +71,7 @@ export interface BrainFuckVM extends BaseContract {
       code: BytesLike,
       input: BytesLike,
       outSize: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string] & { out: string }>;
   };
 
@@ -79,7 +79,7 @@ export interface BrainFuckVM extends BaseContract {
     code: BytesLike,
     input: BytesLike,
     outSize: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   callStatic: {
@@ -87,7 +87,7 @@ export interface BrainFuckVM extends BaseContract {
       code: BytesLike,
       input: BytesLike,
       outSize: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
   };
 
@@ -98,7 +98,7 @@ export interface BrainFuckVM extends BaseContract {
       code: BytesLike,
       input: BytesLike,
       outSize: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
@@ -107,7 +107,7 @@ export interface BrainFuckVM extends BaseContract {
       code: BytesLike,
       input: BytesLike,
       outSize: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }
