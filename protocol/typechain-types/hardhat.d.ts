@@ -73,6 +73,10 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DebugBFR__factory>;
     getContractFactory(
+      name: 'DotMatrixBFR',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.DotMatrixBFR__factory>;
+    getContractFactory(
       name: 'ERC721A',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721A__factory>;
@@ -152,6 +156,11 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.DebugBFR>;
+    getContractAt(
+      name: 'DotMatrixBFR',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.DotMatrixBFR>;
     getContractAt(
       name: 'ERC721A',
       address: string,

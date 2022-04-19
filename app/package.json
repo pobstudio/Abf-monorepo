@@ -1,5 +1,5 @@
 {
-  "name": "@pob-monorepo/app",
+  "name": "@abf-monorepo/app",
   "version": "1.0.0",
   "description": "",
   "main": "",
@@ -12,8 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.3.13",
-    "@pob-monorepo/protocol": "1.0.0",
-    "@pob-monorepo/types": "1.0.0",
+    "@abf-monorepo/protocol": "1.0.0",
+    "@abf-monorepo/types": "1.0.0",
     "@web3-react/core": "8.0.18-beta.0",
     "@web3-react/eip1193": "8.0.13-beta.0",
     "@web3-react/empty": "8.0.10-beta.0",

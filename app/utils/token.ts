@@ -1,4 +1,4 @@
-import { getSeasonFromTokenId } from '@pob-monorepo/types';
+import { getSeasonFromTokenId } from '@abf-monorepo/types';
 import { getEditionFromGenesisTokenId } from '../stores/tokens/genesis';
 
 export const getEditionFromTokenId = (tokenId: string) => {

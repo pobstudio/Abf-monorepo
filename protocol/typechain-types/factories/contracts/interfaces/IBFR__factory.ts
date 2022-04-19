@@ -17,7 +17,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -36,7 +36,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -49,7 +49,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -62,7 +62,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -81,7 +81,26 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes',
+        name: 'out',
+        type: 'bytes',
+      },
+    ],
+    name: 'renderRaw',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'pure',
     type: 'function',
   },
 ];

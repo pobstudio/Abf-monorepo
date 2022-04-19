@@ -26,6 +26,7 @@ export interface DebugBFRInterface extends utils.Interface {
     'name()': FunctionFragment;
     'outSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
+    'renderRaw(bytes)': FunctionFragment;
   };
 
   getFunction(
@@ -34,7 +35,8 @@ export interface DebugBFRInterface extends utils.Interface {
       | 'attributes'
       | 'name'
       | 'outSize'
-      | 'render',
+      | 'render'
+      | 'renderRaw',
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -48,6 +50,10 @@ export interface DebugBFRInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'outSize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'render', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'renderRaw',
+    values: [BytesLike],
+  ): string;
 
   decodeFunctionResult(
     functionFragment: 'additionalMetadataURI',
@@ -57,6 +63,7 @@ export interface DebugBFRInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
 
   events: {};
 }
@@ -97,6 +104,8 @@ export interface DebugBFR extends BaseContract {
     outSize(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+
+    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
   };
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
@@ -109,6 +118,8 @@ export interface DebugBFR extends BaseContract {
 
   render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
+  renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+
   callStatic: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
@@ -119,6 +130,8 @@ export interface DebugBFR extends BaseContract {
     outSize(overrides?: CallOverrides): Promise<BigNumber>;
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+
+    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
@@ -133,6 +146,8 @@ export interface DebugBFR extends BaseContract {
     outSize(overrides?: CallOverrides): Promise<BigNumber>;
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -150,6 +165,11 @@ export interface DebugBFR extends BaseContract {
     outSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     render(
+      out: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    renderRaw(
       out: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;

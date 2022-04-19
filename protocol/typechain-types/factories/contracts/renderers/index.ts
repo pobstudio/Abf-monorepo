@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { DebugBFR__factory } from './DebugBFR__factory';
+export { DotMatrixBFR__factory } from './DotMatrixBFR__factory';

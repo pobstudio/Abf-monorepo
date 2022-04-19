@@ -1,5 +1,5 @@
 {
-  "name": "@pob-monorepo/preview",
+  "name": "@abf-monorepo/preview",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,8 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@ethersproject/providers": "^5.1.0",
-    "@pob-monorepo/types": "1.0.0",
-    "@pob-monorepo/protocol": "1.0.0",
+    "@abf-monorepo/types": "1.0.0",
+    "@abf-monorepo/protocol": "1.0.0",
     "chrome-aws-lambda": "^8.0.1",
     "ethers": "^5.5.2",
     "isomorphic-fetch": "^3.0.0",

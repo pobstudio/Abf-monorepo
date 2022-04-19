@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { DebugBFR } from './DebugBFR';
+export type { DotMatrixBFR } from './DotMatrixBFR';

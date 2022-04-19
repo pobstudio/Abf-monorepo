@@ -36,5 +36,7 @@ export type { IBFR } from './contracts/interfaces/IBFR';
 export { IBFR__factory } from './factories/contracts/interfaces/IBFR__factory';
 export type { DebugBFR } from './contracts/renderers/DebugBFR';
 export { DebugBFR__factory } from './factories/contracts/renderers/DebugBFR__factory';
+export type { DotMatrixBFR } from './contracts/renderers/DotMatrixBFR';
+export { DotMatrixBFR__factory } from './factories/contracts/renderers/DotMatrixBFR__factory';
 export type { ERC721A } from './contracts/tokens/ERC721A';
 export { ERC721A__factory } from './factories/contracts/tokens/ERC721A__factory';

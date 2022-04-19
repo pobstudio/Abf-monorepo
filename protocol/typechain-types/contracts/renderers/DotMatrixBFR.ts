@@ -19,7 +19,7 @@ import type {
   OnEvent,
 } from '../../common';
 
-export interface IBFRInterface extends utils.Interface {
+export interface DotMatrixBFRInterface extends utils.Interface {
   functions: {
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
@@ -68,12 +68,12 @@ export interface IBFRInterface extends utils.Interface {
   events: {};
 }
 
-export interface IBFR extends BaseContract {
+export interface DotMatrixBFR extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IBFRInterface;
+  interface: DotMatrixBFRInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

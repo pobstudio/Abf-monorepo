@@ -1,5 +1,5 @@
 import { DEFAULT_SEASON } from '../stores/season';
-import { Season } from '@pob-monorepo/types';
+import { Season } from '@abf-monorepo/types';
 
 export const fetchPrerenderWithFailsafe = async (
   season: Season = DEFAULT_SEASON,

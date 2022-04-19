@@ -1,4 +1,4 @@
-import { deployments, ERC721A__factory } from '@pob-monorepo/protocol';
+import { deployments, ERC721A__factory } from '@abf-monorepo/protocol';
 import { useMemo } from 'react';
 import { CHAIN_ID } from '../constants';
 import { JsonRpcProvider } from '@ethersproject/providers';

@@ -1,6 +1,6 @@
 const withTM = require('next-transpile-modules')([
-  '@pob-monorepo/protocol',
-  '@pob-monorepo/types',
+  '@abf-monorepo/protocol',
+  '@abf-monorepo/types',
 ]);
 
 module.exports = withTM({

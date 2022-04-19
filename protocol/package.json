@@ -1,5 +1,5 @@
 {
-  "name": "@pob-monorepo/protocol",
+  "name": "@abf-monorepo/protocol",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -7,6 +7,7 @@
     "build": "hardhat compile && hardhat typechain",
     "compile": "hardhat compile",
     "test": "hardhat test",
+    "develop-svg": "hardhat develop-svg",
     "deploy": "hardhat deploy",
     "verify": "hardhat verify"
   },
@@ -29,6 +30,8 @@
     "@openzeppelin/contracts": "^4.5.0",
     "@typechain/ethers-v5": "^10.0.0",
     "@typechain/hardhat": "^6.0.0",
+    "chokidar": "^3.5.3",
+    "get-port": "^5.1.1",
     "lodash": "^4.17.20",
     "typechain": "^8.0.0"
   }
