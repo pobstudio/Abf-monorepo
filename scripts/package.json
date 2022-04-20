@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "run-script": "yarn ts-node --project ./tsconfig.json",
     "sample": "yarn ts-node --project ./tsconfig.json src/sample"
   },
   "author": "",

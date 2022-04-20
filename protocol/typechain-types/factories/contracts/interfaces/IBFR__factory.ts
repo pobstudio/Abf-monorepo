@@ -17,7 +17,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -36,7 +36,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -49,7 +49,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -62,7 +62,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -81,7 +81,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -100,7 +100,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
 ];
