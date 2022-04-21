@@ -3,6 +3,7 @@
 /* eslint-disable */
 export * as extensions from './extensions';
 export * as interfaces from './interfaces';
+export * as libraries from './libraries';
 export * as renderers from './renderers';
 export * as tokens from './tokens';
 export { BrainFuck__factory } from './BrainFuck__factory';

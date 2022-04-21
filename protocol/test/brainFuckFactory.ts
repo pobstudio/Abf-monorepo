@@ -3,7 +3,7 @@ import { BigNumber, Signer } from 'ethers';
 import {
   BrainFuckVM,
   BrainFuck,
-  DebugBFR,
+  DebugRenderer,
   BrainFuckURIConstructor,
   BrainFuckFactory,
 } from '../typechain-types';
@@ -46,7 +46,7 @@ describe('BrainFuckFactory', function () {
   let brainFuckURIConstructor: BrainFuckURIConstructor;
   let brainFuckFactory: BrainFuckFactory;
 
-  let debugBFR: DebugBFR;
+  let debugRenderer: DebugRenderer;
   let owner: Signer;
   let artist: Signer;
   let rando: Signer;
@@ -63,9 +63,9 @@ describe('BrainFuckFactory', function () {
   });
 
   beforeEach(async function () {
-    const DebugBFR = await ethers.getContractFactory('DebugBFR');
-    debugBFR = (await DebugBFR.deploy()) as DebugBFR;
-    await debugBFR.deployed();
+    const DebugRenderer = await ethers.getContractFactory('DebugRenderer');
+    debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
+    await debugRenderer.deployed();
 
     const BrainFuckVM = await ethers.getContractFactory('BrainFuckVM');
     brainFuckVM = (await BrainFuckVM.deploy()) as BrainFuckVM;
@@ -104,7 +104,7 @@ describe('BrainFuckFactory', function () {
         additionalMetadataURI: 'ipfs://test',
         seed: '0x01',
         code: '0x02',
-        renderer: debugBFR.address,
+        renderer: debugRenderer.address,
         mintingSupply: BigNumber.from(100),
         price: ethers.utils.parseEther('0.1'),
       };

@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.4;
-import "../interfaces/IBFR.sol";
+import "../interfaces/IRenderer.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract DebugBFR is IBFR {
+contract DebugRenderer is IRenderer {
   using Strings for uint256;
 
   function name() external override pure returns (string memory) {
     return "DEBUG";
   }
+  
   function outSize() external override pure returns (uint256) {
     return 256;
   }

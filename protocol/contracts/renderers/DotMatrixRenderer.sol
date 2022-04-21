@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.4;
-import "../interfaces/IBFR.sol";
+import "../interfaces/IRenderer.sol";
+import "../libraries/SvgUtils.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 
-contract DotMatrixBFR is IBFR {
+contract DotMatrixRenderer is IRenderer {
   using Strings for uint256;
+
+  uint public constant RADIUS_MIN = 4;
+  uint public constant RADIUS_MAX = 16;
 
   string circlePrefix = '<circle fill="#000" ';
   string circleSuffix = ' r="6"/>';
@@ -273,7 +277,7 @@ contract DotMatrixBFR is IBFR {
   function name() external override pure returns (string memory) {
     return "DOT MATRIX";
   }
-  
+
   function outSize() external override pure returns (uint256) {
     return 256;
   }
@@ -285,7 +289,7 @@ contract DotMatrixBFR is IBFR {
   function renderRaw(bytes calldata out) public override view returns (string memory) {
     string memory content = '';
     for (uint i = 0; i < 256; ++i) {
-      content = string(abi.encodePacked(content, circlePrefix, circles[i], circleSuffix));
+      content = string(abi.encodePacked(content, circlePrefix, circles[i], ' r="', SvgUtils.toDecimalString(SvgUtils.lerpWithDecimals(RADIUS_MIN, RADIUS_MAX, out[i])), '" />'));
     }
 
     return string(abi.encodePacked(

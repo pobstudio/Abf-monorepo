@@ -17,13 +17,25 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Ownable__factory>;
     getContractFactory(
+      name: 'IERC2981',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IERC2981__factory>;
+    getContractFactory(
       name: 'Pausable',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Pausable__factory>;
     getContractFactory(
+      name: 'ERC2981',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ERC2981__factory>;
+    getContractFactory(
       name: 'ERC721',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721__factory>;
+    getContractFactory(
+      name: 'ERC721Royalty',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ERC721Royalty__factory>;
     getContractFactory(
       name: 'IERC721Metadata',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -65,17 +77,21 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721APausable__factory>;
     getContractFactory(
-      name: 'IBFR',
+      name: 'IRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.IBFR__factory>;
+    ): Promise<Contracts.IRenderer__factory>;
     getContractFactory(
-      name: 'DebugBFR',
+      name: 'SvgUtils',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.DebugBFR__factory>;
+    ): Promise<Contracts.SvgUtils__factory>;
     getContractFactory(
-      name: 'DotMatrixBFR',
+      name: 'DebugRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.DotMatrixBFR__factory>;
+    ): Promise<Contracts.DebugRenderer__factory>;
+    getContractFactory(
+      name: 'DotMatrixRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.DotMatrixRenderer__factory>;
     getContractFactory(
       name: 'ERC721A',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -87,15 +103,30 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.Ownable>;
     getContractAt(
+      name: 'IERC2981',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IERC2981>;
+    getContractAt(
       name: 'Pausable',
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.Pausable>;
     getContractAt(
+      name: 'ERC2981',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ERC2981>;
+    getContractAt(
       name: 'ERC721',
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.ERC721>;
+    getContractAt(
+      name: 'ERC721Royalty',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ERC721Royalty>;
     getContractAt(
       name: 'IERC721Metadata',
       address: string,
@@ -147,20 +178,25 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.ERC721APausable>;
     getContractAt(
-      name: 'IBFR',
+      name: 'IRenderer',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.IBFR>;
+    ): Promise<Contracts.IRenderer>;
     getContractAt(
-      name: 'DebugBFR',
+      name: 'SvgUtils',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.DebugBFR>;
+    ): Promise<Contracts.SvgUtils>;
     getContractAt(
-      name: 'DotMatrixBFR',
+      name: 'DebugRenderer',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.DotMatrixBFR>;
+    ): Promise<Contracts.DebugRenderer>;
+    getContractAt(
+      name: 'DotMatrixRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.DotMatrixRenderer>;
     getContractAt(
       name: 'ERC721A',
       address: string,

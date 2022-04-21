@@ -3,7 +3,7 @@
 pragma solidity ^0.8.4;
 
 import "./BrainFuckVM.sol";
-import "./interfaces/IBFR.sol";
+import "./interfaces/IRenderer.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
@@ -26,7 +26,7 @@ library BrainFuckURIConstructor {
       );
     }
 
-    function tokenURI(uint256 tokenId, string memory name, bytes memory seed, bytes memory code, IBFR renderer) public view returns (string memory) {
+    function tokenURI(uint256 tokenId, string memory name, bytes memory seed, bytes memory code, IRenderer renderer) public view returns (string memory) {
       string memory tokenName = string(abi.encodePacked(name, " #", tokenId.toString()));
       bytes memory out = BrainFuckVM.runBrainFuckCode(code, abi.encodePacked(keccak256(abi.encodePacked(seed, tokenId))), renderer.outSize());
       string memory image = renderer.render(out);

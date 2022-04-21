@@ -18,42 +18,45 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-} from '../common';
+} from '../../../common';
 
-export interface BrainFuckURIConstructorInterface extends utils.Interface {
+export interface IERC2981Interface extends utils.Interface {
   functions: {
-    'contractURI(string,address)': FunctionFragment;
-    'tokenURI(uint256,string,bytes,bytes,IRenderer)': FunctionFragment;
+    'royaltyInfo(uint256,uint256)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: 'contractURI' | 'tokenURI',
+    nameOrSignatureOrTopic: 'royaltyInfo' | 'supportsInterface',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: 'contractURI',
-    values: [string, string],
+    functionFragment: 'royaltyInfo',
+    values: [BigNumberish, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: 'tokenURI',
-    values: [BigNumberish, string, BytesLike, BytesLike, string],
+    functionFragment: 'supportsInterface',
+    values: [BytesLike],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: 'contractURI',
+    functionFragment: 'royaltyInfo',
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'supportsInterface',
+    data: BytesLike,
+  ): Result;
 
   events: {};
 }
 
-export interface BrainFuckURIConstructor extends BaseContract {
+export interface IERC2981 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BrainFuckURIConstructorInterface;
+  interface: IERC2981Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -75,86 +78,72 @@ export interface BrainFuckURIConstructor extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    contractURI(
-      name: string,
-      nft: string,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
-
-    tokenURI(
+    royaltyInfo(
       tokenId: BigNumberish,
-      name: string,
-      seed: BytesLike,
-      code: BytesLike,
-      renderer: string,
+      salePrice: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<[string]>;
+    ): Promise<
+      [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
+    >;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
   };
 
-  contractURI(
-    name: string,
-    nft: string,
-    overrides?: CallOverrides,
-  ): Promise<string>;
-
-  tokenURI(
+  royaltyInfo(
     tokenId: BigNumberish,
-    name: string,
-    seed: BytesLike,
-    code: BytesLike,
-    renderer: string,
+    salePrice: BigNumberish,
     overrides?: CallOverrides,
-  ): Promise<string>;
+  ): Promise<
+    [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
+  >;
+
+  supportsInterface(
+    interfaceId: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   callStatic: {
-    contractURI(
-      name: string,
-      nft: string,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
-    tokenURI(
+    royaltyInfo(
       tokenId: BigNumberish,
-      name: string,
-      seed: BytesLike,
-      code: BytesLike,
-      renderer: string,
+      salePrice: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<string>;
+    ): Promise<
+      [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
+    >;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {};
 
   estimateGas: {
-    contractURI(
-      name: string,
-      nft: string,
+    royaltyInfo(
+      tokenId: BigNumberish,
+      salePrice: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    tokenURI(
-      tokenId: BigNumberish,
-      name: string,
-      seed: BytesLike,
-      code: BytesLike,
-      renderer: string,
+    supportsInterface(
+      interfaceId: BytesLike,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    contractURI(
-      name: string,
-      nft: string,
+    royaltyInfo(
+      tokenId: BigNumberish,
+      salePrice: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    tokenURI(
-      tokenId: BigNumberish,
-      name: string,
-      seed: BytesLike,
-      code: BytesLike,
-      renderer: string,
+    supportsInterface(
+      interfaceId: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

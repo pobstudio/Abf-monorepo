@@ -3,7 +3,7 @@ import { BigNumber, Signer } from 'ethers';
 import {
   BrainFuckVM,
   BrainFuck,
-  DebugBFR,
+  DebugRenderer,
   BrainFuckURIConstructor,
 } from '../typechain-types';
 import { expect } from 'chai';
@@ -47,7 +47,7 @@ describe('BrainFuck', function () {
   let brainFuck: BrainFuck;
   let brainFuckURIConstructor: BrainFuckURIConstructor;
 
-  let debugBFR: DebugBFR;
+  let debugRenderer: DebugRenderer;
   let owner: Signer;
   let artist: Signer;
   let rando: Signer;
@@ -64,9 +64,9 @@ describe('BrainFuck', function () {
   });
 
   beforeEach(async function () {
-    const DebugBFR = await ethers.getContractFactory('DebugBFR');
-    debugBFR = (await DebugBFR.deploy()) as DebugBFR;
-    await debugBFR.deployed();
+    const DebugRenderer = await ethers.getContractFactory('DebugRenderer');
+    debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
+    await debugRenderer.deployed();
 
     const BrainFuckVM = await ethers.getContractFactory('BrainFuckVM');
     brainFuckVM = (await BrainFuckVM.deploy()) as BrainFuckVM;
@@ -96,7 +96,7 @@ describe('BrainFuck', function () {
       TEST_URI,
       SEED,
       CODE,
-      debugBFR.address,
+      debugRenderer.address,
       MINTING_SUPPLY,
       PRICE,
     )) as BrainFuck;
@@ -110,7 +110,7 @@ describe('BrainFuck', function () {
       expect(await brainFuck.additionalMetadataURI()).to.eq(TEST_URI);
       expect(await brainFuck.seed()).to.eq(SEED);
       expect(await brainFuck.code()).to.eq(CODE);
-      expect(await brainFuck.renderer()).to.eq(debugBFR.address);
+      expect(await brainFuck.renderer()).to.eq(debugRenderer.address);
       expect(await brainFuck.mintingSupply()).to.eq(MINTING_SUPPLY);
       expect(await brainFuck.price()).to.eq(PRICE);
     });
@@ -132,6 +132,38 @@ describe('BrainFuck', function () {
       expect(contractMetadata.external_link).to.eq(
         `https://abf.dev/project/${brainFuck.address.toLowerCase()}`,
       );
+    });
+  });
+
+  describe('supportsInterface', () => {
+    it('supports ERC2981', async () => {
+      expect(await brainFuck.supportsInterface('0x2a55205a')).to.eq(true);
+    });
+    it('supports ERC721', async () => {
+      expect(await brainFuck.supportsInterface('0x80ac58cd')).to.eq(true);
+    });
+    it('supports ERC721Metadata', async () => {
+      expect(await brainFuck.supportsInterface('0x5b5e139f')).to.eq(true);
+    });
+  });
+
+  describe('setRoyalty', () => {
+    it('owner can set royalty', async () => {
+      await brainFuck.mint(await owner.getAddress(), 1, {
+        value: PRICE,
+      });
+      await brainFuck.connect(owner).setRoyalty(await rando.getAddress(), 1000);
+      const royaltyData = await brainFuck.royaltyInfo(
+        0,
+        ethers.utils.parseEther('1'),
+      );
+      expect(royaltyData[0]).to.eq(await rando.getAddress());
+      expect(royaltyData[1]).to.eq(ethers.utils.parseEther('0.1'));
+    });
+    it('cannot mint if exceeds supply (v1)', async () => {
+      await expect(
+        brainFuck.connect(rando).setRoyalty(await rando.getAddress(), 1000),
+      ).to.revertedWith('Ownable: caller is not the owner');
     });
   });
 
@@ -171,9 +203,17 @@ describe('BrainFuck', function () {
       const beforeBalance = await owner.getBalance();
       await brainFuck
         .connect(rando)
-        .mint(await rando.getAddress(), 10, { value: PRICE.mul(11) });
+        .mint(await rando.getAddress(), 4, { value: PRICE.mul(11) });
+      await brainFuck
+        .connect(rando)
+        .mint(await rando.getAddress(), 6, { value: PRICE.mul(11) });
       const afterBalance = await owner.getBalance();
       expect(afterBalance.sub(beforeBalance)).to.eq(PRICE.mul(10));
+    });
+    it('cant mint more than 7 in a single call', async () => {
+      await expect(
+        brainFuck.mint(await rando.getAddress(), 7, { value: PRICE.mul(7) }),
+      ).to.revertedWith('exceeded number of mint in single call');
     });
   });
 
