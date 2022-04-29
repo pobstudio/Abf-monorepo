@@ -17,7 +17,7 @@ const IndexPage: NextPage = () => {
           </FlexEnds>
           <FlexEnds style={{ marginTop: 32 }}>
             <Label>
-              ipfs://bafybeial█3r6asbsfdwghq47wsp7z3llne4gz█6ze5nfpzmi4zfts5e7zi
+              ipfs://bafybeieqwsz7t█dtxhxq44qrdibrs6fy33vmefzh4█sa4gnz7tmorc4vfm
             </Label>
           </FlexEnds>
         </PaddedBox>
