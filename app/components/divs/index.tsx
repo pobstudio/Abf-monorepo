@@ -8,7 +8,6 @@ export const Box = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
-
 export const PaddedBox = styled(Box)`
   padding: 16px;
-`
+`;

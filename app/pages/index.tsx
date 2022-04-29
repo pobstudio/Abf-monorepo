@@ -9,13 +9,13 @@ import { Label, Text } from '../components/texts';
 const IndexPage: NextPage = () => {
   return (
     <PageDiv>
-      <FlexCenter style={{height: '100vh'}}>
-        <PaddedBox style={{ width: 560 }}>
+      <FlexCenter style={{ height: '100vh' }}>
+        <PaddedBox style={{ width: 540 }}>
           <FlexEnds>
             <Text>██████████ PROTOCOL NOT FOUND</Text>
             <Text>PLEASE CONTACT THE ████████</Text>
           </FlexEnds>
-          <FlexEnds style={{marginTop: 32 }}>
+          <FlexEnds style={{ marginTop: 32 }}>
             <Label>
               ipfs://bafybeial█3r6asbsfdwghq47wsp7z3llne4gz█6ze5nfpzmi4zfts5e7zi
             </Label>
