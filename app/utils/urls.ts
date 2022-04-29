@@ -2,9 +2,9 @@ import { deployments } from '@abf-monorepo/protocol';
 import { BigNumber } from 'ethers';
 import { CHAIN_ID, IPFS_LINK } from '../constants';
 
-export const getOpenSeaUrl = (tokenId: string) => {
+export const getOpenSeaUrl = (address: string, tokenId: string) => {
   return `https://${CHAIN_ID === 1 ? '' : 'testnets.'}opensea.io/assets/${
-    deployments[CHAIN_ID].erc1155
+    address
   }/${BigNumber.from(tokenId).toString()}`;
 };
 

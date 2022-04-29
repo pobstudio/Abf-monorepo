@@ -1,32 +1,15 @@
 import create from 'zustand';
 import produce from 'immer';
 import { TransactionReceipt } from '@ethersproject/providers';
-import { useToastsStore } from './toasts';
-import { SagaMinterType } from './tokens/saga';
 
 export type TransactionStatus = 'in-progress' | 'success' | 'failed';
 
-export interface GenesisMintingTransactionMetadata {
-  type: 'genesis-minting';
-  attemptedEdition: number;
-  hash: string;
-}
-
-export interface SagaBatchMintingTransactionMetadata {
-  type: 'saga-batch-minting';
-  hashes: string[];
-  minter: SagaMinterType;
-}
-
-export interface UpdatingTokenMetadataTransactionMetadata {
-  tokenId: string;
-  type: 'updating-token-metadata';
+export interface MintingTransactionMetadata {
+  type: 'minting';
 }
 
 export type TransactionMetadata =
-  | GenesisMintingTransactionMetadata
-  | SagaBatchMintingTransactionMetadata
-  | UpdatingTokenMetadataTransactionMetadata;
+  | MintingTransactionMetadata;
 
 export interface TransactionObject {
   hash: string;
