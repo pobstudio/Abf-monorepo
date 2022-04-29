@@ -7,9 +7,9 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 contract DebugRenderer is IRenderer {
   using Strings for uint256;
 
-  function name() external override pure returns (string memory) {
-    return "DEBUG";
-  }
+  // function name() external override pure returns (string memory) {
+  //   return "DEBUG";
+  // }
   
   function outSize() external override pure returns (uint256) {
     return 256;

@@ -3,7 +3,7 @@
 pragma solidity ^0.8.4;
 
 interface IRenderer {
-  function name() external view returns (string memory);
+  // function name() external view returns (string memory);
   function outSize() external view returns (uint256);
   function additionalMetadataURI() external view returns (string memory);
   function renderRaw(bytes calldata out) external view returns (string memory);

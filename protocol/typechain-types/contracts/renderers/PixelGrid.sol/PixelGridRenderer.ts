@@ -17,12 +17,10 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-} from '../../common';
+} from '../../../common';
 
-export interface DotMatrixRendererInterface extends utils.Interface {
+export interface PixelGridRendererInterface extends utils.Interface {
   functions: {
-    'RADIUS_MAX()': FunctionFragment;
-    'RADIUS_MIN()': FunctionFragment;
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
     'outSize()': FunctionFragment;
@@ -32,8 +30,6 @@ export interface DotMatrixRendererInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'RADIUS_MAX'
-      | 'RADIUS_MIN'
       | 'additionalMetadataURI'
       | 'attributes'
       | 'outSize'
@@ -41,14 +37,6 @@ export interface DotMatrixRendererInterface extends utils.Interface {
       | 'renderRaw',
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: 'RADIUS_MAX',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'RADIUS_MIN',
-    values?: undefined,
-  ): string;
   encodeFunctionData(
     functionFragment: 'additionalMetadataURI',
     values?: undefined,
@@ -64,8 +52,6 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     values: [BytesLike],
   ): string;
 
-  decodeFunctionResult(functionFragment: 'RADIUS_MAX', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'RADIUS_MIN', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'additionalMetadataURI',
     data: BytesLike,
@@ -78,12 +64,12 @@ export interface DotMatrixRendererInterface extends utils.Interface {
   events: {};
 }
 
-export interface DotMatrixRenderer extends BaseContract {
+export interface PixelGridRenderer extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: DotMatrixRendererInterface;
+  interface: PixelGridRendererInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -105,10 +91,6 @@ export interface DotMatrixRenderer extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    RADIUS_MAX(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    RADIUS_MIN(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
     attributes(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
@@ -119,10 +101,6 @@ export interface DotMatrixRenderer extends BaseContract {
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
   };
-
-  RADIUS_MAX(overrides?: CallOverrides): Promise<BigNumber>;
-
-  RADIUS_MIN(overrides?: CallOverrides): Promise<BigNumber>;
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
@@ -135,10 +113,6 @@ export interface DotMatrixRenderer extends BaseContract {
   renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    RADIUS_MAX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    RADIUS_MIN(overrides?: CallOverrides): Promise<BigNumber>;
-
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
     attributes(out: BytesLike, overrides?: CallOverrides): Promise<string>;
@@ -153,10 +127,6 @@ export interface DotMatrixRenderer extends BaseContract {
   filters: {};
 
   estimateGas: {
-    RADIUS_MAX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    RADIUS_MIN(overrides?: CallOverrides): Promise<BigNumber>;
-
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     attributes(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
@@ -169,10 +139,6 @@ export interface DotMatrixRenderer extends BaseContract {
   };
 
   populateTransaction: {
-    RADIUS_MAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    RADIUS_MIN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     additionalMetadataURI(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;

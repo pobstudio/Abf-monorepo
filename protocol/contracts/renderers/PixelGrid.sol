@@ -6,14 +6,11 @@ import "../libraries/SvgUtils.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 
-contract DotMatrixRenderer is IRenderer {
+contract PixelGridRenderer is IRenderer {
   using Strings for uint256;
 
-  uint public constant RADIUS_MIN = 4;
-  uint public constant RADIUS_MAX = 16;
-
-  string circlePrefix = '<circle fill="#000" ';
-  string circleSuffix = '" />';
+  string rectPrefix = '<rect ';
+  string rectSuffix = ' />';
 
   string[256] circles = [
     'cx="60" cy="60"',
@@ -279,7 +276,7 @@ contract DotMatrixRenderer is IRenderer {
   // }
 
   function outSize() external override pure returns (uint256) {
-    return 256;
+    return 256 * 3;
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
@@ -289,7 +286,7 @@ contract DotMatrixRenderer is IRenderer {
   function renderRaw(bytes calldata out) public override view returns (string memory) {
     string memory content = '';
     for (uint i = 0; i < 256; ++i) {
-      content = string(abi.encodePacked(content, circlePrefix, circles[i], ' r="', SvgUtils.toDecimalString(SvgUtils.lerpWithDecimals(RADIUS_MIN, RADIUS_MAX, out[i])), circleSuffix));
+      content = string(abi.encodePacked(content, rectPrefix, circles[i], ' fill="', "#000", rectSuffix));
     }
 
     return string(abi.encodePacked(

@@ -46,5 +46,7 @@ export type { DebugRenderer } from './contracts/renderers/DebugRenderer';
 export { DebugRenderer__factory } from './factories/contracts/renderers/DebugRenderer__factory';
 export type { DotMatrixRenderer } from './contracts/renderers/DotMatrixRenderer';
 export { DotMatrixRenderer__factory } from './factories/contracts/renderers/DotMatrixRenderer__factory';
+export type { PixelGridRenderer } from './contracts/renderers/PixelGrid.sol/PixelGridRenderer';
+export { PixelGridRenderer__factory } from './factories/contracts/renderers/PixelGrid.sol/PixelGridRenderer__factory';
 export type { ERC721A } from './contracts/tokens/ERC721A';
 export { ERC721A__factory } from './factories/contracts/tokens/ERC721A__factory';

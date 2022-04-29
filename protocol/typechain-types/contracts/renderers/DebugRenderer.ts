@@ -23,7 +23,6 @@ export interface DebugRendererInterface extends utils.Interface {
   functions: {
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
-    'name()': FunctionFragment;
     'outSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
@@ -33,7 +32,6 @@ export interface DebugRendererInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'additionalMetadataURI'
       | 'attributes'
-      | 'name'
       | 'outSize'
       | 'render'
       | 'renderRaw',
@@ -47,7 +45,6 @@ export interface DebugRendererInterface extends utils.Interface {
     functionFragment: 'attributes',
     values: [BytesLike],
   ): string;
-  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'outSize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'render', values: [BytesLike]): string;
   encodeFunctionData(
@@ -60,7 +57,6 @@ export interface DebugRendererInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
@@ -99,8 +95,6 @@ export interface DebugRenderer extends BaseContract {
 
     attributes(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
-
     outSize(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
@@ -112,8 +106,6 @@ export interface DebugRenderer extends BaseContract {
 
   attributes(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
-  name(overrides?: CallOverrides): Promise<string>;
-
   outSize(overrides?: CallOverrides): Promise<BigNumber>;
 
   render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
@@ -124,8 +116,6 @@ export interface DebugRenderer extends BaseContract {
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
     attributes(out: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-    name(overrides?: CallOverrides): Promise<string>;
 
     outSize(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -140,8 +130,6 @@ export interface DebugRenderer extends BaseContract {
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     attributes(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-    name(overrides?: CallOverrides): Promise<BigNumber>;
 
     outSize(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -159,8 +147,6 @@ export interface DebugRenderer extends BaseContract {
       out: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
-
-    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     outSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

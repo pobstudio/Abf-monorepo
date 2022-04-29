@@ -41,7 +41,7 @@ library BrainFuckURIConstructor {
                         '","description": "Generative art written in BrainFuck.", "image": "',
                         image,
                         '", "aspect_ratio":1, "attributes": [', renderer.attributes(out), '{"trait_type":"Renderer","value":"',
-                          renderer.name(),
+                          uint256(uint160(address(renderer))).toHexString(),
                         '"}]}'
                     )
                 )

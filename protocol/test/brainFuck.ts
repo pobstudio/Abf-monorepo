@@ -241,7 +241,9 @@ describe('BrainFuck', function () {
       const rendererAttribute = metadata.attributes.find(
         (a: any) => a.trait_type === 'Renderer',
       );
-      expect(rendererAttribute?.value).to.eq('DEBUG');
+      expect(rendererAttribute?.value).to.eq(
+        debugRenderer.address.toLowerCase(),
+      );
       const dataLengthAttribute = metadata.attributes.find(
         (a: any) => a.trait_type === 'Data Length',
       );
