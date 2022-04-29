@@ -12,8 +12,8 @@ import { AppProvider } from '../contexts/app';
 import { subgraphClient } from '../clients/subgraph';
 import { Toaster } from 'react-hot-toast';
 
-const DEFAULT_TITLE = `ABF - Generative art written in BrainFuck`;
-const DEFAULT_DESCRIPTION = `On-chain generative art written by anybody who dared.`;
+const DEFAULT_TITLE = `ABF`;
+const DEFAULT_DESCRIPTION = ``;
 
 export default class PobApp extends App {
   render() {
