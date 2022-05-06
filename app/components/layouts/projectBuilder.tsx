@@ -15,6 +15,28 @@ import { InputWell, NumberInput, TextArea, TextInput } from '../inputs/input';
 import { Text } from '../texts';
 import { TwoRowContainer } from './common';
 
+export const ProjectBuilder: FC = () => {
+  return (
+    <ProjectBuilderProvider>
+      <ProjectBuilderContainer>
+        <PaddedBox>
+          <DetailRowTablesContainer>
+            <Jumbotron />
+            <SelectRenderer />
+            <WriteBrainFuck />
+            <SelectTokenParameters />
+            <SelectMintingParameters />
+            <SubmitAndCreateContract />
+          </DetailRowTablesContainer>
+        </PaddedBox>
+        <PaddedBox>
+          <DetailRow>{['Sample Render', '']}</DetailRow>
+        </PaddedBox>
+      </ProjectBuilderContainer>
+    </ProjectBuilderProvider>
+  );
+};
+
 const ProjectBuilderContainer = styled(TwoRowContainer)`
   > :first-child {
     border-right: none;
@@ -39,29 +61,6 @@ const InteractiveDetailRowsContainer = styled(DetailRowsContainer)<{
     background: rgba(255, 255, 255, 0.25);
   }
 `;
-
-export const ProjectBuilder: FC = () => {
-  return (
-    <ProjectBuilderProvider>
-      <ProjectBuilderContainer>
-        <PaddedBox>
-          <DetailRowTablesContainer>
-            <Jumbotron />
-            <SelectRenderer />
-            <WriteBrainFuck />
-            <SelectTokenParameters />
-            <SelectMintingParameters />
-            <SubmitAndCreateContract />
-          </DetailRowTablesContainer>
-        </PaddedBox>
-        <PaddedBox>
-          <DetailRow>{['Supply', `${0}/1000`]}</DetailRow>
-        </PaddedBox>
-      </ProjectBuilderContainer>
-    </ProjectBuilderProvider>
-  );
-};
-
 const Jumbotron: FC = () => {
   return (
     <InteractiveDetailRowsContainer>
