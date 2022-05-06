@@ -3,40 +3,39 @@ import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Flex, FlexCenter, FlexEnds } from '../flexs';
+import { Label } from '../texts';
 import { HeaderAnchor, HeaderLogoAnchor } from './anchor';
-import { Web3Status } from './web3Status';
-// import { Web3Status } from './web3Status';
 
-const HeaderRow = styled.div`
+const FooterRow = styled.div`
   display: grid;
   grid-template-columns: 200px 1fr 200px;
 `;
 
-const HeaderAnchorRow = styled(Flex)`
+const FooterAnchorRow = styled(Flex)`
   > ${HeaderAnchor} + ${HeaderAnchor} {
     margin-left: 32px;
   }
 `;
 
-export const Header: React.FC = () => {
+export const Footer: React.FC = () => {
   const router = useRouter();
 
   return (
-    <HeaderRow>
-      <HeaderAnchorRow>
-        <HeaderAnchor>ORIGIN</HeaderAnchor>
-        <HeaderAnchor>COLLECTIONS</HeaderAnchor>
-      </HeaderAnchorRow>
+    <FooterRow>
+      <FooterAnchorRow>
+        <HeaderAnchor>TWITTER</HeaderAnchor>
+        <HeaderAnchor>DISCORD</HeaderAnchor>
+      </FooterAnchorRow>
       <FlexCenter>
         <Link passHref href={'/'}>
           <HeaderLogoAnchor style={{ fontWeight: 'bold' }}>
-            ABS BRAIN FUCK
+            BY THE CORP
           </HeaderLogoAnchor>
         </Link>
       </FlexCenter>
       <Flex style={{ flexDirection: 'row-reverse' }}>
-        <Web3Status />
+        <Label>VIRES IN STRUCTURAS.</Label>
       </Flex>
-    </HeaderRow>
+    </FooterRow>
   );
 };

@@ -8,8 +8,7 @@ export interface MintingTransactionMetadata {
   type: 'minting';
 }
 
-export type TransactionMetadata =
-  | MintingTransactionMetadata;
+export type TransactionMetadata = MintingTransactionMetadata;
 
 export interface TransactionObject {
   hash: string;

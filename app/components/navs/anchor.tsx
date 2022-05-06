@@ -11,4 +11,5 @@ export const HeaderAnchor = styled.a`
 
 export const HeaderLogoAnchor = styled(HeaderAnchor)`
   font-weight: bold;
+  font-family: Helvetica, sans-serif;
 `;

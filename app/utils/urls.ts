@@ -3,9 +3,9 @@ import { BigNumber } from 'ethers';
 import { CHAIN_ID, IPFS_LINK } from '../constants';
 
 export const getOpenSeaUrl = (address: string, tokenId: string) => {
-  return `https://${CHAIN_ID === 1 ? '' : 'testnets.'}opensea.io/assets/${
-    address
-  }/${BigNumber.from(tokenId).toString()}`;
+  return `https://${
+    CHAIN_ID === 1 ? '' : 'testnets.'
+  }opensea.io/assets/${address}/${BigNumber.from(tokenId).toString()}`;
 };
 
 export const getOpenSeaAccountUrl = (address: string) => {

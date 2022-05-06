@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import { PageDiv } from '../components/divs';
 import { Header } from '../components/navs/header';
-import { FlexCenter } from '../components/flex';
+import { FlexCenter } from '../components/flexs';
 import { Label } from '../components/texts';
 import { HEADER_HEIGHT } from '../constants';
 

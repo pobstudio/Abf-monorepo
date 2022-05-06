@@ -9,5 +9,5 @@ export const Box = styled.div`
 `;
 
 export const PaddedBox = styled(Box)`
-  padding: 16px;
+  padding: 128px;
 `;

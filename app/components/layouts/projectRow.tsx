@@ -1,12 +1,9 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { DetailRow } from '../details/rows';
+import { TwoRowContainer } from './common';
 
-const ProjectRowContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 180px;
-`;
+const ProjectRowContainer = styled(TwoRowContainer)``;
 
 export const ProjectRow: FC = () => {
   return (
