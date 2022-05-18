@@ -27,6 +27,8 @@ export interface SvgUtilsInterface extends utils.Interface {
     'decimals(uint256)': FunctionFragment;
     'lerpWithDecimals(uint256,uint256,bytes1)': FunctionFragment;
     'padZeros(string,uint256)': FunctionFragment;
+    'toColorHexString(uint256)': FunctionFragment;
+    'toColorHexStringByBytes(bytes1,bytes1,bytes1)': FunctionFragment;
     'toDecimalString(uint256)': FunctionFragment;
     'wholeNumber(uint256)': FunctionFragment;
   };
@@ -38,6 +40,8 @@ export interface SvgUtilsInterface extends utils.Interface {
       | 'decimals'
       | 'lerpWithDecimals'
       | 'padZeros'
+      | 'toColorHexString'
+      | 'toColorHexStringByBytes'
       | 'toDecimalString'
       | 'wholeNumber',
   ): FunctionFragment;
@@ -57,6 +61,14 @@ export interface SvgUtilsInterface extends utils.Interface {
     values: [string, BigNumberish],
   ): string;
   encodeFunctionData(
+    functionFragment: 'toColorHexString',
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'toColorHexStringByBytes',
+    values: [BytesLike, BytesLike, BytesLike],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'toDecimalString',
     values: [BigNumberish],
   ): string;
@@ -73,6 +85,14 @@ export interface SvgUtilsInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'padZeros', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'toColorHexString',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'toColorHexStringByBytes',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: 'toDecimalString',
     data: BytesLike,
@@ -131,6 +151,18 @@ export interface SvgUtils extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
+    toColorHexString(
+      value: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
+    toColorHexStringByBytes(
+      r: BytesLike,
+      g: BytesLike,
+      b: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
     toDecimalString(
       n: BigNumberish,
       overrides?: CallOverrides,
@@ -161,6 +193,18 @@ export interface SvgUtils extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
+  toColorHexString(
+    value: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  toColorHexStringByBytes(
+    r: BytesLike,
+    g: BytesLike,
+    b: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
   toDecimalString(n: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   wholeNumber(n: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
@@ -182,6 +226,18 @@ export interface SvgUtils extends BaseContract {
     padZeros(
       s: string,
       len: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    toColorHexString(
+      value: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    toColorHexStringByBytes(
+      r: BytesLike,
+      g: BytesLike,
+      b: BytesLike,
       overrides?: CallOverrides,
     ): Promise<string>;
 
@@ -215,6 +271,18 @@ export interface SvgUtils extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    toColorHexString(
+      value: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    toColorHexStringByBytes(
+      r: BytesLike,
+      g: BytesLike,
+      b: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     toDecimalString(
       n: BigNumberish,
       overrides?: CallOverrides,
@@ -243,6 +311,18 @@ export interface SvgUtils extends BaseContract {
     padZeros(
       s: string,
       len: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    toColorHexString(
+      value: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    toColorHexStringByBytes(
+      r: BytesLike,
+      g: BytesLike,
+      b: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

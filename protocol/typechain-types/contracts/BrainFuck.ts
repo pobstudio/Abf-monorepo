@@ -34,8 +34,10 @@ export interface BrainFuckInterface extends utils.Interface {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
     'code()': FunctionFragment;
+    'constants()': FunctionFragment;
     'contractURI()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'isActive()': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'mint(address,uint256)': FunctionFragment;
     'mintingSupply()': FunctionFragment;
@@ -50,6 +52,7 @@ export interface BrainFuckInterface extends utils.Interface {
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
     'seed()': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
+    'setIsActive(bool)': FunctionFragment;
     'setRoyalty(address,uint96)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
@@ -66,8 +69,10 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'approve'
       | 'balanceOf'
       | 'code'
+      | 'constants'
       | 'contractURI'
       | 'getApproved'
+      | 'isActive'
       | 'isApprovedForAll'
       | 'mint'
       | 'mintingSupply'
@@ -82,6 +87,7 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'safeTransferFrom(address,address,uint256,bytes)'
       | 'seed'
       | 'setApprovalForAll'
+      | 'setIsActive'
       | 'setRoyalty'
       | 'supportsInterface'
       | 'symbol'
@@ -105,6 +111,7 @@ export interface BrainFuckInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(functionFragment: 'code', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'constants', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'contractURI',
     values?: undefined,
@@ -113,6 +120,7 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'getApproved',
     values: [BigNumberish],
   ): string;
+  encodeFunctionData(functionFragment: 'isActive', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'isApprovedForAll',
     values: [string, string],
@@ -155,6 +163,10 @@ export interface BrainFuckInterface extends utils.Interface {
     values: [string, boolean],
   ): string;
   encodeFunctionData(
+    functionFragment: 'setIsActive',
+    values: [boolean],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'setRoyalty',
     values: [string, BigNumberish],
   ): string;
@@ -191,6 +203,7 @@ export interface BrainFuckInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'code', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'constants', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'contractURI',
     data: BytesLike,
@@ -199,6 +212,7 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'getApproved',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'isActive', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'isApprovedForAll',
     data: BytesLike,
@@ -232,6 +246,10 @@ export interface BrainFuckInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'seed', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'setApprovalForAll',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setIsActive',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'setRoyalty', data: BytesLike): Result;
@@ -356,12 +374,16 @@ export interface BrainFuck extends BaseContract {
 
     code(overrides?: CallOverrides): Promise<[string]>;
 
+    constants(overrides?: CallOverrides): Promise<[string]>;
+
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    isActive(overrides?: CallOverrides): Promise<[boolean]>;
 
     isApprovedForAll(
       owner: string,
@@ -423,6 +445,11 @@ export interface BrainFuck extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
+    setIsActive(
+      _isActive: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
     setRoyalty(
       newReceiver: string,
       newRoyaltyFraction: BigNumberish,
@@ -470,12 +497,16 @@ export interface BrainFuck extends BaseContract {
 
   code(overrides?: CallOverrides): Promise<string>;
 
+  constants(overrides?: CallOverrides): Promise<string>;
+
   contractURI(overrides?: CallOverrides): Promise<string>;
 
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  isActive(overrides?: CallOverrides): Promise<boolean>;
 
   isApprovedForAll(
     owner: string,
@@ -534,6 +565,11 @@ export interface BrainFuck extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
+  setIsActive(
+    _isActive: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
   setRoyalty(
     newReceiver: string,
     newRoyaltyFraction: BigNumberish,
@@ -578,12 +614,16 @@ export interface BrainFuck extends BaseContract {
 
     code(overrides?: CallOverrides): Promise<string>;
 
+    constants(overrides?: CallOverrides): Promise<string>;
+
     contractURI(overrides?: CallOverrides): Promise<string>;
 
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    isActive(overrides?: CallOverrides): Promise<boolean>;
 
     isApprovedForAll(
       owner: string,
@@ -639,6 +679,8 @@ export interface BrainFuck extends BaseContract {
       approved: boolean,
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    setIsActive(_isActive: boolean, overrides?: CallOverrides): Promise<void>;
 
     setRoyalty(
       newReceiver: string,
@@ -729,12 +771,16 @@ export interface BrainFuck extends BaseContract {
 
     code(overrides?: CallOverrides): Promise<BigNumber>;
 
+    constants(overrides?: CallOverrides): Promise<BigNumber>;
+
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    isActive(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
@@ -796,6 +842,11 @@ export interface BrainFuck extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
+    setIsActive(
+      _isActive: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
     setRoyalty(
       newReceiver: string,
       newRoyaltyFraction: BigNumberish,
@@ -851,12 +902,16 @@ export interface BrainFuck extends BaseContract {
 
     code(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    constants(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    isActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
@@ -915,6 +970,11 @@ export interface BrainFuck extends BaseContract {
     setApprovalForAll(
       operator: string,
       approved: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setIsActive(
+      _isActive: boolean,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 

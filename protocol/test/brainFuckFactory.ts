@@ -103,6 +103,7 @@ describe('BrainFuckFactory', function () {
         symbol: 'ABF',
         additionalMetadataURI: 'ipfs://test',
         seed: '0x01',
+        constants: '0xaabbccddeeff0000',
         code: '0x02',
         renderer: debugRenderer.address,
         mintingSupply: BigNumber.from(100),

@@ -1,0 +1,7 @@
+type Renderer @entity {
+  id: ID!
+  address: Bytes!
+  outSize: BigInt!
+  additionalMetadataURI: String!
+}
+

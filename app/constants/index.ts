@@ -3,7 +3,7 @@ import { invert } from 'lodash';
 /**
  * Global app related constants
  */
-export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
+export const CHAIN_ID = parseInt('5'); // process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
 
 /**
  * Data constants

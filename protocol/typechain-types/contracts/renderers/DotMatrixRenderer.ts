@@ -28,6 +28,7 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     'outSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
   };
 
   getFunction(
@@ -38,7 +39,8 @@ export interface DotMatrixRendererInterface extends utils.Interface {
       | 'attributes'
       | 'outSize'
       | 'render'
-      | 'renderRaw',
+      | 'renderRaw'
+      | 'supportsInterface',
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -63,6 +65,10 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     functionFragment: 'renderRaw',
     values: [BytesLike],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'supportsInterface',
+    values: [BytesLike],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'RADIUS_MAX', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'RADIUS_MIN', data: BytesLike): Result;
@@ -74,6 +80,10 @@ export interface DotMatrixRendererInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'supportsInterface',
+    data: BytesLike,
+  ): Result;
 
   events: {};
 }
@@ -118,6 +128,11 @@ export interface DotMatrixRenderer extends BaseContract {
     render(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
   };
 
   RADIUS_MAX(overrides?: CallOverrides): Promise<BigNumber>;
@@ -134,6 +149,11 @@ export interface DotMatrixRenderer extends BaseContract {
 
   renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
+  supportsInterface(
+    interfaceId: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
   callStatic: {
     RADIUS_MAX(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -148,6 +168,11 @@ export interface DotMatrixRenderer extends BaseContract {
     render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {};
@@ -166,6 +191,11 @@ export interface DotMatrixRenderer extends BaseContract {
     render(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -191,6 +221,11 @@ export interface DotMatrixRenderer extends BaseContract {
 
     renderRaw(
       out: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

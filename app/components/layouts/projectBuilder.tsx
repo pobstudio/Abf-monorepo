@@ -4,68 +4,49 @@ import { ProjectBuilderProvider } from '../../contexts/projectBuilder';
 import {
   DetailAnchorRow,
   DetailRow,
-  DetailRowsContainer,
+  InteractiveDetailRowsContainer,
   DetailTitleAnchorRow,
-  DetailTitleRow,
 } from '../details/rows';
-import { DetailRowTablesContainer } from '../details/tables';
-import { Box, PaddedBox } from '../divs';
+import {
+  TwoColumnContainer,
+  TwoColumnContentContainer,
+} from '../divs/twoColumn';
+import { FlexCenterColumn } from '../flexs';
 import { PrimaryButton } from '../inputs/button';
 import { InputWell, NumberInput, TextArea, TextInput } from '../inputs/input';
+import { PlaceholderRender } from '../renders';
 import { Text } from '../texts';
-import { TwoRowContainer } from './common';
 
 export const ProjectBuilder: FC = () => {
   return (
     <ProjectBuilderProvider>
-      <ProjectBuilderContainer>
-        <PaddedBox>
-          <DetailRowTablesContainer>
+      <TwoColumnContainer>
+        <FlexCenterColumn>
+          <TwoColumnContentContainer>
             <Jumbotron />
             <SelectRenderer />
             <WriteBrainFuck />
             <SelectTokenParameters />
             <SelectMintingParameters />
+            <SelectAdvancedTokenParameters />
             <SubmitAndCreateContract />
-          </DetailRowTablesContainer>
-        </PaddedBox>
-        <PaddedBox>
-          <DetailRow>{['Sample Render', '']}</DetailRow>
-        </PaddedBox>
-      </ProjectBuilderContainer>
+          </TwoColumnContentContainer>
+        </FlexCenterColumn>
+        <FlexCenterColumn>
+          <TwoColumnContentContainer>
+            <PlaceholderRender />
+          </TwoColumnContentContainer>
+        </FlexCenterColumn>
+      </TwoColumnContainer>
     </ProjectBuilderProvider>
   );
 };
 
-const ProjectBuilderContainer = styled(TwoRowContainer)`
-  > :first-child {
-    border-right: none;
-  }
-  margin: 256px 0;
-`;
-
-const InteractiveDetailRowsContainer = styled(DetailRowsContainer)<{
-  disabled?: boolean;
-}>`
-  position: relative;
-  *::after {
-    content: '';
-    position: absolute;
-    display: ${(p) => (p.disabled ? 'flex' : 'none')};
-    align-items: center;
-    justify-content: center;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background: rgba(255, 255, 255, 0.25);
-  }
-`;
 const Jumbotron: FC = () => {
   return (
     <InteractiveDetailRowsContainer>
       <Text>
-        <strong>NFT Gen-art is too fucking easy.</strong>
+        <strong>SUBJECT: NFT GEN-ART IS TOO FUCKING EASY.</strong>
       </Text>
       <Text>Enter ABF.</Text>
       <Text style={{ lineHeight: '16px' }}>
@@ -129,10 +110,26 @@ const SelectTokenParameters: FC = () => {
         <Text>SYMBOL</Text>
         <TextInput style={{ textAlign: 'right' }} placeholder="ABF" />
       </InputWell>
+    </InteractiveDetailRowsContainer>
+  );
+};
+
+const SelectAdvancedTokenParameters: FC = () => {
+  return (
+    <InteractiveDetailRowsContainer>
+      <DetailTitleAnchorRow>
+        {['5. CONFIGURE ADVANCED PARAMETERS (OPTIONAL)', `SPEC`]}
+      </DetailTitleAnchorRow>
       <InputWell>
         <Text>SEED</Text>
         <TextInput style={{ textAlign: 'right' }} placeholder="0xabcd...decd" />
       </InputWell>
+      <InputWell>
+        <Text>INPUT CONSTANTS</Text>
+        <TextInput style={{ textAlign: 'right' }} placeholder="0xabcd...decd" />
+      </InputWell>
+      <DetailRow>{['VALID SEED', `TRUE`]}</DetailRow>
+      <DetailRow>{['VALID INPUT CONSTANTS', `TRUE`]}</DetailRow>
     </InteractiveDetailRowsContainer>
   );
 };
@@ -153,10 +150,6 @@ const SelectMintingParameters: FC = () => {
         <Text style={{ paddingLeft: 8 }}>
           <strong>ETH</strong>
         </Text>
-      </InputWell>
-      <InputWell>
-        <Text>MINTING RELEASE (UNIX)</Text>
-        <NumberInput style={{ textAlign: 'right' }} placeholder="1651794229" />
       </InputWell>
       <InputWell>
         <Text>SECONDARY MARKET ROYALTY (0-100)</Text>

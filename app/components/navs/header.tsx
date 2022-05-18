@@ -24,8 +24,12 @@ export const Header: React.FC = () => {
   return (
     <HeaderRow>
       <HeaderAnchorRow>
-        <HeaderAnchor>ORIGIN</HeaderAnchor>
-        <HeaderAnchor>COLLECTIONS</HeaderAnchor>
+        <Link passHref href={'/origin'}>
+          <HeaderAnchor>ORIGINS</HeaderAnchor>
+        </Link>
+        <Link passHref href={'/project'}>
+          <HeaderAnchor>PROJECTS</HeaderAnchor>
+        </Link>
       </HeaderAnchorRow>
       <FlexCenter>
         <Link passHref href={'/'}>

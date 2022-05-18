@@ -11,7 +11,14 @@ import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
 library BrainFuckURIConstructor {
+  
     using Strings for uint256;
+
+    bytes32 public constant SEED_CONSTANTS_TYPE_MASK = 0x0000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+    function tokenSeed(bytes memory seed, uint256 tokenId, bytes8 constants) public view returns (bytes32) {
+      return (keccak256(abi.encodePacked(seed, tokenId)) & SEED_CONSTANTS_TYPE_MASK) | bytes32(constants);
+    }
 
     function contractURI(string memory name, address nft) public pure returns (string memory) {
       return string(
@@ -26,9 +33,9 @@ library BrainFuckURIConstructor {
       );
     }
 
-    function tokenURI(uint256 tokenId, string memory name, bytes memory seed, bytes memory code, IRenderer renderer) public view returns (string memory) {
+    function tokenURI(uint256 tokenId, string memory name, bytes memory seed, bytes8 constants, bytes memory code, IRenderer renderer) public view returns (string memory) {
       string memory tokenName = string(abi.encodePacked(name, " #", tokenId.toString()));
-      bytes memory out = BrainFuckVM.runBrainFuckCode(code, abi.encodePacked(keccak256(abi.encodePacked(seed, tokenId))), renderer.outSize());
+      bytes memory out = BrainFuckVM.runBrainFuckCode(code, abi.encodePacked(tokenSeed(seed, tokenId, constants)), renderer.outSize());
       string memory image = renderer.render(out);
 
       return string(

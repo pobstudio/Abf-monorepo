@@ -1,18 +1,42 @@
 import React, { useMemo, useCallback } from 'react';
+import { ProjectMetadata } from '../types';
 
-export interface ProjectBuilderProviderContext {}
+export interface ProjectBuilderProviderContext {
+  projectMetadata: Partial<ProjectMetadata>;
+  encodedProjectMetadata: string;
+}
 
 export type ProjectBuilderProviderState = ProjectBuilderProviderContext;
 
-const initialState: ProjectBuilderProviderState = {};
+const DEFAULT_PROJECT_METADATA: Partial<ProjectMetadata> = {};
+
+const ENCODED_DEFAULT_PROJECT_METADATA = btoa(
+  JSON.stringify(DEFAULT_PROJECT_METADATA),
+);
+
+const initialState: ProjectBuilderProviderState = {
+  projectMetadata: DEFAULT_PROJECT_METADATA,
+  encodedProjectMetadata: ENCODED_DEFAULT_PROJECT_METADATA,
+};
 
 const ProjectBuilderContext =
   React.createContext<ProjectBuilderProviderState>(initialState);
 
 const ProjectBuilderProvider: React.FC = ({ children }) => {
-  const stateObject = useMemo(() => {
+  const projectMetadata: Partial<ProjectMetadata> = useMemo(() => {
     return {};
   }, []);
+
+  const encodedProjectMetadata = useMemo(() => {
+    return btoa(JSON.stringify(projectMetadata));
+  }, [projectMetadata]);
+
+  const stateObject = useMemo(() => {
+    return {
+      projectMetadata,
+      encodedProjectMetadata,
+    };
+  }, [projectMetadata, encodedProjectMetadata]);
 
   return (
     <ProjectBuilderContext.Provider value={stateObject}>

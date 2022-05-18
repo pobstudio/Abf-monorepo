@@ -33,6 +33,7 @@ const convertHexStrToAscii = (hexStr: string) => {
 
 const NAME = 'Absolute Brain Fuck';
 const SYMBOL = 'ABF';
+const CONSTANTS = '0xaabbccddeeff0000';
 const CODE = convertToHexStr(
   '>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.',
 );
@@ -95,6 +96,7 @@ describe('BrainFuck', function () {
       SYMBOL,
       TEST_URI,
       SEED,
+      CONSTANTS,
       CODE,
       debugRenderer.address,
       MINTING_SUPPLY,
@@ -107,6 +109,7 @@ describe('BrainFuck', function () {
     it('check parameters are valid', async function () {
       expect(await brainFuck.name()).to.eq(NAME);
       expect(await brainFuck.symbol()).to.eq(SYMBOL);
+      expect(await brainFuck.isActive()).to.eq(false);
       expect(await brainFuck.additionalMetadataURI()).to.eq(TEST_URI);
       expect(await brainFuck.seed()).to.eq(SEED);
       expect(await brainFuck.code()).to.eq(CODE);
@@ -149,6 +152,7 @@ describe('BrainFuck', function () {
 
   describe('setRoyalty', () => {
     it('owner can set royalty', async () => {
+      await brainFuck.connect(owner).setIsActive(true);
       await brainFuck.mint(await owner.getAddress(), 1, {
         value: PRICE,
       });
@@ -167,7 +171,22 @@ describe('BrainFuck', function () {
     });
   });
 
+  describe('setIsActive', () => {
+    it('owner can set isActive', async () => {
+      await brainFuck.connect(owner).setIsActive(true);
+      expect(await brainFuck.isActive()).to.eq(true);
+    });
+    it('rando can not set isActive', async () => {
+      await expect(brainFuck.connect(rando).setIsActive(true)).to.revertedWith(
+        'Ownable: caller is not the owner',
+      );
+    });
+  });
+
   describe('mint', () => {
+    beforeEach(async () => {
+      await brainFuck.connect(owner).setIsActive(true);
+    });
     it('correctly mints for given price', async () => {
       await brainFuck.mint(await owner.getAddress(), 5, {
         value: PRICE.mul(5),
@@ -180,6 +199,20 @@ describe('BrainFuck', function () {
       expect(await brainFuck.ownerOf(5)).to.eq(await rando.getAddress());
       expect(await brainFuck.ownerOf(9)).to.eq(await rando.getAddress());
     });
+    it('cannot mint if not active', async () => {
+      await brainFuck.connect(owner).setIsActive(false);
+      await expect(
+        brainFuck.mint(await rando.getAddress(), 1, { value: PRICE.mul(1) }),
+      ).to.revertedWith('minting needs to be active to mint');
+    });
+    it('cannot mint if exceeds supply (v2)', async () => {
+      await brainFuck.mint(await owner.getAddress(), 5, {
+        value: PRICE.mul(5),
+      });
+      await expect(
+        brainFuck.mint(await rando.getAddress(), 6, { value: PRICE.mul(6) }),
+      ).to.revertedWith('exceeded max supply');
+    });
     it('cannot mint if exceeds supply (v1)', async () => {
       await brainFuck.mint(await owner.getAddress(), 5, {
         value: PRICE.mul(5),
@@ -189,14 +222,6 @@ describe('BrainFuck', function () {
       });
       await expect(
         brainFuck.mint(await rando.getAddress(), 1, { value: PRICE.mul(1) }),
-      ).to.revertedWith('exceeded max supply');
-    });
-    it('cannot mint if exceeds supply (v2)', async () => {
-      await brainFuck.mint(await owner.getAddress(), 5, {
-        value: PRICE.mul(5),
-      });
-      await expect(
-        brainFuck.mint(await rando.getAddress(), 6, { value: PRICE.mul(6) }),
       ).to.revertedWith('exceeded max supply');
     });
     it('correctly mints for given price', async () => {
@@ -219,6 +244,7 @@ describe('BrainFuck', function () {
 
   describe('tokenURI', () => {
     beforeEach(async () => {
+      await brainFuck.connect(owner).setIsActive(true);
       await brainFuck.mint(await owner.getAddress(), 1, { value: PRICE });
     });
 
@@ -248,6 +274,46 @@ describe('BrainFuck', function () {
         (a: any) => a.trait_type === 'Data Length',
       );
       expect(dataLengthAttribute?.value).to.eq(13);
+    });
+  });
+
+  describe('tokenSeed', () => {
+    beforeEach(async () => {
+      await brainFuck.connect(owner).setIsActive(true);
+      await brainFuck.mint(await owner.getAddress(), 1, { value: PRICE });
+    });
+
+    it('should construct tokenSeed correctly', async function () {
+      const BrainFuck = await ethers.getContractFactory('BrainFuck', {
+        libraries: {
+          BrainFuckURIConstructor: brainFuckURIConstructor.address,
+        },
+      });
+
+      const brainFuck = (await BrainFuck.deploy(
+        NAME,
+        SYMBOL,
+        TEST_URI,
+        SEED,
+        '0x68656c6c6f212121',
+        convertToHexStr('++++++++[>,.<-]'),
+        debugRenderer.address,
+        MINTING_SUPPLY,
+        PRICE,
+      )) as BrainFuck;
+      await brainFuck.deployed();
+
+      await brainFuck.connect(owner).setIsActive(true);
+      await brainFuck.mint(await owner.getAddress(), 1, { value: PRICE });
+
+      const tokenId = 0;
+      const metadataDataURI = await brainFuck.tokenURI(tokenId);
+      const metadataJsonStr = Buffer.from(
+        metadataDataURI.slice(29),
+        'base64',
+      ).toString('ascii');
+      const metadata = JSON.parse(metadataJsonStr);
+      console.log('metadata', metadata);
     });
   });
 });

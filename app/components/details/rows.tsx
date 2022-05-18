@@ -11,6 +11,24 @@ export const DetailRowsContainer = styled.div`
   }
 `;
 
+export const InteractiveDetailRowsContainer = styled(DetailRowsContainer)<{
+  disabled?: boolean;
+}>`
+  position: relative;
+  *::after {
+    content: '';
+    position: absolute;
+    display: ${(p) => (p.disabled ? 'flex' : 'none')};
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.25);
+  }
+`;
+
 export const DetailTitleAnchorRow: FC<{
   children: [string, string];
   href?: string;

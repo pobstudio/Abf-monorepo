@@ -129,4 +129,21 @@ describe('SvgUtils', function () {
       );
     });
   });
+
+  describe('toColorHexString', () => {
+    it('correctly return value as color hex code from uint', async function () {
+      expect(await svgUtils.toColorHexString('0xffffff')).to.equal('#ffffff');
+      expect(await svgUtils.toColorHexString('0xab3dcd')).to.equal('#ab3dcd');
+    });
+  });
+  describe('toColorHexStringByBytes', () => {
+    it('correctly return value as color hex code from bytes', async function () {
+      expect(
+        await svgUtils.toColorHexStringByBytes('0xff', '0xff', '0xff'),
+      ).to.equal('#ffffff');
+      expect(
+        await svgUtils.toColorHexStringByBytes('0xab', '0x3d', '0xcd'),
+      ).to.equal('#ab3dcd');
+    });
+  });
 });

@@ -1,8 +1,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { Header } from '../components/navs/header';
-import { PaddedBox, PageDiv } from '../components/divs';
-import { ProjectRow } from '../components/layouts/projectRow';
+import { PageDiv } from '../components/divs';
 import { FlexCenter, FlexEnds } from '../components/flexs';
 import { Label, Text } from '../components/texts';
 import { ProjectBuilder } from '../components/layouts/projectBuilder';

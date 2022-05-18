@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { getSvgHotLoadingServer } from '../utils/svg';
-import { DotMatrixRenderer, SvgUtils } from '../typechain-types';
+import { PathRenderer, PixelGridRenderer, SvgUtils } from '../typechain-types';
 import { BigNumber } from 'ethers';
 
 task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
@@ -17,22 +17,61 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
       '',
     );
 
-  console.log(GRADIENT_BYTES);
+  const GRAYSCALE_BYTES =
+    '0x' +
+    [...Array(256)].reduce(
+      (a, c, i) =>
+        a +
+        BigNumber.from(i).toHexString().slice(2) +
+        BigNumber.from(i).toHexString().slice(2) +
+        BigNumber.from(i).toHexString().slice(2),
+      '',
+    );
+
+  const LINE_BYTES =
+    '0x4D0000' +
+    [...Array(16)].reduce(
+      (a, c, i) =>
+        a +
+        'L'.charCodeAt(0).toString(16) +
+        BigNumber.from(i * 16)
+          .toHexString()
+          .slice(2) +
+        (i % 2 === 1 ? '00' : 'ff'),
+      '',
+    ) +
+    '000000';
 
   const server = await getSvgHotLoadingServer(async () => {
     await hre.run('compile');
 
-    const DotMatrixRenderer = await hre.ethers.getContractFactory(
-      'DotMatrixRenderer',
-      {
-        libraries: {
-          SvgUtils: svgUtils.address,
-        },
-      },
-    );
-    const Renderer = (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
+    // const DotMatrixRenderer = await hre.ethers.getContractFactory(
+    //   'DotMatrixRenderer',
+    //   {
+    //     libraries: {
+    //       SvgUtils: svgUtils.address,
+    //     },
+    //   },
+    // );
+    // const Renderer = (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
+
+    // const PixelGridRenderer = await hre.ethers.getContractFactory(
+    //   'PixelGridRenderer',
+    //   {
+    //     libraries: {
+    //       SvgUtils: svgUtils.address,
+    //     },
+    //   },
+    // );
+
+    const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {
+      // libraries: {
+      //   SvgUtils: svgUtils.address,
+      // },
+    });
+    const Renderer = (await PathRenderer.deploy()) as PathRenderer;
     await Renderer.deployed();
-    const res = await Renderer.renderRaw(GRADIENT_BYTES);
+    const res = await Renderer.renderRaw(LINE_BYTES);
     return res;
   });
 

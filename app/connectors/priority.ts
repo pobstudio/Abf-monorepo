@@ -12,7 +12,7 @@ const {
 } = getPriorityConnector(
   [metaMask, metaMaskHooks],
   [walletConnect, walletConnectHooks],
-  [network, networkHooks],
+  // [network, networkHooks],
 );
 
 export {

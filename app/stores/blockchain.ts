@@ -4,16 +4,13 @@ import produce from 'immer';
 type State = {
   balanceMap: { [address: string]: string };
   blockNumber: number | undefined;
-  mainnetBlockNumber: number | undefined;
   setBalance: (address: string, balance: string) => void;
   setBlockNumber: (blockNumber?: number) => void;
-  setMainnetBlockNumber: (mainnetBlockNumber?: number) => void;
 };
 
 export const useBlockchainStore = create<State>((set) => ({
   balanceMap: {},
   blockNumber: undefined,
-  mainnetBlockNumber: undefined,
   setBalance: (address: string, balance: string) => {
     set(
       produce((update) => {
@@ -22,6 +19,4 @@ export const useBlockchainStore = create<State>((set) => ({
     );
   },
   setBlockNumber: (blockNumber?: number) => set({ blockNumber }),
-  setMainnetBlockNumber: (mainnetBlockNumber?: number) =>
-    set({ mainnetBlockNumber }),
 }));

@@ -8,7 +8,7 @@ import { DEFAULT_TOAST_STYLES } from '../constants/styles';
 export const TransactionsEffect: FC = () => {
   const blockNumber = useBlockchainStore((s) => s.blockNumber);
   const account = usePriorityAccount();
-  const provider = useProvider(true);
+  const provider = useProvider(false);
   const chainId = usePriorityChainId();
   const { transactionMap, updateTransactionMap } = useTransactionsStore();
 

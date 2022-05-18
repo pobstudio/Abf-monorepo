@@ -26,6 +26,7 @@ export interface IRendererInterface extends utils.Interface {
     'outSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
   };
 
   getFunction(
@@ -34,7 +35,8 @@ export interface IRendererInterface extends utils.Interface {
       | 'attributes'
       | 'outSize'
       | 'render'
-      | 'renderRaw',
+      | 'renderRaw'
+      | 'supportsInterface',
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -51,6 +53,10 @@ export interface IRendererInterface extends utils.Interface {
     functionFragment: 'renderRaw',
     values: [BytesLike],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'supportsInterface',
+    values: [BytesLike],
+  ): string;
 
   decodeFunctionResult(
     functionFragment: 'additionalMetadataURI',
@@ -60,6 +66,10 @@ export interface IRendererInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'supportsInterface',
+    data: BytesLike,
+  ): Result;
 
   events: {};
 }
@@ -100,6 +110,11 @@ export interface IRenderer extends BaseContract {
     render(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
   };
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
@@ -112,6 +127,11 @@ export interface IRenderer extends BaseContract {
 
   renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
+  supportsInterface(
+    interfaceId: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
   callStatic: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
@@ -122,6 +142,11 @@ export interface IRenderer extends BaseContract {
     render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {};
@@ -136,6 +161,11 @@ export interface IRenderer extends BaseContract {
     render(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -157,6 +187,11 @@ export interface IRenderer extends BaseContract {
 
     renderRaw(
       out: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

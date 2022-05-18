@@ -85,6 +85,10 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.SvgUtils__factory>;
     getContractFactory(
+      name: 'RendererRegistry',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.RendererRegistry__factory>;
+    getContractFactory(
       name: 'DebugRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DebugRenderer__factory>;
@@ -92,6 +96,10 @@ declare module 'hardhat/types/runtime' {
       name: 'DotMatrixRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DotMatrixRenderer__factory>;
+    getContractFactory(
+      name: 'PathRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.PathRenderer__factory>;
     getContractFactory(
       name: 'PixelGridRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -192,6 +200,11 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.SvgUtils>;
     getContractAt(
+      name: 'RendererRegistry',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.RendererRegistry>;
+    getContractAt(
       name: 'DebugRenderer',
       address: string,
       signer?: ethers.Signer,
@@ -201,6 +214,11 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.DotMatrixRenderer>;
+    getContractAt(
+      name: 'PathRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.PathRenderer>;
     getContractAt(
       name: 'PixelGridRenderer',
       address: string,

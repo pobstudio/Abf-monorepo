@@ -26,17 +26,21 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
     string public additionalMetadataURI;
     bytes public seed;
     bytes public code;
-
+    bytes8 public constants;
+    bool public isActive = false;
+     
     constructor (
       string memory _name,
       string memory _symbol,
       string memory _additionalMetadataURI,
       bytes memory _seed,
+      bytes8 _constants,
       bytes memory _code,
       address _renderer,
       uint256 _mintingSupply,
       uint256 _price
     ) ERC721A(_name, _symbol) {
+      constants = _constants;
       additionalMetadataURI = _additionalMetadataURI;
       seed = _seed;
       code = _code;
@@ -53,13 +57,17 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       _setDefaultRoyalty(newReceiver, newRoyaltyFraction);
     }
 
+    function setIsActive(bool _isActive) public onlyOwner {
+      isActive = _isActive; 
+    }
+
     function contractURI() public view returns (string memory) {
       return BrainFuckURIConstructor.contractURI(name(), address(this)); 
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
       require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
-      return BrainFuckURIConstructor.tokenURI(tokenId, name(), seed, code, renderer);
+      return BrainFuckURIConstructor.tokenURI(tokenId, name(), seed, constants, code, renderer);
     }
     
     modifier onlyUnderMaxSupply(uint256 numToMint) {
@@ -67,7 +75,12 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       _;
     }
 
-    function mint(address to, uint256 numMints) onlyUnderMaxSupply(numMints) public payable nonReentrant {
+    modifier onlyIsActive() {
+      require(isActive, 'minting needs to be active to mint');
+      _;
+    }
+
+    function mint(address to, uint256 numMints) onlyIsActive onlyUnderMaxSupply(numMints) public payable nonReentrant {
       require(numMints <= MAX_MINTING_PER_TX, "exceeded number of mint in single call");
       _safeMint(to, numMints);
       uint256 totalPrice = price * numMints;

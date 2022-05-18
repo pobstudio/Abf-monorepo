@@ -22,27 +22,46 @@ import type {
 
 export interface BrainFuckURIConstructorInterface extends utils.Interface {
   functions: {
+    'SEED_CONSTANTS_TYPE_MASK()': FunctionFragment;
     'contractURI(string,address)': FunctionFragment;
-    'tokenURI(uint256,string,bytes,bytes,IRenderer)': FunctionFragment;
+    'tokenSeed(bytes,uint256,bytes8)': FunctionFragment;
+    'tokenURI(uint256,string,bytes,bytes8,bytes,IRenderer)': FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: 'contractURI' | 'tokenURI',
+    nameOrSignatureOrTopic:
+      | 'SEED_CONSTANTS_TYPE_MASK'
+      | 'contractURI'
+      | 'tokenSeed'
+      | 'tokenURI',
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: 'SEED_CONSTANTS_TYPE_MASK',
+    values?: undefined,
+  ): string;
   encodeFunctionData(
     functionFragment: 'contractURI',
     values: [string, string],
   ): string;
   encodeFunctionData(
+    functionFragment: 'tokenSeed',
+    values: [BytesLike, BigNumberish, BytesLike],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'tokenURI',
-    values: [BigNumberish, string, BytesLike, BytesLike, string],
+    values: [BigNumberish, string, BytesLike, BytesLike, BytesLike, string],
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: 'SEED_CONSTANTS_TYPE_MASK',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: 'contractURI',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'tokenSeed', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
 
   events: {};
@@ -75,9 +94,18 @@ export interface BrainFuckURIConstructor extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    SEED_CONSTANTS_TYPE_MASK(overrides?: CallOverrides): Promise<[string]>;
+
     contractURI(
       name: string,
       nft: string,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
+    tokenSeed(
+      seed: BytesLike,
+      tokenId: BigNumberish,
+      constants: BytesLike,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
@@ -85,11 +113,14 @@ export interface BrainFuckURIConstructor extends BaseContract {
       tokenId: BigNumberish,
       name: string,
       seed: BytesLike,
+      constants: BytesLike,
       code: BytesLike,
       renderer: string,
       overrides?: CallOverrides,
     ): Promise<[string]>;
   };
+
+  SEED_CONSTANTS_TYPE_MASK(overrides?: CallOverrides): Promise<string>;
 
   contractURI(
     name: string,
@@ -97,19 +128,36 @@ export interface BrainFuckURIConstructor extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
+  tokenSeed(
+    seed: BytesLike,
+    tokenId: BigNumberish,
+    constants: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
   tokenURI(
     tokenId: BigNumberish,
     name: string,
     seed: BytesLike,
+    constants: BytesLike,
     code: BytesLike,
     renderer: string,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   callStatic: {
+    SEED_CONSTANTS_TYPE_MASK(overrides?: CallOverrides): Promise<string>;
+
     contractURI(
       name: string,
       nft: string,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    tokenSeed(
+      seed: BytesLike,
+      tokenId: BigNumberish,
+      constants: BytesLike,
       overrides?: CallOverrides,
     ): Promise<string>;
 
@@ -117,6 +165,7 @@ export interface BrainFuckURIConstructor extends BaseContract {
       tokenId: BigNumberish,
       name: string,
       seed: BytesLike,
+      constants: BytesLike,
       code: BytesLike,
       renderer: string,
       overrides?: CallOverrides,
@@ -126,9 +175,18 @@ export interface BrainFuckURIConstructor extends BaseContract {
   filters: {};
 
   estimateGas: {
+    SEED_CONSTANTS_TYPE_MASK(overrides?: CallOverrides): Promise<BigNumber>;
+
     contractURI(
       name: string,
       nft: string,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    tokenSeed(
+      seed: BytesLike,
+      tokenId: BigNumberish,
+      constants: BytesLike,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -136,6 +194,7 @@ export interface BrainFuckURIConstructor extends BaseContract {
       tokenId: BigNumberish,
       name: string,
       seed: BytesLike,
+      constants: BytesLike,
       code: BytesLike,
       renderer: string,
       overrides?: CallOverrides,
@@ -143,9 +202,20 @@ export interface BrainFuckURIConstructor extends BaseContract {
   };
 
   populateTransaction: {
+    SEED_CONSTANTS_TYPE_MASK(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     contractURI(
       name: string,
       nft: string,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    tokenSeed(
+      seed: BytesLike,
+      tokenId: BigNumberish,
+      constants: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -153,6 +223,7 @@ export interface BrainFuckURIConstructor extends BaseContract {
       tokenId: BigNumberish,
       name: string,
       seed: BytesLike,
+      constants: BytesLike,
       code: BytesLike,
       renderer: string,
       overrides?: CallOverrides,

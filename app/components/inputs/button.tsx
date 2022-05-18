@@ -19,3 +19,11 @@ export const PrimaryButton = styled(BaseButton)`
   padding: 28px;
   width: 100%;
 `;
+
+export const TertiaryButton = styled(BaseButton)`
+  background-color: white;
+  color: black;
+  border: 1px solid #e0e0e0;
+  padding: 28px;
+  width: 100%;
+`;

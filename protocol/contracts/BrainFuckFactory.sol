@@ -18,6 +18,7 @@ contract BrainFuckFactory is ReentrancyGuard {
       string symbol;
       string additionalMetadataURI;
       bytes seed;
+      bytes8 constants;
       bytes code; 
       address renderer;
       uint256 mintingSupply;
@@ -39,6 +40,7 @@ contract BrainFuckFactory is ReentrancyGuard {
         config.symbol,
         config.additionalMetadataURI,
         config.seed,
+        config.constants,
         config.code,
         config.renderer,
         config.mintingSupply,

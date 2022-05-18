@@ -5,8 +5,9 @@ import "../interfaces/IRenderer.sol";
 import "../libraries/SvgUtils.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
+import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 
-contract DotMatrixRenderer is IRenderer {
+contract DotMatrixRenderer is IRenderer, ERC165 {
   using Strings for uint256;
 
   uint public constant RADIUS_MIN = 4;
@@ -277,6 +278,12 @@ contract DotMatrixRenderer is IRenderer {
   // function name() external override pure returns (string memory) {
   //   return "DOT MATRIX";
   // }
+
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
+    return
+      interfaceId == type(IRenderer).interfaceId ||
+      super.supportsInterface(interfaceId);
+  }
 
   function outSize() external override pure returns (uint256) {
     return 256;

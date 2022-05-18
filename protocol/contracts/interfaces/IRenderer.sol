@@ -2,10 +2,12 @@
 
 pragma solidity ^0.8.4;
 
-interface IRenderer {
+import '@openzeppelin/contracts/utils/introspection/IERC165.sol';
+
+interface IRenderer is IERC165 {
   // function name() external view returns (string memory);
-  function outSize() external view returns (uint256);
-  function additionalMetadataURI() external view returns (string memory);
+  function outSize() external pure returns (uint256);
+  function additionalMetadataURI() external pure returns (string memory);
   function renderRaw(bytes calldata out) external view returns (string memory);
   function render(bytes calldata out) external view returns (string memory);
   function attributes(bytes calldata out) external view returns (string memory);

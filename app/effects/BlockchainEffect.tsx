@@ -10,13 +10,10 @@ import { DEFAULT_TOAST_STYLES } from '../constants/styles';
 
 export const BlockchainEffect: FC = () => {
   const setBlockNumber = useBlockchainStore((s) => s.setBlockNumber);
-  const setMainnetBlockNumber = useBlockchainStore(
-    (s) => s.setMainnetBlockNumber,
-  );
   const setBalance = useBlockchainStore((s) => s.setBalance);
   const blockNumber = useBlockchainStore((s) => s.blockNumber);
 
-  const provider = useProvider(true);
+  const provider = useProvider(false);
   const isMounted = useMountedState();
   const account = usePriorityAccount();
   const chainId = usePriorityChainId();
@@ -50,13 +47,6 @@ export const BlockchainEffect: FC = () => {
   }, [provider, isMounted, setBlockNumber]);
 
   useEffect(() => {
-    if (CHAIN_ID !== 1) {
-      return;
-    }
-    setMainnetBlockNumber(blockNumber);
-  }, [setMainnetBlockNumber, blockNumber]);
-
-  useEffect(() => {
     if (!isMounted() || !provider || !account) {
       return;
     }
@@ -64,38 +54,6 @@ export const BlockchainEffect: FC = () => {
       setBalance(account, v.toString());
     });
   }, [provider, account, setBalance, blockNumber]);
-
-  useEffect(() => {
-    if (!isMounted()) {
-      return;
-    }
-
-    if (CHAIN_ID === 1) {
-      return;
-    }
-
-    let stale = false;
-
-    // set initial value
-    MAINNET_PROVIDER.getBlockNumber().then((blockNum: number) => {
-      if (!stale) {
-        setMainnetBlockNumber(blockNum);
-      }
-    });
-
-    MAINNET_PROVIDER.on('block', (blockNum: number) => {
-      if (stale) {
-      }
-      setMainnetBlockNumber(blockNum);
-    });
-
-    // remove listener when the component is unmounted
-    return () => {
-      MAINNET_PROVIDER.removeAllListeners('block');
-      setMainnetBlockNumber(undefined);
-      stale = true;
-    };
-  }, [isMounted, setMainnetBlockNumber]);
 
   const { toasts } = useToasterStore();
 
