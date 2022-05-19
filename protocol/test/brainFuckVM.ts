@@ -75,7 +75,7 @@ describe('BrainFuckVM', function () {
       );
       const input = '0xF3';
 
-      const out = await brainFuckVM.runBrainFuckCode(code, input, 256);
+      const out = await brainFuckVM.runBrainFuckCode(code, input);
 
       expect(convertHexStrToAscii(out)).to.eq('Hello, World!');
     });
@@ -83,14 +83,14 @@ describe('BrainFuckVM', function () {
       const code = convertToHexStr('+[>,]<-[+.<-]');
       const input = '0x0123456789ABCDEF';
 
-      const out = await brainFuckVM.runBrainFuckCode(code, input, 256);
+      const out = await brainFuckVM.runBrainFuckCode(code, input);
 
       expect(pruneHexStr(out)).to.eq('0xefcdab89674523');
     });
     it('666', async function () {
       const code = convertToHexStr('>+++++++++[<++++++>-]<...>++++++++++.');
       const input = '0x0123456789ABCDEF';
-      const out = await brainFuckVM.runBrainFuckCode(code, input, 256);
+      const out = await brainFuckVM.runBrainFuckCode(code, input);
       expect(convertHexStrToAscii(out)).to.eq('666\n');
     });
   });

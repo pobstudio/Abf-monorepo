@@ -4,7 +4,6 @@
 import type {
   BaseContract,
   BigNumber,
-  BigNumberish,
   BytesLike,
   CallOverrides,
   PopulatedTransaction,
@@ -22,14 +21,14 @@ import type {
 
 export interface BrainFuckVMInterface extends utils.Interface {
   functions: {
-    'runBrainFuckCode(bytes,bytes,uint256)': FunctionFragment;
+    'runBrainFuckCode(bytes,bytes)': FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: 'runBrainFuckCode'): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: 'runBrainFuckCode',
-    values: [BytesLike, BytesLike, BigNumberish],
+    values: [BytesLike, BytesLike],
   ): string;
 
   decodeFunctionResult(
@@ -70,7 +69,6 @@ export interface BrainFuckVM extends BaseContract {
     runBrainFuckCode(
       code: BytesLike,
       input: BytesLike,
-      outSize: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<[string] & { out: string }>;
   };
@@ -78,7 +76,6 @@ export interface BrainFuckVM extends BaseContract {
   runBrainFuckCode(
     code: BytesLike,
     input: BytesLike,
-    outSize: BigNumberish,
     overrides?: CallOverrides,
   ): Promise<string>;
 
@@ -86,7 +83,6 @@ export interface BrainFuckVM extends BaseContract {
     runBrainFuckCode(
       code: BytesLike,
       input: BytesLike,
-      outSize: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<string>;
   };
@@ -97,7 +93,6 @@ export interface BrainFuckVM extends BaseContract {
     runBrainFuckCode(
       code: BytesLike,
       input: BytesLike,
-      outSize: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
@@ -106,7 +101,6 @@ export interface BrainFuckVM extends BaseContract {
     runBrainFuckCode(
       code: BytesLike,
       input: BytesLike,
-      outSize: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

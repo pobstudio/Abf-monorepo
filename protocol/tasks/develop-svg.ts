@@ -55,23 +55,25 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     // );
     // const Renderer = (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
 
-    // const PixelGridRenderer = await hre.ethers.getContractFactory(
-    //   'PixelGridRenderer',
-    //   {
-    //     libraries: {
-    //       SvgUtils: svgUtils.address,
-    //     },
-    //   },
-    // );
+    const PixelGridRenderer = await hre.ethers.getContractFactory(
+      'PixelGridRenderer',
+      {
+        libraries: {
+          SvgUtils: svgUtils.address,
+        },
+      },
+    );
 
-    const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {
-      // libraries: {
-      //   SvgUtils: svgUtils.address,
-      // },
-    });
-    const Renderer = (await PathRenderer.deploy()) as PathRenderer;
-    await Renderer.deployed();
-    const res = await Renderer.renderRaw(LINE_BYTES);
+    // const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {
+    //   // libraries: {
+    //   //   SvgUtils: svgUtils.address,
+    //   // },
+    // });
+    const renderer = (await PixelGridRenderer.deploy()) as PathRenderer;
+    await renderer.deployed();
+    const res = await renderer.renderRaw(GRAYSCALE_BYTES);
+    const estimation = await renderer.estimateGas.renderRaw(GRAYSCALE_BYTES);
+    console.log('Gas used for call:', estimation.toNumber());
     return res;
   });
 
