@@ -1,3 +1,5 @@
+import { BigNumber } from 'ethers';
+
 export interface ProjectMetadata {
   name: string;
   symbol: string;
@@ -6,6 +8,18 @@ export interface ProjectMetadata {
   constants: string;
   code: string;
   renderer: string;
+  rendererMetadataStub?: RendererMetadataStub;
   mintingSupply: number;
   priceInEth: number;
+}
+
+export interface RendererMetadataStub {
+  address: string;
+  additionalMetadataURI: string;
+  outSize: BigNumber;
+}
+
+export interface RendererMetadata extends RendererMetadataStub {
+  id: BigNumber;
+  registeredAt: number;
 }

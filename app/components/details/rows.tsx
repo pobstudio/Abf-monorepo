@@ -7,7 +7,7 @@ const DetailRowContainer = styled(FlexEnds)``;
 
 export const DetailRowsContainer = styled.div`
   > * + * {
-    margin-top: 18px;
+    margin-top: 16px;
   }
 `;
 
@@ -38,7 +38,9 @@ export const DetailTitleAnchorRow: FC<{
       <Text style={{ textTransform: 'uppercase' }}>
         <strong>{children[0]}</strong>
       </Text>
-      <LabelAnchor href={href}>{children[1]}</LabelAnchor>
+      <LabelAnchor target="_blank" href={href}>
+        {children[1]}
+      </LabelAnchor>
     </DetailRowContainer>
   );
 };
@@ -72,7 +74,9 @@ export const DetailAnchorRow: FC<{
   return (
     <DetailRowContainer>
       <Label style={{ textTransform: 'uppercase' }}>{children[0]}</Label>
-      <TextAnchor href={href}>{children[1]}</TextAnchor>
+      <TextAnchor target="_blank" href={href}>
+        {children[1]}
+      </TextAnchor>
     </DetailRowContainer>
   );
 };

@@ -48,8 +48,9 @@ export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 export const OPENSEA_LINK = `https://opensea.io/collection/TODO`;
 export const GITHUB_LINK = `https://github.com/proofofbeauty/TODO`;
 export const PREVIEW_IMAGE_LINK = `https://hash-preview.vercel.app`;
-export const SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/TODO`;
-export const TEST_SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/TODO`;
+export const SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf`;
+export const TEST_SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf-goerli`;
+export const BRAINFUCK_DOCS_LINK = `https://gist.github.com/roachhd/dce54bec8ba55fb17d3a`;
 
 // OG banners
 export const GLOBAL_OG_BANNER = `${PROD_LINK}/assets/og/logo-repeat.png`;

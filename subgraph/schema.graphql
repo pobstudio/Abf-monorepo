@@ -3,5 +3,6 @@ type Renderer @entity {
   address: Bytes!
   outSize: BigInt!
   additionalMetadataURI: String!
+  registeredAt: BigInt!
 }
 

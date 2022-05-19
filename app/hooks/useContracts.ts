@@ -1,13 +1,12 @@
-import { deployments, ERC721A__factory } from '@abf-monorepo/protocol';
+import { IRenderer__factory } from '@abf-monorepo/protocol';
 import { useMemo } from 'react';
-import { CHAIN_ID } from '../constants';
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { useProvider } from './useProvider';
 import { usePriorityAccount } from '../connectors/priority';
 import { getProviderOrSigner } from '../clients/provider';
+import { useProvider } from './useProvider';
 
-export const useERC721AContract = (
-  address = deployments[CHAIN_ID].nft,
+export const useRendererContract = (
+  address: string | undefined,
   shouldUseFallback: boolean = false,
 ) => {
   const account = usePriorityAccount();
@@ -18,7 +17,10 @@ export const useERC721AContract = (
       return;
     }
 
-    return ERC721A__factory.connect(
+    if (!address) {
+      return;
+    }
+    return IRenderer__factory.connect(
       address,
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );

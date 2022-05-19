@@ -1,6 +1,13 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { ProjectBuilderProvider } from '../../contexts/projectBuilder';
+import { BRAINFUCK_DOCS_LINK } from '../../constants';
+import {
+  ProjectBuilderProvider,
+  useModifyProjectMetadata,
+  useProjectMetadata,
+  useRawProjectMetadata,
+} from '../../contexts/projectBuilder';
+import { getIPFSUrl } from '../../utils/urls';
 import {
   DetailAnchorRow,
   DetailRow,
@@ -15,7 +22,7 @@ import { FlexCenterColumn } from '../flexs';
 import { PrimaryButton } from '../inputs/button';
 import { InputWell, NumberInput, TextArea, TextInput } from '../inputs/input';
 import { PlaceholderRender } from '../renders';
-import { Text } from '../texts';
+import { Text, TextAnchor } from '../texts';
 
 export const ProjectBuilder: FC = () => {
   return (
@@ -55,24 +62,46 @@ const Jumbotron: FC = () => {
         forever.
       </Text>
       <Text>
-        The catch? You need to write your generative art with BrainFuck.
+        The catch? You need to write your generative art with{' '}
+        <TextAnchor href={BRAINFUCK_DOCS_LINK}>BrainFuck</TextAnchor>.
       </Text>
     </InteractiveDetailRowsContainer>
   );
 };
 
 const SelectRenderer: FC = () => {
+  const { onRendererChange } = useModifyProjectMetadata();
+  const { rendererMetadataStub } = useProjectMetadata();
+  const { renderer } = useRawProjectMetadata();
+
   return (
     <InteractiveDetailRowsContainer>
-      <DetailTitleAnchorRow>
+      <DetailTitleAnchorRow href={'/renderers'}>
         {['1. SELECT RENDERER', `REGISTRY`]}
       </DetailTitleAnchorRow>
       <InputWell>
-        <TextInput placeholder="0xabcd...1234" />
+        <TextInput
+          value={renderer ?? ''}
+          onChange={(e) => onRendererChange(e.target.value)}
+          placeholder="0xabcd...1234"
+        />
       </InputWell>
-      <DetailRow>{['VALID CONTRACT', `TRUE`]}</DetailRow>
-      <DetailRow>{['REQUIRED INPUT BYTE STRING SIZE', `256 BYTES`]}</DetailRow>
-      <DetailAnchorRow>{['DOCUMENTATION', `IPFS`]}</DetailAnchorRow>
+      <DetailRow>
+        {['VALID CONTRACT', !!rendererMetadataStub ? 'TRUE' : 'FALSE']}
+      </DetailRow>
+      <DetailRow>
+        {[
+          'REQUIRED INPUT BYTE STRING SIZE',
+          `${rendererMetadataStub?.outSize.toString() ?? '-'} BYTES`,
+        ]}
+      </DetailRow>
+      {!!rendererMetadataStub?.additionalMetadataURI && (
+        <DetailAnchorRow
+          href={getIPFSUrl(rendererMetadataStub.additionalMetadataURI)}
+        >
+          {['DOCUMENTATION', 'IPFS']}
+        </DetailAnchorRow>
+      )}
     </InteractiveDetailRowsContainer>
   );
 };
@@ -80,7 +109,7 @@ const SelectRenderer: FC = () => {
 const WriteBrainFuck: FC = () => {
   return (
     <InteractiveDetailRowsContainer>
-      <DetailTitleAnchorRow>
+      <DetailTitleAnchorRow href={BRAINFUCK_DOCS_LINK}>
         {['2. WRITE BRAINFUCK', `DOCS`]}
       </DetailTitleAnchorRow>
       <InputWell>

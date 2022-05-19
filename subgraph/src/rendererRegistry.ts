@@ -9,6 +9,7 @@ export function handleRegisteredRenderer(event: RegisteredRenderer): void {
     renderer.address = event.params.renderer;
     renderer.outSize = event.params.outSize;
     renderer.additionalMetadataURI = event.params.additionalMetadataURI;
+    renderer.registeredAt = event.block.timestamp;
     renderer.save();
   } else {
     throw new Error('Renderer already registered');

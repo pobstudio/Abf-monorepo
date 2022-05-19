@@ -13,6 +13,7 @@ export const LabelAnchor = styled.a`
   margin: 0;
   font-size: 12px;
   opacity: 0.2;
+  color: black;
   text-decoration: underline;
   line-height: 12px;
 `;
