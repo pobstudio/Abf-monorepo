@@ -1,5 +1,5 @@
 import React from 'react';
-import { NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import { Header } from '../components/navs/header';
 import { PageDiv } from '../components/divs';
 import { FlexCenter, FlexEnds } from '../components/flexs';

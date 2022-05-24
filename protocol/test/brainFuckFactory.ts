@@ -107,7 +107,9 @@ describe('BrainFuckFactory', function () {
         code: '0x02',
         renderer: debugRenderer.address,
         mintingSupply: BigNumber.from(100),
+        royaltyFraction: BigNumber.from(1000),
         price: ethers.utils.parseEther('0.1'),
+        isActive: true,
       };
       await brainFuckFactory.createNFT(config);
       expect(await brainFuckFactory.projectIdIndex()).to.eq(BigNumber.from(1));
@@ -137,6 +139,13 @@ describe('BrainFuckFactory', function () {
       expect(await brainFuck.renderer()).to.eq(config.renderer);
       expect(await brainFuck.mintingSupply()).to.eq(config.mintingSupply);
       expect(await brainFuck.price()).to.eq(config.price);
+      const royaltyData = await brainFuck.royaltyInfo(
+        0,
+        ethers.utils.parseEther('1'),
+      );
+      expect(royaltyData[0]).to.eq(await owner.getAddress());
+      expect(royaltyData[1]).to.eq(ethers.utils.parseEther('0.1'));
+      expect(await brainFuck.isActive()).to.eq(config.isActive);
     });
   });
 });

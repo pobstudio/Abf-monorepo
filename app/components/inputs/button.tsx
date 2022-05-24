@@ -9,6 +9,7 @@ export const BaseButton = styled.button`
   font-size: 12px;
   cursor: pointer;
   :disabled {
+    opacity: 0.4;
     cursor: not-allowed;
   }
 `;

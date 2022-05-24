@@ -43,6 +43,28 @@ export const NumberInput = styled.input.attrs({ type: 'number' })`
   }
 `;
 
+export const CheckboxInput = styled.button<{ isActive?: boolean }>`
+  width: 16px;
+  height: 16px;
+  outline: none;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 2px;
+    left: 2px;
+    background: ${(p) => (p.isActive ? 'black' : 'white')};
+  }
+`;
+
 export const TextArea = styled.textarea`
   font-size: 12px;
   background: none;

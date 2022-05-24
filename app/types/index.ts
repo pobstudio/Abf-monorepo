@@ -11,6 +11,9 @@ export interface ProjectMetadata {
   rendererMetadataStub?: RendererMetadataStub;
   mintingSupply: number;
   priceInEth: number;
+  inputConstants: string;
+  royaltyFractionInBps: number;
+  isActive: boolean;
 }
 
 export interface RendererMetadataStub {
@@ -18,7 +21,6 @@ export interface RendererMetadataStub {
   additionalMetadataURI: string;
   outSize: BigNumber;
 }
-
 export interface RendererMetadata extends RendererMetadataStub {
   id: BigNumber;
   registeredAt: number;

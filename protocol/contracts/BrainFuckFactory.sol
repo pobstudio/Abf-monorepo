@@ -23,6 +23,8 @@ contract BrainFuckFactory is ReentrancyGuard {
       address renderer;
       uint256 mintingSupply;
       uint256 price;
+      uint96 royaltyFraction;
+      bool isActive;
     }
 
     event CreatedBrainFuckNFT(
@@ -46,6 +48,8 @@ contract BrainFuckFactory is ReentrancyGuard {
         config.mintingSupply,
         config.price
       );
+      nft.setRoyalty(msg.sender, config.royaltyFraction);
+      nft.setIsActive(config.isActive);
       nft.transferOwnership(msg.sender);
       projectIdIndex++;
       projectIdToAddress[projectIdIndex] = address(nft);

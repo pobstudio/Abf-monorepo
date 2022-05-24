@@ -10,6 +10,7 @@ import { Web3Status } from './web3Status';
 const HeaderRow = styled.div`
   display: grid;
   grid-template-columns: 200px 1fr 200px;
+  height: 180px;
 `;
 
 const HeaderAnchorRow = styled(Flex)`
@@ -27,8 +28,8 @@ export const Header: React.FC = () => {
         <Link passHref href={'/origin'}>
           <HeaderAnchor>ORIGINS</HeaderAnchor>
         </Link>
-        <Link passHref href={'/project'}>
-          <HeaderAnchor>PROJECTS</HeaderAnchor>
+        <Link passHref href={'/collection'}>
+          <HeaderAnchor>COLLECTIONS</HeaderAnchor>
         </Link>
       </HeaderAnchorRow>
       <FlexCenter>

@@ -25,6 +25,10 @@ export const Text = styled.p`
   line-height: 12px;
 `;
 
+export const MultiLineText = styled(Text)`
+  line-height: 16px;
+`;
+
 export const TextAnchor = styled.a`
   text-decoration: underline;
   color: black;

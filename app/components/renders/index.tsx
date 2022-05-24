@@ -5,4 +5,5 @@ export const PlaceholderRender = styled.div`
   width: 100%;
   height: 0;
   padding-top: 100%;
+  position: relative;
 `;

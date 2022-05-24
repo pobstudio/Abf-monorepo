@@ -9,6 +9,7 @@ import { HeaderAnchor, HeaderLogoAnchor } from './anchor';
 const FooterRow = styled.div`
   display: grid;
   grid-template-columns: 200px 1fr 200px;
+  height: 180px;
 `;
 
 const FooterAnchorRow = styled(Flex)`

@@ -16,7 +16,7 @@ library BrainFuckURIConstructor {
 
     bytes32 public constant SEED_CONSTANTS_TYPE_MASK = 0x0000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
 
-    function tokenSeed(bytes memory seed, uint256 tokenId, bytes8 constants) public view returns (bytes32) {
+    function tokenSeed(bytes memory seed, uint256 tokenId, bytes8 constants) public pure returns (bytes32) {
       return (keccak256(abi.encodePacked(seed, tokenId)) & SEED_CONSTANTS_TYPE_MASK) | bytes32(constants);
     }
 

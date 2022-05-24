@@ -21,16 +21,33 @@ import type {
 
 export interface BrainFuckVMInterface extends utils.Interface {
   functions: {
+    'LOOPING_STACK_SIZE()': FunctionFragment;
+    'TAPE_SIZE()': FunctionFragment;
     'runBrainFuckCode(bytes,bytes)': FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: 'runBrainFuckCode'): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic:
+      | 'LOOPING_STACK_SIZE'
+      | 'TAPE_SIZE'
+      | 'runBrainFuckCode',
+  ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: 'LOOPING_STACK_SIZE',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(functionFragment: 'TAPE_SIZE', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'runBrainFuckCode',
     values: [BytesLike, BytesLike],
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: 'LOOPING_STACK_SIZE',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'TAPE_SIZE', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'runBrainFuckCode',
     data: BytesLike,
@@ -66,12 +83,20 @@ export interface BrainFuckVM extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    TAPE_SIZE(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     runBrainFuckCode(
       code: BytesLike,
       input: BytesLike,
       overrides?: CallOverrides,
     ): Promise<[string] & { out: string }>;
   };
+
+  LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+
+  TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
   runBrainFuckCode(
     code: BytesLike,
@@ -80,6 +105,10 @@ export interface BrainFuckVM extends BaseContract {
   ): Promise<string>;
 
   callStatic: {
+    LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+
     runBrainFuckCode(
       code: BytesLike,
       input: BytesLike,
@@ -90,6 +119,10 @@ export interface BrainFuckVM extends BaseContract {
   filters: {};
 
   estimateGas: {
+    LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+
     runBrainFuckCode(
       code: BytesLike,
       input: BytesLike,
@@ -98,6 +131,12 @@ export interface BrainFuckVM extends BaseContract {
   };
 
   populateTransaction: {
+    LOOPING_STACK_SIZE(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    TAPE_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     runBrainFuckCode(
       code: BytesLike,
       input: BytesLike,
