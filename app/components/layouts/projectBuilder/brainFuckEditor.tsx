@@ -20,9 +20,7 @@ export const BrainFuckEditor: FC = () => {
 
   return (
     <InteractiveDetailRowsContainer>
-      <DetailTitleAnchorRow>
-        {['2. WRITE BRAINFUCK', `DOCS`]}
-      </DetailTitleAnchorRow>
+      <DetailTitleAnchorRow>{['WRITE BRAINFUCK', `DOCS`]}</DetailTitleAnchorRow>
       <InputWell>
         <TextArea
           value={code ?? ''}

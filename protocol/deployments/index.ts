@@ -29,7 +29,7 @@ export const deployments: Deployments = {
       debug: '0x31732da9A5e498dAc53Df670db9aa9e7aeb2C3ec',
       dotMatrix: '0x5E94Da066F4C94dF80ff461FA3b58066f3f7d885',
       path: '0xE4B49D2b77dBbBeB65e0C5f49Af734D7E8803494',
-      pixelGrid: '0xb883CD6348aEA68f9b050F0bA0CFd09E702304a0',
+      pixelGrid16: '0xb883CD6348aEA68f9b050F0bA0CFd09E702304a0',
     },
     registries: {
       renderer: '0x8c8F8fCcC22d1A95B3278013bd6aFBab1Abb4cD6',

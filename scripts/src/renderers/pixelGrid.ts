@@ -1,8 +1,8 @@
 import { lerp } from '@abf-monorepo/sketch-utils';
 
-const CANVAS_SIZE = 560;
+const CANVAS_SIZE = 24;
 
-const GRID_SIZE = 16;
+const GRID_SIZE = 24;
 
 const rects = [];
 

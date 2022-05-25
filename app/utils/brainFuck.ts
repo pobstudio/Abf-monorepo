@@ -15,20 +15,25 @@ export const getTokenSeed = (
   return `0x${inputConstants.slice(2).padEnd(16, '0')}${hash.slice(18)}`;
 };
 
+const MAX_IS_LOOPING_COUNTER = 10000;
+
 export const runBrainFuckCode = (code: string, input: number[]) => {
-  let out = '';
+  let out = '0x';
   const tape = [...Array(TAPE_SIZE)].map((_) => 0);
 
   let readIndex = 0;
   let ptr = 0;
   let isLooping = false;
+  let isLoopingCounter = 0;
   let innerLoops = 0;
   let loopingStack = [...Array(LOOPING_STACK_SIZE)];
   let loopingStackIndex = 0;
 
   for (let i = 0; i < code.length; ++i) {
     const opcode = '0x' + code[i].charCodeAt(0).toString(16).toUpperCase();
-    console.log(i, opcode);
+    if (isLoopingCounter > MAX_IS_LOOPING_COUNTER) {
+      throw new Error('MAX LOOPS EXCEEDED (10,000)');
+    }
     if (isLooping) {
       // [
       if (opcode === '0x5B') {
@@ -36,6 +41,7 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
       }
       // ]
       if (opcode === '0x5D') {
+        isLoopingCounter++;
         if (innerLoops === 0) isLooping = false;
         else innerLoops--;
       }
@@ -55,7 +61,7 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
       }
       // .
       if (opcode === '0x2E') {
-        out += String.fromCharCode(tape[ptr]);
+        out += tape[ptr].toString(16).padStart(2, '0');
       }
       // >
       if (opcode === '0x3E') {
@@ -76,6 +82,7 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
       }
       // ]
       if (opcode === '0x5D') {
+        isLoopingCounter++;
         if (tape[ptr] != 0x00) {
           i = loopingStack[loopingStackIndex - 1];
         } else {

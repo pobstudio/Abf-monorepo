@@ -21,7 +21,13 @@ export interface RendererMetadataStub {
   additionalMetadataURI: string;
   outSize: BigNumber;
 }
+
 export interface RendererMetadata extends RendererMetadataStub {
   id: BigNumber;
   registeredAt: number;
+}
+
+export interface OfflineRenderer {
+  outSize: number;
+  renderRaw: (out: string) => string;
 }

@@ -29,27 +29,23 @@ export const TokenIdSwitcher: FC = () => {
   }, [mintingSupply, currentSampleTokenId]);
 
   return (
-    <DetailRowsContainer>
-      <FlexCenter>
-        <Flex>
-          <ArrowButton
-            onClick={() => setCurrentSampleTokenId?.((s) => s - 1)}
-            disabled={isDecrementDisabled}
-          >
-            {'<'}
-          </ArrowButton>
-          <CenteredText>{`TOKEN ID: ${currentSampleTokenId} / ${
-            mintingSupply ?? '???'
-          }`}</CenteredText>
-          <ArrowButton
-            onClick={() => setCurrentSampleTokenId?.((s) => s + 1)}
-            disabled={isIncrementDisabled}
-          >
-            {'>'}
-          </ArrowButton>
-        </Flex>
-      </FlexCenter>
-    </DetailRowsContainer>
+    <Flex>
+      <ArrowButton
+        onClick={() => setCurrentSampleTokenId?.((s) => s - 1)}
+        disabled={isDecrementDisabled}
+      >
+        {'<'}
+      </ArrowButton>
+      <CenteredText>{`TOKEN ID: ${currentSampleTokenId} / ${
+        mintingSupply ?? '???'
+      }`}</CenteredText>
+      <ArrowButton
+        onClick={() => setCurrentSampleTokenId?.((s) => s + 1)}
+        disabled={isIncrementDisabled}
+      >
+        {'>'}
+      </ArrowButton>
+    </Flex>
   );
 };
 

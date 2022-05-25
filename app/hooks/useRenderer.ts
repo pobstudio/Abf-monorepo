@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import { useLastTruthyValue } from './useLastTruthyValue';
-import { BigNumber } from 'ethers';
+import { BigNumber, utils } from 'ethers';
 import { useBlockchainStore } from '../stores/blockchain';
 import { useEffect, useMemo, useState } from 'react';
 import { RendererMetadata, RendererMetadataStub } from '../types';
@@ -78,7 +78,7 @@ export const useRendererMetadata = (address: string | undefined) => {
       return undefined;
     }
     const r = data.renderers[0];
-    if (address !== r.address) {
+    if (!address || utils.getAddress(address) !== utils.getAddress(r.address)) {
       return undefined;
     }
     return {
@@ -88,7 +88,7 @@ export const useRendererMetadata = (address: string | undefined) => {
       additionalMetadataURI: r.additionalMetadataURI,
       registeredAt: parseInt(r.registeredAt),
     } as RendererMetadata;
-  }, [results]);
+  }, [data]);
 };
 
 export const useRendererMetadataStubByProvider = (

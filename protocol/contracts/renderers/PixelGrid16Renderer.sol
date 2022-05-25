@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 
-contract PixelGridRenderer is IRenderer, ERC165 {
+contract PixelGrid16Renderer is IRenderer, ERC165 {
   using Strings for uint256;
 
   string rectPrefix = '<rect width="35" height="35"';

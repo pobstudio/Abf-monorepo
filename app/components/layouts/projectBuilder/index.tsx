@@ -49,6 +49,10 @@ export const ProjectBuilder: FC = () => {
           <TwoColumnContentContainer>
             <Jumbotron />
             <BrainFuckEditor />
+          </TwoColumnContentContainer>
+          <TwoColumnContentContainer
+            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+          >
             <TokenParametersSelector />
             <MintingParametersSelector />
             <ContractSubmit />
@@ -57,8 +61,9 @@ export const ProjectBuilder: FC = () => {
         <div>
           <TwoColumnContentContainer>
             <TokenPreview />
-            <RendererSelector />
-            <TokenIdSwitcher />
+            <FlexCenter>
+              <TokenIdSwitcher />
+            </FlexCenter>
           </TwoColumnContentContainer>
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}

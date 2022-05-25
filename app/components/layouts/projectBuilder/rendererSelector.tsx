@@ -35,7 +35,7 @@ export const RendererSelector: FC = () => {
       </DetailRow>
       <DetailRow>
         {[
-          'REQUIRED INPUT BYTE STRING SIZE',
+          'REQUIRED OUTPUT LENGTH',
           `${rendererMetadataStub?.outSize.toString() ?? '-'} BYTES`,
         ]}
       </DetailRow>

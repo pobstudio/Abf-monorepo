@@ -3,25 +3,73 @@ import {
   useProjectBuilderContext,
   useProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import { DetailRowsContainer } from '../../details/rows';
+import { useENSorHex } from '../../../hooks/useENS';
+import { getIPFSUrl } from '../../../utils/urls';
+import {
+  DetailAnchorRow,
+  DetailRow,
+  DetailRowsContainer,
+} from '../../details/rows';
+import { FlexEnds } from '../../flexs';
 import { PlaceholderRender } from '../../renders';
 import { Label, MultiLineText, Text } from '../../texts';
+import { TokenIdSwitcher } from './tokenIdSwitcher';
 
 export const TokenPreview: FC = () => {
-  const { currentSampleTokenSeed } = useProjectBuilderContext();
-  const { code } = useProjectMetadata();
+  const { currentSampleTokenSeed, currentSampleTokenCodeOutput } =
+    useProjectBuilderContext();
+  const { rendererMetadataStub, inputConstants: validInputConstants } =
+    useProjectMetadata();
+  const name = useENSorHex(rendererMetadataStub?.address);
   return (
     <DetailRowsContainer>
+      <FlexEnds>
+        <Text>
+          <strong>PREVIEW</strong>
+        </Text>
+      </FlexEnds>
       <Label>INPUT</Label>
       <Text>{currentSampleTokenSeed ?? '-'}</Text>
-      <Label>BRAINFUCK CODE</Label>
-      <MultiLineText>{code ?? '-'}</MultiLineText>
-      <Label>OUTPUT (AS BYTES)</Label>
-      <MultiLineText>
-        {'0x9d8901739585af157a9a23d4fac9e6cdd8c09f9788c3636d61ed77dc45b05687'}
+      <FlexEnds>
+        <Label>OUTPUT (AS BYTES)</Label>
+      </FlexEnds>
+      <MultiLineText
+        style={{
+          lineHeight: '22px',
+          lineBreak: 'anywhere',
+          color:
+            currentSampleTokenCodeOutput?.[1] === 'error' ? '#FF5D5D' : 'black',
+        }}
+      >
+        {(
+          <>
+            {currentSampleTokenCodeOutput?.[0]}{' '}
+            <span style={{ opacity: 0.2 }}>
+              {currentSampleTokenCodeOutput?.[1] === 'success'
+                ? `${(currentSampleTokenCodeOutput?.[0].length - 2) / 2} BYTES`
+                : '-'}
+            </span>
+          </>
+        ) ?? '-'}
       </MultiLineText>
-      <Label>OUTPUT (AS RENDERED OUTPUT)</Label>
+      <FlexEnds>
+        <Label>OUTPUT (AS RENDERED OUTPUT)</Label>
+        <Label>{name}</Label>
+      </FlexEnds>
       <PlaceholderRender />
+      <DetailRow>
+        {[
+          'REQUIRED OUTPUT LENGTH',
+          `${rendererMetadataStub?.outSize.toString() ?? '-'} BYTES`,
+        ]}
+      </DetailRow>
+      {!!rendererMetadataStub?.additionalMetadataURI && (
+        <DetailAnchorRow
+          href={getIPFSUrl(rendererMetadataStub.additionalMetadataURI)}
+        >
+          {['RENDERER DOCUMENTATION', 'IPFS']}
+        </DetailAnchorRow>
+      )}
     </DetailRowsContainer>
   );
 };

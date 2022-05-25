@@ -8,11 +8,12 @@ import produce from 'immer';
 import { ADDRESS_REGEX, INPUT_CONSTANTS_REGEX } from '../../types/src';
 import { BigNumber, utils } from 'ethers';
 import Router, { useRouter } from 'next/router';
-import { HUNDRED_PERCENT_BPS } from '../constants';
-import { getTokenSeed } from '../utils/brainFuck';
+import { CHAIN_ID, HUNDRED_PERCENT_BPS } from '../constants';
+import { getTokenSeed, runBrainFuckCode } from '../utils/brainFuck';
+import { OFFLINE_RENDERS } from '../utils/renderers';
+import { deployments } from '@abf-monorepo/protocol';
 
 export interface ProjectBuilderProviderContext {
-  currentSampleTokenId: number;
   rawProjectMetadata: Partial<ProjectMetadata>;
   setRawProjectMetadata:
     | React.Dispatch<React.SetStateAction<Partial<ProjectMetadata>>>
@@ -22,14 +23,16 @@ export interface ProjectBuilderProviderContext {
     | undefined;
   projectMetadata: Partial<ProjectMetadata>;
   encodedProjectMetadata: string;
+  currentSampleTokenId: number;
   currentSampleTokenSeed: string | undefined;
+  currentSampleTokenCodeOutput: [string, 'error' | 'success'] | undefined;
 }
 
 export type ProjectBuilderProviderState = ProjectBuilderProviderContext;
 
-const DEFAULT_PROJECT_METADATA: Partial<ProjectMetadata> = {
-  isActive: false,
-};
+const DEFAULT_RENDERER_KEY = 'pixelGrid16';
+
+const DEFAULT_PROJECT_METADATA: Partial<ProjectMetadata> = {};
 
 const ENCODED_DEFAULT_PROJECT_METADATA = btoa(
   JSON.stringify(DEFAULT_PROJECT_METADATA),
@@ -38,6 +41,7 @@ const ENCODED_DEFAULT_PROJECT_METADATA = btoa(
 const initialState: ProjectBuilderProviderState = {
   currentSampleTokenSeed: undefined,
   currentSampleTokenId: 0,
+  currentSampleTokenCodeOutput: undefined,
   rawProjectMetadata: DEFAULT_PROJECT_METADATA,
   setRawProjectMetadata: undefined,
   setCurrentSampleTokenId: undefined,
@@ -59,7 +63,11 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
 
   const [rawProjectMetadata, setRawProjectMetadata] = useState<
     Partial<ProjectMetadata>
-  >({ seed: defaultSeed, inputConstants: '0x'.padEnd(18, '0') });
+  >({
+    seed: defaultSeed,
+    inputConstants: '0x'.padEnd(18, '0'),
+    renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],
+  });
 
   const sanitizedRenderer = useMemo(() => {
     if (!rawProjectMetadata.renderer) {
@@ -106,6 +114,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       mintingSupply: rawProjectMetadata.mintingSupply,
       name: rawProjectMetadata.name,
       symbol: rawProjectMetadata.symbol,
+      code: rawProjectMetadata.code,
       renderer: sanitizedRenderer,
       seed:
         (rawProjectMetadata?.seed?.length ?? 0) > 2
@@ -134,6 +143,32 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       projectMetadata.inputConstants,
     );
   }, [currentSampleTokenId, projectMetadata]);
+
+  const currentSampleTokenCodeOutput = useMemo(():
+    | [string, 'error' | 'success']
+    | undefined => {
+    if (!currentSampleTokenSeed) {
+      return undefined;
+    }
+    if (!projectMetadata?.code) {
+      return undefined;
+    }
+    const input: number[] = [];
+    for (let i = 2; i < currentSampleTokenSeed.length; i += 2) {
+      input.push(parseInt(currentSampleTokenSeed.slice(i, i + 2), 16));
+    }
+    try {
+      return [runBrainFuckCode(projectMetadata.code, input), 'success'];
+    } catch (e: any) {
+      return [e.message, 'error'];
+    }
+  }, [currentSampleTokenSeed, projectMetadata.code]);
+
+  const [
+    currentSampleTokenRendererOutput,
+    setCurrentSampleTokenRendererOutput,
+  ] = useState<string | undefined>(undefined);
+  useEffect(() => {}, []);
 
   const encodedProjectMetadata = useMemo(() => {
     return btoa(JSON.stringify(projectMetadata));
@@ -177,6 +212,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       currentSampleTokenId,
       setCurrentSampleTokenId,
       currentSampleTokenSeed,
+      currentSampleTokenCodeOutput,
     };
   }, [
     projectMetadata,
@@ -184,6 +220,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     currentSampleTokenId,
     rawProjectMetadata,
     encodedProjectMetadata,
+    currentSampleTokenCodeOutput,
   ]);
 
   return (

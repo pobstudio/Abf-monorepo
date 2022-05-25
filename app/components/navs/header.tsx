@@ -35,7 +35,7 @@ export const Header: React.FC = () => {
       <FlexCenter>
         <Link passHref href={'/'}>
           <HeaderLogoAnchor style={{ fontWeight: 'bold' }}>
-            ABS BRAIN FUCK
+            ABS BRAIN FUCK (ALPHA ON GOERLI)
           </HeaderLogoAnchor>
         </Link>
       </FlexCenter>

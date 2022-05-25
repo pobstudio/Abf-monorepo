@@ -21,14 +21,25 @@ import {
 import { Text } from '../../texts';
 
 export const RendererParametersSelector: FC = () => {
-  const { onInputConstantsChange, onSeedChange } = useModifyProjectMetadata();
-  const { inputConstants, seed } = useRawProjectMetadata();
-  const { inputConstants: validInputConstants } = useProjectMetadata();
+  const { onRendererChange, onInputConstantsChange, onSeedChange } =
+    useModifyProjectMetadata();
+  const { renderer, inputConstants, seed } = useRawProjectMetadata();
+  const { rendererMetadataStub, inputConstants: validInputConstants } =
+    useProjectMetadata();
   return (
     <InteractiveDetailRowsContainer>
       <DetailTitleAnchorRow>
-        {['5. CONFIGURE RENDERING PARAMETERS', `SPEC`]}
+        {['CONFIGURE RENDERING PARAMETERS', `SPEC`]}
       </DetailTitleAnchorRow>
+      <InputWell>
+        <Text>RENDERER</Text>
+        <TextInput
+          style={{ textAlign: 'right' }}
+          value={renderer ?? ''}
+          onChange={(e) => onRendererChange(e.target.value)}
+          placeholder="0xabcd...1234"
+        />
+      </InputWell>
       <InputWell>
         <Text>SEED</Text>
         <TextInput
@@ -47,6 +58,9 @@ export const RendererParametersSelector: FC = () => {
           placeholder="0xabcd...decd"
         />
       </InputWell>
+      <DetailRow>
+        {['VALID RENDERER', !!rendererMetadataStub ? 'TRUE' : 'FALSE']}
+      </DetailRow>
       <DetailRow>
         {['VALID INPUT CONSTANTS', !!validInputConstants ? 'TRUE' : 'FALSE']}
       </DetailRow>
