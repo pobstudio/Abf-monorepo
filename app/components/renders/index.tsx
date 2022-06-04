@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useRendererContract } from '../../hooks/useContracts';
-import { RendererMetadataStub } from '../../types';
+import { RenderCodeOutputState, RendererMetadataStub } from '../../types';
 
 export const PlaceholderRender = styled.div`
   background: rgba(0, 0, 0, 0.05);
@@ -31,7 +31,7 @@ const RenderContainer = styled.div`
 `;
 
 export const Render: FC<{
-  output: [string, 'error' | 'success'] | undefined;
+  output: RenderCodeOutputState;
   rendererMetadata: RendererMetadataStub | undefined;
 }> = ({ output, rendererMetadata }) => {
   const renderer = useRendererContract(rendererMetadata?.address);

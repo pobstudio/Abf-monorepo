@@ -17,7 +17,7 @@ export const useSavedObject = <T>(obj: T) => {
     const save = router.query.save;
     if (!hasHydrated && typeof save === 'string') {
       setHasHydrated(true);
-      setSavedObject(JSON.parse(decodeURIComponent(save)));
+      setSavedObject(JSON.parse(atob(save)));
     }
   }, [router]);
 

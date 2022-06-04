@@ -9,7 +9,7 @@ import { BaseButton } from '../../inputs/button';
 import { Text } from '../../texts';
 
 export const TokenIdSwitcher: FC = () => {
-  const { currentSampleTokenId, setCurrentSampleTokenId } =
+  const { currentSampleTokenRenderState, setCurrentSampleTokenId } =
     useProjectBuilderContext();
   const { mintingSupply } = useProjectMetadata();
 
@@ -17,15 +17,15 @@ export const TokenIdSwitcher: FC = () => {
     if (!mintingSupply) {
       return true;
     }
-    return currentSampleTokenId <= 0;
-  }, [mintingSupply, currentSampleTokenId]);
+    return currentSampleTokenRenderState.tokenId <= 0;
+  }, [mintingSupply, currentSampleTokenRenderState]);
 
   const isIncrementDisabled = useMemo(() => {
     if (!mintingSupply) {
       return true;
     }
-    return currentSampleTokenId >= mintingSupply;
-  }, [mintingSupply, currentSampleTokenId]);
+    return currentSampleTokenRenderState.tokenId >= mintingSupply;
+  }, [mintingSupply, currentSampleTokenRenderState]);
 
   return (
     <Flex>
@@ -35,7 +35,7 @@ export const TokenIdSwitcher: FC = () => {
       >
         {'<'}
       </ArrowButton>
-      <CenteredText>{`TOKEN ID: ${currentSampleTokenId} / ${
+      <CenteredText>{`TOKEN ID: ${currentSampleTokenRenderState.tokenId} / ${
         mintingSupply ?? '???'
       }`}</CenteredText>
       <ArrowButton

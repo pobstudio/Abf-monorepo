@@ -15,7 +15,7 @@ import { Render } from '../../renders';
 import { Label, MultiLineText, Text } from '../../texts';
 
 export const TokenPreview: FC = () => {
-  const { currentSampleTokenSeed, currentSampleTokenCodeOutput } =
+  const { currentSampleTokenRenderState } =
     useProjectBuilderContext();
   const { rendererMetadataStub, inputConstants: validInputConstants } =
     useProjectMetadata();
@@ -28,7 +28,7 @@ export const TokenPreview: FC = () => {
         </Text>
       </FlexEnds>
       <Label>INPUT</Label>
-      <Text>{currentSampleTokenSeed ?? '-'}</Text>
+      <Text>{currentSampleTokenRenderState.tokenSeed ?? '-'}</Text>
       <FlexEnds>
         <Label>OUTPUT (AS BYTES)</Label>
       </FlexEnds>
@@ -37,15 +37,15 @@ export const TokenPreview: FC = () => {
           lineHeight: '22px',
           lineBreak: 'anywhere',
           color:
-            currentSampleTokenCodeOutput?.[1] === 'error' ? '#FF5D5D' : 'black',
+          currentSampleTokenRenderState.codeOutput?.[1] === 'error' ? '#FF5D5D' : 'black',
         }}
       >
         {(
           <>
-            {currentSampleTokenCodeOutput?.[0]}{' '}
+            {currentSampleTokenRenderState.codeOutput?.[0]}{' '}
             <span style={{ opacity: 0.2 }}>
-              {currentSampleTokenCodeOutput?.[1] === 'success'
-                ? `${(currentSampleTokenCodeOutput?.[0].length - 2) / 2} BYTES`
+              {currentSampleTokenRenderState.codeOutput?.[1] === 'success'
+                ? `${(currentSampleTokenRenderState.codeOutput?.[0].length - 2) / 2} BYTES`
                 : '-'}
             </span>
           </>
@@ -56,7 +56,7 @@ export const TokenPreview: FC = () => {
         <Label>{name}</Label>
       </FlexEnds>
       <Render
-        output={currentSampleTokenCodeOutput}
+        output={currentSampleTokenRenderState.codeOutput}
         rendererMetadata={rendererMetadataStub}
       />
       <DetailRow>
