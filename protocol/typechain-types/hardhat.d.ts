@@ -101,9 +101,13 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.PathRenderer__factory>;
     getContractFactory(
-      name: 'PixelGridRenderer',
+      name: 'PixelGrid16Renderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.PixelGridRenderer__factory>;
+    ): Promise<Contracts.PixelGrid16Renderer__factory>;
+    getContractFactory(
+      name: 'PixelGrid24Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.PixelGrid24Renderer__factory>;
     getContractFactory(
       name: 'ERC721A',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -220,10 +224,15 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.PathRenderer>;
     getContractAt(
-      name: 'PixelGridRenderer',
+      name: 'PixelGrid16Renderer',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.PixelGridRenderer>;
+    ): Promise<Contracts.PixelGrid16Renderer>;
+    getContractAt(
+      name: 'PixelGrid24Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.PixelGrid24Renderer>;
     getContractAt(
       name: 'ERC721A',
       address: string,

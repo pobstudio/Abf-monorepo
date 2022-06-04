@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { getSvgHotLoadingServer } from '../utils/svg';
-import { PathRenderer, PixelGridRenderer, SvgUtils } from '../typechain-types';
+import { PathRenderer, SvgUtils } from '../typechain-types';
 import { BigNumber } from 'ethers';
 
 task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {

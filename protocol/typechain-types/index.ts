@@ -50,7 +50,9 @@ export type { DotMatrixRenderer } from './contracts/renderers/DotMatrixRenderer'
 export { DotMatrixRenderer__factory } from './factories/contracts/renderers/DotMatrixRenderer__factory';
 export type { PathRenderer } from './contracts/renderers/PathRenderer';
 export { PathRenderer__factory } from './factories/contracts/renderers/PathRenderer__factory';
-export type { PixelGridRenderer } from './contracts/renderers/PixelGridRenderer';
-export { PixelGridRenderer__factory } from './factories/contracts/renderers/PixelGridRenderer__factory';
+export type { PixelGrid16Renderer } from './contracts/renderers/PixelGrid16Renderer';
+export { PixelGrid16Renderer__factory } from './factories/contracts/renderers/PixelGrid16Renderer__factory';
+export type { PixelGrid24Renderer } from './contracts/renderers/PixelGrid24Renderer';
+export { PixelGrid24Renderer__factory } from './factories/contracts/renderers/PixelGrid24Renderer__factory';
 export type { ERC721A } from './contracts/tokens/ERC721A';
 export { ERC721A__factory } from './factories/contracts/tokens/ERC721A__factory';

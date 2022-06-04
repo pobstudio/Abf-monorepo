@@ -4,4 +4,5 @@
 export type { DebugRenderer } from './DebugRenderer';
 export type { DotMatrixRenderer } from './DotMatrixRenderer';
 export type { PathRenderer } from './PathRenderer';
-export type { PixelGridRenderer } from './PixelGridRenderer';
+export type { PixelGrid16Renderer } from './PixelGrid16Renderer';
+export type { PixelGrid24Renderer } from './PixelGrid24Renderer';

@@ -31,6 +31,9 @@ export const Header: React.FC = () => {
         <Link passHref href={'/collection'}>
           <HeaderAnchor>COLLECTIONS</HeaderAnchor>
         </Link>
+        <Link passHref href={'/collection'}>
+          <HeaderAnchor>RECRUITMENT</HeaderAnchor>
+        </Link>
       </HeaderAnchorRow>
       <FlexCenter>
         <Link passHref href={'/'}>

@@ -6,7 +6,7 @@ import {
 import { ProjectMetadata } from '../types';
 import produce from 'immer';
 import { ADDRESS_REGEX, INPUT_CONSTANTS_REGEX } from '../../types/src';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber, ethers, utils } from 'ethers';
 import Router, { useRouter } from 'next/router';
 import { CHAIN_ID, HUNDRED_PERCENT_BPS } from '../constants';
 import { getTokenSeed, runBrainFuckCode } from '../utils/brainFuck';
@@ -22,6 +22,7 @@ export interface ProjectBuilderProviderContext {
     | React.Dispatch<React.SetStateAction<number>>
     | undefined;
   projectMetadata: Partial<ProjectMetadata>;
+  hashedProjectMetadata: string | undefined;
   encodedProjectMetadata: string;
   currentSampleTokenId: number;
   currentSampleTokenSeed: string | undefined;
@@ -45,6 +46,7 @@ const initialState: ProjectBuilderProviderState = {
   rawProjectMetadata: DEFAULT_PROJECT_METADATA,
   setRawProjectMetadata: undefined,
   setCurrentSampleTokenId: undefined,
+  hashedProjectMetadata: undefined,
   projectMetadata: DEFAULT_PROJECT_METADATA,
   encodedProjectMetadata: ENCODED_DEFAULT_PROJECT_METADATA,
 };
@@ -54,6 +56,7 @@ const ProjectBuilderContext =
 
 export const ProjectBuilderProvider: React.FC = ({ children }) => {
   const [currentSampleTokenId, setCurrentSampleTokenId] = useState(0);
+
   const defaultSeed = useMemo(() => {
     const input = Date.now().toString(16);
     return utils
@@ -67,6 +70,8 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     seed: defaultSeed,
     inputConstants: '0x'.padEnd(18, '0'),
     renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],
+    isActive: false,
+    royaltyFractionInBps: 0,
   });
 
   const sanitizedRenderer = useMemo(() => {
@@ -110,6 +115,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     return {
       inputConstants: sanitizedInputConstants,
       isActive: rawProjectMetadata.isActive,
+      additionalMetadataURI: '',
       royaltyFractionInBps: rawProjectMetadata.royaltyFractionInBps,
       mintingSupply: rawProjectMetadata.mintingSupply,
       name: rawProjectMetadata.name,
@@ -164,14 +170,18 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     }
   }, [currentSampleTokenSeed, projectMetadata.code]);
 
-  const [
-    currentSampleTokenRendererOutput,
-    setCurrentSampleTokenRendererOutput,
-  ] = useState<string | undefined>(undefined);
-  useEffect(() => {}, []);
+  const hashedProjectMetadata = useMemo(
+    () =>
+      ethers.utils.keccak256(
+        JSON.stringify(projectMetadata)
+          .split('')
+          .map((c) => c.charCodeAt(0)),
+      ),
+    [projectMetadata],
+  );
 
   const encodedProjectMetadata = useMemo(() => {
-    return btoa(JSON.stringify(projectMetadata));
+    return encodeURIComponent(JSON.stringify(projectMetadata));
   }, [projectMetadata]);
 
   const router = useRouter();
@@ -180,7 +190,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     const save = router.query.save;
     if (!hasHydrated && typeof save === 'string') {
       setHasHydrated(true);
-      setRawProjectMetadata(JSON.parse(atob(save)));
+      setRawProjectMetadata(JSON.parse(decodeURIComponent(save)));
     }
   }, [router]);
 
@@ -213,6 +223,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       setCurrentSampleTokenId,
       currentSampleTokenSeed,
       currentSampleTokenCodeOutput,
+      hashedProjectMetadata,
     };
   }, [
     projectMetadata,
@@ -220,6 +231,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     currentSampleTokenId,
     rawProjectMetadata,
     encodedProjectMetadata,
+    hashedProjectMetadata,
     currentSampleTokenCodeOutput,
   ]);
 

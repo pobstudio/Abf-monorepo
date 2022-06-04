@@ -8,6 +8,8 @@ import "./BrainFuckVM.sol";
 
 contract BrainFuckFactory is ReentrancyGuard {
 
+    uint constant public VERSION = 1;
+
     mapping(uint => address) public projectIdToAddress;
     mapping(address => uint) public addressToProjectId;
 

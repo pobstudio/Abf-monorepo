@@ -38,7 +38,7 @@ export const MintingParametersSelector: FC = () => {
   return (
     <InteractiveDetailRowsContainer>
       <DetailTitleAnchorRow>
-        {['4. CONFIGURE MINTING PARAMETERS', `SPEC`]}
+        {['CONFIGURE MINTING PARAMETERS', `SPEC`]}
       </DetailTitleAnchorRow>
       <InputWell>
         <Text>SUPPLY</Text>

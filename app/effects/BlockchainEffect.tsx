@@ -3,7 +3,7 @@ import toast, { useToasterStore } from 'react-hot-toast';
 import { useMountedState } from 'react-use';
 import { MAINNET_PROVIDER } from '../clients/provider';
 import { usePriorityAccount, usePriorityChainId } from '../connectors/priority';
-import { CHAIN_ID } from '../constants';
+import { CHAIN_ID, CHAIN_ID_TO_NETWORK_NAME } from '../constants';
 import { useProvider } from '../hooks/useProvider';
 import { useBlockchainStore } from '../stores/blockchain';
 import { DEFAULT_TOAST_STYLES } from '../constants/styles';
@@ -63,7 +63,8 @@ export const BlockchainEffect: FC = () => {
         (t) => (
           <span>
             You are on the wrong network. <br />
-            Switch to <b>mainnet</b> to enjoy <b>ABF</b>.
+            Switch to <b>{CHAIN_ID_TO_NETWORK_NAME[CHAIN_ID]}</b> to enjoy{' '}
+            <b>ABF</b>.
           </span>
         ),
         {

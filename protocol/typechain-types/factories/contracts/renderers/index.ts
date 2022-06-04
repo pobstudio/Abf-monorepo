@@ -4,4 +4,5 @@
 export { DebugRenderer__factory } from './DebugRenderer__factory';
 export { DotMatrixRenderer__factory } from './DotMatrixRenderer__factory';
 export { PathRenderer__factory } from './PathRenderer__factory';
-export { PixelGridRenderer__factory } from './PixelGridRenderer__factory';
+export { PixelGrid16Renderer__factory } from './PixelGrid16Renderer__factory';
+export { PixelGrid24Renderer__factory } from './PixelGrid24Renderer__factory';

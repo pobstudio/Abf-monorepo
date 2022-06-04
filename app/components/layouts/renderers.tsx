@@ -4,7 +4,7 @@ import { ProjectBuilderProvider } from '../../contexts/projectBuilder';
 import { useENSorHex } from '../../hooks/useENS';
 import { useAllRendererMetadata } from '../../hooks/useRenderer';
 import { RendererMetadata } from '../../types';
-import { shortenHexString } from '../../utils/hex';
+import { prettifyCountableNumber, shortenHexString } from '../../utils/hex';
 import { getEtherscanAddressUrl, getIPFSUrl } from '../../utils/urls';
 import {
   DetailAnchorRow,
@@ -69,7 +69,7 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
         ]}
       </DetailRow>
       <DetailRow>
-        {['REQUIRED INPUT BYTE STRING SIZE', outSize.toString()]}
+        {['REQUIRED INPUT BYTE STRING SIZE', prettifyCountableNumber(outSize)]}
       </DetailRow>
       <DetailAnchorRow href={getIPFSUrl(additionalMetadataURI)}>
         {['DOCUMENTATION', 'IPFS']}

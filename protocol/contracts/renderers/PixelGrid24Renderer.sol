@@ -10,7 +10,7 @@ import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 contract PixelGrid24Renderer is IRenderer, ERC165 {
   using Strings for uint256;
 
-  string rectPrefix = '<rect width="1" height="1"';
+  string rectPrefix = '<rect width="1" height="1" ';
   string rectSuffix = '" />';
 
   string[576] rects = [

@@ -1,7 +1,8 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
 import {
-  PixelGridRenderer,
+  PixelGrid16Renderer,
+  PixelGrid24Renderer,
   PathRenderer,
   DotMatrixRenderer,
   DebugRenderer,
@@ -66,72 +67,96 @@ task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
     brainFuckFactory.address,
   );
 
-  // const RendererRegistry = await hre.ethers.getContractFactory(
-  //   'RendererRegistry',
-  //   {},
-  // );
-  // const rendererRegistry =
-  //   (await RendererRegistry.deploy()) as RendererRegistry;
-  // await rendererRegistry.deployed();
+  const RendererRegistry = await hre.ethers.getContractFactory(
+    'RendererRegistry',
+    {},
+  );
+  const rendererRegistry =
+    (await RendererRegistry.deploy()) as RendererRegistry;
+  await rendererRegistry.deployed();
 
-  // console.log(
-  //   'RendererRegistry address deployed to:',
-  //   rendererRegistry.address,
-  // );
+  console.log(
+    'RendererRegistry address deployed to:',
+    rendererRegistry.address,
+  );
 
-  // const DebugRenderer = await hre.ethers.getContractFactory('DebugRenderer', {
-  //   // libraries: {
-  //   //   SvgUtils: svgUtils.address,
-  //   // },
-  // });
-  // const debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
-  // await debugRenderer.deployed();
+  const DebugRenderer = await hre.ethers.getContractFactory('DebugRenderer', {
+    // libraries: {
+    //   SvgUtils: svgUtils.address,
+    // },
+  });
+  const debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
+  await debugRenderer.deployed();
 
-  // console.log('DebugRenderer address deployed to:', debugRenderer.address);
+  console.log('DebugRenderer address deployed to:', debugRenderer.address);
 
-  // const DotMatrixRenderer = await hre.ethers.getContractFactory(
-  //   'DotMatrixRenderer',
-  //   {
-  //     libraries: {
-  //       SvgUtils: svgUtils.address,
-  //     },
-  //   },
-  // );
-  // const dotMatrixRenderer =
-  //   (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
-  // await dotMatrixRenderer.deployed();
+  const DotMatrixRenderer = await hre.ethers.getContractFactory(
+    'DotMatrixRenderer',
+    {
+      libraries: {
+        SvgUtils: svgUtils.address,
+      },
+    },
+  );
+  const dotMatrixRenderer =
+    (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
+  await dotMatrixRenderer.deployed();
 
-  // console.log(
-  //   'DotMatrixRenderer address deployed to:',
-  //   dotMatrixRenderer.address,
-  // );
+  console.log(
+    'DotMatrixRenderer address deployed to:',
+    dotMatrixRenderer.address,
+  );
 
-  // const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {});
-  // const pathRenderer = (await PathRenderer.deploy()) as PathRenderer;
-  // await pathRenderer.deployed();
+  const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {});
+  const pathRenderer = (await PathRenderer.deploy()) as PathRenderer;
+  await pathRenderer.deployed();
 
-  // console.log('PathRenderer address deployed to:', pathRenderer.address);
+  console.log('PathRenderer address deployed to:', pathRenderer.address);
 
-  // const PixelGridRenderer = await hre.ethers.getContractFactory(
-  //   'PixelGridRenderer',
-  //   {
-  //     libraries: {
-  //       SvgUtils: svgUtils.address,
-  //     },
-  //   },
-  // );
-  // const pixelGridRenderer =
-  //   (await PixelGridRenderer.deploy()) as PixelGridRenderer;
-  // await pixelGridRenderer.deployed();
+  const PixelGrid16Renderer = await hre.ethers.getContractFactory(
+    'PixelGrid16Renderer',
+    {
+      libraries: {
+        SvgUtils: svgUtils.address,
+      },
+    },
+  );
+  const pixelGrid16Renderer =
+    (await PixelGrid16Renderer.deploy()) as PixelGrid16Renderer;
+  await pixelGrid16Renderer.deployed();
 
-  // console.log(
-  //   'PixelGridRenderer address deployed to:',
-  //   pixelGridRenderer.address,
-  // );
+  console.log(
+    'PixelGrid16Renderer address deployed to:',
+    pixelGrid16Renderer.address,
+  );
+
+  const PixelGrid24Renderer = await hre.ethers.getContractFactory(
+    'PixelGrid24Renderer',
+    {
+      libraries: {
+        SvgUtils: svgUtils.address,
+      },
+    },
+  );
+  const pixelGrid24Renderer =
+    (await PixelGrid24Renderer.deploy()) as PixelGrid24Renderer;
+  await pixelGrid24Renderer.deployed();
+
+  console.log(
+    'PixelGrid24Renderer address deployed to:',
+    pixelGrid24Renderer.address,
+  );
 
   console.log('Registering renderers');
-  // await rendererRegistry.registerRenderer(debugRenderer.address);
-  // await rendererRegistry.registerRenderer(dotMatrixRenderer.address);
-  // await rendererRegistry.registerRenderer(pathRenderer.address);
-  // await rendererRegistry.registerRenderer(pixelGridRenderer.address);
+  await (await rendererRegistry.registerRenderer(debugRenderer.address)).wait();
+  await (
+    await rendererRegistry.registerRenderer(dotMatrixRenderer.address)
+  ).wait();
+  await (await rendererRegistry.registerRenderer(pathRenderer.address)).wait();
+  await (
+    await rendererRegistry.registerRenderer(pixelGrid16Renderer.address)
+  ).wait();
+  await (
+    await rendererRegistry.registerRenderer(pixelGrid24Renderer.address)
+  ).wait();
 });

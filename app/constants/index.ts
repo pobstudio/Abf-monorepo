@@ -11,9 +11,17 @@ export const CHAIN_ID = parseInt('5'); // process.env.NEXT_PUBLIC_CHAIN_ID ?? '1
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const NULL_HASH =
   '0x0000000000000000000000000000000000000000000000000000000000000000';
+
+export const MAX_UINT = BigNumber.from(
+  '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+);
 export const ZERO = BigNumber.from(0);
 export const MIN_BLOCK_CONFIRMATIONS = 35;
 export const HUNDRED_PERCENT_BPS = 10000;
+export const CHAIN_ID_TO_NETWORK_NAME: { [chainId: number]: string } = {
+  5: 'goerli',
+  1: 'mainnet',
+};
 
 /**
  * Environment/keys

@@ -11,7 +11,7 @@ import {
   DetailRowsContainer,
 } from '../../details/rows';
 import { FlexEnds } from '../../flexs';
-import { PlaceholderRender } from '../../renders';
+import { PlaceholderRender, Render } from '../../renders';
 import { Label, MultiLineText, Text } from '../../texts';
 import { TokenIdSwitcher } from './tokenIdSwitcher';
 
@@ -56,7 +56,10 @@ export const TokenPreview: FC = () => {
         <Label>OUTPUT (AS RENDERED OUTPUT)</Label>
         <Label>{name}</Label>
       </FlexEnds>
-      <PlaceholderRender />
+      <Render
+        output={currentSampleTokenCodeOutput}
+        rendererMetadata={rendererMetadataStub}
+      />
       <DetailRow>
         {[
           'REQUIRED OUTPUT LENGTH',

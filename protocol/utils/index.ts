@@ -3,6 +3,7 @@ import { BigNumber } from 'ethers';
 export const NETWORK_NAME_CHAIN_ID: { [name: string]: number } = {
   mainnet: 1,
   rinkeby: 4,
+  goerli: 5,
   hardhat: 1337,
 };
 

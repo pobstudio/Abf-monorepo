@@ -28,7 +28,9 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
     bytes public code;
     bytes8 public constants;
     bool public isActive = false;
-     
+    
+    uint256 public constant VERSION = 1;
+    
     constructor (
       string memory _name,
       string memory _symbol,
