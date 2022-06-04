@@ -1,13 +1,12 @@
-import React from 'react';
 import Document, {
   DocumentContext,
-  Html,
   Head,
+  Html,
   Main,
   NextScript,
 } from 'next/document';
+import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
-import { DefaultSeo } from 'next-seo';
 
 // Document is only rendered in the server
 export default class PobDocument extends Document {

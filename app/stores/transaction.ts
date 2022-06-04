@@ -1,7 +1,8 @@
-import create from 'zustand';
 import produce from 'immer';
-import { TransactionReceipt } from '@ethersproject/providers';
+import create from 'zustand';
+import { TransactionMetadata, TransactionObject } from '../types/transaction';
 
+export type TransactionMap = { [hash: string]: TransactionObject };
 type State = {
   transactionMap: TransactionMap;
   updateTransactionMap: (updateFn: (update: any) => void) => void;

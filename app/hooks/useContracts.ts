@@ -1,15 +1,14 @@
 import {
   BrainFuckFactory__factory,
-  BrainFuck__factory,
   deployments,
   IRenderer__factory,
 } from '@abf-monorepo/protocol';
-import { useMemo } from 'react';
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { usePriorityAccount } from '../connectors/priority';
+import { useMemo } from 'react';
 import { getProviderOrSigner } from '../clients/provider';
-import { useProvider } from './useProvider';
+import { usePriorityAccount } from '../connectors/priority';
 import { CHAIN_ID } from '../constants';
+import { useProvider } from './useProvider';
 
 export const useRendererContract = (
   address: string | undefined,

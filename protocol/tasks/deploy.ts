@@ -1,18 +1,16 @@
 import { task } from 'hardhat/config';
-import { deployments } from '../deployments';
 import {
-  PixelGrid16Renderer,
-  PixelGrid24Renderer,
-  PathRenderer,
-  DotMatrixRenderer,
-  DebugRenderer,
-  RendererRegistry,
   BrainFuckFactory,
   BrainFuckURIConstructor,
   BrainFuckVM,
+  DebugRenderer,
+  DotMatrixRenderer,
+  PathRenderer,
+  PixelGrid16Renderer,
+  PixelGrid24Renderer,
+  RendererRegistry,
   SvgUtils,
 } from '../typechain-types';
-import { NETWORK_NAME_CHAIN_ID } from '../utils';
 
 task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
   const owner = (await hre.ethers.getSigners())[0];

@@ -1,9 +1,9 @@
-import React from 'react';
 import { NextPage } from 'next';
-import { Header } from '../../../components/navs/header';
+import React from 'react';
 import { PageDiv } from '../../../components/divs';
-import { Footer } from '../../../components/navs/footer';
 import { Project } from '../../../components/layouts/project';
+import { Footer } from '../../../components/navs/footer';
+import { Header } from '../../../components/navs/header';
 
 const CollectionPage: NextPage = () => {
   return (

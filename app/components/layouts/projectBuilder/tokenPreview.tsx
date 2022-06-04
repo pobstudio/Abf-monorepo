@@ -11,9 +11,8 @@ import {
   DetailRowsContainer,
 } from '../../details/rows';
 import { FlexEnds } from '../../flexs';
-import { PlaceholderRender, Render } from '../../renders';
+import { Render } from '../../renders';
 import { Label, MultiLineText, Text } from '../../texts';
-import { TokenIdSwitcher } from './tokenIdSwitcher';
 
 export const TokenPreview: FC = () => {
   const { currentSampleTokenSeed, currentSampleTokenCodeOutput } =

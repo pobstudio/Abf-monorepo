@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Flex, FlexCenter, FlexEnds } from '../flexs';
+import { Flex, FlexCenter } from '../flexs';
 import { HeaderAnchor, HeaderLogoAnchor } from './anchor';
 import { Web3Status } from './web3Status';
 // import { Web3Status } from './web3Status';

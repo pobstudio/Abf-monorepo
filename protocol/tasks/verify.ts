@@ -1,7 +1,4 @@
 import { task } from 'hardhat/config';
-import { BigNumber, Signer } from 'ethers';
-import { deployments } from '../deployments';
-import { ETH_IN_WEI, NETWORK_NAME_CHAIN_ID } from '../utils';
 
 task('verify', 'Verifies contracts on Etherscan', async (args, hre) => {
   const owner = (await hre.ethers.getSigners())[0];

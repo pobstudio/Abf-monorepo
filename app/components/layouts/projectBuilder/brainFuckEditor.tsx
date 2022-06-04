@@ -1,18 +1,13 @@
 import { FC } from 'react';
 import {
   useModifyProjectMetadata,
-  useProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import { getIPFSUrl } from '../../../utils/urls';
 import {
-  DetailAnchorRow,
-  DetailRow,
   DetailTitleAnchorRow,
   InteractiveDetailRowsContainer,
 } from '../../details/rows';
-import { InputWell, TextArea, TextInput } from '../../inputs/input';
-import { TextAnchor } from '../../texts';
+import { InputWell, TextArea } from '../../inputs/input';
 
 export const BrainFuckEditor: FC = () => {
   const { onCodeChange } = useModifyProjectMetadata();

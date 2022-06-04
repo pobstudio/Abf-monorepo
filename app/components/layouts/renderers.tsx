@@ -1,6 +1,6 @@
+import { format } from 'date-fns';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { ProjectBuilderProvider } from '../../contexts/projectBuilder';
 import { useENSorHex } from '../../hooks/useENS';
 import { useAllRendererMetadata } from '../../hooks/useRenderer';
 import { RendererMetadata } from '../../types';
@@ -9,24 +9,14 @@ import { getEtherscanAddressUrl, getIPFSUrl } from '../../utils/urls';
 import {
   DetailAnchorRow,
   DetailRow,
-  InteractiveDetailRowsContainer,
-  DetailTitleAnchorRow,
   DetailRowsContainer,
+  DetailTitleAnchorRow,
 } from '../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
-import {
-  TwoColumnContainer,
-  TwoColumnContentContainer,
-} from '../divs/twoColumn';
-import { FlexCenterColumn } from '../flexs';
-import { PrimaryButton } from '../inputs/button';
-import { InputWell, NumberInput, TextArea, TextInput } from '../inputs/input';
-import { PlaceholderRender } from '../renders';
 import { Text } from '../texts';
-import { format } from 'date-fns';
 
 export const Renderers: FC = () => {
   const rendererMetadatas = useAllRendererMetadata();

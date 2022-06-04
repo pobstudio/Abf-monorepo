@@ -1,11 +1,7 @@
 import { FC } from 'react';
-import styled from 'styled-components';
-import { ProjectBuilderProvider } from '../../contexts/projectBuilder';
 import {
-  DetailAnchorRow,
   DetailRow,
   DetailRowsContainer,
-  DetailTitleAnchorRow,
   DetailTitleRow,
 } from '../details/rows';
 import {
@@ -14,7 +10,6 @@ import {
 } from '../divs/twoColumn';
 import { FlexCenterColumn } from '../flexs';
 import { PrimaryButton, TertiaryButton } from '../inputs/button';
-import { InputWell, NumberInput, TextArea, TextInput } from '../inputs/input';
 import { PlaceholderRender } from '../renders';
 import { Text } from '../texts';
 

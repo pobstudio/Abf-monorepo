@@ -1,16 +1,16 @@
-import React from 'react';
+import { ApolloProvider } from '@apollo/client';
+import { DefaultSeo } from 'next-seo';
 import App from 'next/app';
-import { ThemedGlobalStyle } from '../theme';
+import React from 'react';
+import { Toaster } from 'react-hot-toast';
+import { subgraphClient } from '../clients/subgraph';
+import { GLOBAL_OG_BANNER, PROD_LINK } from '../constants';
+import { AppProvider } from '../contexts/app';
 import { BlockchainEffect } from '../effects/BlockchainEffect';
-import { PROD_LINK, GLOBAL_OG_BANNER } from '../constants';
 import { EagerConnectEffect } from '../effects/EagerConnectEffect';
 import { TokensEffect } from '../effects/TokensEffect';
 import { TransactionsEffect } from '../effects/TransactionsEffect';
-import { DefaultSeo } from 'next-seo';
-import { ApolloProvider } from '@apollo/client';
-import { AppProvider } from '../contexts/app';
-import { subgraphClient } from '../clients/subgraph';
-import { Toaster } from 'react-hot-toast';
+import { ThemedGlobalStyle } from '../theme';
 
 const DEFAULT_TITLE = `ABF`;
 const DEFAULT_DESCRIPTION = ``;

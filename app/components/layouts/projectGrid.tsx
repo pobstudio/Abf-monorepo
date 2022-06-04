@@ -1,19 +1,8 @@
 import { FC } from 'react';
-import styled from 'styled-components';
-import { ProjectBuilderProvider } from '../../contexts/projectBuilder';
-import {
-  DetailAnchorRow,
-  DetailRow,
-  DetailRowsContainer,
-  DetailTitleAnchorRow,
-  DetailTitleRow,
-} from '../details/rows';
+import { DetailRow, DetailRowsContainer } from '../details/rows';
 import { GridContainer, GridContentContainer } from '../divs/grid';
-import { FlexCenterColumn } from '../flexs';
 import { PrimaryButton, TertiaryButton } from '../inputs/button';
-import { InputWell, NumberInput, TextArea, TextInput } from '../inputs/input';
 import { PlaceholderRender } from '../renders';
-import { Text } from '../texts';
 
 export const ProjectGrid: FC = () => {
   return (

@@ -1,42 +1,15 @@
-import { FC, useMemo } from 'react';
-import styled from 'styled-components';
-import { BRAINFUCK_DOCS_LINK, HUNDRED_PERCENT_BPS } from '../../../constants';
-import {
-  ProjectBuilderProvider,
-  useModifyProjectMetadata,
-  useProjectBuilderContext,
-  useProjectMetadata,
-  useRawProjectMetadata,
-} from '../../../contexts/projectBuilder';
-import { getIPFSUrl } from '../../../utils/urls';
-import {
-  DetailAnchorRow,
-  DetailRow,
-  InteractiveDetailRowsContainer,
-  DetailTitleAnchorRow,
-  DetailRowsContainer,
-} from '../../details/rows';
+import { FC } from 'react';
+import { ProjectBuilderProvider } from '../../../contexts/projectBuilder';
 import {
   TwoColumnContainer,
   TwoColumnContentContainer,
 } from '../../divs/twoColumn';
-import { Flex, FlexCenter, FlexCenterColumn, FlexEnds } from '../../flexs';
-import { BaseButton, PrimaryButton, TertiaryButton } from '../../inputs/button';
-import {
-  CheckboxInput,
-  InputWell,
-  NumberInput,
-  TextArea,
-  TextInput,
-} from '../../inputs/input';
-import { PlaceholderRender } from '../../renders';
-import { Label, MultiLineText, Text, TextAnchor } from '../../texts';
+import { FlexCenter } from '../../flexs';
 import { BrainFuckEditor } from './brainFuckEditor';
-import { ContractSubmit } from './ContractSubmit';
+import { ContractSubmit } from './contractSubmit';
 import { Jumbotron } from './jumbotron';
 import { MintingParametersSelector } from './mintingParametersSelector';
 import { RendererParametersSelector } from './rendererParametersSelector';
-import { RendererSelector } from './rendererSelector';
 import { TokenIdSwitcher } from './tokenIdSwitcher';
 import { TokenParametersSelector } from './tokenParametersSelector';
 import { TokenPreview } from './tokenPreview';

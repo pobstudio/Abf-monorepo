@@ -1,4 +1,3 @@
-import { deployments } from '@abf-monorepo/protocol';
 import { BigNumber } from 'ethers';
 import { CHAIN_ID, IPFS_LINK } from '../constants';
 

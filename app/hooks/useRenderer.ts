@@ -1,13 +1,11 @@
-import { gql, useQuery } from '@apollo/client';
-import { useLastTruthyValue } from './useLastTruthyValue';
-import { BigNumber, utils } from 'ethers';
-import { useBlockchainStore } from '../stores/blockchain';
-import { useEffect, useMemo, useState } from 'react';
-import { RendererMetadata, RendererMetadataStub } from '../types';
-import { useProvider } from './useProvider';
-import { useRendererContract } from './useContracts';
 import { deployments } from '@abf-monorepo/protocol';
+import { gql, useQuery } from '@apollo/client';
+import { BigNumber, utils } from 'ethers';
+import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
+import { RendererMetadata, RendererMetadataStub } from '../types';
+import { useRendererContract } from './useContracts';
+import { useLastTruthyValue } from './useLastTruthyValue';
 
 export const RENDERER_PAGE_SIZE = 100;
 

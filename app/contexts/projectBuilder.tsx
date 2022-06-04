@@ -1,54 +1,51 @@
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
+import { BigNumber } from 'ethers';
+import produce from 'immer';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { INPUT_CONSTANTS_REGEX } from '../../types/src';
+import { HUNDRED_PERCENT_BPS } from '../constants';
+import { useAddress } from '../hooks/useAddress';
+import { useDefaultProjectMetadata } from '../hooks/useDefaults';
+import { useHash } from '../hooks/useHash';
 import {
   useRendererMetadata,
   useRendererMetadataStubByProvider,
 } from '../hooks/useRenderer';
-import { ProjectMetadata } from '../types';
-import produce from 'immer';
-import { ADDRESS_REGEX, INPUT_CONSTANTS_REGEX } from '../../types/src';
-import { BigNumber, ethers, utils } from 'ethers';
-import Router, { useRouter } from 'next/router';
-import { CHAIN_ID, HUNDRED_PERCENT_BPS } from '../constants';
+import { useSavedObject } from '../hooks/useSavedObject';
+import {
+  ProjectMetadata,
+  RenderCodeOutputState,
+  SampleTokenRenderState,
+} from '../types';
 import { getTokenSeed, runBrainFuckCode } from '../utils/brainFuck';
-import { OFFLINE_RENDERS } from '../utils/renderers';
-import { deployments } from '@abf-monorepo/protocol';
 
 export interface ProjectBuilderProviderContext {
   rawProjectMetadata: Partial<ProjectMetadata>;
-  setRawProjectMetadata:
-    | React.Dispatch<React.SetStateAction<Partial<ProjectMetadata>>>
-    | undefined;
-  setCurrentSampleTokenId:
-    | React.Dispatch<React.SetStateAction<number>>
-    | undefined;
   projectMetadata: Partial<ProjectMetadata>;
-  hashedProjectMetadata: string | undefined;
+  hashedProjectMetadata: string;
   encodedProjectMetadata: string;
-  currentSampleTokenId: number;
-  currentSampleTokenSeed: string | undefined;
-  currentSampleTokenCodeOutput: [string, 'error' | 'success'] | undefined;
+  setRawProjectMetadata: React.Dispatch<
+    React.SetStateAction<Partial<ProjectMetadata>>
+  >;
+  setCurrentSampleTokenId: React.Dispatch<React.SetStateAction<number>>;
+  currentSampleTokenRenderState: SampleTokenRenderState;
 }
 
 export type ProjectBuilderProviderState = ProjectBuilderProviderContext;
 
-const DEFAULT_RENDERER_KEY = 'pixelGrid16';
-
-const DEFAULT_PROJECT_METADATA: Partial<ProjectMetadata> = {};
-
-const ENCODED_DEFAULT_PROJECT_METADATA = btoa(
-  JSON.stringify(DEFAULT_PROJECT_METADATA),
-);
+const DEFAULT_CURRENT_SAMPLE_TOKEN_RENDER_STATE: SampleTokenRenderState = {
+  tokenId: 0,
+  tokenSeed: '0x00',
+  codeOutput: undefined,
+};
 
 const initialState: ProjectBuilderProviderState = {
-  currentSampleTokenSeed: undefined,
-  currentSampleTokenId: 0,
-  currentSampleTokenCodeOutput: undefined,
-  rawProjectMetadata: DEFAULT_PROJECT_METADATA,
-  setRawProjectMetadata: undefined,
-  setCurrentSampleTokenId: undefined,
-  hashedProjectMetadata: undefined,
-  projectMetadata: DEFAULT_PROJECT_METADATA,
-  encodedProjectMetadata: ENCODED_DEFAULT_PROJECT_METADATA,
+  currentSampleTokenRenderState: DEFAULT_CURRENT_SAMPLE_TOKEN_RENDER_STATE,
+  rawProjectMetadata: {},
+  setRawProjectMetadata: () => new Error('func is not set'),
+  setCurrentSampleTokenId: () => new Error('func is not set'),
+  hashedProjectMetadata: '',
+  projectMetadata: {},
+  encodedProjectMetadata: '',
 };
 
 const ProjectBuilderContext =
@@ -57,34 +54,13 @@ const ProjectBuilderContext =
 export const ProjectBuilderProvider: React.FC = ({ children }) => {
   const [currentSampleTokenId, setCurrentSampleTokenId] = useState(0);
 
-  const defaultSeed = useMemo(() => {
-    const input = Date.now().toString(16);
-    return utils
-      .keccak256('0x' + (input.length % 2 === 1 ? '0' : '') + input)
-      .slice(0, 24);
-  }, []);
+  const defaultProjectMetadata = useDefaultProjectMetadata();
 
   const [rawProjectMetadata, setRawProjectMetadata] = useState<
     Partial<ProjectMetadata>
-  >({
-    seed: defaultSeed,
-    inputConstants: '0x'.padEnd(18, '0'),
-    renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],
-    isActive: false,
-    royaltyFractionInBps: 0,
-  });
+  >(defaultProjectMetadata);
 
-  const sanitizedRenderer = useMemo(() => {
-    if (!rawProjectMetadata.renderer) {
-      return undefined;
-    }
-    if (!ADDRESS_REGEX.test(rawProjectMetadata.renderer)) {
-      return undefined;
-    }
-    return utils.getAddress(rawProjectMetadata.renderer);
-  }, [rawProjectMetadata]);
-
-  const sanitizedInputConstants = useMemo(() => {
+  const inputConstants = useMemo(() => {
     if (!rawProjectMetadata.inputConstants) {
       return undefined;
     }
@@ -107,132 +83,99 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     return filledInputConstants;
   }, [rawProjectMetadata]);
 
-  const rendererMetadata = useRendererMetadata(sanitizedRenderer);
-  const rendererMetadataStub =
-    useRendererMetadataStubByProvider(sanitizedRenderer);
+  const seed = useMemo(() => {
+    return (rawProjectMetadata.seed?.length ?? 0) > 2
+      ? rawProjectMetadata.seed
+      : undefined;
+  }, [rawProjectMetadata]);
+
+  const renderer = useAddress(rawProjectMetadata.renderer);
+  const rendererMetadata = useRendererMetadata(renderer);
+  const rendererMetadataStub = useRendererMetadataStubByProvider(renderer);
 
   const projectMetadata: Partial<ProjectMetadata> = useMemo(() => {
     return {
-      inputConstants: sanitizedInputConstants,
-      isActive: rawProjectMetadata.isActive,
-      additionalMetadataURI: '',
-      royaltyFractionInBps: rawProjectMetadata.royaltyFractionInBps,
-      mintingSupply: rawProjectMetadata.mintingSupply,
-      name: rawProjectMetadata.name,
-      symbol: rawProjectMetadata.symbol,
-      code: rawProjectMetadata.code,
-      renderer: sanitizedRenderer,
-      seed:
-        (rawProjectMetadata?.seed?.length ?? 0) > 2
-          ? rawProjectMetadata.seed
-          : undefined,
+      ...rawProjectMetadata,
+      inputConstants,
+      renderer,
+      seed,
       rendererMetadataStub: rendererMetadataStub ?? rendererMetadata,
     };
   }, [
-    sanitizedRenderer,
-    sanitizedInputConstants,
+    renderer,
+    seed,
+    inputConstants,
     rawProjectMetadata,
     rendererMetadataStub,
     rendererMetadata,
   ]);
 
-  const currentSampleTokenSeed = useMemo(() => {
-    if (currentSampleTokenId === undefined) {
-      return undefined;
-    }
-    if (!projectMetadata?.inputConstants || !projectMetadata?.seed) {
-      return undefined;
-    }
-    return getTokenSeed(
-      projectMetadata.seed,
-      BigNumber.from(currentSampleTokenId),
-      projectMetadata.inputConstants,
-    );
-  }, [currentSampleTokenId, projectMetadata]);
+  const currentSampleTokenRenderState = useMemo((): SampleTokenRenderState => {
+    const tokenSeed =
+      !!projectMetadata.inputConstants && !!projectMetadata.seed
+        ? getTokenSeed(
+            projectMetadata.seed,
+            BigNumber.from(currentSampleTokenId),
+            projectMetadata.inputConstants,
+          )
+        : undefined;
 
-  const currentSampleTokenCodeOutput = useMemo(():
-    | [string, 'error' | 'success']
-    | undefined => {
-    if (!currentSampleTokenSeed) {
-      return undefined;
-    }
-    if (!projectMetadata?.code) {
-      return undefined;
-    }
-    const input: number[] = [];
-    for (let i = 2; i < currentSampleTokenSeed.length; i += 2) {
-      input.push(parseInt(currentSampleTokenSeed.slice(i, i + 2), 16));
-    }
-    try {
-      return [runBrainFuckCode(projectMetadata.code, input), 'success'];
-    } catch (e: any) {
-      return [e.message, 'error'];
-    }
-  }, [currentSampleTokenSeed, projectMetadata.code]);
+    const getCodeOutput = (): RenderCodeOutputState => {
+      if (!tokenSeed) {
+        return undefined;
+      }
+      if (!projectMetadata?.code) {
+        return undefined;
+      }
+      const input: number[] = [];
+      for (let i = 2; i < tokenSeed.length; i += 2) {
+        input.push(parseInt(tokenSeed.slice(i, i + 2), 16));
+      }
+      try {
+        return [runBrainFuckCode(projectMetadata.code, input), 'success'];
+      } catch (e: any) {
+        return [e.message, 'error'];
+      }
+    };
 
-  const hashedProjectMetadata = useMemo(
-    () =>
-      ethers.utils.keccak256(
-        JSON.stringify(projectMetadata)
-          .split('')
-          .map((c) => c.charCodeAt(0)),
-      ),
-    [projectMetadata],
-  );
+    const codeOutput = getCodeOutput();
 
-  const encodedProjectMetadata = useMemo(() => {
-    return encodeURIComponent(JSON.stringify(projectMetadata));
-  }, [projectMetadata]);
+    return {
+      tokenId: currentSampleTokenId,
+      tokenSeed,
+      codeOutput,
+    };
+  }, [projectMetadata, currentSampleTokenId]);
 
-  const router = useRouter();
-  const [hasHydrated, setHasHydrated] = useState(false);
-  useEffect(() => {
-    const save = router.query.save;
-    if (!hasHydrated && typeof save === 'string') {
-      setHasHydrated(true);
-      setRawProjectMetadata(JSON.parse(decodeURIComponent(save)));
-    }
-  }, [router]);
+  const hashedProjectMetadata = useHash(projectMetadata);
+
+  const [savedProjectMetadata, encodedProjectMetadata] =
+    useSavedObject(projectMetadata);
 
   useEffect(() => {
     console.log('rawProjectMetadata:', rawProjectMetadata);
-    console.log('projectMetadata:', projectMetadata);
+    console.log('savedProjectMetadata:', savedProjectMetadata);
     console.log('encodedProjectMetadata:', encodedProjectMetadata);
-  }, [rawProjectMetadata, projectMetadata, encodedProjectMetadata]);
-
-  // dehydrate base64
-  useEffect(() => {
-    Router.push(
-      {
-        query: { save: encodedProjectMetadata },
-      },
-      undefined,
-      {
-        scroll: false,
-      },
-    );
-  }, [encodedProjectMetadata]);
+  }, [rawProjectMetadata, savedProjectMetadata, encodedProjectMetadata]);
 
   const stateObject = useMemo(() => {
     return {
       rawProjectMetadata,
       setRawProjectMetadata,
-      projectMetadata,
+      projectMetadata: savedProjectMetadata,
       encodedProjectMetadata,
       currentSampleTokenId,
       setCurrentSampleTokenId,
-      currentSampleTokenSeed,
-      currentSampleTokenCodeOutput,
+      currentSampleTokenRenderState,
       hashedProjectMetadata,
     };
   }, [
-    projectMetadata,
-    currentSampleTokenSeed,
+    savedProjectMetadata,
+    currentSampleTokenRenderState,
     currentSampleTokenId,
     rawProjectMetadata,
     encodedProjectMetadata,
     hashedProjectMetadata,
-    currentSampleTokenCodeOutput,
   ]);
 
   return (

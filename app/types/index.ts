@@ -1,4 +1,29 @@
-import { BigNumber } from 'ethers';
+import { BigNumber, BytesLike } from 'ethers';
+
+export type RenderCodeOutputStatus = 'error' | 'success';
+
+export type RenderCodeOutputState =
+  | [string, RenderCodeOutputStatus]
+  | undefined;
+export interface SampleTokenRenderState {
+  tokenId: number;
+  tokenSeed: string | undefined;
+  codeOutput: RenderCodeOutputState;
+}
+
+export interface CreateProjectConfig {
+  name: string;
+  symbol: string;
+  additionalMetadataURI: string;
+  seed: BytesLike;
+  constants: BytesLike;
+  code: BytesLike;
+  renderer: string;
+  mintingSupply: BigNumber;
+  price: BigNumber;
+  royaltyFraction: BigNumber;
+  isActive: boolean;
+}
 
 export interface ProjectMetadata {
   name: string;

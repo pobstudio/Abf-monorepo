@@ -1,5 +1,4 @@
 import { BigNumber } from 'ethers';
-import { invert } from 'lodash';
 /**
  * Global app related constants
  */

@@ -1,10 +1,9 @@
 import { utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
 import { usePriorityAccount } from '../connectors/priority';
-import { NULL_ADDRESS, ZERO } from '../constants';
+import { NULL_ADDRESS } from '../constants';
 import { useProjectBuilderContext } from '../contexts/projectBuilder';
 import { useTransactionsStore } from '../stores/transaction';
-import { ProjectMetadata } from '../types';
 import { TransactionStatus } from '../types/transaction';
 import { convertStrToHexStr } from '../utils/hex';
 import { useBrainFuckFactoryContract } from './useContracts';

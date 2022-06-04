@@ -1,7 +1,7 @@
-import { ethers } from 'hardhat';
-import { Signer } from 'ethers';
-import { DebugRenderer, RendererRegistry } from '../typechain-types';
 import { expect } from 'chai';
+import { Signer } from 'ethers';
+import { ethers } from 'hardhat';
+import { DebugRenderer, RendererRegistry } from '../typechain-types';
 
 describe('RendererRegistry', function () {
   // constant values used in transfer tests

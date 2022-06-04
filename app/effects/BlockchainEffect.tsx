@@ -1,12 +1,11 @@
 import { FC, useEffect } from 'react';
 import toast, { useToasterStore } from 'react-hot-toast';
 import { useMountedState } from 'react-use';
-import { MAINNET_PROVIDER } from '../clients/provider';
 import { usePriorityAccount, usePriorityChainId } from '../connectors/priority';
 import { CHAIN_ID, CHAIN_ID_TO_NETWORK_NAME } from '../constants';
+import { DEFAULT_TOAST_STYLES } from '../constants/styles';
 import { useProvider } from '../hooks/useProvider';
 import { useBlockchainStore } from '../stores/blockchain';
-import { DEFAULT_TOAST_STYLES } from '../constants/styles';
 
 export const BlockchainEffect: FC = () => {
   const setBlockNumber = useBlockchainStore((s) => s.setBlockNumber);

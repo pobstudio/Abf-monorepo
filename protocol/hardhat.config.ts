@@ -1,12 +1,10 @@
 require('dotenv').config();
+import '@nomiclabs/hardhat-etherscan';
 import '@nomiclabs/hardhat-waffle';
 import '@typechain/hardhat';
-import '@nomiclabs/hardhat-etherscan';
 import 'hardhat-gas-reporter';
-
 import { HardhatUserConfig } from 'hardhat/config';
 import { NetworksUserConfig } from 'hardhat/types';
-
 import './tasks';
 
 // You need to export an object to set up your config

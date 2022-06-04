@@ -4,8 +4,7 @@ import {
   useProjectBuilderContext,
   useProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import { DetailRowsContainer } from '../../details/rows';
-import { Flex, FlexCenter } from '../../flexs';
+import { Flex } from '../../flexs';
 import { BaseButton } from '../../inputs/button';
 import { Text } from '../../texts';
 

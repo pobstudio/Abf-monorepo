@@ -1,5 +1,5 @@
-import { getScreenshot } from '../../server/screenshots';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { getScreenshot } from '../../server/screenshots';
 
 const isDev = !process.env.AWS_REGION;
 

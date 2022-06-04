@@ -1,9 +1,7 @@
-import { ethers } from 'hardhat';
-import { BigNumber, Signer } from 'ethers';
-
-import { BrainFuckVM } from '../typechain-types';
 import { expect } from 'chai';
-import { getAddress } from '@ethersproject/address';
+import { BigNumber, Signer } from 'ethers';
+import { ethers } from 'hardhat';
+import { BrainFuckVM } from '../typechain-types';
 
 const TOKEN_ID_ZERO = BigNumber.from(0);
 
