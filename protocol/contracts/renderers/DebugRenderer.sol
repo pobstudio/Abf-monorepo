@@ -24,10 +24,15 @@ contract DebugRenderer is IRenderer, ERC165 {
   function additionalMetadataURI() external override pure returns (string memory) {
     return "";
   }
+  
+  function renderAttributeKey() external override pure returns (string memory) {
+    return "image";
+  }
+
   function renderRaw(bytes calldata out) public override pure returns (string memory) {
     string memory output = "";
     uint i = 0;
-    while(out[i] != 0x00) {
+    while(i < out.length) {
       output = string(abi.encodePacked(output, out[i]));      
       i++;
     }
@@ -39,13 +44,9 @@ contract DebugRenderer is IRenderer, ERC165 {
   }
 
   function attributes(bytes calldata out) external override pure returns (string memory) {
-    uint i = 0;
-    while(out[i] != 0x00) {
-      i++;
-    }
-      return string(
+    return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', i.toString(), '},'
+              '{"trait_type": "Data Length", "value":', out.length.toString(), '},'
             )
           );
   }

@@ -27,6 +27,7 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     'attributes(bytes)': FunctionFragment;
     'outSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
+    'renderAttributeKey()': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
   };
@@ -39,6 +40,7 @@ export interface DotMatrixRendererInterface extends utils.Interface {
       | 'attributes'
       | 'outSize'
       | 'render'
+      | 'renderAttributeKey'
       | 'renderRaw'
       | 'supportsInterface',
   ): FunctionFragment;
@@ -62,6 +64,10 @@ export interface DotMatrixRendererInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'outSize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'render', values: [BytesLike]): string;
   encodeFunctionData(
+    functionFragment: 'renderAttributeKey',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: 'renderRaw',
     values: [BytesLike],
   ): string;
@@ -79,6 +85,10 @@ export interface DotMatrixRendererInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'renderAttributeKey',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'supportsInterface',
@@ -127,6 +137,8 @@ export interface DotMatrixRenderer extends BaseContract {
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
+    renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
+
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     supportsInterface(
@@ -147,6 +159,8 @@ export interface DotMatrixRenderer extends BaseContract {
 
   render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
+  renderAttributeKey(overrides?: CallOverrides): Promise<string>;
+
   renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   supportsInterface(
@@ -166,6 +180,8 @@ export interface DotMatrixRenderer extends BaseContract {
     outSize(overrides?: CallOverrides): Promise<BigNumber>;
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+
+    renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
@@ -189,6 +205,8 @@ export interface DotMatrixRenderer extends BaseContract {
     outSize(overrides?: CallOverrides): Promise<BigNumber>;
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
 
     renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -216,6 +234,10 @@ export interface DotMatrixRenderer extends BaseContract {
 
     render(
       out: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    renderAttributeKey(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

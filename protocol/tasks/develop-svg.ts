@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
-import { PathRenderer, SvgUtils } from '../typechain-types';
+import { PixelGrid8Renderer, SvgUtils } from '../typechain-types';
 import { getSvgHotLoadingServer } from '../utils/svg';
 
 task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
@@ -19,7 +19,7 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
 
   const GRAYSCALE_BYTES =
     '0x' +
-    [...Array(256)].reduce(
+    [...Array(64)].reduce(
       (a, c, i) =>
         a +
         BigNumber.from(i).toHexString().slice(2) +
@@ -55,8 +55,8 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     // );
     // const Renderer = (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
 
-    const PixelGridRenderer = await hre.ethers.getContractFactory(
-      'PixelGridRenderer',
+    const PixelGrid8Renderer = await hre.ethers.getContractFactory(
+      'PixelGrid8Renderer',
       {
         libraries: {
           SvgUtils: svgUtils.address,
@@ -69,12 +69,12 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     //   //   SvgUtils: svgUtils.address,
     //   // },
     // });
-    const renderer = (await PixelGridRenderer.deploy()) as PathRenderer;
+    const renderer = (await PixelGrid8Renderer.deploy()) as PixelGrid8Renderer;
     await renderer.deployed();
-    const res = await renderer.renderRaw(GRAYSCALE_BYTES);
+    const res = await renderer.render(GRAYSCALE_BYTES);
     const estimation = await renderer.estimateGas.renderRaw(GRAYSCALE_BYTES);
     console.log('Gas used for call:', estimation.toNumber());
-    return res;
+    return `<img width="500" height="500" src="${res}"></img>`;
   });
 
   console.log(server);

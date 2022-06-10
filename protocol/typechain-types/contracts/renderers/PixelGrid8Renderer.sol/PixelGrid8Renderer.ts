@@ -17,9 +17,9 @@ import type {
   TypedEvent,
   TypedEventFilter,
   TypedListener,
-} from '../../common';
+} from '../../../common';
 
-export interface IRendererInterface extends utils.Interface {
+export interface PixelGrid8RendererInterface extends utils.Interface {
   functions: {
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
@@ -84,12 +84,12 @@ export interface IRendererInterface extends utils.Interface {
   events: {};
 }
 
-export interface IRenderer extends BaseContract {
+export interface PixelGrid8Renderer extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IRendererInterface;
+  interface: PixelGrid8RendererInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

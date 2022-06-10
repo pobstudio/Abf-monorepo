@@ -1,16 +1,20 @@
 import { BigNumber } from 'ethers';
 import produce from 'immer';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { INPUT_CONSTANTS_REGEX } from '../../types/src';
+import {
+  HEX_STRING_REGEX,
+  INPUT_CONSTANTS_REGEX,
+  SEED_REGEX,
+} from '../../types/src';
 import { HUNDRED_PERCENT_BPS } from '../constants';
 import { useAddress } from '../hooks/useAddress';
-import { useDefaultProjectMetadata } from '../hooks/useDefaults';
+import { useSavedOrDefaultProject } from '../hooks/useDefaults';
 import { useHash } from '../hooks/useHash';
 import {
   useRendererMetadata,
   useRendererMetadataStubByProvider,
 } from '../hooks/useRenderer';
-import { useSavedObject } from '../hooks/useSavedObject';
+import { useHydrateSave } from '../hooks/useSavedObject';
 import {
   ProjectMetadata,
   RenderCodeOutputState,
@@ -54,11 +58,15 @@ const ProjectBuilderContext =
 export const ProjectBuilderProvider: React.FC = ({ children }) => {
   const [currentSampleTokenId, setCurrentSampleTokenId] = useState(0);
 
-  const defaultProjectMetadata = useDefaultProjectMetadata();
-
   const [rawProjectMetadata, setRawProjectMetadata] = useState<
     Partial<ProjectMetadata>
-  >(defaultProjectMetadata);
+  >({});
+
+  const initialProjectMetadata = useSavedOrDefaultProject();
+  useEffect(() => {
+    console.log(initialProjectMetadata);
+    setRawProjectMetadata(initialProjectMetadata);
+  }, [initialProjectMetadata]);
 
   const inputConstants = useMemo(() => {
     if (!rawProjectMetadata.inputConstants) {
@@ -84,7 +92,16 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
   }, [rawProjectMetadata]);
 
   const seed = useMemo(() => {
-    return (rawProjectMetadata.seed?.length ?? 0) > 2
+    if (!rawProjectMetadata.seed) {
+      return undefined;
+    }
+    if (rawProjectMetadata.seed.length % 2 === 1) {
+      return undefined;
+    }
+    if (!SEED_REGEX.test(rawProjectMetadata.seed)) {
+      return undefined;
+    }
+    return (rawProjectMetadata.seed.length ?? 0) > 2
       ? rawProjectMetadata.seed
       : undefined;
   }, [rawProjectMetadata]);
@@ -149,20 +166,19 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
 
   const hashedProjectMetadata = useHash(projectMetadata);
 
-  const [savedProjectMetadata, encodedProjectMetadata] =
-    useSavedObject(projectMetadata);
+  const encodedProjectMetadata = useHydrateSave(projectMetadata);
 
-  useEffect(() => {
-    console.log('rawProjectMetadata:', rawProjectMetadata);
-    console.log('savedProjectMetadata:', savedProjectMetadata);
-    console.log('encodedProjectMetadata:', encodedProjectMetadata);
-  }, [rawProjectMetadata, savedProjectMetadata, encodedProjectMetadata]);
+  // useEffect(() => {
+  //   console.log('rawProjectMetadata:', rawProjectMetadata);
+  //   console.log('savedProjectMetadata:', savedProjectMetadata);
+  //   console.log('encodedProjectMetadata:', encodedProjectMetadata);
+  // }, [rawProjectMetadata, savedProjectMetadata, encodedProjectMetadata]);
 
   const stateObject = useMemo(() => {
     return {
       rawProjectMetadata,
       setRawProjectMetadata,
-      projectMetadata: savedProjectMetadata,
+      projectMetadata,
       encodedProjectMetadata,
       currentSampleTokenId,
       setCurrentSampleTokenId,
@@ -170,7 +186,6 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       hashedProjectMetadata,
     };
   }, [
-    savedProjectMetadata,
     currentSampleTokenRenderState,
     currentSampleTokenId,
     rawProjectMetadata,
@@ -294,6 +309,9 @@ export const useModifyProjectMetadata = () => {
 
   const onInputConstantsChange = useCallback(
     (inputConstants: string) => {
+      if (!HEX_STRING_REGEX.test(inputConstants)) {
+        return;
+      }
       setRawProjectMetadata?.(
         produce((u) => {
           u.inputConstants = '0x' + inputConstants.slice(2, 18);
@@ -305,6 +323,9 @@ export const useModifyProjectMetadata = () => {
 
   const onSeedChange = useCallback(
     (seed: string) => {
+      if (!HEX_STRING_REGEX.test(seed)) {
+        return;
+      }
       setRawProjectMetadata?.(
         produce((u) => {
           u.seed = '0x' + seed.slice(2, 24);

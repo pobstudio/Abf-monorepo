@@ -15,8 +15,7 @@ import { Render } from '../../renders';
 import { Label, MultiLineText, Text } from '../../texts';
 
 export const TokenPreview: FC = () => {
-  const { currentSampleTokenRenderState } =
-    useProjectBuilderContext();
+  const { currentSampleTokenRenderState } = useProjectBuilderContext();
   const { rendererMetadataStub, inputConstants: validInputConstants } =
     useProjectMetadata();
   const name = useENSorHex(rendererMetadataStub?.address);
@@ -37,7 +36,9 @@ export const TokenPreview: FC = () => {
           lineHeight: '22px',
           lineBreak: 'anywhere',
           color:
-          currentSampleTokenRenderState.codeOutput?.[1] === 'error' ? '#FF5D5D' : 'black',
+            currentSampleTokenRenderState.codeOutput?.[1] === 'error'
+              ? '#FF5D5D'
+              : 'black',
         }}
       >
         {(
@@ -45,7 +46,10 @@ export const TokenPreview: FC = () => {
             {currentSampleTokenRenderState.codeOutput?.[0]}{' '}
             <span style={{ opacity: 0.2 }}>
               {currentSampleTokenRenderState.codeOutput?.[1] === 'success'
-                ? `${(currentSampleTokenRenderState.codeOutput?.[0].length - 2) / 2} BYTES`
+                ? `${
+                    (currentSampleTokenRenderState.codeOutput?.[0].length - 2) /
+                    2
+                  } BYTES`
                 : '-'}
             </span>
           </>

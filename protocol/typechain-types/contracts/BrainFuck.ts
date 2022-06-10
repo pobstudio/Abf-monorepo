@@ -30,7 +30,9 @@ import type {
 export interface BrainFuckInterface extends utils.Interface {
   functions: {
     'MAX_MINTING_PER_TX()': FunctionFragment;
+    'VERSION()': FunctionFragment;
     'additionalMetadataURI()': FunctionFragment;
+    'airdropMint(address[],uint256)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
     'code()': FunctionFragment;
@@ -54,6 +56,7 @@ export interface BrainFuckInterface extends utils.Interface {
     'setApprovalForAll(address,bool)': FunctionFragment;
     'setIsActive(bool)': FunctionFragment;
     'setRoyalty(address,uint96)': FunctionFragment;
+    'setSeed(bytes)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
     'tokenURI(uint256)': FunctionFragment;
@@ -65,7 +68,9 @@ export interface BrainFuckInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | 'MAX_MINTING_PER_TX'
+      | 'VERSION'
       | 'additionalMetadataURI'
+      | 'airdropMint'
       | 'approve'
       | 'balanceOf'
       | 'code'
@@ -89,6 +94,7 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'setApprovalForAll'
       | 'setIsActive'
       | 'setRoyalty'
+      | 'setSeed'
       | 'supportsInterface'
       | 'symbol'
       | 'tokenURI'
@@ -101,9 +107,14 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'MAX_MINTING_PER_TX',
     values?: undefined,
   ): string;
+  encodeFunctionData(functionFragment: 'VERSION', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'additionalMetadataURI',
     values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'airdropMint',
+    values: [string[], BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'approve',
@@ -170,6 +181,7 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'setRoyalty',
     values: [string, BigNumberish],
   ): string;
+  encodeFunctionData(functionFragment: 'setSeed', values: [BytesLike]): string;
   encodeFunctionData(
     functionFragment: 'supportsInterface',
     values: [BytesLike],
@@ -196,8 +208,13 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'MAX_MINTING_PER_TX',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'VERSION', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'additionalMetadataURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'airdropMint',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -253,6 +270,7 @@ export interface BrainFuckInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'setRoyalty', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSeed', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'supportsInterface',
     data: BytesLike,
@@ -362,7 +380,15 @@ export interface BrainFuck extends BaseContract {
   'functions': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    VERSION(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
+
+    airdropMint(
+      to: string[],
+      numMintsEach: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
 
     approve(
       to: string,
@@ -456,6 +482,11 @@ export interface BrainFuck extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
+    setSeed(
+      _seed: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -485,7 +516,15 @@ export interface BrainFuck extends BaseContract {
 
   MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
+  VERSION(overrides?: CallOverrides): Promise<BigNumber>;
+
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
+
+  airdropMint(
+    to: string[],
+    numMintsEach: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
 
   approve(
     to: string,
@@ -576,6 +615,11 @@ export interface BrainFuck extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
+  setSeed(
+    _seed: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
   supportsInterface(
     interfaceId: BytesLike,
     overrides?: CallOverrides,
@@ -602,7 +646,15 @@ export interface BrainFuck extends BaseContract {
   'callStatic': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
+    VERSION(overrides?: CallOverrides): Promise<BigNumber>;
+
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
+
+    airdropMint(
+      to: string[],
+      numMintsEach: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     approve(
       to: string,
@@ -688,6 +740,8 @@ export interface BrainFuck extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    setSeed(_seed: BytesLike, overrides?: CallOverrides): Promise<void>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -759,7 +813,15 @@ export interface BrainFuck extends BaseContract {
   'estimateGas': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
+    VERSION(overrides?: CallOverrides): Promise<BigNumber>;
+
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
+
+    airdropMint(
+      to: string[],
+      numMintsEach: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
 
     approve(
       to: string,
@@ -853,6 +915,11 @@ export interface BrainFuck extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
+    setSeed(
+      _seed: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -885,8 +952,16 @@ export interface BrainFuck extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    VERSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     additionalMetadataURI(
       overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    airdropMint(
+      to: string[],
+      numMintsEach: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
@@ -981,6 +1056,11 @@ export interface BrainFuck extends BaseContract {
     setRoyalty(
       newReceiver: string,
       newRoyaltyFraction: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setSeed(
+      _seed: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 

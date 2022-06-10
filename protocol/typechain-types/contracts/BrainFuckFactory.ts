@@ -70,6 +70,7 @@ export declare namespace BrainFuckFactory {
 
 export interface BrainFuckFactoryInterface extends utils.Interface {
   functions: {
+    'VERSION()': FunctionFragment;
     'addressToProjectId(address)': FunctionFragment;
     'createNFT((string,string,string,bytes,bytes8,bytes,address,uint256,uint256,uint96,bool))': FunctionFragment;
     'projectIdIndex()': FunctionFragment;
@@ -78,12 +79,14 @@ export interface BrainFuckFactoryInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'VERSION'
       | 'addressToProjectId'
       | 'createNFT'
       | 'projectIdIndex'
       | 'projectIdToAddress',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'VERSION', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'addressToProjectId',
     values: [string],
@@ -101,6 +104,7 @@ export interface BrainFuckFactoryInterface extends utils.Interface {
     values: [BigNumberish],
   ): string;
 
+  decodeFunctionResult(functionFragment: 'VERSION', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'addressToProjectId',
     data: BytesLike,
@@ -161,6 +165,8 @@ export interface BrainFuckFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    VERSION(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     addressToProjectId(
       arg0: string,
       overrides?: CallOverrides,
@@ -178,6 +184,8 @@ export interface BrainFuckFactory extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
   };
+
+  VERSION(overrides?: CallOverrides): Promise<BigNumber>;
 
   addressToProjectId(
     arg0: string,
@@ -197,6 +205,8 @@ export interface BrainFuckFactory extends BaseContract {
   ): Promise<string>;
 
   callStatic: {
+    VERSION(overrides?: CallOverrides): Promise<BigNumber>;
+
     addressToProjectId(
       arg0: string,
       overrides?: CallOverrides,
@@ -227,6 +237,8 @@ export interface BrainFuckFactory extends BaseContract {
   };
 
   estimateGas: {
+    VERSION(overrides?: CallOverrides): Promise<BigNumber>;
+
     addressToProjectId(
       arg0: string,
       overrides?: CallOverrides,
@@ -246,6 +258,8 @@ export interface BrainFuckFactory extends BaseContract {
   };
 
   populateTransaction: {
+    VERSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     addressToProjectId(
       arg0: string,
       overrides?: CallOverrides,

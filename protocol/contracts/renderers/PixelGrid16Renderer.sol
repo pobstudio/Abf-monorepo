@@ -10,7 +10,7 @@ import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 contract PixelGrid16Renderer is IRenderer, ERC165 {
   using Strings for uint256;
 
-  string rectPrefix = '<rect width="1" height="1" ';
+  string rectPrefix = '<rect width="1.05" height="1.05" ';
   string rectSuffix = '" />';
 
   string[256] rects = [
@@ -290,6 +290,10 @@ contract PixelGrid16Renderer is IRenderer, ERC165 {
     return "";
   }
 
+  function renderAttributeKey() external override pure returns (string memory) {
+    return "image";
+  }
+
   function renderRaw(bytes calldata out) public override view returns (string memory) {
     string memory content = '';
     for (uint i = 0; i < 256; ++i) {
@@ -307,7 +311,7 @@ contract PixelGrid16Renderer is IRenderer, ERC165 {
   function render(bytes calldata out) external override view returns (string memory) {
     return string(
       abi.encodePacked(
-        'data:application/json;base64,',
+        'data:image/svg+xml;base64,',
         Base64.encode(bytes(renderRaw(out))) 
       )
     );

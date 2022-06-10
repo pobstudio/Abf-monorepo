@@ -36,8 +36,9 @@ library BrainFuckURIConstructor {
     function tokenURI(uint256 tokenId, string memory name, bytes memory seed, bytes8 constants, bytes memory code, IRenderer renderer) public view returns (string memory) {
       string memory tokenName = string(abi.encodePacked(name, " #", tokenId.toString()));
       bytes memory out = BrainFuckVM.runBrainFuckCode(code, abi.encodePacked(tokenSeed(seed, tokenId, constants)));
-      string memory image = renderer.render(out);
 
+      string memory image = renderer.render(out);
+      
       return string(
             abi.encodePacked(
                 'data:application/json;base64,', 
@@ -45,7 +46,7 @@ library BrainFuckURIConstructor {
                     abi.encodePacked(
                         '{"name":"',
                         tokenName,
-                        '","description": "Generative art written in BrainFuck.", "image": "',
+                        '","description": "Generative art written in BrainFuck.", "', renderer.renderAttributeKey(), '": "',
                         image,
                         '", "aspect_ratio":1, "attributes": [', renderer.attributes(out), '{"trait_type":"Renderer","value":"',
                           uint256(uint160(address(renderer))).toHexString(),

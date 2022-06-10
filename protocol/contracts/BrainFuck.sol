@@ -63,12 +63,18 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       isActive = _isActive; 
     }
 
+    function setSeed(bytes calldata _seed) public onlyOwner {
+      require(seed.length == 0, "BrainFuck: Seed is already set");
+      seed = _seed; 
+    }
+
     function contractURI() public view returns (string memory) {
       return BrainFuckURIConstructor.contractURI(name(), address(this)); 
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-      require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+      require(_exists(tokenId), "BrainFuck: URI query for nonexistent token");
+      require(seed.length != 0, "BrainFuck: Seed is not set yet");
       return BrainFuckURIConstructor.tokenURI(tokenId, name(), seed, constants, code, renderer);
     }
     
@@ -84,10 +90,16 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
 
     function mint(address to, uint256 numMints) onlyIsActive onlyUnderMaxSupply(numMints) public payable nonReentrant {
       require(numMints <= MAX_MINTING_PER_TX, "exceeded number of mint in single call");
-      _safeMint(to, numMints);
+      _mint(to, numMints, '', false);
       uint256 totalPrice = price * numMints;
       require(totalPrice <= msg.value, "insufficient funds to pay for mint");
       owner().call{value: totalPrice }("");
       msg.sender.call{value: msg.value - totalPrice }("");
+    }
+
+    function airdropMint(address[] memory to, uint256 numMintsEach) onlyOwner onlyUnderMaxSupply(to.length * numMintsEach) public {
+      for (uint i = 0; i < to.length; ++i) {
+        _mint(to[i], numMintsEach, '', false);
+      }
     }
 }

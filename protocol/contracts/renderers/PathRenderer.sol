@@ -23,10 +23,14 @@ contract PathRenderer is IRenderer, ERC165 {
     return "";
   }
 
+  function renderAttributeKey() external override pure returns (string memory) {
+    return "image";
+  }
+
   function renderRaw(bytes calldata out) public override pure returns (string memory) {
     string memory content = '';
     uint i = 0;
-    while(out[i * 3] != 0x00) {
+    while((i * 3 + 2) < out.length) {
       if (out[i * 3] == 0x4C || out[i * 3] == 0x4D || out[i * 3] == 0x6C || out[i * 3] == 0x6D) {
         content = string(abi.encodePacked(content, ' ', out[i * 3], (uint(uint8(out[i * 3 + 1])) + 16).toString(), ' ', (uint(uint8(out[i * 3 + 2])) + 16).toString()));
       }
@@ -43,20 +47,16 @@ contract PathRenderer is IRenderer, ERC165 {
   function render(bytes calldata out) external override pure returns (string memory) {
     return string(
       abi.encodePacked(
-        'data:application/json;base64,',
+        'data:image/svg+xml;base64,',
         Base64.encode(bytes(renderRaw(out))) 
       )
     );
   }
 
   function attributes(bytes calldata out) external override pure returns (string memory) {
-    uint i = 0;
-    while(out[i] != 0x00) {
-      i++;
-    }
       return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', i.toString(), '},'
+              '{"trait_type": "Data Length", "value":', (out.length / 3).toString(), '},'
             )
           );
   }

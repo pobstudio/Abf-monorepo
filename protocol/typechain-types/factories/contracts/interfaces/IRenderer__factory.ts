@@ -75,6 +75,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'renderAttributeKey',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'bytes',

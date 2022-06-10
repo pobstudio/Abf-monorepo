@@ -27,6 +27,7 @@ export type { DotMatrixRenderer } from './contracts/renderers/DotMatrixRenderer'
 export type { PathRenderer } from './contracts/renderers/PathRenderer';
 export type { PixelGrid16Renderer } from './contracts/renderers/PixelGrid16Renderer';
 export type { PixelGrid24Renderer } from './contracts/renderers/PixelGrid24Renderer';
+export type { PixelGrid8Renderer } from './contracts/renderers/PixelGrid8Renderer';
 export type { ERC721A } from './contracts/tokens/ERC721A';
 export * as factories from './factories';
 export { Ownable__factory } from './factories/@openzeppelin/contracts/access/Ownable__factory';
@@ -53,6 +54,7 @@ export { DotMatrixRenderer__factory } from './factories/contracts/renderers/DotM
 export { PathRenderer__factory } from './factories/contracts/renderers/PathRenderer__factory';
 export { PixelGrid16Renderer__factory } from './factories/contracts/renderers/PixelGrid16Renderer__factory';
 export { PixelGrid24Renderer__factory } from './factories/contracts/renderers/PixelGrid24Renderer__factory';
+export { PixelGrid8Renderer__factory } from './factories/contracts/renderers/PixelGrid8Renderer__factory';
 export { ERC721A__factory } from './factories/contracts/tokens/ERC721A__factory';
 export type { openzeppelin };
 export type { contracts };

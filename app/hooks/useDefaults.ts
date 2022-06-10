@@ -1,6 +1,7 @@
 import { deployments } from '@abf-monorepo/protocol';
 import { utils } from 'ethers';
-import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
 import { ProjectMetadata } from '../types';
 
@@ -13,7 +14,7 @@ export const useDefaultSeed = () => {
   }, []);
 };
 
-export const DEFAULT_RENDERER_KEY = 'pixelGrid16';
+export const DEFAULT_RENDERER_KEY = 'pixelGrid8';
 export const DEFAULT_INPUT_CONSTANTS = '0x'.padEnd(18, '0');
 
 export const useDefaultProjectMetadata = (): Partial<ProjectMetadata> => {
@@ -28,4 +29,37 @@ export const useDefaultProjectMetadata = (): Partial<ProjectMetadata> => {
       royaltyFractionInBps: 0,
     };
   }, [seed]);
+};
+
+export const useSavedOrDefaultProject = (): Partial<ProjectMetadata> => {
+  const defaultProjectMetadata = useDefaultProjectMetadata();
+
+  const router = useRouter();
+
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  const [savedProjectMetadata, setSavedProjectMetadata] = useState<
+    Partial<ProjectMetadata>
+  >({});
+  useEffect(() => {
+    if (hasHydrated) {
+      return;
+    }
+    if (typeof router.query.save !== 'string') {
+      return;
+    }
+    try {
+      const save = router.query.save;
+      const obj = JSON.parse(atob(save));
+      if (Object.keys(obj).length !== 0) {
+        setHasHydrated(true);
+        setSavedProjectMetadata(obj as Partial<ProjectMetadata>);
+        return;
+      }
+    } catch (e) {}
+    setHasHydrated(true);
+    setSavedProjectMetadata(defaultProjectMetadata);
+  }, [router]);
+
+  return useMemo(() => savedProjectMetadata, [savedProjectMetadata]);
 };

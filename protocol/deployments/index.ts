@@ -23,22 +23,23 @@ export const deployments: Deployments = {
   },
   5: {
     core: {
-      factory: '0x7D43B6eC231b3310100643f80C7f060a4Cfbb01a',
+      factory: '0x75A810958A04D82cDAFFcFa8e70026D1086Ea8C2',
     },
     renderers: {
-      debug: '0x97b235246D96df453173c642B2e442d9F675947E',
-      dotMatrix: '0x49C44cd6A9d998372472ce66540659E1680BF50e',
-      path: '0xC33462Bf4c17d2239104D0617900Ac606a3e197c',
-      pixelGrid16: '0x6d336181E672632Ef27Db957b5C2a3C611e7e56C',
-      pixelGrid24: '0x8dfEd53aFEd3e57Cee3B5135F5fc3EE5100d3207',
+      debug: '0x76cbD284668E16A9e5801DdB0237FfB8b215C7CB',
+      dotMatrix: '0xE04d7b5D9E6634A0EF7894C80303E3740CEE5cb3',
+      path: '0xA6BAaeE7efAA91F9Bae3Af5F0d13623D7f130F3B',
+      pixelGrid8: '0x4d50D9E57faa76Ba0C9DE333fbfa048736991e6a',
+      pixelGrid16: '0x17f52368fCae0550c0cA7F64C06B13b8e0fEc459',
+      pixelGrid24: '0x2e95494A484a83E615E3540EC7C66364DD4A9867',
     },
     registries: {
-      renderer: '0xD056E4F9c2624f82A470427Ee754F355acf0feae',
+      renderer: '0x3E62fFD8499a810f8CAE426640369F54eed55c16',
     },
     libraries: {
-      vm: '0xeaa088ebcD550B3C2C7fd1F996a9e3853CA0Dd1b',
-      uriConstructor: '0x89Ceac7c868779719E269638f36020CE17829D79',
-      svgUtils: '0xA1aFC0031396E53C73D78cd18CaE849088AB20ec',
+      vm: '0xD83Be186AE2021c5BBd9C1b22025aeDc4d90deba',
+      uriConstructor: '0x3Dbc4D243Cd20ff99D640DEA8D5b361106F50bB5',
+      svgUtils: '0x8C4F73B85B4B8fA3AAccE05a1Bf7f2820E3E7bdd',
     },
     interfaceID: {
       renderer: '0x100045ab',

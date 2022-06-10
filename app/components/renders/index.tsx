@@ -61,7 +61,6 @@ export const Render: FC<{
       )}`;
     return `data:image/svg+xml;utf8,${encodeURIComponent(rawSvgSrc)}`;
   }, [rawSvgSrc]);
-  console.log('rawSvgSrc', rawSvgSrc, imgSrc);
   return (
     <RenderContainer>
       <RenderImage width={'100%'} height={'100%'} src={imgSrc} />

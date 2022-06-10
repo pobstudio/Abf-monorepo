@@ -6,3 +6,4 @@ export { DotMatrixRenderer__factory } from './DotMatrixRenderer__factory';
 export { PathRenderer__factory } from './PathRenderer__factory';
 export { PixelGrid16Renderer__factory } from './PixelGrid16Renderer__factory';
 export { PixelGrid24Renderer__factory } from './PixelGrid24Renderer__factory';
+export { PixelGrid8Renderer__factory } from './PixelGrid8Renderer__factory';

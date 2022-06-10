@@ -6,3 +6,4 @@ export type { DotMatrixRenderer } from './DotMatrixRenderer';
 export type { PathRenderer } from './PathRenderer';
 export type { PixelGrid16Renderer } from './PixelGrid16Renderer';
 export type { PixelGrid24Renderer } from './PixelGrid24Renderer';
+export type { PixelGrid8Renderer } from './PixelGrid8Renderer';

@@ -16,8 +16,11 @@ export const RendererParametersSelector: FC = () => {
   const { onRendererChange, onInputConstantsChange, onSeedChange } =
     useModifyProjectMetadata();
   const { renderer, inputConstants, seed } = useRawProjectMetadata();
-  const { rendererMetadataStub, inputConstants: validInputConstants } =
-    useProjectMetadata();
+  const {
+    rendererMetadataStub,
+    seed: validSeed,
+    inputConstants: validInputConstants,
+  } = useProjectMetadata();
   return (
     <InteractiveDetailRowsContainer>
       <DetailTitleAnchorRow>
@@ -53,6 +56,7 @@ export const RendererParametersSelector: FC = () => {
       <DetailRow>
         {['VALID RENDERER', !!rendererMetadataStub ? 'TRUE' : 'FALSE']}
       </DetailRow>
+      <DetailRow>{['VALID SEED', !!validSeed ? 'TRUE' : 'FALSE']}</DetailRow>
       <DetailRow>
         {['VALID INPUT CONSTANTS', !!validInputConstants ? 'TRUE' : 'FALSE']}
       </DetailRow>

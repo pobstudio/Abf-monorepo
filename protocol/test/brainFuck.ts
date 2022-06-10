@@ -184,6 +184,33 @@ describe('BrainFuck', function () {
   });
 
   describe('mint', () => {
+    beforeEach(async () => {});
+    it('correctly mints quantity for each address', async () => {
+      await brainFuck
+        .connect(owner)
+        .airdropMint([await owner.getAddress(), await rando.getAddress()], 5);
+      expect(await brainFuck.ownerOf(0)).to.eq(await owner.getAddress());
+      expect(await brainFuck.ownerOf(4)).to.eq(await owner.getAddress());
+      expect(await brainFuck.ownerOf(5)).to.eq(await rando.getAddress());
+      expect(await brainFuck.ownerOf(9)).to.eq(await rando.getAddress());
+    });
+    it('rando can not call airdropMint', async () => {
+      await expect(
+        brainFuck
+          .connect(rando)
+          .airdropMint([await owner.getAddress(), await rando.getAddress()], 5),
+      ).to.revertedWith('Ownable: caller is not the owner');
+    });
+    it('airdropMint can not exceed total allotted supply', async () => {
+      await expect(
+        brainFuck
+          .connect(owner)
+          .airdropMint([await owner.getAddress(), await rando.getAddress()], 6),
+      ).to.revertedWith('exceeded max supply');
+    });
+  });
+
+  describe('mint', () => {
     beforeEach(async () => {
       await brainFuck.connect(owner).setIsActive(true);
     });
@@ -274,6 +301,51 @@ describe('BrainFuck', function () {
         (a: any) => a.trait_type === 'Data Length',
       );
       expect(dataLengthAttribute?.value).to.eq(13);
+    });
+  });
+
+  describe('seed', () => {
+    beforeEach(async () => {
+      const BrainFuck = await ethers.getContractFactory('BrainFuck', {
+        libraries: {
+          BrainFuckURIConstructor: brainFuckURIConstructor.address,
+        },
+      });
+
+      brainFuck = (await BrainFuck.deploy(
+        NAME,
+        SYMBOL,
+        TEST_URI,
+        '0x',
+        CONSTANTS,
+        CODE,
+        debugRenderer.address,
+        MINTING_SUPPLY,
+        PRICE,
+      )) as BrainFuck;
+      await brainFuck.deployed();
+      await brainFuck.connect(owner).setIsActive(true);
+    });
+    it('if seed is still zero, tokenURI reverts as unrevealed.', async function () {
+      await brainFuck.mint(await owner.getAddress(), 1, { value: PRICE });
+      await expect(brainFuck.tokenURI(0)).to.revertedWith(
+        'BrainFuck: Seed is not set yet',
+      );
+    });
+    it('if seed is zero, allow seed to be set by owner later', async function () {
+      await brainFuck.setSeed(SEED);
+      expect(await brainFuck.seed()).to.eq(SEED);
+    });
+    it('cant setSeed after seed was set', async () => {
+      await brainFuck.setSeed(SEED);
+      await expect(brainFuck.setSeed(SEED)).to.revertedWith(
+        'BrainFuck: Seed is already set',
+      );
+    });
+    it('cant setSeed if rando', async () => {
+      await expect(brainFuck.connect(rando).setSeed(SEED)).to.revertedWith(
+        'Ownable: caller is not the owner',
+      );
     });
   });
 

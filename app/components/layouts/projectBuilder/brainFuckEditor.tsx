@@ -2,7 +2,6 @@ import { FC } from 'react';
 import {
   useModifyProjectMetadata,
   useProjectMetadata,
-  useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
 import {
   DetailTitleAnchorRow,

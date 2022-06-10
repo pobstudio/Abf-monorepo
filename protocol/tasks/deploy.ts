@@ -8,6 +8,7 @@ import {
   PathRenderer,
   PixelGrid16Renderer,
   PixelGrid24Renderer,
+  PixelGrid8Renderer,
   RendererRegistry,
   SvgUtils,
 } from '../typechain-types';
@@ -111,6 +112,23 @@ task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
 
   console.log('PathRenderer address deployed to:', pathRenderer.address);
 
+  const PixelGrid8Renderer = await hre.ethers.getContractFactory(
+    'PixelGrid8Renderer',
+    {
+      libraries: {
+        SvgUtils: svgUtils.address,
+      },
+    },
+  );
+  const pixelGrid8Renderer =
+    (await PixelGrid8Renderer.deploy()) as PixelGrid8Renderer;
+  await pixelGrid8Renderer.deployed();
+
+  console.log(
+    'PixelGrid8Renderer address deployed to:',
+    pixelGrid8Renderer.address,
+  );
+
   const PixelGrid16Renderer = await hre.ethers.getContractFactory(
     'PixelGrid16Renderer',
     {
@@ -151,6 +169,9 @@ task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
     await rendererRegistry.registerRenderer(dotMatrixRenderer.address)
   ).wait();
   await (await rendererRegistry.registerRenderer(pathRenderer.address)).wait();
+  await (
+    await rendererRegistry.registerRenderer(pixelGrid8Renderer.address)
+  ).wait();
   await (
     await rendererRegistry.registerRenderer(pixelGrid16Renderer.address)
   ).wait();

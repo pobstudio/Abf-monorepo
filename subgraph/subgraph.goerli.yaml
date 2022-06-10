@@ -6,9 +6,9 @@ dataSources:
     name: RendererRegistry 
     network: goerli
     source:
-      address: "0xD056E4F9c2624f82A470427Ee754F355acf0feae"
+      address: "0x3E62fFD8499a810f8CAE426640369F54eed55c16"
       abi: RendererRegistry
-      startBlock: 6948310 
+      startBlock: 7028237 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
