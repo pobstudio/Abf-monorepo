@@ -10,14 +10,15 @@ import { HUNDRED_PERCENT_BPS } from '../constants';
 import { useAddress } from '../hooks/useAddress';
 import {
   useDefaultProjectMetadata,
+  useMinimizedProjectMetadata,
   useSavedOrDefaultProject,
 } from '../hooks/useDefaults';
 import { useHash } from '../hooks/useHash';
+import { useHydrateSave } from '../hooks/useHydrateSave';
 import {
   useRendererMetadata,
   useRendererMetadataStubByProvider,
 } from '../hooks/useRenderer';
-import { useHydrateSave } from '../hooks/useSavedObject';
 import {
   ProjectMetadata,
   RenderCodeOutputState,
@@ -183,7 +184,8 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
 
   const hashedProjectMetadata = useHash(projectMetadata);
 
-  const encodedProjectMetadata = useHydrateSave(projectMetadata);
+  const minimizedProjectMetadata = useMinimizedProjectMetadata(projectMetadata);
+  const encodedProjectMetadata = useHydrateSave(minimizedProjectMetadata);
 
   // useEffect(() => {
   //   console.log('rawProjectMetadata:', rawProjectMetadata);

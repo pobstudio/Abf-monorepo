@@ -16,6 +16,13 @@ export const useDefaultSeed = (refresh?: any) => {
 
 export const DEFAULT_RENDERER_KEY = 'pixelGrid8';
 export const DEFAULT_INPUT_CONSTANTS = '0x'.padEnd(18, '0');
+export const DEFAULT_PROJECT_METADATA_STUB: Partial<ProjectMetadata> = {
+  inputConstants: DEFAULT_INPUT_CONSTANTS,
+  renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],
+  isActive: false,
+  additionalMetadataURI: '',
+  royaltyFractionInBps: 0,
+};
 
 export const useDefaultProjectMetadata = (
   refresh?: any,
@@ -23,14 +30,29 @@ export const useDefaultProjectMetadata = (
   const seed = useDefaultSeed(refresh);
   return useMemo(() => {
     return {
+      ...DEFAULT_PROJECT_METADATA_STUB,
       seed: seed,
-      inputConstants: DEFAULT_INPUT_CONSTANTS,
-      renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],
-      isActive: false,
-      additionalMetadataURI: '',
-      royaltyFractionInBps: 0,
     };
   }, [seed]);
+};
+
+export const useMinimizedProjectMetadata = (
+  metadata: Partial<ProjectMetadata>,
+) => {
+  return useMemo(() => {
+    const minimizedObject: any = {};
+    for (const key of Object.keys(metadata)) {
+      if (
+        (metadata as any)[key] !== (DEFAULT_PROJECT_METADATA_STUB as any)[key]
+      ) {
+        if (key === 'rendererMetadataStub') {
+          continue;
+        }
+        minimizedObject[key] = (metadata as any)[key];
+      }
+    }
+    return minimizedObject as Partial<ProjectMetadata>;
+  }, [metadata]);
 };
 
 export const useSavedOrDefaultProject = (): Partial<ProjectMetadata> => {
@@ -55,7 +77,10 @@ export const useSavedOrDefaultProject = (): Partial<ProjectMetadata> => {
       const obj = JSON.parse(atob(save));
       if (Object.keys(obj).length !== 0) {
         setHasHydrated(true);
-        setSavedProjectMetadata(obj as Partial<ProjectMetadata>);
+        setSavedProjectMetadata({
+          ...defaultProjectMetadata,
+          ...(obj as Partial<ProjectMetadata>),
+        });
         return;
       }
     } catch (e) {}
