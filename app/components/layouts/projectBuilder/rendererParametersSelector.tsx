@@ -9,8 +9,10 @@ import {
   DetailTitleAnchorRow,
   InteractiveDetailRowsContainer,
 } from '../../details/rows';
+import { Flex } from '../../flexs';
 import { InputWell, TextInput } from '../../inputs/input';
-import { Text } from '../../texts';
+import { MultiLineText, Text, TextAnchor } from '../../texts';
+import { Tooltip } from '../../tooltip';
 
 export const RendererParametersSelector: FC = () => {
   const { onRendererChange, onInputConstantsChange, onSeedChange } =
@@ -24,10 +26,19 @@ export const RendererParametersSelector: FC = () => {
   return (
     <InteractiveDetailRowsContainer>
       <DetailTitleAnchorRow>
-        {['CONFIGURE RENDERING PARAMETERS', `SPEC`]}
+        {['CONFIGURE RENDERING PARAMETERS', `DOCS`]}
       </DetailTitleAnchorRow>
       <InputWell>
-        <Text>RENDERER</Text>
+        <Flex>
+          <Text style={{ marginRight: 6 }}>RENDERER</Text>
+          <Tooltip direction={'left'}>
+            <MultiLineText>
+              Renderers are on-chain contracts that interpret bytes into svg or
+              html. Valid renderers for ABF must abide to the Renderer{' '}
+              <TextAnchor>Spec</TextAnchor>.
+            </MultiLineText>
+          </Tooltip>
+        </Flex>
         <TextInput
           style={{ textAlign: 'right' }}
           value={renderer ?? ''}
@@ -36,7 +47,15 @@ export const RendererParametersSelector: FC = () => {
         />
       </InputWell>
       <InputWell>
-        <Text>SEED</Text>
+        <Flex>
+          <Text style={{ marginRight: 6 }}>SEED</Text>
+          <Tooltip direction={'left'}>
+            <MultiLineText>
+              Seed provides a determinstic source of random for generating the
+              input bytes provided to Brainfuck code.
+            </MultiLineText>
+          </Tooltip>
+        </Flex>
         <TextInput
           value={seed ?? ''}
           onChange={(e) => onSeedChange(e.target.value)}
@@ -45,7 +64,16 @@ export const RendererParametersSelector: FC = () => {
         />
       </InputWell>
       <InputWell>
-        <Text>INPUT CONSTANTS</Text>
+        <Flex>
+          <Text style={{ marginRight: 6 }}>INPUT CONSTANTS</Text>
+          <Tooltip direction={'left'}>
+            <MultiLineText>
+              Input constants are provided as the first 8 bytes of input to
+              BrainFuck code; after these 8 bytes, the input will be random,
+              generated via the seed.
+            </MultiLineText>
+          </Tooltip>
+        </Flex>
         <TextInput
           value={inputConstants ?? ''}
           onChange={(e) => onInputConstantsChange(e.target.value)}
@@ -56,6 +84,9 @@ export const RendererParametersSelector: FC = () => {
       <DetailRow>
         {['VALID RENDERER', !!rendererMetadataStub ? 'TRUE' : 'FALSE']}
       </DetailRow>
+      {!!rendererMetadataStub?.label && (
+        <DetailRow>{['RENDERER LABEL', rendererMetadataStub.label]}</DetailRow>
+      )}
       <DetailRow>{['VALID SEED', !!validSeed ? 'TRUE' : 'FALSE']}</DetailRow>
       <DetailRow>
         {['VALID INPUT CONSTANTS', !!validInputConstants ? 'TRUE' : 'FALSE']}

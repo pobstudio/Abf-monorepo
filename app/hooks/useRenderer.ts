@@ -1,10 +1,13 @@
 import { deployments } from '@abf-monorepo/protocol';
 import { gql, useQuery } from '@apollo/client';
 import { BigNumber, utils } from 'ethers';
+import findKey from 'lodash/findKey';
 import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
 import { RendererMetadata, RendererMetadataStub } from '../types';
+import { useAddress } from './useAddress';
 import { useRendererContract } from './useContracts';
+import { useENSorHex } from './useENS';
 import { useLastTruthyValue } from './useLastTruthyValue';
 
 export const RENDERER_PAGE_SIZE = 100;
@@ -32,6 +35,21 @@ const GET_RENDERER_METADATA_BY_ADDRESS = gql`
     }
   }
 `;
+
+export const useRendererLabel = (address: string | undefined) => {
+  const normalizedRendererAddress = useAddress(address);
+  const rendererKey = useMemo(() => {
+    if (!address) {
+      return undefined;
+    }
+    return findKey(
+      deployments[CHAIN_ID].renderers,
+      (r) => r === normalizedRendererAddress,
+    );
+  }, [address]);
+  const ensOrHex = useENSorHex(address);
+  return useMemo(() => rendererKey ?? ensOrHex, [ensOrHex, rendererKey]);
+};
 
 // TODO: make it page query based.
 export const useAllRendererMetadata = (): RendererMetadata[] => {
@@ -67,6 +85,7 @@ export const useRendererMetadata = (address: string | undefined) => {
   });
 
   const data = useLastTruthyValue(results.data);
+  const label = useRendererLabel(address);
 
   return useMemo(() => {
     if (!data) {
@@ -85,8 +104,9 @@ export const useRendererMetadata = (address: string | undefined) => {
       outSize: BigNumber.from(r.outSize),
       additionalMetadataURI: r.additionalMetadataURI,
       registeredAt: parseInt(r.registeredAt),
+      label,
     } as RendererMetadata;
-  }, [data]);
+  }, [data, label]);
 };
 
 export const useRendererMetadataStubByProvider = (
@@ -97,6 +117,8 @@ export const useRendererMetadataStubByProvider = (
   const [rendererMetadataStub, setRendererMetadataStub] = useState<
     RendererMetadataStub | undefined
   >(undefined);
+
+  const label = useRendererLabel(address);
 
   useEffect(() => {
     if (!address) {
@@ -127,6 +149,7 @@ export const useRendererMetadataStubByProvider = (
           address,
           additionalMetadataURI,
           outSize,
+          label,
         });
       } catch (e) {
         return;
@@ -134,7 +157,7 @@ export const useRendererMetadataStubByProvider = (
     };
 
     getRendererMetadataStub();
-  }, [address, renderer]);
+  }, [address, label, renderer]);
 
   return rendererMetadataStub;
 };

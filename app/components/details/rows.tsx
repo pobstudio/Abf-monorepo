@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { FlexEnds } from '../flexs';
 import { Label, LabelAnchor, Text, TextAnchor } from '../texts';

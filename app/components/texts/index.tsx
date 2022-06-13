@@ -35,3 +35,8 @@ export const TextAnchor = styled.a`
   font-size: 12px;
   line-height: 12px;
 `;
+
+export const Code = styled.code`
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0 4px;
+`;

@@ -8,8 +8,10 @@ import {
   DetailTitleAnchorRow,
   InteractiveDetailRowsContainer,
 } from '../../details/rows';
+import { Flex } from '../../flexs';
 import { CheckboxInput, InputWell, NumberInput } from '../../inputs/input';
-import { Text } from '../../texts';
+import { MultiLineText, Text, TextAnchor } from '../../texts';
+import { Tooltip } from '../../tooltip';
 
 export const MintingParametersSelector: FC = () => {
   const {
@@ -32,7 +34,14 @@ export const MintingParametersSelector: FC = () => {
         {['CONFIGURE MINTING PARAMETERS', `SPEC`]}
       </DetailTitleAnchorRow>
       <InputWell>
-        <Text>SUPPLY</Text>
+        <Flex>
+          <Text style={{ marginRight: 6 }}>SUPPLY</Text>
+          <Tooltip direction={'left'}>
+            <MultiLineText>
+              Total supply mintable in this ABF NFT collection.
+            </MultiLineText>
+          </Tooltip>
+        </Flex>
         <NumberInput
           value={mintingSupply ?? ''}
           onChange={(e) => onMintingSupplyChange(e.target.valueAsNumber)}
@@ -41,7 +50,15 @@ export const MintingParametersSelector: FC = () => {
         />
       </InputWell>
       <InputWell>
-        <Text>PRICE</Text>
+        <Flex>
+          <Text style={{ marginRight: 6 }}>PRICE</Text>
+          <Tooltip direction={'left'}>
+            <MultiLineText>
+              Price in ETH for a collector to mint this collection. ABF protocol
+              extracts no fees, all minting profits go to creator.
+            </MultiLineText>
+          </Tooltip>
+        </Flex>
         <NumberInput
           value={priceInEth ?? ''}
           onChange={(e) => onPriceChange(e.target.valueAsNumber)}
@@ -53,7 +70,17 @@ export const MintingParametersSelector: FC = () => {
         </Text>
       </InputWell>
       <InputWell>
-        <Text>SECONDARY MARKET ROYALTY (0-100)</Text>
+        <Flex>
+          <Text style={{ marginRight: 6 }}>
+            SECONDARY MARKET ROYALTY (0-100)
+          </Text>
+          <Tooltip direction={'left'}>
+            <MultiLineText>
+              Set the secondary market royalty fee routed to creator; utilizes{' '}
+              <TextAnchor>EIP2981</TextAnchor>.
+            </MultiLineText>
+          </Tooltip>
+        </Flex>
         <NumberInput
           value={royaltyFractionPercentage ?? ''}
           onChange={(e) => onRoyaltyFractionChange(e.target.valueAsNumber)}
@@ -65,7 +92,16 @@ export const MintingParametersSelector: FC = () => {
         </Text>
       </InputWell>
       <InputWell style={{ justifyContent: 'space-between' }}>
-        <Text>ALLOW MINTING AT CREATION</Text>
+        <Flex>
+          <Text style={{ marginRight: 6 }}>ALLOW MINTING AT CREATION</Text>
+          <Tooltip direction={'left'}>
+            <MultiLineText>
+              If toggled, minting will immediately be available after contract
+              creation. If not toggled, creator can enable minting at a late
+              time.
+            </MultiLineText>
+          </Tooltip>
+        </Flex>
         <CheckboxInput
           isActive={isActive}
           onClick={() => onIsActiveChange(!isActive)}

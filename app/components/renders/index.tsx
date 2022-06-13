@@ -2,6 +2,7 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useRendererContract } from '../../hooks/useContracts';
 import { RenderCodeOutputState, RendererMetadataStub } from '../../types';
+import { OFFLINE_RENDERERS } from '../../utils/renderers';
 
 export const PlaceholderRender = styled.div`
   background: rgba(0, 0, 0, 0.05);
@@ -35,10 +36,26 @@ export const Render: FC<{
   rendererMetadata: RendererMetadataStub | undefined;
 }> = ({ output, rendererMetadata }) => {
   const renderer = useRendererContract(rendererMetadata?.address);
+
   const [rawSvgSrc, setRawSvgSrc] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (output?.[1] !== 'success') {
       return;
+    }
+    if (
+      !!rendererMetadata?.label &&
+      !!OFFLINE_RENDERERS[rendererMetadata.label]
+    ) {
+      console.log('local render');
+      try {
+        const renderRaw = OFFLINE_RENDERERS[rendererMetadata.label].renderRaw(
+          output[0],
+        );
+        setRawSvgSrc(renderRaw);
+        return;
+      } catch (e) {
+        return;
+      }
     }
     if (!renderer) {
       return;
@@ -53,7 +70,7 @@ export const Render: FC<{
     };
 
     getRawSvgSrc();
-  }, [output, renderer]);
+  }, [output, rendererMetadata, renderer]);
   const imgSrc = useMemo(() => {
     if (!rawSvgSrc)
       return `data:image/svg+xml;utf8,${encodeURIComponent(

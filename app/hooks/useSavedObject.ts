@@ -19,4 +19,6 @@ export const useHydrateSave = <T>(obj: T) => {
       },
     );
   }, [encodedObj]);
+
+  return encodedObj;
 };

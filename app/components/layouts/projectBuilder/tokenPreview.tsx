@@ -3,22 +3,17 @@ import {
   useProjectBuilderContext,
   useProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import { useENSorHex } from '../../../hooks/useENS';
-import { getIPFSUrl } from '../../../utils/urls';
-import {
-  DetailAnchorRow,
-  DetailRow,
-  DetailRowsContainer,
-} from '../../details/rows';
-import { FlexEnds } from '../../flexs';
+import { getEtherscanAddressUrl, getIPFSUrl } from '../../../utils/urls';
+import { DetailAnchorRow, DetailRowsContainer } from '../../details/rows';
+import { Flex, FlexEnds } from '../../flexs';
 import { Render } from '../../renders';
-import { Label, MultiLineText, Text } from '../../texts';
+import { Code, Label, LabelAnchor, MultiLineText, Text } from '../../texts';
+import { Tooltip } from '../../tooltip';
 
 export const TokenPreview: FC = () => {
   const { currentSampleTokenRenderState } = useProjectBuilderContext();
   const { rendererMetadataStub, inputConstants: validInputConstants } =
     useProjectMetadata();
-  const name = useENSorHex(rendererMetadataStub?.address);
   return (
     <DetailRowsContainer>
       <FlexEnds>
@@ -26,10 +21,26 @@ export const TokenPreview: FC = () => {
           <strong>PREVIEW</strong>
         </Text>
       </FlexEnds>
-      <Label>INPUT</Label>
+      <FlexEnds>
+        <Label style={{ marginRight: 6 }}>BRAINFUCK CODE INPUT</Label>
+        <Tooltip direction={'right'}>
+          <MultiLineText>
+            Bytes specific to{' '}
+            <strong>token id {currentSampleTokenRenderState.tokenId}</strong>{' '}
+            provided to the BrainFuck code readable via the <Code>,</Code>{' '}
+            opcode.
+          </MultiLineText>
+        </Tooltip>
+      </FlexEnds>
       <Text>{currentSampleTokenRenderState.tokenSeed ?? '-'}</Text>
       <FlexEnds>
-        <Label>OUTPUT (AS BYTES)</Label>
+        <Label>OUTPUT (BYTES)</Label>
+        <Tooltip direction={'right'}>
+          <MultiLineText>
+            Bytes produced by BrainFuck code is inputted to a renderer which
+            interprets as a SVG or HTML.
+          </MultiLineText>
+        </Tooltip>
       </FlexEnds>
       <MultiLineText
         style={{
@@ -56,19 +67,37 @@ export const TokenPreview: FC = () => {
         ) ?? '-'}
       </MultiLineText>
       <FlexEnds>
-        <Label>OUTPUT (AS RENDERED OUTPUT)</Label>
-        <Label>{name}</Label>
+        <Label>OUTPUT (IMAGE)</Label>
+        <LabelAnchor
+          target={'_blank'}
+          href={
+            rendererMetadataStub?.address
+              ? getEtherscanAddressUrl(rendererMetadataStub?.address)
+              : '#'
+          }
+        >
+          {rendererMetadataStub?.label}
+        </LabelAnchor>
       </FlexEnds>
       <Render
         output={currentSampleTokenRenderState.codeOutput}
         rendererMetadata={rendererMetadataStub}
       />
-      <DetailRow>
-        {[
-          'REQUIRED OUTPUT LENGTH',
-          `${rendererMetadataStub?.outSize.toString() ?? '-'} BYTES`,
-        ]}
-      </DetailRow>
+      <FlexEnds>
+        <Flex>
+          <Label style={{ marginRight: 6 }}>REQUIRED OUTPUT LENGTH</Label>
+          <Tooltip direction={'left'}>
+            <MultiLineText>
+              Renderers typically expect an exact amount of output bytes from
+              BrainFuck to correctly render a SVG or HTML; ensure your code
+              output provides the required output length.
+            </MultiLineText>
+          </Tooltip>
+        </Flex>
+        <Text>{`${
+          rendererMetadataStub?.outSize.toString() ?? '-'
+        } BYTES`}</Text>
+      </FlexEnds>
       {!!rendererMetadataStub?.additionalMetadataURI && (
         <DetailAnchorRow
           href={getIPFSUrl(rendererMetadataStub.additionalMetadataURI)}

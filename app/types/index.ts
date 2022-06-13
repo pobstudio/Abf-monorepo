@@ -42,6 +42,7 @@ export interface ProjectMetadata {
 }
 
 export interface RendererMetadataStub {
+  label: string | undefined;
   address: string;
   additionalMetadataURI: string;
   outSize: BigNumber;
