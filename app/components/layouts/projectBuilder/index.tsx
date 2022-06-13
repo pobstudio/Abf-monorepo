@@ -6,7 +6,7 @@ import {
 } from '../../divs/twoColumn';
 import { FlexCenter } from '../../flexs';
 import { BrainFuckEditor } from './brainFuckEditor';
-import { ContractSubmit } from './contractSubmit';
+import { ContractSubmit } from './submit';
 import { Jumbotron } from './jumbotron';
 import { MintingParametersSelector } from './mintingParametersSelector';
 import { RendererParametersSelector } from './rendererParametersSelector';
