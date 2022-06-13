@@ -63,9 +63,6 @@ export const Render: FC<{
     if (output?.[1] !== 'success') {
       return;
     }
-    if (!renderer) {
-      return;
-    }
     const getRawSvgSrc = async () => {
       setErrorMessage(undefined);
       try {
@@ -79,7 +76,7 @@ export const Render: FC<{
             output[0],
           );
           setRawSvgSrc(renderRaw);
-        } else {
+        } else if (!!renderer) {
           setIsRenderLoading(true);
           const renderRaw = await renderer.renderRaw(output[0]);
           setRawSvgSrc(renderRaw);
