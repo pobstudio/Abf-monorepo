@@ -8,7 +8,10 @@ import {
 } from '../../types/src';
 import { HUNDRED_PERCENT_BPS } from '../constants';
 import { useAddress } from '../hooks/useAddress';
-import { useSavedOrDefaultProject } from '../hooks/useDefaults';
+import {
+  useDefaultProjectMetadata,
+  useSavedOrDefaultProject,
+} from '../hooks/useDefaults';
 import { useHash } from '../hooks/useHash';
 import {
   useRendererMetadata,
@@ -32,6 +35,7 @@ export interface ProjectBuilderProviderContext {
   >;
   setCurrentSampleTokenId: React.Dispatch<React.SetStateAction<number>>;
   currentSampleTokenRenderState: SampleTokenRenderState;
+  onRefresh: () => void;
 }
 
 export type ProjectBuilderProviderState = ProjectBuilderProviderContext;
@@ -47,6 +51,7 @@ const initialState: ProjectBuilderProviderState = {
   rawProjectMetadata: {},
   setRawProjectMetadata: () => new Error('func is not set'),
   setCurrentSampleTokenId: () => new Error('func is not set'),
+  onRefresh: () => new Error('func is not set'),
   hashedProjectMetadata: '',
   projectMetadata: {},
   encodedProjectMetadata: '',
@@ -64,10 +69,22 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
 
   const initialProjectMetadata = useSavedOrDefaultProject();
   useEffect(() => {
-    console.log(initialProjectMetadata);
     setRawProjectMetadata(initialProjectMetadata);
   }, [initialProjectMetadata]);
-
+  const [refreshCounter, setRefreshCounter] = useState(0);
+  const refreshedProjectMetadata = useDefaultProjectMetadata(refreshCounter);
+  useEffect(() => {
+    if (!refreshCounter) {
+      return;
+    }
+    setRawProjectMetadata(refreshedProjectMetadata);
+  }, [refreshCounter, refreshedProjectMetadata]);
+  const onRefresh = useCallback(() => {
+    if (!confirm('Just double checking. You sure you want to reset?')) {
+      return;
+    }
+    setRefreshCounter((c) => c + 1);
+  }, []);
   const inputConstants = useMemo(() => {
     if (!rawProjectMetadata.inputConstants) {
       return undefined;
@@ -184,6 +201,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       setCurrentSampleTokenId,
       currentSampleTokenRenderState,
       hashedProjectMetadata,
+      onRefresh,
     };
   }, [
     currentSampleTokenRenderState,

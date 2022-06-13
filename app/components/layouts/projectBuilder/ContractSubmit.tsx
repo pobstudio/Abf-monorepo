@@ -1,7 +1,10 @@
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import { usePriorityAccount } from '../../../connectors/priority';
-import { useProjectMetadata } from '../../../contexts/projectBuilder';
+import {
+  useProjectBuilderContext,
+  useProjectMetadata,
+} from '../../../contexts/projectBuilder';
 import { InteractiveDetailRowsContainer } from '../../details/rows';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { Text } from '../../texts';
@@ -17,10 +20,14 @@ const ErrorText = styled(Text)`
 `;
 
 export const ContractSubmit: FC = () => {
+  const { onRefresh } = useProjectBuilderContext();
   const projectMetadata = useProjectMetadata();
   const errorMessages = useMemo(() => {
     const messages: string[] = [];
-    if (projectMetadata.code === undefined) {
+    if (
+      projectMetadata.code === undefined ||
+      projectMetadata.code.length === 0
+    ) {
       messages.push('WRITE BRAINFUCK: BRAINFUCK CODE REQUIRED');
     }
     if (!projectMetadata.name) {
@@ -66,7 +73,7 @@ export const ContractSubmit: FC = () => {
       <PrimaryButton disabled={!account || errorMessages.length !== 0}>
         {!account ? 'NEED CONNECTED WALLET' : 'CREATE COLLECTION'}
       </PrimaryButton>
-      <TertiaryButton>RESET</TertiaryButton>
+      <TertiaryButton onClick={onRefresh}>RESET</TertiaryButton>
     </InteractiveDetailRowsContainer>
   );
 };

@@ -1,3 +1,4 @@
+import { OUTSIZE_MISMATCH_ERROR_MESSAGE } from '../constants/errors';
 import { OfflineRenderer } from '../types';
 
 export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
@@ -6,7 +7,7 @@ export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
     renderRaw: (out: string) => {
       const prunedOut = out.slice(2);
       if (prunedOut.length / 2 !== 64 * 3) {
-        throw new Error('outSize mismatch');
+        throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
       }
       const rects = [
         'x="0" y="0"',

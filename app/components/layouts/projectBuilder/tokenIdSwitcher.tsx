@@ -24,7 +24,7 @@ export const TokenIdSwitcher: FC = () => {
     if (!mintingSupply) {
       return true;
     }
-    return currentSampleTokenRenderState.tokenId >= mintingSupply;
+    return currentSampleTokenRenderState.tokenId >= mintingSupply - 1;
   }, [mintingSupply, currentSampleTokenRenderState]);
 
   return (

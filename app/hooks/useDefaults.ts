@@ -5,20 +5,22 @@ import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
 import { ProjectMetadata } from '../types';
 
-export const useDefaultSeed = () => {
+export const useDefaultSeed = (refresh?: any) => {
   return useMemo(() => {
     const input = Date.now().toString(16);
     return utils
       .keccak256('0x' + (input.length % 2 === 1 ? '0' : '') + input)
       .slice(0, 24);
-  }, []);
+  }, [refresh]);
 };
 
 export const DEFAULT_RENDERER_KEY = 'pixelGrid8';
 export const DEFAULT_INPUT_CONSTANTS = '0x'.padEnd(18, '0');
 
-export const useDefaultProjectMetadata = (): Partial<ProjectMetadata> => {
-  const seed = useDefaultSeed();
+export const useDefaultProjectMetadata = (
+  refresh?: any,
+): Partial<ProjectMetadata> => {
+  const seed = useDefaultSeed(refresh);
   return useMemo(() => {
     return {
       seed: seed,
