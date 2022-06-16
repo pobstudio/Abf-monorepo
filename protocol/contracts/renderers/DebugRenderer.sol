@@ -8,9 +8,11 @@ import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 contract DebugRenderer is IRenderer, ERC165 {
   using Strings for uint256;
 
-  // function name() external override pure returns (string memory) {
-  //   return "DEBUG";
-  // }
+  address public override owner; 
+
+  constructor() {
+    owner = msg.sender;
+  }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
     return

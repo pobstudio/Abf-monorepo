@@ -89,6 +89,11 @@ describe('BrainFuckVM', function () {
       const code = convertToHexStr('>+++++++++[<++++++>-]<...>++++++++++.');
       const input = '0x0123456789ABCDEF';
       const out = await brainFuckVM.runBrainFuckCode(code, input);
+      const estimation = await brainFuckVM.estimateGas.runBrainFuckCode(
+        code,
+        input,
+      );
+      console.log('Gas used for call:', estimation.toNumber());
       expect(convertHexStrToAscii(out)).to.eq('666\n');
     });
   });

@@ -13,6 +13,7 @@ const ZERO = BigNumber.from(0);
 const ONE_TOKEN_IN_BASE_UNITS = ethers.utils.parseEther('1');
 const ONE_MWEI = ethers.utils.parseUnits('1', 'mwei');
 const ONE_GWEI = ethers.utils.parseUnits('1', 'gwei');
+const HUNDRED_PERCENT_BPS = 10000;
 
 const convertToHexStr = (code: string) => {
   let hexStr = '0x';
@@ -33,7 +34,8 @@ const convertHexStrToAscii = (hexStr: string) => {
 
 const NAME = 'Absolute Brain Fuck';
 const SYMBOL = 'ABF';
-const CONSTANTS = '0xaabbccddeeff0000';
+const CONSTANTS =
+  '0xaabbccddeeff0000aabbccddeeff0000aabbccddeeff0000aabbccddeeff0000';
 const CODE = convertToHexStr(
   '>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.',
 );
@@ -41,6 +43,7 @@ const TEST_URI = 'ipfs://test';
 const SEED = '0xab';
 const MINTING_SUPPLY = BigNumber.from(10);
 const PRICE = ethers.utils.parseEther('0.01');
+const RENDERER_ROYALTY_FRACTION = 0;
 
 describe('BrainFuck', function () {
   // constant values used in transfer tests
@@ -101,6 +104,7 @@ describe('BrainFuck', function () {
       debugRenderer.address,
       MINTING_SUPPLY,
       PRICE,
+      RENDERER_ROYALTY_FRACTION,
     )) as BrainFuck;
     await brainFuck.deployed();
   });
@@ -211,7 +215,32 @@ describe('BrainFuck', function () {
   });
 
   describe('mint', () => {
+    let tippingBrainFuck: BrainFuck;
+
+    const TIPPING_RENDERER_ROYALTY_FRACTION = 1000;
+
     beforeEach(async () => {
+      const BrainFuck = await ethers.getContractFactory('BrainFuck', {
+        libraries: {
+          BrainFuckURIConstructor: brainFuckURIConstructor.address,
+        },
+      });
+
+      tippingBrainFuck = (await BrainFuck.connect(rando).deploy(
+        NAME,
+        SYMBOL,
+        TEST_URI,
+        SEED,
+        CONSTANTS,
+        CODE,
+        debugRenderer.address,
+        MINTING_SUPPLY,
+        PRICE,
+        TIPPING_RENDERER_ROYALTY_FRACTION,
+      )) as BrainFuck;
+      await tippingBrainFuck.deployed();
+      await tippingBrainFuck.connect(rando).setIsActive(true);
+
       await brainFuck.connect(owner).setIsActive(true);
     });
     it('correctly mints for given price', async () => {
@@ -261,6 +290,25 @@ describe('BrainFuck', function () {
         .mint(await rando.getAddress(), 6, { value: PRICE.mul(11) });
       const afterBalance = await owner.getBalance();
       expect(afterBalance.sub(beforeBalance)).to.eq(PRICE.mul(10));
+    });
+    it('correctly mints and routes tip to renderer owner', async () => {
+      const beforeBalanceRendererOwner = await owner.getBalance();
+      const beforeBalanceOwner = await rando.getBalance();
+      await tippingBrainFuck
+        .connect(receiver1)
+        .mint(await rando.getAddress(), 4, { value: PRICE.mul(11) });
+      const afterBalanceRendererOwner = await owner.getBalance();
+      const afterBalanceOwner = await rando.getBalance();
+      expect(afterBalanceOwner.sub(beforeBalanceOwner)).to.eq(
+        PRICE.mul(4)
+          .mul(HUNDRED_PERCENT_BPS - TIPPING_RENDERER_ROYALTY_FRACTION)
+          .div(HUNDRED_PERCENT_BPS),
+      );
+      expect(afterBalanceRendererOwner.sub(beforeBalanceRendererOwner)).to.eq(
+        PRICE.mul(4)
+          .mul(TIPPING_RENDERER_ROYALTY_FRACTION)
+          .div(HUNDRED_PERCENT_BPS),
+      );
     });
     it('cant mint more than 7 in a single call', async () => {
       await expect(
@@ -322,6 +370,7 @@ describe('BrainFuck', function () {
         debugRenderer.address,
         MINTING_SUPPLY,
         PRICE,
+        RENDERER_ROYALTY_FRACTION,
       )) as BrainFuck;
       await brainFuck.deployed();
       await brainFuck.connect(owner).setIsActive(true);
@@ -367,11 +416,12 @@ describe('BrainFuck', function () {
         SYMBOL,
         TEST_URI,
         SEED,
-        '0x68656c6c6f212121',
+        '0x68656c6c6f21212168656c6c6f21212168656c6c6f21212168656c6c6f212121',
         convertToHexStr('++++++++[>,.<-]'),
         debugRenderer.address,
         MINTING_SUPPLY,
         PRICE,
+        RENDERER_ROYALTY_FRACTION,
       )) as BrainFuck;
       await brainFuck.deployed();
 

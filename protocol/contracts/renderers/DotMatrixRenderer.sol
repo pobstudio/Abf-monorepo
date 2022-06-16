@@ -275,9 +275,11 @@ contract DotMatrixRenderer is IRenderer, ERC165 {
     'cx="510" cy="510"'
   ];
 
-  // function name() external override pure returns (string memory) {
-  //   return "DOT MATRIX";
-  // }
+  address public override owner; 
+
+  constructor() {
+    owner = msg.sender;
+  }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
     return

@@ -26,9 +26,10 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
     string public additionalMetadataURI;
     bytes public seed;
     bytes public code;
-    bytes8 public constants;
+    bytes32 public constants;
     bool public isActive = false;
-    
+    uint256 public rendererRoyaltyFraction;
+
     uint256 public constant VERSION = 1;
     
     constructor (
@@ -36,11 +37,12 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       string memory _symbol,
       string memory _additionalMetadataURI,
       bytes memory _seed,
-      bytes8 _constants,
+      bytes32 _constants,
       bytes memory _code,
       address _renderer,
       uint256 _mintingSupply,
-      uint256 _price
+      uint256 _price,
+      uint96 _rendererRoyaltyFraction
     ) ERC721A(_name, _symbol) {
       constants = _constants;
       additionalMetadataURI = _additionalMetadataURI;
@@ -49,6 +51,7 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       renderer = IRenderer(_renderer);
       mintingSupply = _mintingSupply;
       price = _price;
+      rendererRoyaltyFraction = _rendererRoyaltyFraction;
     } 
 
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721A, ERC2981) returns (bool) {
@@ -93,8 +96,15 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       _mint(to, numMints, '', false);
       uint256 totalPrice = price * numMints;
       require(totalPrice <= msg.value, "insufficient funds to pay for mint");
-      owner().call{value: totalPrice }("");
-      msg.sender.call{value: msg.value - totalPrice }("");
+      if (rendererRoyaltyFraction == 0) {
+        owner().call{value: totalPrice }("");
+        msg.sender.call{value: msg.value - totalPrice }("");
+      } else {
+        uint rendererRoyalty = totalPrice * rendererRoyaltyFraction / 10000; // in bps 
+        owner().call{value: totalPrice - rendererRoyalty }("");
+        renderer.owner().call{value: rendererRoyalty }(""); 
+        msg.sender.call{value: msg.value - totalPrice }("");
+      }
     }
 
     function airdropMint(address[] memory to, uint256 numMintsEach) onlyOwner onlyUnderMaxSupply(to.length * numMintsEach) public {

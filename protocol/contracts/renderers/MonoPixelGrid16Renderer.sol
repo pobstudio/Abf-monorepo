@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 
-contract PixelGrid16Renderer is IRenderer, ERC165 {
+contract MonoPixelGrid16Renderer is IRenderer, ERC165 {
   using Strings for uint256;
 
   string rectPrefix = '<rect width="1.05" height="1.05" ';
@@ -285,7 +285,7 @@ contract PixelGrid16Renderer is IRenderer, ERC165 {
   }
 
   function outSize() external override pure returns (uint256) {
-    return 256 * 3;
+    return 256;
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
@@ -299,7 +299,7 @@ contract PixelGrid16Renderer is IRenderer, ERC165 {
   function renderRaw(bytes calldata out) public override view returns (string memory) {
     string memory content = '';
     for (uint i = 0; i < 256; ++i) {
-      content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(out[i * 3], out[i * 3 + 1], out[i * 3 + 2]), rectSuffix));
+      content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(out[i], out[i], out[i]), rectSuffix));
     }
 
     return string(abi.encodePacked(

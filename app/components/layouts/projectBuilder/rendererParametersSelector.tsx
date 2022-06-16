@@ -68,8 +68,8 @@ export const RendererParametersSelector: FC = () => {
           <Text style={{ marginRight: 6 }}>INPUT CONSTANTS</Text>
           <Tooltip direction={'left'}>
             <MultiLineText>
-              Input constants are provided as the first 8 bytes of input to
-              BrainFuck code; after these 8 bytes, the input will be random,
+              Input constants are provided as the first 32 bytes of input to
+              BrainFuck code; after these 32 bytes, the input will be random,
               generated via the seed.
             </MultiLineText>
           </Tooltip>

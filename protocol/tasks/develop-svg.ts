@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
-import { PixelGrid8Renderer, SvgUtils } from '../typechain-types';
+import { MonoPixelGrid8Renderer, SvgUtils } from '../typechain-types';
 import { getSvgHotLoadingServer } from '../utils/svg';
 
 task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
@@ -16,6 +16,15 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
       (a, c, i) => a + BigNumber.from(i).toHexString().slice(2),
       '',
     );
+
+  const MONO_GRAYSCALE_BYTES =
+    '0x' +
+    [...Array(256)].reduce(
+      (a, c, i) => a + BigNumber.from(i).toHexString().slice(2),
+      '',
+    );
+
+  console.log(MONO_GRAYSCALE_BYTES, (MONO_GRAYSCALE_BYTES.length - 2) / 2);
 
   const GRAYSCALE_BYTES =
     '0x' +
@@ -55,8 +64,8 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     // );
     // const Renderer = (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
 
-    const PixelGrid8Renderer = await hre.ethers.getContractFactory(
-      'PixelGrid8Renderer',
+    const MonoPixelGrid8Renderer = await hre.ethers.getContractFactory(
+      'MonoPixelGrid8Renderer',
       {
         libraries: {
           SvgUtils: svgUtils.address,
@@ -69,10 +78,13 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     //   //   SvgUtils: svgUtils.address,
     //   // },
     // });
-    const renderer = (await PixelGrid8Renderer.deploy()) as PixelGrid8Renderer;
+    const renderer =
+      (await MonoPixelGrid8Renderer.deploy()) as MonoPixelGrid8Renderer;
     await renderer.deployed();
-    const res = await renderer.render(GRAYSCALE_BYTES);
-    const estimation = await renderer.estimateGas.renderRaw(GRAYSCALE_BYTES);
+    const res = await renderer.render(MONO_GRAYSCALE_BYTES);
+    const estimation = await renderer.estimateGas.renderRaw(
+      MONO_GRAYSCALE_BYTES,
+    );
     console.log('Gas used for call:', estimation.toNumber());
     return `<img width="500" height="500" src="${res}"></img>`;
   });

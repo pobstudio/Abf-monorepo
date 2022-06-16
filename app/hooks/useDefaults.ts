@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
 import { ProjectMetadata } from '../types';
+import { INPUT_CONSTANT_BYTES_SIZE } from '../utils/brainFuck';
 
 export const useDefaultSeed = (refresh?: any) => {
   return useMemo(() => {
@@ -15,7 +16,10 @@ export const useDefaultSeed = (refresh?: any) => {
 };
 
 export const DEFAULT_RENDERER_KEY = 'pixelGrid8';
-export const DEFAULT_INPUT_CONSTANTS = '0x'.padEnd(18, '0');
+export const DEFAULT_INPUT_CONSTANTS = '0x'.padEnd(
+  INPUT_CONSTANT_BYTES_SIZE * 2 + 2,
+  '0',
+);
 export const DEFAULT_PROJECT_METADATA_STUB: Partial<ProjectMetadata> = {
   inputConstants: DEFAULT_INPUT_CONSTANTS,
   renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],

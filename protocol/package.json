@@ -9,6 +9,7 @@
     "test": "hardhat test",
     "develop-svg": "hardhat develop-svg",
     "deploy": "hardhat deploy",
+    "deploy-renderers": "hardhat deploy-renderers",
     "verify": "hardhat verify"
   },
   "author": "",

@@ -24,6 +24,7 @@ export interface PixelGrid24RendererInterface extends utils.Interface {
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
     'outSize()': FunctionFragment;
+    'owner()': FunctionFragment;
     'render(bytes)': FunctionFragment;
     'renderAttributeKey()': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
@@ -35,6 +36,7 @@ export interface PixelGrid24RendererInterface extends utils.Interface {
       | 'additionalMetadataURI'
       | 'attributes'
       | 'outSize'
+      | 'owner'
       | 'render'
       | 'renderAttributeKey'
       | 'renderRaw'
@@ -50,6 +52,7 @@ export interface PixelGrid24RendererInterface extends utils.Interface {
     values: [BytesLike],
   ): string;
   encodeFunctionData(functionFragment: 'outSize', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'render', values: [BytesLike]): string;
   encodeFunctionData(
     functionFragment: 'renderAttributeKey',
@@ -70,6 +73,7 @@ export interface PixelGrid24RendererInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'renderAttributeKey',
@@ -117,6 +121,8 @@ export interface PixelGrid24Renderer extends BaseContract {
 
     outSize(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
     render(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
@@ -135,6 +141,8 @@ export interface PixelGrid24Renderer extends BaseContract {
 
   outSize(overrides?: CallOverrides): Promise<BigNumber>;
 
+  owner(overrides?: CallOverrides): Promise<string>;
+
   render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   renderAttributeKey(overrides?: CallOverrides): Promise<string>;
@@ -152,6 +160,8 @@ export interface PixelGrid24Renderer extends BaseContract {
     attributes(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     outSize(overrides?: CallOverrides): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
 
@@ -173,6 +183,8 @@ export interface PixelGrid24Renderer extends BaseContract {
     attributes(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     outSize(overrides?: CallOverrides): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     render(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -197,6 +209,8 @@ export interface PixelGrid24Renderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     outSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     render(
       out: BytesLike,

@@ -20,13 +20,14 @@ contract BrainFuckFactory is ReentrancyGuard {
       string symbol;
       string additionalMetadataURI;
       bytes seed;
-      bytes8 constants;
+      bytes32 constants;
       bytes code; 
       address renderer;
       uint256 mintingSupply;
       uint256 price;
       uint96 royaltyFraction;
       bool isActive;
+      uint96 rendererRoyaltyFraction;
     }
 
     event CreatedBrainFuckNFT(
@@ -48,7 +49,8 @@ contract BrainFuckFactory is ReentrancyGuard {
         config.code,
         config.renderer,
         config.mintingSupply,
-        config.price
+        config.price,
+        config.rendererRoyaltyFraction
       );
       nft.setRoyalty(msg.sender, config.royaltyFraction);
       nft.setIsActive(config.isActive);

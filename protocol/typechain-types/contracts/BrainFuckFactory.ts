@@ -39,6 +39,7 @@ export declare namespace BrainFuckFactory {
     price: BigNumberish;
     royaltyFraction: BigNumberish;
     isActive: boolean;
+    rendererRoyaltyFraction: BigNumberish;
   };
 
   export type CreateBrainFuckNFTConfigStructOutput = [
@@ -53,6 +54,7 @@ export declare namespace BrainFuckFactory {
     BigNumber,
     BigNumber,
     boolean,
+    BigNumber,
   ] & {
     name: string;
     symbol: string;
@@ -65,6 +67,7 @@ export declare namespace BrainFuckFactory {
     price: BigNumber;
     royaltyFraction: BigNumber;
     isActive: boolean;
+    rendererRoyaltyFraction: BigNumber;
   };
 }
 
@@ -72,7 +75,7 @@ export interface BrainFuckFactoryInterface extends utils.Interface {
   functions: {
     'VERSION()': FunctionFragment;
     'addressToProjectId(address)': FunctionFragment;
-    'createNFT((string,string,string,bytes,bytes8,bytes,address,uint256,uint256,uint96,bool))': FunctionFragment;
+    'createNFT((string,string,string,bytes,bytes32,bytes,address,uint256,uint256,uint96,bool,uint96))': FunctionFragment;
     'projectIdIndex()': FunctionFragment;
     'projectIdToAddress(uint256)': FunctionFragment;
   };

@@ -19,7 +19,7 @@ import type {
   TypedListener,
 } from '../../common';
 
-export interface PathRendererInterface extends utils.Interface {
+export interface MonoPixelGrid16RendererInterface extends utils.Interface {
   functions: {
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
@@ -88,12 +88,12 @@ export interface PathRendererInterface extends utils.Interface {
   events: {};
 }
 
-export interface PathRenderer extends BaseContract {
+export interface MonoPixelGrid16Renderer extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PathRendererInterface;
+  interface: MonoPixelGrid16RendererInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

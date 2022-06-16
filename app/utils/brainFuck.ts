@@ -1,10 +1,12 @@
 import { BigNumber, BytesLike, utils } from 'ethers';
 
-const TAPE_SIZE = 256;
+const TAPE_SIZE = 30000;
 const LOOPING_STACK_SIZE = 2056;
 
 const SEED_CONSTANTS_TYPE_MASK =
   '0x0000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF';
+
+export const INPUT_CONSTANT_BYTES_SIZE = 32;
 
 export const getTokenSeed = (
   seed: BytesLike,
@@ -12,7 +14,9 @@ export const getTokenSeed = (
   inputConstants: string,
 ) => {
   const hash = utils.solidityKeccak256(['bytes', 'uint256'], [seed, tokenId]);
-  return `0x${inputConstants.slice(2).padEnd(16, '0')}${hash.slice(18)}`;
+  return `0x${inputConstants
+    .slice(2)
+    .padEnd(INPUT_CONSTANT_BYTES_SIZE * 2, '0')}${hash.slice(2)}`;
 };
 
 const MAX_IS_LOOPING_COUNTER = 10000;

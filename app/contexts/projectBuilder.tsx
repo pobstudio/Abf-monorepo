@@ -24,7 +24,11 @@ import {
   RenderCodeOutputState,
   SampleTokenRenderState,
 } from '../types';
-import { getTokenSeed, runBrainFuckCode } from '../utils/brainFuck';
+import {
+  getTokenSeed,
+  INPUT_CONSTANT_BYTES_SIZE,
+  runBrainFuckCode,
+} from '../utils/brainFuck';
 
 export interface ProjectBuilderProviderContext {
   rawProjectMetadata: Partial<ProjectMetadata>;
@@ -92,7 +96,8 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     }
     if (
       rawProjectMetadata.inputConstants.length <= 2 ||
-      rawProjectMetadata.inputConstants.length > 18
+      rawProjectMetadata.inputConstants.length >
+        2 + INPUT_CONSTANT_BYTES_SIZE * 2
     ) {
       return undefined;
     }
@@ -100,7 +105,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       return undefined;
     }
     const filledInputConstants = rawProjectMetadata.inputConstants.padEnd(
-      18,
+      2 + INPUT_CONSTANT_BYTES_SIZE * 2,
       '0',
     );
     if (!INPUT_CONSTANTS_REGEX.test(filledInputConstants)) {
@@ -334,7 +339,8 @@ export const useModifyProjectMetadata = () => {
       }
       setRawProjectMetadata?.(
         produce((u) => {
-          u.inputConstants = '0x' + inputConstants.slice(2, 18);
+          u.inputConstants =
+            '0x' + inputConstants.slice(2, 2 + INPUT_CONSTANT_BYTES_SIZE * 2);
         }),
       );
     },

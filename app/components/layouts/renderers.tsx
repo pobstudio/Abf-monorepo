@@ -2,7 +2,10 @@ import { format } from 'date-fns';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useENSorHex } from '../../hooks/useENS';
-import { useAllRendererMetadata } from '../../hooks/useRenderer';
+import {
+  useAllRendererMetadata,
+  useRendererLabel,
+} from '../../hooks/useRenderer';
 import { RendererMetadata } from '../../types';
 import { prettifyCountableNumber, shortenHexString } from '../../utils/hex';
 import { getEtherscanAddressUrl, getIPFSUrl } from '../../utils/urls';
@@ -44,10 +47,12 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
   registeredAt,
 }) => {
   const name = useENSorHex(address);
+  const rendererLabel = useRendererLabel(address);
+
   return (
     <DetailRowsContainer>
       <DetailTitleAnchorRow href={getEtherscanAddressUrl(address)}>
-        {[`SR-${id.toString().padStart(3, '0')}: ${name}`, '']}
+        {[`SR-${id.toString().padStart(3, '0')}: ${rendererLabel}`, '']}
       </DetailTitleAnchorRow>
       <DetailAnchorRow href={getEtherscanAddressUrl(address)}>
         {['CONTRACT', shortenHexString(address)]}

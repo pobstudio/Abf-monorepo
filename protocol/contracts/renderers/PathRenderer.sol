@@ -9,6 +9,12 @@ import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 contract PathRenderer is IRenderer, ERC165 {
   using Strings for uint256;
 
+  address public override owner; 
+
+  constructor() {
+    owner = msg.sender;
+  }
+
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
     return
       interfaceId == type(IRenderer).interfaceId ||

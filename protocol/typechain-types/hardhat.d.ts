@@ -96,6 +96,18 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DotMatrixRenderer__factory>;
     getContractFactory(
+      name: 'MonoPixelGrid16Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.MonoPixelGrid16Renderer__factory>;
+    getContractFactory(
+      name: 'MonoPixelGrid24Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.MonoPixelGrid24Renderer__factory>;
+    getContractFactory(
+      name: 'MonoPixelGrid8Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.MonoPixelGrid8Renderer__factory>;
+    getContractFactory(
       name: 'PathRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.PathRenderer__factory>;
@@ -221,6 +233,21 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.DotMatrixRenderer>;
+    getContractAt(
+      name: 'MonoPixelGrid16Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.MonoPixelGrid16Renderer>;
+    getContractAt(
+      name: 'MonoPixelGrid24Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.MonoPixelGrid24Renderer>;
+    getContractAt(
+      name: 'MonoPixelGrid8Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.MonoPixelGrid8Renderer>;
     getContractAt(
       name: 'PathRenderer',
       address: string,

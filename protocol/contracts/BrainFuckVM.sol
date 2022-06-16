@@ -3,8 +3,8 @@
 pragma solidity ^0.8.4;
 
 library BrainFuckVM {
-  uint constant public TAPE_SIZE = 512;
-  uint constant public LOOPING_STACK_SIZE = 2056;
+  uint constant public TAPE_SIZE = 30000; 
+  uint constant public LOOPING_STACK_SIZE = 4096;
 
   function runBrainFuckCode(bytes calldata code, bytes calldata input) public pure returns (bytes memory out) {
     out = "";

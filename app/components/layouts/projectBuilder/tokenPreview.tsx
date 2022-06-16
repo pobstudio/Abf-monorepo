@@ -32,7 +32,9 @@ export const TokenPreview: FC = () => {
           </MultiLineText>
         </Tooltip>
       </FlexEnds>
-      <Text>{currentSampleTokenRenderState.tokenSeed ?? '-'}</Text>
+      <MultiLineText style={{ lineHeight: '22px', lineBreak: 'anywhere' }}>
+        {currentSampleTokenRenderState.tokenSeed ?? '-'}
+      </MultiLineText>
       <FlexEnds>
         <Label>OUTPUT (BYTES)</Label>
         <Tooltip direction={'right'}>

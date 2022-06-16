@@ -3,6 +3,9 @@
 /* eslint-disable */
 export { DebugRenderer__factory } from './DebugRenderer__factory';
 export { DotMatrixRenderer__factory } from './DotMatrixRenderer__factory';
+export { MonoPixelGrid16Renderer__factory } from './MonoPixelGrid16Renderer__factory';
+export { MonoPixelGrid24Renderer__factory } from './MonoPixelGrid24Renderer__factory';
+export { MonoPixelGrid8Renderer__factory } from './MonoPixelGrid8Renderer__factory';
 export { PathRenderer__factory } from './PathRenderer__factory';
 export { PixelGrid16Renderer__factory } from './PixelGrid16Renderer__factory';
 export { PixelGrid24Renderer__factory } from './PixelGrid24Renderer__factory';

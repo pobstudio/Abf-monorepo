@@ -28,8 +28,11 @@ export const Header: React.FC = () => {
         <Link passHref href={'/origin'}>
           <HeaderAnchor>ORIGINS</HeaderAnchor>
         </Link>
+        <Link passHref href={'/renderers'}>
+          <HeaderAnchor>RENDERERS</HeaderAnchor>
+        </Link>
         <Link passHref href={'/collection'}>
-          <HeaderAnchor>COLLECTIONS</HeaderAnchor>
+          <HeaderAnchor>COLLECTION</HeaderAnchor>
         </Link>
         <Link passHref href={'/collection'}>
           <HeaderAnchor>RECRUITMENT</HeaderAnchor>

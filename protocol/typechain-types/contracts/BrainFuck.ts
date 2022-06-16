@@ -48,6 +48,7 @@ export interface BrainFuckInterface extends utils.Interface {
     'ownerOf(uint256)': FunctionFragment;
     'price()': FunctionFragment;
     'renderer()': FunctionFragment;
+    'rendererRoyaltyFraction()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'royaltyInfo(uint256,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
@@ -86,6 +87,7 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'ownerOf'
       | 'price'
       | 'renderer'
+      | 'rendererRoyaltyFraction'
       | 'renounceOwnership'
       | 'royaltyInfo'
       | 'safeTransferFrom(address,address,uint256)'
@@ -152,6 +154,10 @@ export interface BrainFuckInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'price', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renderer', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'rendererRoyaltyFraction',
+    values?: undefined,
+  ): string;
   encodeFunctionData(
     functionFragment: 'renounceOwnership',
     values?: undefined,
@@ -244,6 +250,10 @@ export interface BrainFuckInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'price', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renderer', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'rendererRoyaltyFraction',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: 'renounceOwnership',
     data: BytesLike,
@@ -438,6 +448,8 @@ export interface BrainFuck extends BaseContract {
 
     renderer(overrides?: CallOverrides): Promise<[string]>;
 
+    rendererRoyaltyFraction(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
@@ -571,6 +583,8 @@ export interface BrainFuck extends BaseContract {
 
   renderer(overrides?: CallOverrides): Promise<string>;
 
+  rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
+
   renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
@@ -700,6 +714,8 @@ export interface BrainFuck extends BaseContract {
     price(overrides?: CallOverrides): Promise<BigNumber>;
 
     renderer(overrides?: CallOverrides): Promise<string>;
+
+    rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -871,6 +887,8 @@ export interface BrainFuck extends BaseContract {
 
     renderer(overrides?: CallOverrides): Promise<BigNumber>;
 
+    rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
@@ -1014,6 +1032,10 @@ export interface BrainFuck extends BaseContract {
     price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renderer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    rendererRoyaltyFraction(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> },

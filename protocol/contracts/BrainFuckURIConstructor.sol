@@ -14,10 +14,12 @@ library BrainFuckURIConstructor {
   
     using Strings for uint256;
 
-    bytes32 public constant SEED_CONSTANTS_TYPE_MASK = 0x0000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+    function tokenSeed(bytes memory seed, uint256 tokenId, bytes32 constants) public pure returns (bytes memory) {
+      return abi.encodePacked(constants, keccak256(abi.encodePacked(seed, tokenId)));
+    }
 
-    function tokenSeed(bytes memory seed, uint256 tokenId, bytes8 constants) public pure returns (bytes32) {
-      return (keccak256(abi.encodePacked(seed, tokenId)) & SEED_CONSTANTS_TYPE_MASK) | bytes32(constants);
+    function debug(bytes memory seed, uint256 tokenId) public pure returns (bytes memory) {
+      return abi.encodePacked(seed, tokenId);
     }
 
     function contractURI(string memory name, address nft) public pure returns (string memory) {
@@ -33,9 +35,9 @@ library BrainFuckURIConstructor {
       );
     }
 
-    function tokenURI(uint256 tokenId, string memory name, bytes memory seed, bytes8 constants, bytes memory code, IRenderer renderer) public view returns (string memory) {
+    function tokenURI(uint256 tokenId, string memory name, bytes memory seed, bytes32 constants, bytes memory code, IRenderer renderer) public view returns (string memory) {
       string memory tokenName = string(abi.encodePacked(name, " #", tokenId.toString()));
-      bytes memory out = BrainFuckVM.runBrainFuckCode(code, abi.encodePacked(tokenSeed(seed, tokenId, constants)));
+      bytes memory out = BrainFuckVM.runBrainFuckCode(code, tokenSeed(seed, tokenId, constants));
 
       string memory image = renderer.render(out);
       
