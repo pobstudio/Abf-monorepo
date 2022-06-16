@@ -23,6 +23,7 @@ export interface CreateProjectConfig {
   price: BigNumber;
   royaltyFraction: BigNumber;
   isActive: boolean;
+  rendererRoyaltyFraction: BigNumber;
 }
 
 export interface ProjectMetadata {
@@ -38,6 +39,7 @@ export interface ProjectMetadata {
   priceInEth: number;
   inputConstants: string;
   royaltyFractionInBps: number;
+  rendererRoyaltyFraction: number;
   isActive: boolean;
 }
 

@@ -24,7 +24,6 @@ export const DEFAULT_PROJECT_METADATA_STUB: Partial<ProjectMetadata> = {
   inputConstants: DEFAULT_INPUT_CONSTANTS,
   renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],
   isActive: false,
-  additionalMetadataURI: '',
   royaltyFractionInBps: 0,
 };
 

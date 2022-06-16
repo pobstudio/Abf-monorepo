@@ -55,6 +55,7 @@ export const useCreateCollection = () => {
         price: utils.parseEther(projectMetadata.priceInEth?.toString() ?? '0'),
         royaltyFraction: projectMetadata.royaltyFractionInBps ?? 0,
         isActive: projectMetadata.isActive ?? false,
+        rendererRoyaltyFraction: projectMetadata.rendererRoyaltyFraction ?? 0,
       };
 
       const res = await factory.createNFT(config);
