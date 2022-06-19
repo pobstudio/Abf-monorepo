@@ -1,6 +1,11 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { OUTSIZE_MISMATCH_ERROR_MESSAGE } from '../../constants/errors';
+import { usePriorityAccount } from '../../connectors/priority';
+import {
+  NO_CONNECTED_WALLET,
+  OUTSIZE_MISMATCH_ERROR_MESSAGE,
+  RENDERER_NOT_FOUND,
+} from '../../constants/errors';
 import { useRendererContract } from '../../hooks/useContracts';
 import { RenderCodeOutputState, RendererMetadataStub } from '../../types';
 import { OFFLINE_RENDERERS } from '../../utils/renderers';
@@ -37,7 +42,6 @@ const RenderImageCover = styled.div`
   padding: 24px;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.75);
 `;
 
 const RenderContainer = styled.div`
@@ -51,6 +55,7 @@ export const Render: FC<{
   output: RenderCodeOutputState;
   rendererMetadata: RendererMetadataStub | undefined;
 }> = ({ output, rendererMetadata }) => {
+  const account = usePriorityAccount();
   const renderer = useRendererContract(rendererMetadata?.address);
 
   const [rawSvgSrc, setRawSvgSrc] = useState<string | undefined>(undefined);
@@ -81,11 +86,21 @@ export const Render: FC<{
           const renderRaw = await renderer.renderRaw(output[0]);
           setRawSvgSrc(renderRaw);
           setIsRenderLoading(false);
+        } else if (!account) {
+          throw new Error(NO_CONNECTED_WALLET);
+        } else {
+          throw new Error(RENDERER_NOT_FOUND);
         }
       } catch (e: any) {
         console.log(e.message);
         if (e.message.indexOf(OUTSIZE_MISMATCH_ERROR_MESSAGE) !== -1) {
           setErrorMessage('OUTPUT BYTES NOT AT REQUIRED SIZE.');
+        } else if (e.message.indexOf(NO_CONNECTED_WALLET) !== -1) {
+          setErrorMessage('NO WALLET CONNECTED. CONNECT TO SEE PREVIEW.');
+          setRawSvgSrc(undefined);
+        } else if (e.message.indexOf(RENDERER_NOT_FOUND) !== -1) {
+          setErrorMessage('RENDERER NOT FOUND ON-CHAIN.');
+          setRawSvgSrc(undefined);
         } else {
           setErrorMessage(
             'RENDERER ERROR. CHECK CONSOLE LOGS FOR MORE DETAILS.',
@@ -96,7 +111,7 @@ export const Render: FC<{
     };
 
     getRawSvgSrc();
-  }, [output, rendererMetadata, renderer]);
+  }, [account, output, rendererMetadata, renderer]);
   const isCoverOpened = useMemo(() => {
     return isRenderLoading || !!errorMessage;
   }, [isRenderLoading, errorMessage]);
@@ -112,7 +127,13 @@ export const Render: FC<{
     <RenderContainer>
       <RenderImage width={'100%'} height={'100%'} src={imgSrc} />
       {isCoverOpened && (
-        <RenderImageCover>
+        <RenderImageCover
+          style={{
+            background: !!rawSvgSrc
+              ? 'rgba(255, 255, 255, 0.75)'
+              : 'rgba(0, 0, 0, 0)',
+          }}
+        >
           {isRenderLoading && <MultiLineText>Loading...</MultiLineText>}
           {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
         </RenderImageCover>

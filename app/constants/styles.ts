@@ -1,3 +1,5 @@
+import { config, SpringConfig } from 'react-spring';
+
 export const BREAKPTS = {
   XS: 360,
   SM: 480,
@@ -16,3 +18,25 @@ export const DEFAULT_TOAST_STYLES = {
   fontSize: 12,
   boxShadow: 'none',
 }; // TODO(dave4506)
+
+interface ExtendedCssProps extends React.CSSProperties {
+  y: number;
+  config: SpringConfig;
+}
+
+export const DropdownAnimation: { [key: string]: ExtendedCssProps } = {
+  hidden: {
+    y: 8,
+    opacity: 0,
+    pointerEvents: 'none',
+    userSelect: 'none',
+    config: config.stiff,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    pointerEvents: 'auto',
+    userSelect: 'auto',
+    config: config.stiff,
+  },
+};

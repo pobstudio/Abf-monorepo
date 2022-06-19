@@ -1,29 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { animated, config, SpringConfig, useSpring } from 'react-spring';
+import { animated, useSpring } from 'react-spring';
 import { useClickAway } from 'react-use';
 import styled from 'styled-components';
-
-interface ExtendedCssProps extends React.CSSProperties {
-  y: number;
-  config: SpringConfig;
-}
-
-const DropdownAnimation: { [key: string]: ExtendedCssProps } = {
-  hidden: {
-    y: 8,
-    opacity: 0,
-    pointerEvents: 'none',
-    userSelect: 'none',
-    config: config.stiff,
-  },
-  visible: {
-    y: 0,
-    opacity: 1,
-    pointerEvents: 'auto',
-    userSelect: 'auto',
-    config: config.stiff,
-  },
-};
+import { DropdownAnimation } from '../../constants/styles';
 
 export const Tooltip: FC<{
   direction: 'left' | 'right';

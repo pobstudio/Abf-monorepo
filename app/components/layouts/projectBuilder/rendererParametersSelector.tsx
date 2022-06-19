@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import styled from 'styled-components';
+import { usePriorityAccount } from '../../../connectors/priority';
 import {
   useModifyProjectMetadata,
   useProjectMetadata,
@@ -23,6 +25,7 @@ export const RendererParametersSelector: FC = () => {
     seed: validSeed,
     inputConstants: validInputConstants,
   } = useProjectMetadata();
+  const account = usePriorityAccount();
   return (
     <InteractiveDetailRowsContainer>
       <DetailTitleAnchorRow>
@@ -63,24 +66,6 @@ export const RendererParametersSelector: FC = () => {
           placeholder="0xabcd...decd"
         />
       </InputWell>
-      <InputWell>
-        <Flex>
-          <Text style={{ marginRight: 6 }}>INPUT CONSTANTS</Text>
-          <Tooltip direction={'left'}>
-            <MultiLineText>
-              Input constants are provided as the first 32 bytes of input to
-              BrainFuck code; after these 32 bytes, the input will be random,
-              generated via the seed.
-            </MultiLineText>
-          </Tooltip>
-        </Flex>
-        <TextInput
-          value={inputConstants ?? ''}
-          onChange={(e) => onInputConstantsChange(e.target.value)}
-          style={{ textAlign: 'right' }}
-          placeholder="0xabcd...decd"
-        />
-      </InputWell>
       <DetailRow>
         {['VALID RENDERER', !!rendererMetadataStub ? 'TRUE' : 'FALSE']}
       </DetailRow>
@@ -88,9 +73,25 @@ export const RendererParametersSelector: FC = () => {
         <DetailRow>{['RENDERER LABEL', rendererMetadataStub.label]}</DetailRow>
       )}
       <DetailRow>{['VALID SEED', !!validSeed ? 'TRUE' : 'FALSE']}</DetailRow>
-      <DetailRow>
-        {['VALID INPUT CONSTANTS', !!validInputConstants ? 'TRUE' : 'FALSE']}
-      </DetailRow>
+      {!account && (
+        <RenderererParametersSelectorCover>
+          <MultiLineText>CONNECT WALLET TO CHANGE RENDERER</MultiLineText>
+        </RenderererParametersSelectorCover>
+      )}
     </InteractiveDetailRowsContainer>
   );
 };
+
+const RenderererParametersSelectorCover = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.75);
+`;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const OneColumnContainer = styled.div`
   border: 1px solid #e0e0e0;
-  margin: 256px auto;
+  margin: 0px auto;
   width: 712px;
 `;
 

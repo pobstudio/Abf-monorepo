@@ -75,20 +75,21 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
 
 const Jumbotron: FC = () => {
   return (
-    <>
+    <DetailRowsContainer>
       <div>
         <JumbotronText>
-          <strong>SUBJECT: CURRENT DECLASSIFIED LIST OF SR-XXX</strong>
+          <strong>SUBJECT: CURRENT DECLASSIFIED LIST OF RENDERERS</strong>
         </JumbotronText>
       </div>
       <div>
         <JumbotronText>
-          Contained in this document is our up-to-date list of all Special
-          Renderers found by the ABFC and the broader public sphere. This is by
-          no means exhaustive. Please consult each SR carefully before use.
+          Contained in this document is the corp's up-to-date list of all
+          Renderers excavated by the ABFC and the broader public sphere. This
+          repository is by no means exhaustive. Please consult each renderer
+          carefully before use.
         </JumbotronText>
       </div>
-    </>
+    </DetailRowsContainer>
   );
 };
 
