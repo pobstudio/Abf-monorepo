@@ -22,7 +22,7 @@ export const TokenPreview: FC = () => {
         </Text>
       </FlexEnds>
       <FlexEnds>
-        <Label style={{ marginRight: 6 }}>BRAINFUCK CODE INPUT</Label>
+        <Label style={{ marginRight: 6 }}>BF CODE INPUT</Label>
         <Tooltip direction={'right'}>
           <MultiLineText>
             Bytes specific to{' '}

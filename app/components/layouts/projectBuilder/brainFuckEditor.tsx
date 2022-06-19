@@ -30,7 +30,7 @@ export const BrainFuckEditor: FC = () => {
         />
       </InputWell>
       <FlexEnds style={{ paddingTop: 82 }}>
-        <Text>INPUT TO BF</Text>
+        <Text>INPUT TO BF CODE</Text>
         <Tooltip direction={'right'}>
           <MultiLineText>
             Input in Brainfuck is read via the <Code>,</Code> operator. Provide
