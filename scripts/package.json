@@ -16,6 +16,6 @@
     "isomorphic-fetch": "^3.0.0"
   },
   "dependencies": {
-    "nft.storage": "^6.3.0"
+    "nft.storage": "^1.3.1"
   }
 }
