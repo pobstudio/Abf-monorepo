@@ -1,7 +1,12 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { usePriorityAccount } from '../../connectors/priority';
 import {
+  usePriorityAccount,
+  usePriorityChainId,
+} from '../../connectors/priority';
+import { CHAIN_ID } from '../../constants';
+import {
+  INCORRECT_CHAIN_ID,
   NO_CONNECTED_WALLET,
   OUTSIZE_MISMATCH_ERROR_MESSAGE,
   RENDERER_NOT_FOUND,
@@ -56,6 +61,7 @@ export const Render: FC<{
   rendererMetadata: RendererMetadataStub | undefined;
 }> = ({ output, rendererMetadata }) => {
   const account = usePriorityAccount();
+  const chainId = usePriorityChainId();
   const renderer = useRendererContract(rendererMetadata?.address);
 
   const [rawSvgSrc, setRawSvgSrc] = useState<string | undefined>(undefined);
@@ -81,7 +87,10 @@ export const Render: FC<{
             output[0],
           );
           setRawSvgSrc(renderRaw);
+        } else if (chainId !== CHAIN_ID) {
+          throw new Error(INCORRECT_CHAIN_ID);
         } else if (!!renderer) {
+          console.log('node render', renderer.address);
           setIsRenderLoading(true);
           const renderRaw = await renderer.renderRaw(output[0]);
           setRawSvgSrc(renderRaw);
@@ -95,6 +104,9 @@ export const Render: FC<{
         console.log(e.message);
         if (e.message.indexOf(OUTSIZE_MISMATCH_ERROR_MESSAGE) !== -1) {
           setErrorMessage('OUTPUT BYTES NOT AT REQUIRED SIZE.');
+        } else if (e.message.indexOf(INCORRECT_CHAIN_ID) !== -1) {
+          setErrorMessage('INCORRECT CHAIN CONNECTED.');
+          setRawSvgSrc(undefined);
         } else if (e.message.indexOf(NO_CONNECTED_WALLET) !== -1) {
           setErrorMessage('NO WALLET CONNECTED. CONNECT TO SEE PREVIEW.');
           setRawSvgSrc(undefined);
@@ -111,7 +123,7 @@ export const Render: FC<{
     };
 
     getRawSvgSrc();
-  }, [account, output, rendererMetadata, renderer]);
+  }, [account, output, rendererMetadata, renderer, chainId]);
   const isCoverOpened = useMemo(() => {
     return isRenderLoading || !!errorMessage;
   }, [isRenderLoading, errorMessage]);

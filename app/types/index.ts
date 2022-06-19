@@ -48,6 +48,15 @@ export interface RendererMetadataStub {
   address: string;
   additionalMetadataURI: string;
   outSize: BigNumber;
+  additionalMetadata: RendererAdditionalMetadata;
+}
+
+export interface RendererAdditionalMetadata {
+  description: string;
+  previewOptions?: {
+    groupBytesIn?: number;
+    skipBytesBeforeGrouping?: number;
+  };
 }
 
 export interface RendererMetadata extends RendererMetadataStub {

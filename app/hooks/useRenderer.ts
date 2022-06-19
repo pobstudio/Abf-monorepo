@@ -1,13 +1,18 @@
-import { deployments } from '@abf-monorepo/protocol';
+import { deployments, RENDERER_LOCAL_IPFS_CID } from '@abf-monorepo/protocol';
 import { gql, useQuery } from '@apollo/client';
 import { BigNumber, utils } from 'ethers';
 import findKey from 'lodash/findKey';
 import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
-import { RendererMetadata, RendererMetadataStub } from '../types';
+import {
+  RendererAdditionalMetadata,
+  RendererMetadata,
+  RendererMetadataStub,
+} from '../types';
 import { useAddress } from './useAddress';
 import { useRendererContract } from './useContracts';
 import { useENSorHex } from './useENS';
+import { useIPFSJson } from './useIPFS';
 import { useLastTruthyValue } from './useLastTruthyValue';
 
 export const RENDERER_PAGE_SIZE = 100;
@@ -35,6 +40,35 @@ const GET_RENDERER_METADATA_BY_ADDRESS = gql`
     }
   }
 `;
+
+export const useAdditionalMetadata = (
+  renderer: string | undefined,
+  additionalMetadataURI: string | undefined,
+) => {
+  const label = useRendererLabel(renderer);
+  const cid = useMemo(() => {
+    if (!!RENDERER_LOCAL_IPFS_CID[label]) {
+      return RENDERER_LOCAL_IPFS_CID[label];
+    }
+    if (additionalMetadataURI?.startsWith('ipfs://')) {
+      return additionalMetadataURI.slice('ipfs://'.length);
+    }
+    if (
+      additionalMetadataURI?.startsWith('baf') ||
+      additionalMetadataURI?.startsWith('Qm')
+    ) {
+      return additionalMetadataURI;
+    }
+    return undefined;
+  }, [additionalMetadataURI, label]);
+  const obj = useIPFSJson(cid);
+  return useMemo(() => {
+    if (!obj?.description) {
+      return undefined;
+    }
+    return obj as RendererAdditionalMetadata;
+  }, [obj]);
+};
 
 export const useRendererLabel = (address: string | undefined) => {
   const normalizedRendererAddress = useAddress(address);
@@ -87,6 +121,10 @@ export const useRendererMetadata = (address: string | undefined) => {
   const data = useLastTruthyValue(results.data);
   const label = useRendererLabel(address);
 
+  const additionalMetadata = useAdditionalMetadata(
+    address,
+    data?.renderers?.[0]?.additionalMetadataURI,
+  );
   return useMemo(() => {
     if (!data) {
       return undefined;
@@ -104,9 +142,10 @@ export const useRendererMetadata = (address: string | undefined) => {
       outSize: BigNumber.from(r.outSize),
       additionalMetadataURI: r.additionalMetadataURI,
       registeredAt: parseInt(r.registeredAt),
+      additionalMetadata,
       label,
     } as RendererMetadata;
-  }, [data, label]);
+  }, [data, label, additionalMetadata]);
 };
 
 export const useRendererMetadataStubByProvider = (
@@ -115,7 +154,7 @@ export const useRendererMetadataStubByProvider = (
   const renderer = useRendererContract(address);
 
   const [rendererMetadataStub, setRendererMetadataStub] = useState<
-    RendererMetadataStub | undefined
+    Partial<RendererMetadataStub> | undefined
   >(undefined);
 
   const label = useRendererLabel(address);
@@ -159,5 +198,19 @@ export const useRendererMetadataStubByProvider = (
     getRendererMetadataStub();
   }, [address, label, renderer]);
 
-  return rendererMetadataStub;
+  const additionalMetadata = useAdditionalMetadata(
+    address,
+    rendererMetadataStub?.additionalMetadataURI,
+  );
+
+  return useMemo(
+    () =>
+      !!rendererMetadataStub
+        ? ({
+            ...rendererMetadataStub,
+            additionalMetadata,
+          } as RendererMetadataStub)
+        : undefined,
+    [rendererMetadataStub, additionalMetadata],
+  );
 };

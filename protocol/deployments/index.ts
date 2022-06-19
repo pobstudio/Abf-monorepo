@@ -52,3 +52,9 @@ export const deployments: Deployments = {
     },
   },
 };
+
+export const RENDERER_LOCAL_IPFS_CID: { [renderer: string]: string } = {
+  dotMatrix: 'bafkreibmk2xdb6dlacgfic6g2zsz6vjlep4j5klctflwopl62hqpxvn3ii',
+  pixelGrid8: 'bafkreia3wfctuvolqks25cpbk4ddqcmtrogpmtkmr2vmmttepswnjymvza',
+  monoPixelGrid8: 'bafkreifhpchsv7gjyllzmacwor7logavr5wvu2d66onq6sdjtuyrbg6ntq',
+};

@@ -9,10 +9,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@abf-monorepo/sketch-utils": "1.0.0",
     "@abf-monorepo/protocol": "1.0.0",
+    "@abf-monorepo/sketch-utils": "1.0.0",
     "dotenv": "^8.2.0",
     "ethers": "^5.0.29",
     "isomorphic-fetch": "^3.0.0"
+  },
+  "dependencies": {
+    "nft.storage": "^6.3.0"
   }
 }

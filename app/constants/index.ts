@@ -38,11 +38,13 @@ export const NFT_STORAGE_API_KEY = process.env.NFT_STORAGE_API_KEY;
  * Links
  */
 export const IPFS_LINK = `https://public-pob-studio.mypinata.cloud/ipfs`;
+
 export const IPFS_FALLBACK_LINKS = [
   (hash: string, url: string) => `${IPFS_LINK}/${hash}/${url}`,
   (hash: string, url: string) => `https://ipfs.io/ipfs/${hash}/${url}`,
   (hash: string, url: string) => `https://${hash}.ipfs.dweb.link/${url}`,
 ];
+
 export const PRIVATE_GATEWAY_IPFS_LINK = `https://pob-studio.mypinata.cloud/ipfs`;
 export const STUDIO_PROD_LINK = 'https://pob.studio';
 export const SHOP_PROD_LINK = 'https://shop.pob.studio';
