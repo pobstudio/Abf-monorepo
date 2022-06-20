@@ -28,3 +28,6 @@ export const prettifyCountableNumber = (number: BigNumberish) => {
   }
   return BigNumber.from(number).toString();
 };
+
+export const getHexStringNumBytes = (hexStr: string) =>
+  hexStr.slice(2).length / 2;

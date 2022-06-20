@@ -1,14 +1,28 @@
 import { BigNumber, BytesLike } from 'ethers';
 
-export type RenderCodeOutputStatus = 'error' | 'success';
+export interface ErrorRenderCodeOutputState {
+  status: 'error';
+  message: string;
+}
+
+export interface SuccessRenderCodeOutputState {
+  status: 'success';
+  output: string;
+  warnings?: string[];
+}
 
 export type RenderCodeOutputState =
-  | [string, RenderCodeOutputStatus]
-  | undefined;
+  | ErrorRenderCodeOutputState
+  | SuccessRenderCodeOutputState;
+
+export interface SampleTokenRenderDebugState {
+  focusedByteGroupingIndex?: number | null;
+}
+
 export interface SampleTokenRenderState {
   tokenId: number;
   tokenSeed: string | undefined;
-  codeOutput: RenderCodeOutputState;
+  codeOutput: RenderCodeOutputState | undefined;
 }
 
 export interface CreateProjectConfig {

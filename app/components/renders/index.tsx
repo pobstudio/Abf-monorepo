@@ -57,7 +57,7 @@ const RenderContainer = styled.div`
 `;
 
 export const Render: FC<{
-  output: RenderCodeOutputState;
+  output: RenderCodeOutputState | undefined;
   rendererMetadata: RendererMetadataStub | undefined;
 }> = ({ output, rendererMetadata }) => {
   const account = usePriorityAccount();
@@ -69,32 +69,36 @@ export const Render: FC<{
     undefined,
   );
   const [isRenderLoading, setIsRenderLoading] = useState(false);
-
+  const [renderedBy, setRenderedBy] = useState<
+    'local' | 'on-chain' | undefined
+  >();
   useEffect(() => {
-    if (output?.[1] !== 'success') {
+    if (output?.status !== 'success') {
       return;
     }
     const getRawSvgSrc = async () => {
       setErrorMessage(undefined);
+      setRenderedBy(undefined);
       try {
         if (
           !!rendererMetadata?.label &&
           !!OFFLINE_RENDERERS[rendererMetadata.label]
         ) {
           setIsRenderLoading(false);
-          console.log('local render');
           const renderRaw = OFFLINE_RENDERERS[rendererMetadata.label].renderRaw(
-            output[0],
+            output.output,
           );
           setRawSvgSrc(renderRaw);
+          setRenderedBy('local');
         } else if (chainId !== CHAIN_ID) {
           throw new Error(INCORRECT_CHAIN_ID);
         } else if (!!renderer) {
           console.log('node render', renderer.address);
           setIsRenderLoading(true);
-          const renderRaw = await renderer.renderRaw(output[0]);
+          const renderRaw = await renderer.renderRaw(output.output);
           setRawSvgSrc(renderRaw);
           setIsRenderLoading(false);
+          setRenderedBy('on-chain');
         } else if (!account) {
           throw new Error(NO_CONNECTED_WALLET);
         } else {
@@ -135,21 +139,24 @@ export const Render: FC<{
       )}`;
     return `data:image/svg+xml;utf8,${encodeURIComponent(rawSvgSrc)}`;
   }, [rawSvgSrc]);
+
   return (
-    <RenderContainer>
-      <RenderImage width={'100%'} height={'100%'} src={imgSrc} />
-      {isCoverOpened && (
-        <RenderImageCover
-          style={{
-            background: !!rawSvgSrc
-              ? 'rgba(255, 255, 255, 0.75)'
-              : 'rgba(0, 0, 0, 0)',
-          }}
-        >
-          {isRenderLoading && <MultiLineText>Loading...</MultiLineText>}
-          {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
-        </RenderImageCover>
-      )}
-    </RenderContainer>
+    <>
+      <RenderContainer>
+        <RenderImage width={'100%'} height={'100%'} src={imgSrc} />
+        {isCoverOpened && (
+          <RenderImageCover
+            style={{
+              background: !!rawSvgSrc
+                ? 'rgba(255, 255, 255, 0.75)'
+                : 'rgba(0, 0, 0, 0)',
+            }}
+          >
+            {isRenderLoading && <MultiLineText>Loading...</MultiLineText>}
+            {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
+          </RenderImageCover>
+        )}
+      </RenderContainer>
+    </>
   );
 };

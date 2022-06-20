@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import {
   useProjectBuilderContext,
@@ -15,44 +15,9 @@ export const TokenPreview: FC = () => {
   const { currentSampleTokenRenderState } = useProjectBuilderContext();
   const { rendererMetadataStub, inputConstants: validInputConstants } =
     useProjectMetadata();
-  const groupedOutputBytes = useMemo((): string[] | undefined => {
-    if (currentSampleTokenRenderState.codeOutput?.[1] !== 'success') {
-      return undefined;
-    }
-    const groupedBytes: string[] = [];
-    const groupBytesIn =
-      rendererMetadataStub?.additionalMetadata?.previewOptions?.groupBytesIn;
-    const skipBytesBeforeGrouping =
-      rendererMetadataStub?.additionalMetadata?.previewOptions
-        ?.skipBytesBeforeGrouping;
-    if (!!groupBytesIn) {
-      groupedBytes.push('0x');
-      if (!!skipBytesBeforeGrouping) {
-        groupedBytes.push(
-          currentSampleTokenRenderState.codeOutput[0].slice(
-            2,
-            skipBytesBeforeGrouping * 2 + 2,
-          ),
-        );
-      }
-      for (
-        let i = (skipBytesBeforeGrouping ?? 0) + 2;
-        i < currentSampleTokenRenderState.codeOutput[0].length;
-        i += 2 * groupBytesIn
-      ) {
-        groupedBytes.push(
-          currentSampleTokenRenderState.codeOutput[0].slice(
-            i,
-            i + groupBytesIn * 2,
-          ),
-        );
-      }
-    } else {
-      groupedBytes.push(currentSampleTokenRenderState.codeOutput[0]);
-    }
-    return groupedBytes;
-  }, [currentSampleTokenRenderState, rendererMetadataStub]);
-
+  const [focusedByteGroupingIndex, setFocusedByteGroupingIndex] = useState<
+    null | number
+  >(null);
   return (
     <DetailRowsContainer>
       <FlexEnds>
@@ -71,11 +36,19 @@ export const TokenPreview: FC = () => {
           </MultiLineText>
         </Tooltip>
       </FlexEnds>
-      <MultiLineText style={{ lineHeight: '22px', lineBreak: 'anywhere' }}>
-        {currentSampleTokenRenderState.tokenSeed ?? '-'}
-      </MultiLineText>
+      {!!currentSampleTokenRenderState.tokenSeed ? (
+        <GroupedBytes
+          groupBytesIn={1}
+          showBytesLength={false}
+          output={currentSampleTokenRenderState.tokenSeed}
+          focusedByteGroupingIndex={focusedByteGroupingIndex}
+          setFocusedByteGroupingIndex={setFocusedByteGroupingIndex}
+        />
+      ) : (
+        <MultiLineText>{'-'}</MultiLineText>
+      )}
       <FlexEnds>
-        <Label>OUTPUT (BYTES)</Label>
+        <Label>BF CODE OUTPUT</Label>
         <Tooltip direction={'right'}>
           <MultiLineText>
             Bytes produced by BrainFuck code is inputted to a renderer which
@@ -83,44 +56,9 @@ export const TokenPreview: FC = () => {
           </MultiLineText>
         </Tooltip>
       </FlexEnds>
-      <MultiLineText
-        style={{
-          lineHeight: '22px',
-          lineBreak: groupedOutputBytes?.length === 1 ? 'anywhere' : undefined,
-          color:
-            currentSampleTokenRenderState.codeOutput?.[1] === 'error'
-              ? '#FF5D5D'
-              : 'black',
-        }}
-      >
-        {(
-          <>
-            {!!groupedOutputBytes ? (
-              <GroupedBytesContainer>
-                {groupedOutputBytes.map((b, i) => {
-                  return (
-                    <GroupedBytesSpan key={`grouped-bytes-${i}`}>
-                      {b}{' '}
-                    </GroupedBytesSpan>
-                  );
-                })}
-              </GroupedBytesContainer>
-            ) : (
-              currentSampleTokenRenderState.codeOutput?.[0]
-            )}{' '}
-            <span style={{ opacity: 0.2 }}>
-              {currentSampleTokenRenderState.codeOutput?.[1] === 'success'
-                ? `${
-                    (currentSampleTokenRenderState.codeOutput?.[0].length - 2) /
-                    2
-                  } BYTES`
-                : '-'}
-            </span>
-          </>
-        ) ?? '-'}
-      </MultiLineText>
+      <RawOutput />
       <FlexEnds>
-        <Label>OUTPUT (IMAGE)</Label>
+        <Label>BF CODE OUTPUT (RENDERED)</Label>
         <LabelAnchor
           target={'_blank'}
           href={
@@ -170,10 +108,141 @@ export const TokenPreview: FC = () => {
   );
 };
 
+const RawOutput: FC = () => {
+  const { currentSampleTokenRenderState } = useProjectBuilderContext();
+  const { rendererMetadataStub } = useProjectMetadata();
+  const { currentSampleTokenDebugState, setCurrentSampleTokenDebugState } =
+    useProjectBuilderContext();
+
+  if (!currentSampleTokenRenderState.codeOutput) {
+    return <MultiLineText style={{ lineHeight: '22px' }}>{'-'}</MultiLineText>;
+  }
+
+  if (currentSampleTokenRenderState.codeOutput.status === 'error') {
+    return (
+      <MultiLineText style={{ lineHeight: '22px', color: '#FF5D5D' }}>
+        {currentSampleTokenRenderState.codeOutput?.message}
+      </MultiLineText>
+    );
+  }
+
+  return (
+    <>
+      <GroupedBytes
+        output={currentSampleTokenRenderState.codeOutput.output}
+        skipBytesBeforeGrouping={
+          rendererMetadataStub?.additionalMetadata?.previewOptions
+            ?.skipBytesBeforeGrouping
+        }
+        groupBytesIn={
+          rendererMetadataStub?.additionalMetadata?.previewOptions?.groupBytesIn
+        }
+        focusedByteGroupingIndex={
+          currentSampleTokenDebugState?.focusedByteGroupingIndex
+        }
+        setFocusedByteGroupingIndex={(i) =>
+          setCurrentSampleTokenDebugState((s) => ({
+            ...s,
+            focusedByteGroupingIndex: i,
+          }))
+        }
+      />
+      {currentSampleTokenRenderState.codeOutput?.warnings?.map((w, i) => {
+        return (
+          <MultiLineText style={{ color: '#FFC54D' }} key={`warning-row-${i}`}>
+            {w}
+          </MultiLineText>
+        );
+      })}
+    </>
+  );
+};
+
+const GroupedBytes: FC<{
+  output: string;
+  groupBytesIn?: number;
+  skipBytesBeforeGrouping?: number;
+  showBytesLength?: boolean;
+  focusedByteGroupingIndex?: number | null;
+  setFocusedByteGroupingIndex?: (index: number | null) => void;
+}> = ({
+  output,
+  skipBytesBeforeGrouping,
+  groupBytesIn,
+  showBytesLength = true,
+  focusedByteGroupingIndex,
+  setFocusedByteGroupingIndex,
+}) => {
+  const groupedOutputBytes = useMemo((): string[] => {
+    const groupedBytes: string[] = [];
+    if (!!groupBytesIn) {
+      if (!!skipBytesBeforeGrouping) {
+        groupedBytes.push(output.slice(2, skipBytesBeforeGrouping * 2 + 2));
+      }
+      for (
+        let i = (skipBytesBeforeGrouping ?? 0) + 2;
+        i < output.length;
+        i += 2 * groupBytesIn
+      ) {
+        groupedBytes.push(output.slice(i, i + groupBytesIn * 2));
+      }
+    } else {
+      groupedBytes.push(output.slice(2));
+    }
+    return groupedBytes;
+  }, [output, groupBytesIn, skipBytesBeforeGrouping]);
+
+  return (
+    <MultiLineText
+      onMouseLeave={() => setFocusedByteGroupingIndex?.(null)}
+      style={{
+        position: 'relative',
+        lineHeight: '22px',
+        lineBreak: groupedOutputBytes?.length === 1 ? 'anywhere' : undefined,
+      }}
+    >
+      {(
+        <>
+          <HexStringHeaderHanger>0x</HexStringHeaderHanger>
+          <GroupedBytesContainer>
+            {groupedOutputBytes.map((b, i) => {
+              return (
+                <GroupedBytesSpan
+                  onMouseEnter={() => setFocusedByteGroupingIndex?.(i)}
+                  key={`grouped-bytes-${i}`}
+                >
+                  {b}{' '}
+                </GroupedBytesSpan>
+              );
+            })}
+          </GroupedBytesContainer>
+          <span style={{ opacity: 0.2 }}>
+            {showBytesLength ? `${(output.length - 2) / 2} BYTES` : ''}
+            <strong>
+              {focusedByteGroupingIndex !== null &&
+              focusedByteGroupingIndex !== undefined
+                ? ` • ${focusedByteGroupingIndex + 1}`
+                : undefined}
+            </strong>
+          </span>
+        </>
+      ) ?? '-'}
+    </MultiLineText>
+  );
+};
+
 const GroupedBytesSpan = styled.span``;
 
 const GroupedBytesContainer = styled.span`
   > ${GroupedBytesSpan} + ${GroupedBytesSpan} {
     // margin-left: 4px;
   }
+`;
+
+const HexStringHeaderHanger = styled.span`
+  position: absolute;
+  // top: 0;
+  right: 100%;
+  line-break: strict;
+  color: rgba(0, 0, 0, 0.1);
 `;

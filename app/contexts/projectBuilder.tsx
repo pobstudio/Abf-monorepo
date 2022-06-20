@@ -6,7 +6,7 @@ import {
   INPUT_CONSTANTS_REGEX,
   SEED_REGEX,
 } from '../../types/src';
-import { HUNDRED_PERCENT_BPS } from '../constants';
+import { HUNDRED_PERCENT_BPS, MAX_UINT } from '../constants';
 import { useAddress } from '../hooks/useAddress';
 import {
   useDefaultProjectMetadata,
@@ -22,6 +22,7 @@ import {
 import {
   ProjectMetadata,
   RenderCodeOutputState,
+  SampleTokenRenderDebugState,
   SampleTokenRenderState,
 } from '../types';
 import {
@@ -29,6 +30,7 @@ import {
   INPUT_CONSTANT_BYTES_SIZE,
   runBrainFuckCode,
 } from '../utils/brainFuck';
+import { getHexStringNumBytes } from '../utils/hex';
 
 export interface ProjectBuilderProviderContext {
   rawProjectMetadata: Partial<ProjectMetadata>;
@@ -40,6 +42,10 @@ export interface ProjectBuilderProviderContext {
   >;
   setCurrentSampleTokenId: React.Dispatch<React.SetStateAction<number>>;
   currentSampleTokenRenderState: SampleTokenRenderState;
+  currentSampleTokenDebugState: SampleTokenRenderDebugState;
+  setCurrentSampleTokenDebugState: React.Dispatch<
+    React.SetStateAction<SampleTokenRenderDebugState>
+  >;
   onRefresh: () => void;
 }
 
@@ -51,11 +57,17 @@ const DEFAULT_CURRENT_SAMPLE_TOKEN_RENDER_STATE: SampleTokenRenderState = {
   codeOutput: undefined,
 };
 
+const DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE: SampleTokenRenderDebugState = {
+  focusedByteGroupingIndex: undefined,
+};
+
 const initialState: ProjectBuilderProviderState = {
+  currentSampleTokenDebugState: DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE,
   currentSampleTokenRenderState: DEFAULT_CURRENT_SAMPLE_TOKEN_RENDER_STATE,
   rawProjectMetadata: {},
   setRawProjectMetadata: () => new Error('func is not set'),
   setCurrentSampleTokenId: () => new Error('func is not set'),
+  setCurrentSampleTokenDebugState: () => new Error('func is not set'),
   onRefresh: () => new Error('func is not set'),
   hashedProjectMetadata: '',
   projectMetadata: {},
@@ -150,6 +162,11 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     rendererMetadata,
   ]);
 
+  const [currentSampleTokenDebugState, setCurrentSampleTokenDebugState] =
+    useState<SampleTokenRenderDebugState>(
+      DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE,
+    );
+
   const currentSampleTokenRenderState = useMemo((): SampleTokenRenderState => {
     const tokenSeed =
       !!projectMetadata.inputConstants && !!projectMetadata.seed
@@ -160,7 +177,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
           )
         : undefined;
 
-    const getCodeOutput = (): RenderCodeOutputState => {
+    const getCodeOutput = (): RenderCodeOutputState | undefined => {
       if (!tokenSeed) {
         return undefined;
       }
@@ -172,9 +189,32 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
         input.push(parseInt(tokenSeed.slice(i, i + 2), 16));
       }
       try {
-        return [runBrainFuckCode(projectMetadata.code, input), 'success'];
+        const output = runBrainFuckCode(projectMetadata.code, input);
+
+        const extraWarnings: string[] = [];
+
+        if (
+          !!projectMetadata?.rendererMetadataStub?.outSize &&
+          !MAX_UINT.eq(projectMetadata.rendererMetadataStub.outSize) &&
+          !projectMetadata.rendererMetadataStub.outSize.eq(
+            getHexStringNumBytes(output),
+          )
+        ) {
+          extraWarnings.push(
+            'EXCESS BYTES: RENDERER MAY NOT BEHAVE CORRECTLY.',
+          );
+        }
+
+        return {
+          output,
+          status: 'success',
+          warnings: [...extraWarnings],
+        };
       } catch (e: any) {
-        return [e.message, 'error'];
+        return {
+          message: e.message,
+          status: 'error',
+        };
       }
     };
 
@@ -206,7 +246,9 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       encodedProjectMetadata,
       currentSampleTokenId,
       setCurrentSampleTokenId,
+      setCurrentSampleTokenDebugState,
       currentSampleTokenRenderState,
+      currentSampleTokenDebugState,
       hashedProjectMetadata,
       onRefresh,
     };
@@ -214,6 +256,8 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     currentSampleTokenRenderState,
     currentSampleTokenId,
     rawProjectMetadata,
+    setCurrentSampleTokenDebugState,
+    currentSampleTokenDebugState,
     encodedProjectMetadata,
     hashedProjectMetadata,
   ]);
