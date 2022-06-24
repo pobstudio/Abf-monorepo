@@ -6,7 +6,6 @@ import {
   MonoPixelGrid16Renderer,
   MonoPixelGrid24Renderer,
   MonoPixelGrid8Renderer,
-  PathRenderer,
   PixelGrid16Renderer,
   PixelGrid24Renderer,
   PixelGrid8Renderer,
@@ -63,11 +62,11 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     dotMatrixRenderer.address,
   );
 
-  const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {});
-  const pathRenderer = (await PathRenderer.deploy()) as PathRenderer;
-  await pathRenderer.deployed();
+  // const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {});
+  // const pathRenderer = (await PathRenderer.deploy()) as PathRenderer;
+  // await pathRenderer.deployed();
 
-  console.log('PathRenderer address deployed to:', pathRenderer.address);
+  // console.log('PathRenderer address deployed to:', pathRenderer.address);
 
   const PixelGrid8Renderer = await hre.ethers.getContractFactory(
     'PixelGrid8Renderer',
@@ -178,12 +177,17 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     (await MonoPixelGrid24Renderer.deploy()) as MonoPixelGrid24Renderer;
   await monoPixelGrid24Renderer.deployed();
 
+  console.log(
+    'MonoPixelGrid24Renderer address deployed to:',
+    monoPixelGrid24Renderer.address,
+  );
+
   console.log('Registering renderers');
   await (await rendererRegistry.registerRenderer(debugRenderer.address)).wait();
   await (
     await rendererRegistry.registerRenderer(dotMatrixRenderer.address)
   ).wait();
-  await (await rendererRegistry.registerRenderer(pathRenderer.address)).wait();
+  // await (await rendererRegistry.registerRenderer(pathRenderer.address)).wait();
   await (
     await rendererRegistry.registerRenderer(monoPixelGrid8Renderer.address)
   ).wait();

@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
-import { MonoPixelGrid8Renderer, SvgUtils } from '../typechain-types';
+import { PixelGrid8Renderer, SvgUtils } from '../typechain-types';
 import { getSvgHotLoadingServer } from '../utils/svg';
 
 task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
@@ -48,8 +48,7 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
           .slice(2) +
         (i % 2 === 1 ? '00' : 'ff'),
       '',
-    ) +
-    '000000';
+    );
 
   const server = await getSvgHotLoadingServer(async () => {
     await hre.run('compile');
@@ -64,8 +63,17 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     // );
     // const Renderer = (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
 
-    const MonoPixelGrid8Renderer = await hre.ethers.getContractFactory(
-      'MonoPixelGrid8Renderer',
+    // const MonoPixelGrid8Renderer = await hre.ethers.getContractFactory(
+    //   'MonoPixelGrid8Renderer',
+    //   {
+    //     libraries: {
+    //       SvgUtils: svgUtils.address,
+    //     },
+    //   },
+    // );
+
+    const PixelGrid8Renderer = await hre.ethers.getContractFactory(
+      'PixelGrid8Renderer',
       {
         libraries: {
           SvgUtils: svgUtils.address,
@@ -78,13 +86,10 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     //   //   SvgUtils: svgUtils.address,
     //   // },
     // });
-    const renderer =
-      (await MonoPixelGrid8Renderer.deploy()) as MonoPixelGrid8Renderer;
+    const renderer = (await PixelGrid8Renderer.deploy()) as PixelGrid8Renderer;
     await renderer.deployed();
-    const res = await renderer.render(MONO_GRAYSCALE_BYTES);
-    const estimation = await renderer.estimateGas.renderRaw(
-      MONO_GRAYSCALE_BYTES,
-    );
+    const res = await renderer.render(GRAYSCALE_BYTES);
+    const estimation = await renderer.estimateGas.renderRaw(GRAYSCALE_BYTES);
     console.log('Gas used for call:', estimation.toNumber());
     return `<img width="500" height="500" src="${res}"></img>`;
   });

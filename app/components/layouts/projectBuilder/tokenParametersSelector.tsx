@@ -16,7 +16,7 @@ export const TokenParametersSelector: FC = () => {
   return (
     <InteractiveDetailRowsContainer>
       <DetailTitleAnchorRow>
-        {['CONFIGURE TOKEN PARAMETERS', `SPEC`]}
+        {['CONFIGURE COLLECTION PARAMETERS', `SPEC`]}
       </DetailTitleAnchorRow>
       <InputWell>
         <Text>NAME</Text>

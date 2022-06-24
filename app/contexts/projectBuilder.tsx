@@ -196,7 +196,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
         if (
           !!projectMetadata?.rendererMetadataStub?.outSize &&
           !MAX_UINT.eq(projectMetadata.rendererMetadataStub.outSize) &&
-          !projectMetadata.rendererMetadataStub.outSize.eq(
+          projectMetadata.rendererMetadataStub.outSize.lt(
             getHexStringNumBytes(output),
           )
         ) {

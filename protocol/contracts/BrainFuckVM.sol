@@ -33,11 +33,11 @@ library BrainFuckVM {
       } else {
         // +
         if (opcode == 0x2B) {
-          tape[ptr] = bytes1(uint8(tape[ptr]) + 1);
+          tape[ptr] = tape[ptr] == bytes1(0xFF) ? bytes1(0x00) : bytes1(uint8(tape[ptr]) + 1);
         }
         // -
         if (opcode == 0x2D) {
-          tape[ptr] = bytes1(uint8(tape[ptr]) - 1);
+          tape[ptr] = tape[ptr] == bytes1(0x00) ? bytes1(0xFF) : bytes1(uint8(tape[ptr]) - 1);
         }
         // ,
         if (opcode == 0x2C) {

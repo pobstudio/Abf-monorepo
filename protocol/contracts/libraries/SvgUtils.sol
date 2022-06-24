@@ -38,7 +38,7 @@ library SvgUtils {
   function lerpWithDecimals(uint min, uint max, bytes1 scale) public pure returns (uint) {
     if (scale == 0x0) return min * ONE_UNIT;
     if (scale == 0xff) return max * ONE_UNIT;
-    uint delta = ((max - min) * ONE_UNIT * uint(uint8(scale))) / 256; 
+    uint delta = ((max - min) * ONE_UNIT * uint(uint8(scale))) / 255; 
     return (min * ONE_UNIT) + delta;
   }
 

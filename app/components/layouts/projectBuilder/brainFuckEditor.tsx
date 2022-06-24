@@ -9,8 +9,9 @@ import {
   DetailTitleAnchorRow,
   InteractiveDetailRowsContainer,
 } from '../../details/rows';
-import { FlexEnds } from '../../flexs';
-import { InputWell, TextArea } from '../../inputs/input';
+import { ExpandoContentContainer, ExpandoGroup } from '../../expando';
+import { Flex, FlexEnds } from '../../flexs';
+import { InputWell, TextArea, TextInput } from '../../inputs/input';
 import { Code, MultiLineText, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
 
@@ -50,6 +51,43 @@ export const BrainFuckEditor: FC = () => {
       <DetailRow>
         {['VALID INPUT CONSTANTS', !!validInputConstants ? 'TRUE' : 'FALSE']}
       </DetailRow>
+      <div style={{ paddingTop: 82 }}>
+        <AdvancedControls />
+      </div>
     </InteractiveDetailRowsContainer>
+  );
+};
+
+const AdvancedControls: FC = () => {
+  const { onSeedChange } = useModifyProjectMetadata();
+  const { seed } = useRawProjectMetadata();
+  const { seed: validSeed } = useProjectMetadata();
+  return (
+    <ExpandoGroup title={'ADVANCED SETTINGS'}>
+      <ExpandoContentContainer>
+        <InteractiveDetailRowsContainer>
+          <InputWell>
+            <Flex>
+              <Text style={{ marginRight: 6 }}>SEED</Text>
+              <Tooltip direction={'left'}>
+                <MultiLineText>
+                  Seed provides a determinstic source of random for generating
+                  the last 32 bytes provide to Brainfuck code.
+                </MultiLineText>
+              </Tooltip>
+            </Flex>
+            <TextInput
+              value={seed ?? ''}
+              onChange={(e) => onSeedChange(e.target.value)}
+              style={{ textAlign: 'right' }}
+              placeholder="0xabcd...decd"
+            />
+          </InputWell>
+          <DetailRow>
+            {['VALID SEED', !!validSeed ? 'TRUE' : 'FALSE']}
+          </DetailRow>
+        </InteractiveDetailRowsContainer>
+      </ExpandoContentContainer>
+    </ExpandoGroup>
   );
 };

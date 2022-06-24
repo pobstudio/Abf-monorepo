@@ -96,5 +96,29 @@ describe('BrainFuckVM', function () {
       console.log('Gas used for call:', estimation.toNumber());
       expect(convertHexStrToAscii(out)).to.eq('666\n');
     });
+    it('overflow', async function () {
+      const code = convertToHexStr(',+.');
+      const input = '0xFF';
+      const out = await brainFuckVM.runBrainFuckCode(code, input);
+      const estimation = await brainFuckVM.estimateGas.runBrainFuckCode(
+        code,
+        input,
+      );
+      console.log('Gas used for call:', estimation.toNumber());
+      console.log(out);
+      expect(out).to.eq('0x00');
+    });
+    it('underflow', async function () {
+      const code = convertToHexStr(',-.');
+      const input = '0x00';
+      const out = await brainFuckVM.runBrainFuckCode(code, input);
+      const estimation = await brainFuckVM.estimateGas.runBrainFuckCode(
+        code,
+        input,
+      );
+      console.log('Gas used for call:', estimation.toNumber());
+      console.log(out);
+      expect(out).to.eq('0xff');
+    });
   });
 });

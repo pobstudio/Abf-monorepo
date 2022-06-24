@@ -67,10 +67,18 @@ export interface RendererMetadataStub {
 
 export interface RendererAdditionalMetadata {
   description: string;
-  previewOptions?: {
-    groupBytesIn?: number;
-    skipBytesBeforeGrouping?: number;
+  sampleOptions?: {
+    input?: string;
   };
+  previewOptions?: {
+    byteGroups: RendererAdditionalMetadataByteGroup[];
+  };
+}
+
+export interface RendererAdditionalMetadataByteGroup {
+  numGroups: number | 'infinity';
+  groupBytesIn: number;
+  label?: string;
 }
 
 export interface RendererMetadata extends RendererMetadataStub {

@@ -13,6 +13,7 @@ import {
 } from '../../constants/errors';
 import { useRendererContract } from '../../hooks/useContracts';
 import { RenderCodeOutputState, RendererMetadataStub } from '../../types';
+import { getHexStringNumBytes } from '../../utils/hex';
 import { OFFLINE_RENDERERS } from '../../utils/renderers';
 import { MultiLineText } from '../texts';
 
@@ -90,8 +91,16 @@ export const Render: FC<{
           );
           setRawSvgSrc(renderRaw);
           setRenderedBy('local');
+        } else if (!chainId) {
+          throw new Error(NO_CONNECTED_WALLET);
         } else if (chainId !== CHAIN_ID) {
           throw new Error(INCORRECT_CHAIN_ID);
+        } else if (
+          !!renderer &&
+          !!rendererMetadata?.outSize &&
+          rendererMetadata.outSize.gt(getHexStringNumBytes(output.output))
+        ) {
+          throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
         } else if (!!renderer) {
           console.log('node render', renderer.address);
           setIsRenderLoading(true);
@@ -99,8 +108,6 @@ export const Render: FC<{
           setRawSvgSrc(renderRaw);
           setIsRenderLoading(false);
           setRenderedBy('on-chain');
-        } else if (!account) {
-          throw new Error(NO_CONNECTED_WALLET);
         } else {
           throw new Error(RENDERER_NOT_FOUND);
         }

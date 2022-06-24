@@ -4,6 +4,8 @@ import {
   useProjectBuilderContext,
   useProjectMetadata,
 } from '../../../contexts/projectBuilder';
+import { RendererAdditionalMetadataByteGroup } from '../../../types';
+import { prettifyCountableNumber } from '../../../utils/hex';
 import { getEtherscanAddressUrl, getIPFSUrl } from '../../../utils/urls';
 import { DetailAnchorRow, DetailRowsContainer } from '../../details/rows';
 import { Flex, FlexEnds } from '../../flexs';
@@ -38,7 +40,7 @@ export const TokenPreview: FC = () => {
       </FlexEnds>
       {!!currentSampleTokenRenderState.tokenSeed ? (
         <GroupedBytes
-          groupBytesIn={1}
+          byteGroups={[{ numGroups: 64, groupBytesIn: 1 }]}
           showBytesLength={false}
           output={currentSampleTokenRenderState.tokenSeed}
           focusedByteGroupingIndex={focusedByteGroupingIndex}
@@ -93,9 +95,10 @@ export const TokenPreview: FC = () => {
             </MultiLineText>
           </Tooltip>
         </Flex>
-        <Text>{`${
-          rendererMetadataStub?.outSize.toString() ?? '-'
-        } BYTES`}</Text>
+        <Text>{`${(() => {
+          if (!rendererMetadataStub?.outSize) return '-';
+          return prettifyCountableNumber(rendererMetadataStub.outSize);
+        })()} BYTES`}</Text>
       </FlexEnds>
       {!!rendererMetadataStub?.additionalMetadataURI && (
         <DetailAnchorRow
@@ -130,12 +133,8 @@ const RawOutput: FC = () => {
     <>
       <GroupedBytes
         output={currentSampleTokenRenderState.codeOutput.output}
-        skipBytesBeforeGrouping={
-          rendererMetadataStub?.additionalMetadata?.previewOptions
-            ?.skipBytesBeforeGrouping
-        }
-        groupBytesIn={
-          rendererMetadataStub?.additionalMetadata?.previewOptions?.groupBytesIn
+        byteGroups={
+          rendererMetadataStub?.additionalMetadata?.previewOptions?.byteGroups
         }
         focusedByteGroupingIndex={
           currentSampleTokenDebugState?.focusedByteGroupingIndex
@@ -160,37 +159,42 @@ const RawOutput: FC = () => {
 
 const GroupedBytes: FC<{
   output: string;
-  groupBytesIn?: number;
-  skipBytesBeforeGrouping?: number;
+  byteGroups?: RendererAdditionalMetadataByteGroup[];
   showBytesLength?: boolean;
   focusedByteGroupingIndex?: number | null;
   setFocusedByteGroupingIndex?: (index: number | null) => void;
 }> = ({
   output,
-  skipBytesBeforeGrouping,
-  groupBytesIn,
+  byteGroups,
   showBytesLength = true,
   focusedByteGroupingIndex,
   setFocusedByteGroupingIndex,
 }) => {
-  const groupedOutputBytes = useMemo((): string[] => {
-    const groupedBytes: string[] = [];
-    if (!!groupBytesIn) {
-      if (!!skipBytesBeforeGrouping) {
-        groupedBytes.push(output.slice(2, skipBytesBeforeGrouping * 2 + 2));
-      }
-      for (
-        let i = (skipBytesBeforeGrouping ?? 0) + 2;
-        i < output.length;
-        i += 2 * groupBytesIn
-      ) {
-        groupedBytes.push(output.slice(i, i + groupBytesIn * 2));
+  const groupedOutputBytesAndLabels = useMemo((): [
+    string,
+    string | undefined,
+  ][] => {
+    const groupedBytesAndLabels: [string, string | undefined][] = [];
+    if (!!byteGroups && byteGroups.length !== 0) {
+      for (const { numGroups, groupBytesIn, label } of byteGroups) {
+        for (
+          let x = 0, i = 2;
+          i < output.length &&
+          x < (numGroups === 'infinity' ? Infinity : numGroups);
+          ++x
+        ) {
+          groupedBytesAndLabels.push([
+            output.slice(i, i + groupBytesIn * 2),
+            label,
+          ]);
+          i += groupBytesIn * 2;
+        }
       }
     } else {
-      groupedBytes.push(output.slice(2));
+      groupedBytesAndLabels.push([output.slice(2), undefined]);
     }
-    return groupedBytes;
-  }, [output, groupBytesIn, skipBytesBeforeGrouping]);
+    return groupedBytesAndLabels;
+  }, [output, byteGroups]);
 
   return (
     <MultiLineText
@@ -198,20 +202,21 @@ const GroupedBytes: FC<{
       style={{
         position: 'relative',
         lineHeight: '22px',
-        lineBreak: groupedOutputBytes?.length === 1 ? 'anywhere' : undefined,
+        lineBreak:
+          groupedOutputBytesAndLabels?.length === 1 ? 'anywhere' : undefined,
       }}
     >
       {(
         <>
           <HexStringHeaderHanger>0x</HexStringHeaderHanger>
           <GroupedBytesContainer>
-            {groupedOutputBytes.map((b, i) => {
+            {groupedOutputBytesAndLabels.map((b, i) => {
               return (
                 <GroupedBytesSpan
                   onMouseEnter={() => setFocusedByteGroupingIndex?.(i)}
                   key={`grouped-bytes-${i}`}
                 >
-                  {b}{' '}
+                  {b[0]}{' '}
                 </GroupedBytesSpan>
               );
             })}
@@ -221,7 +226,11 @@ const GroupedBytes: FC<{
             <strong>
               {focusedByteGroupingIndex !== null &&
               focusedByteGroupingIndex !== undefined
-                ? ` • ${focusedByteGroupingIndex + 1}`
+                ? ` • ${focusedByteGroupingIndex + 1} ${
+                    groupedOutputBytesAndLabels[focusedByteGroupingIndex][1]
+                      ? `(${groupedOutputBytesAndLabels[focusedByteGroupingIndex][1]})`
+                      : ''
+                  }`
                 : undefined}
             </strong>
           </span>
@@ -241,6 +250,7 @@ const GroupedBytesContainer = styled.span`
 
 const HexStringHeaderHanger = styled.span`
   position: absolute;
+  padding-right: 8px;
   // top: 0;
   right: 100%;
   line-break: strict;

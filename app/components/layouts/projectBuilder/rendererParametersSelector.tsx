@@ -49,30 +49,12 @@ export const RendererParametersSelector: FC = () => {
           placeholder="0xabcd...1234"
         />
       </InputWell>
-      <InputWell>
-        <Flex>
-          <Text style={{ marginRight: 6 }}>SEED</Text>
-          <Tooltip direction={'left'}>
-            <MultiLineText>
-              Seed provides a determinstic source of random for generating the
-              input bytes provided to Brainfuck code.
-            </MultiLineText>
-          </Tooltip>
-        </Flex>
-        <TextInput
-          value={seed ?? ''}
-          onChange={(e) => onSeedChange(e.target.value)}
-          style={{ textAlign: 'right' }}
-          placeholder="0xabcd...decd"
-        />
-      </InputWell>
       <DetailRow>
         {['VALID RENDERER', !!rendererMetadataStub ? 'TRUE' : 'FALSE']}
       </DetailRow>
       {!!rendererMetadataStub?.label && (
         <DetailRow>{['RENDERER LABEL', rendererMetadataStub.label]}</DetailRow>
       )}
-      <DetailRow>{['VALID SEED', !!validSeed ? 'TRUE' : 'FALSE']}</DetailRow>
       {!account && (
         <RenderererParametersSelectorCover>
           <MultiLineText>CONNECT WALLET TO CHANGE RENDERER</MultiLineText>

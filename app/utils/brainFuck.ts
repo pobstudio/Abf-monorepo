@@ -52,11 +52,19 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
     } else {
       // +
       if (opcode === '0x2B') {
-        tape[ptr]++;
+        if (tape[ptr] == 255) {
+          tape[ptr] = 0;
+        } else {
+          tape[ptr]++;
+        }
       }
       // -
       if (opcode === '0x2D') {
-        tape[ptr]--;
+        if (tape[ptr] == 0) {
+          tape[ptr] = 255;
+        } else {
+          tape[ptr]--;
+        }
       }
       // ,
       if (opcode === '0x2C') {
