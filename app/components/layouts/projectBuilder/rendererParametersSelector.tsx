@@ -21,7 +21,7 @@ import {
 import { Flex, FlexEnds } from '../../flexs';
 import { InputWell, TextInput } from '../../inputs/input';
 import { HeaderAnchor } from '../../navs/anchor';
-import { Label, MultiLineText, Text, TextAnchor } from '../../texts';
+import { Label, LabelAnchor, MultiLineText, Text, TextAnchor } from '../../texts';
 import { Tooltip } from '../../tooltip';
 
 export const RendererParametersSelector: FC = () => {
@@ -63,25 +63,27 @@ export const RendererParametersSelector: FC = () => {
     );
   }, [rawRenderer]);
 
-  console.log(isRendererCustom);
   return (
     <InteractiveDetailRowsContainer ref={clickAwayRef}>
-      <DetailTitleAnchorRow href="/renderers">
-        {['SELECT RENDERER', `REGISTRY`]}
-      </DetailTitleAnchorRow>
-      <InputWell
-        style={{ justifyContent: 'space-between', cursor: 'pointer' }}
-        onClick={() => setIsDropdownOpen((s) => !s)}
-      >
+      <FlexEnds>
         <Flex>
-          <Text style={{ marginRight: 6 }}>RENDERER</Text>
-          <Tooltip direction={'left'}>
+        <Text style={{ marginRight: 6 }}><strong>SELECT RENDERER</strong></Text>
+        <Tooltip direction={'left'}>
             <MultiLineText style={{ cursor: 'text' }}>
               Renderers are on-chain contracts that interpret bytes into svg or
               html. Valid renderers for ABF must abide to the Renderer{' '}
               <TextAnchor>Spec</TextAnchor>.
             </MultiLineText>
           </Tooltip>
+        </Flex>
+        <LabelAnchor href="/registry">REGISTRY</LabelAnchor>
+      </FlexEnds>
+      <InputWell
+        style={{ justifyContent: 'space-between', cursor: 'pointer' }}
+        onClick={() => setIsDropdownOpen((s) => !s)}
+      >
+        <Flex>
+          <Text>RENDERER</Text>
         </Flex>
         <Flex>
           <HeaderAnchor>
