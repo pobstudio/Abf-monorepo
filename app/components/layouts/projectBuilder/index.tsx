@@ -4,14 +4,11 @@ import {
   TwoColumnContainer,
   TwoColumnContentContainer,
 } from '../../divs/twoColumn';
-import { FlexCenter } from '../../flexs';
 import { BrainFuckEditor } from './brainFuckEditor';
 import { Jumbotron } from './jumbotron';
 import { MintingParametersSelector } from './mintingParametersSelector';
 import { RendererParametersSelector } from './rendererParametersSelector';
 import { ContractSubmit } from './submit';
-import { TokenIdSwitcher } from './tokenIdSwitcher';
-import { TokenParametersSelector } from './tokenParametersSelector';
 import { TokenPreview } from './tokenPreview';
 
 export const ProjectBuilder: FC = () => {
@@ -21,27 +18,24 @@ export const ProjectBuilder: FC = () => {
         <div>
           <TwoColumnContentContainer>
             <Jumbotron />
+            <RendererParametersSelector />
             <BrainFuckEditor />
           </TwoColumnContentContainer>
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
-            <TokenParametersSelector />
             <MintingParametersSelector />
             <ContractSubmit />
           </TwoColumnContentContainer>
         </div>
         <div>
-          <TwoColumnContentContainer>
-            <TokenPreview />
-            <FlexCenter>
-              <TokenIdSwitcher />
-            </FlexCenter>
-          </TwoColumnContentContainer>
           <TwoColumnContentContainer
-            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+            style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
-            <RendererParametersSelector />
+            <TokenPreview />
+            {/* <FlexCenter>
+              <TokenIdSwitcher />
+            </FlexCenter> */}
           </TwoColumnContentContainer>
         </div>
       </TwoColumnContainer>

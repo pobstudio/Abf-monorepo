@@ -12,6 +12,7 @@ import { Flex, FlexEnds } from '../../flexs';
 import { Render } from '../../renders';
 import { Code, Label, LabelAnchor, MultiLineText, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
+import { TokenIdSwitcher } from './tokenIdSwitcher';
 
 export const TokenPreview: FC = () => {
   const { currentSampleTokenRenderState } = useProjectBuilderContext();
@@ -24,12 +25,13 @@ export const TokenPreview: FC = () => {
     <DetailRowsContainer>
       <FlexEnds>
         <Text>
-          <strong>PREVIEW</strong>
+          <strong>OUTPUT PREVIEW</strong>
         </Text>
+        <TokenIdSwitcher />
       </FlexEnds>
-      <FlexEnds>
+      <Flex>
         <Label style={{ marginRight: 6 }}>BF CODE INPUT</Label>
-        <Tooltip direction={'right'}>
+        <Tooltip direction={'left'}>
           <MultiLineText>
             Bytes specific to{' '}
             <strong>token id {currentSampleTokenRenderState.tokenId}</strong>{' '}
@@ -37,7 +39,7 @@ export const TokenPreview: FC = () => {
             opcode.
           </MultiLineText>
         </Tooltip>
-      </FlexEnds>
+      </Flex>
       {!!currentSampleTokenRenderState.tokenSeed ? (
         <GroupedBytes
           byteGroups={[{ numGroups: 64, groupBytesIn: 1 }]}
@@ -49,15 +51,15 @@ export const TokenPreview: FC = () => {
       ) : (
         <MultiLineText>{'-'}</MultiLineText>
       )}
-      <FlexEnds>
-        <Label>BF CODE OUTPUT</Label>
-        <Tooltip direction={'right'}>
+      <Flex>
+        <Label style={{ marginRight: 6 }}>BF CODE OUTPUT</Label>
+        <Tooltip direction={'left'}>
           <MultiLineText>
             Bytes produced by BrainFuck code is inputted to a renderer which
             interprets as a SVG or HTML.
           </MultiLineText>
         </Tooltip>
-      </FlexEnds>
+      </Flex>
       <RawOutput />
       <FlexEnds>
         <Label>BF CODE OUTPUT (RENDERED)</Label>
