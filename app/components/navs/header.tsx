@@ -111,6 +111,9 @@ const Docs: React.FC = () => {
               <DocAnchor>PROTOCOL DESIGN</DocAnchor>
             </Link>
             <Link passHref href={'/collection'}>
+              <DocAnchor>RENDERER</DocAnchor>
+            </Link>
+            <Link passHref href={'/collection'}>
               <DocAnchor>BRAINFUCK LANG</DocAnchor>
             </Link>
             <Link passHref href={'/collection'}>

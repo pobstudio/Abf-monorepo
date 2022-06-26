@@ -43,7 +43,7 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
         <DetailRowsContainer>
           <DetailTitleRow>
             {[
-              `RENDERER DOCUMENTATION FOR SR-${
+              `RENDERER DOCUMENTATION FOR R-${
                 rendererMetadataStub?.id?.toString().padStart(3, '0') ?? '???'
               } "${rendererMetadataStub?.label}"`,
               '',

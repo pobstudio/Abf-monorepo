@@ -65,7 +65,7 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
     <DetailRowsContainer>
       <Flex>
         <Text style={{ textTransform: 'uppercase', marginRight: 12 }}>
-          <strong>{`SR-${id
+          <strong>{`R-${id
             .toString()
             .padStart(3, '0')} "${rendererLabel}"`}</strong>
         </Text>
