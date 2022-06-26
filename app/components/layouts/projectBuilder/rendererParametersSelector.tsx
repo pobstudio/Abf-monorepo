@@ -14,14 +14,17 @@ import {
 } from '../../../contexts/projectBuilder';
 import { useENSorHex } from '../../../hooks/useENS';
 import { useRendererLabel } from '../../../hooks/useRenderer';
-import {
-  DetailTitleAnchorRow,
-  InteractiveDetailRowsContainer,
-} from '../../details/rows';
+import { DetailAnchorRow, InteractiveDetailRowsContainer } from '../../details/rows';
 import { Flex, FlexEnds } from '../../flexs';
 import { InputWell, TextInput } from '../../inputs/input';
 import { HeaderAnchor } from '../../navs/anchor';
-import { Label, LabelAnchor, MultiLineText, Text, TextAnchor } from '../../texts';
+import {
+  Label,
+  LabelAnchor,
+  MultiLineText,
+  Text,
+  TextAnchor,
+} from '../../texts';
 import { Tooltip } from '../../tooltip';
 
 export const RendererParametersSelector: FC = () => {
@@ -67,8 +70,10 @@ export const RendererParametersSelector: FC = () => {
     <InteractiveDetailRowsContainer ref={clickAwayRef}>
       <FlexEnds>
         <Flex>
-        <Text style={{ marginRight: 6 }}><strong>SELECT RENDERER</strong></Text>
-        <Tooltip direction={'left'}>
+          <Text style={{ marginRight: 6 }}>
+            <strong>SELECT RENDERER</strong>
+          </Text>
+          <Tooltip direction={'left'}>
             <MultiLineText style={{ cursor: 'text' }}>
               Renderers are on-chain contracts that interpret bytes into svg or
               html. Valid renderers for ABF must abide to the Renderer{' '}
@@ -76,7 +81,7 @@ export const RendererParametersSelector: FC = () => {
             </MultiLineText>
           </Tooltip>
         </Flex>
-        <LabelAnchor href="/registry">REGISTRY</LabelAnchor>
+        <LabelAnchor href="/renderers">REGISTRY</LabelAnchor>
       </FlexEnds>
       <InputWell
         style={{ justifyContent: 'space-between', cursor: 'pointer' }}
@@ -179,6 +184,7 @@ export const RendererParametersSelector: FC = () => {
           })()}
         </div>
       </DropdownContainer>
+      {renderer && <DetailAnchorRow href={`/renderer/${renderer}`}>{['DOCUMENTATION', 'FILE']}</DetailAnchorRow>}
     </InteractiveDetailRowsContainer>
   );
 };
@@ -239,6 +245,7 @@ const DropdownSpacer = styled.div`
   width: 100%;
   height: 10px;
   position: absolute;
+  pointer-events: none;
 `;
 
 const Web3StatusWrapper = styled.div`

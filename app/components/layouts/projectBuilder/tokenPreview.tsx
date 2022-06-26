@@ -159,7 +159,7 @@ const RawOutput: FC = () => {
   );
 };
 
-const GroupedBytes: FC<{
+export const GroupedBytes: FC<{
   output: string;
   byteGroups?: RendererAdditionalMetadataByteGroup[];
   showBytesLength?: boolean;

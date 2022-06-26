@@ -15,8 +15,8 @@ export const useDefaultSeed = (refresh?: any) => {
   }, [refresh]);
 };
 
-export const DEFAULT_RENDERER_KEY = 'pixelGrid8';
-export const DEFAULT_INPUT_CONSTANTS = '0x'.padEnd(
+export const DEFAULT_RENDERER_KEY = 'monoPixelGrid16';
+export const DEFAULT_INPUT_CONSTANTS = '0xFF'.padEnd(
   INPUT_CONSTANT_BYTES_SIZE * 2 + 2,
   '0',
 );
@@ -25,6 +25,7 @@ export const DEFAULT_PROJECT_METADATA_STUB: Partial<ProjectMetadata> = {
   renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],
   isActive: false,
   royaltyFractionInBps: 0,
+  code: ',[.-].' 
 };
 
 export const useDefaultProjectMetadata = (

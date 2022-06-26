@@ -98,13 +98,13 @@ const Docs: React.FC = () => {
               <DocAnchor>COMMON INQUIRES</DocAnchor>
             </Link>
           </DocsAnchorGroup>
-          <DocsAnchorGroup>
+          {/* <DocsAnchorGroup>
             <Label>GUIDES</Label>
             <Link passHref href={'/collection'}>
               <DocAnchor>"AMPLEXUS CHAOTICUS"</DocAnchor>
             </Link>
             <DocAnchor>"USUS INITIBUS"</DocAnchor>
-          </DocsAnchorGroup>
+          </DocsAnchorGroup> */}
           <DocsAnchorGroup>
             <Label>SCHEMATICS</Label>
             <Link passHref href={'/collection'}>

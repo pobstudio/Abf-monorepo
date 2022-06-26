@@ -1,25 +1,25 @@
 import { format } from 'date-fns';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useCopyToClipboard } from 'react-use';
 import styled from 'styled-components';
-import { useENSorHex } from '../../hooks/useENS';
 import {
   useAllRendererMetadata,
   useRendererLabel,
 } from '../../hooks/useRenderer';
 import { RendererMetadata } from '../../types';
 import { prettifyCountableNumber, shortenHexString } from '../../utils/hex';
-import { getEtherscanAddressUrl, getIPFSUrl } from '../../utils/urls';
+import { getEtherscanAddressUrl } from '../../utils/urls';
 import {
   DetailAnchorRow,
   DetailRow,
   DetailRowsContainer,
-  DetailTitleAnchorRow,
 } from '../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
-import { Text } from '../texts';
+import { Flex, FlexEnds } from '../flexs';
+import { Label, LabelAnchor, Text, TextAnchor } from '../texts';
 
 export const Renderers: FC = () => {
   const rendererMetadatas = useAllRendererMetadata();
@@ -46,17 +46,51 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
   additionalMetadataURI,
   registeredAt,
 }) => {
-  const name = useENSorHex(address);
   const rendererLabel = useRendererLabel(address);
+  const [, copyToClipboard] = useCopyToClipboard();
+  const [copied, setCopied] = useState<boolean>(false);
+  useEffect(() => {
+    let clearToken: number | undefined = undefined;
+    if (copied) {
+      clearToken = window.setTimeout(() => {
+        setCopied(false);
+      }, 5000);
+    }
+    return () => {
+      clearTimeout(clearToken);
+    };
+  }, [copied]);
 
   return (
     <DetailRowsContainer>
-      <DetailTitleAnchorRow href={getEtherscanAddressUrl(address)}>
-        {[`SR-${id.toString().padStart(3, '0')}: ${rendererLabel}`, '']}
-      </DetailTitleAnchorRow>
-      <DetailAnchorRow href={getEtherscanAddressUrl(address)}>
-        {['CONTRACT', shortenHexString(address)]}
-      </DetailAnchorRow>
+      <Flex>
+        <Text style={{ textTransform: 'uppercase', marginRight: 12 }}>
+          <strong>{`SR-${id
+            .toString()
+            .padStart(3, '0')} "${rendererLabel}"`}</strong>
+        </Text>
+      </Flex>
+      <FlexEnds>
+        <Label style={{ textTransform: 'uppercase' }}>CONTRACT</Label>
+        <Flex>
+          <TextAnchor href={getEtherscanAddressUrl(address)} target={'_blank'}>
+            {shortenHexString(address)}
+          </TextAnchor>
+          <LabelAnchor
+            onClick={() => {
+              copyToClipboard(address);
+              setCopied(true);
+            }}
+            style={{
+              cursor: 'pointer',
+              textDecoration: 'none',
+              marginLeft: 12,
+            }}
+          >
+            {copied ? '(COPIED)' : '(COPY)'}
+          </LabelAnchor>
+        </Flex>
+      </FlexEnds>
       <DetailRow>
         {[
           'DISCOVERED AT',
@@ -66,8 +100,8 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
       <DetailRow>
         {['REQUIRED INPUT BYTE STRING SIZE', prettifyCountableNumber(outSize)]}
       </DetailRow>
-      <DetailAnchorRow href={getIPFSUrl(additionalMetadataURI)}>
-        {['DOCUMENTATION', 'IPFS']}
+      <DetailAnchorRow href={`/renderer/${address}`}>
+        {['DOCUMENTATION', 'FILE']}
       </DetailAnchorRow>
     </DetailRowsContainer>
   );
