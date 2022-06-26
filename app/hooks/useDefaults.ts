@@ -25,7 +25,7 @@ export const DEFAULT_PROJECT_METADATA_STUB: Partial<ProjectMetadata> = {
   renderer: deployments[CHAIN_ID].renderers[DEFAULT_RENDERER_KEY],
   isActive: false,
   royaltyFractionInBps: 0,
-  code: ',[.-].' 
+  code: ',[.-].',
 };
 
 export const useDefaultProjectMetadata = (

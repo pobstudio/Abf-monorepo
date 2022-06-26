@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
         {/* <Link passHref href={'/collection'}>
           <HeaderAnchor>COLLECTION</HeaderAnchor>
         </Link> */}
-        <Link passHref href={'/collection'}>
+        <Link passHref href={'/recruitment'}>
           <HeaderAnchor>RECRUITMENT</HeaderAnchor>
         </Link>
       </HeaderAnchorRow>

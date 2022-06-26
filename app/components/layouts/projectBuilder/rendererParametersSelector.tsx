@@ -14,7 +14,10 @@ import {
 } from '../../../contexts/projectBuilder';
 import { useENSorHex } from '../../../hooks/useENS';
 import { useRendererLabel } from '../../../hooks/useRenderer';
-import { DetailAnchorRow, InteractiveDetailRowsContainer } from '../../details/rows';
+import {
+  DetailAnchorRow,
+  InteractiveDetailRowsContainer,
+} from '../../details/rows';
 import { Flex, FlexEnds } from '../../flexs';
 import { InputWell, TextInput } from '../../inputs/input';
 import { HeaderAnchor } from '../../navs/anchor';
@@ -184,7 +187,11 @@ export const RendererParametersSelector: FC = () => {
           })()}
         </div>
       </DropdownContainer>
-      {renderer && <DetailAnchorRow href={`/renderer/${renderer}`}>{['DOCUMENTATION', 'FILE']}</DetailAnchorRow>}
+      {renderer && (
+        <DetailAnchorRow href={`/renderer/${renderer}`}>
+          {['DOCUMENTATION', 'FILE']}
+        </DetailAnchorRow>
+      )}
     </InteractiveDetailRowsContainer>
   );
 };
