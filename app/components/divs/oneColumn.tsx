@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { FlexCenter, FlexCenterColumn } from '../flexs';
+import { FlexCenterColumn } from '../flexs';
 
-export const OneColumnContainer = styled(FlexCenter)`
+export const OneColumnContainer = styled(FlexCenterColumn)`
+  min-height: 100vh;
   // margin: 0px auto;
 `;
 

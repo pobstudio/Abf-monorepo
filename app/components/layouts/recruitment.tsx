@@ -24,11 +24,11 @@ const Jumbotron: React.FC = () => {
     <DetailRowsContainer>
       <div>
         <JumbotronText>
-          <strong>FROM: B-001 (BOARD MEMBER)</strong>
+          <strong>FROM: 001 (BOARD MEMBER)</strong>
         </JumbotronText>
-        <JumbotronText>
+        {/* <JumbotronText>
           <strong>TO: XXX</strong>
-        </JumbotronText>
+        </JumbotronText> */}
         <JumbotronText>
           <strong>SUBJECT: ABF CORP RECRUIMENT OF NEW MEMBERS</strong>
         </JumbotronText>

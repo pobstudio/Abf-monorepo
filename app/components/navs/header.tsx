@@ -85,7 +85,7 @@ const Docs: React.FC = () => {
         <DropdownContainerContent>
           <DocsAnchorGroup>
             <Label>ORIENTATION</Label>
-            <Link passHref href={'/collection'}>
+            <Link passHref href={'/exec'}>
               <DocAnchor>EXEC SUMMARY</DocAnchor>
             </Link>
             <Link passHref href={'/collection'}>
@@ -111,14 +111,14 @@ const Docs: React.FC = () => {
               <DocAnchor>PROTOCOL DESIGN</DocAnchor>
             </Link>
             <Link passHref href={'/collection'}>
-              <DocAnchor>RENDERER</DocAnchor>
-            </Link>
-            <Link passHref href={'/collection'}>
               <DocAnchor>BRAINFUCK LANG</DocAnchor>
             </Link>
             <Link passHref href={'/collection'}>
-              <DocAnchor>GITHUB</DocAnchor>
+              <DocAnchor>RENDERER</DocAnchor>
             </Link>
+            {/* <Link passHref href={'/collection'}>
+              <DocAnchor>GITHUB</DocAnchor>
+            </Link> */}
           </DocsAnchorGroup>
           <DocsAnchorGroup>
             <Label>REGISTRIES</Label>
