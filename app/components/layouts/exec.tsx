@@ -110,7 +110,7 @@ const Jumbotron: React.FC = () => {
       <JumbotronText>
         That is why we want you in the corp. Not to band together in some
         collective goal, but to celebrate together. To struggle together. To ask
-        each-other to better. To put like minded people in the same space.
+        each other to better. To put like minded people in the same space.
       </JumbotronText>
       <JumbotronText>
         I want to emphasize. ABF is what we make of it. There's no "roadmap" in any traditional sense. It's about us making it our home. This is as much your story as all of ours.
