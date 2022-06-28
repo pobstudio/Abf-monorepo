@@ -9,8 +9,8 @@ const IndexPage: NextPage = () => {
   return (
     <PageDiv>
       <Header />
-      <Landing />
-      {/* <ProjectBuilder /> */}
+      {/* <Landing /> */}
+      <ProjectBuilder />
       <Footer />
     </PageDiv>
   );
