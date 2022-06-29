@@ -88,7 +88,7 @@ const Docs: React.FC = () => {
             <Link passHref href={'/exec'}>
               <DocAnchor>EXEC SUMMARY</DocAnchor>
             </Link>
-            <Link passHref href={'/collection'}>
+            <Link passHref href={'/origins'}>
               <DocAnchor>ORIGINS</DocAnchor>
             </Link>
             {/* <Link passHref href={'/collection'}>
