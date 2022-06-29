@@ -26,15 +26,15 @@ const Jumbotron: React.FC = () => {
       <Label>RECORDING OF 001 WELCOMING THE FIRST CLASS OF CORP MEMBERS</Label>
 
       <JumbotronText>
-        <strong>001:</strong> Before we start, I'd like you to welcome to the
-        orientation for the <strong>ABF Corp.</strong> If you haven't already,
-        please complete the{' '}
+        <strong>001:</strong> Before we start, I'd like you to welcome you to
+        the <strong>ABF Corp.</strong> If you haven't already, please complete
+        the{' '}
         <TextAnchor href={'/recruitment'}>recruitment onboarding</TextAnchor> to
-        gain access to ABF.
+        gain access to all aspects of ABF.
       </JumbotronText>
       <JumbotronText>
         <strong>001:</strong> I'm sure you have all read the ABF marketing
-        materials. We get it, its dry as f**k. But if you are still here, that
+        materials. We get it, its dry as fuck. But if you are still here, that
         means we want you.
       </JumbotronText>
       <JumbotronText style={{ fontStyle: 'italic' }}>
@@ -59,8 +59,8 @@ const Jumbotron: React.FC = () => {
         code and produce on-chain art.
       </JumbotronText>
       <JumbotronText>
-        But really, beyond the atomic breakdowns of "what ABF is", ABF is about
-        something much more... simple.
+        But really, beyond the atomic breakdowns of the composition of ABF, it's
+        about something much more... simple.
       </JumbotronText>
       <JumbotronText style={{ fontStyle: 'italic' }}>
         [001 re-postures himself and leaves an uncomfortable silence in the
@@ -90,30 +90,32 @@ const Jumbotron: React.FC = () => {
         blessings.
       </JumbotronText>
       <JumbotronText>
-        To the fault of the BrainFuck esoterism, creating gen-art with ABF
-        rewires the brain. You aren't thinking about token supplies, mint
-        prices, or marketing. It's just about getting 8 op-codes working the way
-        you want.
+        To the fault of BrainFuck's esoterism, creating gen-art with ABF rewires
+        the brain. You aren't thinking about token supplies, mint prices, or
+        marketing. It's just about getting 8 op-codes working the way you want.
       </JumbotronText>
       <JumbotronText>
-        It is kinda ... brain-fucky, but its meditative. *chuckles*
+        It's kinda ... brain-fucky, but its meditative. *chuckles*
       </JumbotronText>
       <JumbotronText style={{ fontStyle: 'italic' }}>
         {' '}
         [001 appears to be lost in thought, before snapping back to life]
       </JumbotronText>
       <JumbotronText>
-        <strong>001: </strong>That is ABF. It's about creating art. It's about
+        <strong>001: </strong>That's ABF. It's about creating art. It's about
         not creating any blocker to doing it. It's about celebrating the people
         who dare to do it.
       </JumbotronText>
       <JumbotronText>
-        That is why we want you in the corp. Not to band together in some
-        collective goal, but to celebrate together. To struggle together. To ask
-        each other to better. To put like minded people in the same space.
+        That is why we want you in the corp. Not to band together to pump a
+        token, but to celebrate together. To struggle together. To ask each
+        other to be better.
       </JumbotronText>
       <JumbotronText>
-        I want to emphasize. ABF is what we make of it. There's no "roadmap" in any traditional sense. It's about us making it our home. This is as much your story as all of ours.
+        I want to emphasize. ABF is what we make of it. There's no "roadmap" in
+        any traditional sense. It's about us making it our home. This is as much
+        your story as all of ours. As you learn more about the protocol, you
+        will learn just how powerful the protocol is in the right pair of hands.
       </JumbotronText>
       <JumbotronText>
         Anyways, I welcome you to the corp. Please treat each other with
@@ -125,7 +127,7 @@ const Jumbotron: React.FC = () => {
       </JumbotronText>
       <JumbotronText>
         Please continue orientation by reading exhaustively through{' '}
-        <TextAnchor>DOCUMENTATION</TextAnchor>.
+        <TextAnchor href={'/origins'}>ORIGINS</TextAnchor>.
       </JumbotronText>
     </DetailRowsContainer>
   );

@@ -1,13 +1,21 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import { INVITE_LINKS } from '../../data/discord';
+import { useDefaultSeed } from '../../hooks/useDefaults';
+import { useHydrateSave } from '../../hooks/useHydrateSave';
+import { RenderCodeOutputState } from '../../types';
+import { runBrainFuckCode } from '../../utils/brainFuck';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
+import { FlexEnds } from '../flexs';
 import { PrimaryButton } from '../inputs/button';
 import { InputWell, TextArea } from '../inputs/input';
-import { Label, MultiLineText, Text } from '../texts';
+import { Label, LabelAnchor, MultiLineText, Text } from '../texts';
+import { GroupedBytes } from './projectBuilder/tokenPreview';
 
 export const Recruitment: React.FC = () => {
   return (
@@ -44,7 +52,7 @@ const Jumbotron: React.FC = () => {
         <JumbotronText>
           The ABF Corp is the steward of the <strong>ABF protocol</strong>, but
           do not be confused. The corp is NOT a DAO. We are not the owners of
-          the protocol (f**k fee extractors), simply its primary users, artists,
+          the protocol (fuck fee extractors), simply its primary users, artists,
           and researchers.
         </JumbotronText>
       </div>
@@ -61,6 +69,86 @@ const Jumbotron: React.FC = () => {
       <div
         style={{ margin: '82px 0', borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
       ></div>
+      <Challenge />
+    </DetailRowsContainer>
+  );
+};
+
+interface ChallengeMetadata {
+  parameters: number[];
+  code: string;
+  seed: string;
+}
+
+const Challenge: FC = () => {
+  const { parameters } = useSavedOrDefaultChallenge();
+  const [code, setCode] = useState<string | undefined>(undefined);
+  const output = useMemo((): RenderCodeOutputState | undefined => {
+    if (!code) {
+      return undefined;
+    }
+    try {
+      const output = runBrainFuckCode(code, []);
+      return {
+        output,
+        status: 'success',
+        warnings: [],
+      };
+    } catch (e: any) {
+      return {
+        message: e.message,
+        status: 'error',
+      };
+    }
+  }, [code]);
+
+  const challengeMetadata = useMemo((): Partial<ChallengeMetadata> => {
+    return {
+      parameters,
+      code,
+    };
+  }, [parameters, code]);
+  useHydrateSave(challengeMetadata);
+
+  const expectedOutputHexStr = useMemo(() => {
+    if (!parameters) {
+      return undefined;
+    }
+    let hexStr = '0x';
+    for (let i = parameters[0]; i <= parameters[1]; ++i) {
+      hexStr += i.toString(16).padStart(2, '0');
+    }
+    return hexStr;
+  }, [parameters]);
+  const [focusedByteGroupingIndex, setFocusedByteGroupingIndex] = useState<
+    null | number
+  >(null);
+  const [
+    focusedExpectedOutputByteGroupingIndex,
+    setFocusedExpectedOutputByteGroupingIndex,
+  ] = useState<null | number>(null);
+
+  const isButtonDisabled = useMemo(() => {
+    if (output?.status !== 'success') {
+      return true;
+    }
+    if (!expectedOutputHexStr) {
+      return true;
+    }
+    return expectedOutputHexStr !== output.output;
+  }, [expectedOutputHexStr, output]);
+
+  const onSubmit = useCallback(() => {
+    if (isButtonDisabled) {
+      confirm('Answer is not correct.');
+      return;
+    }
+    confirm(
+      `Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page. You will need it for verification in discord.`,
+    );
+  }, [isButtonDisabled]);
+  return (
+    <>
       <div>
         <JumbotronText>
           <strong>
@@ -71,37 +159,118 @@ const Jumbotron: React.FC = () => {
       </div>
       <Label>CHALLENGE</Label>
       <MultiLineText>
-        Write a BrainFuck algorithmn that prints every integer between 41 and 82
+        Write a BrainFuck algorithmn that outputs every integer between{' '}
+        {parameters?.[0]} and {parameters?.[1] + ' '}
         (inclusive).
       </MultiLineText>
-      <Label>ANSWER</Label>
+      <FlexEnds>
+        <Label>ANSWER</Label>
+        <LabelAnchor>BRAINFUCK DOCS</LabelAnchor>
+      </FlexEnds>
       <InputWell>
         <TextArea
-          // value={code ?? ''}
-          // onChange={(e) => onCodeChange(e.target.value)}
+          value={code ?? ''}
+          onChange={(e) => setCode(e.target.value)}
           style={{ minHeight: 240 }}
           placeholder="-[--->+<]>-.[---->+++++<]>-.+.++++++++++.+[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.[-->+++++++<]>.++.-------------.[--->+<]>---..+++++.-[---->+<]>++.+[->+++<]>.++++++++++++..---.[-->+<]>--------."
         />
       </InputWell>
       <Label>OUTPUT</Label>
-      <MultiLineText>testing...</MultiLineText>
-      <ErrorTable>
-        <ErrorText>OUTPUT IS INCORRECT.</ErrorText>
-      </ErrorTable>
-      <PrimaryButton>SUBMIT ANSWER</PrimaryButton>
-    </DetailRowsContainer>
+      {(() => {
+        if (!output) {
+          return <Text>-</Text>;
+        }
+        if (output.status === 'error') {
+          return <Text style={{ color: '#FF5D5D' }}>{output.message}</Text>;
+        }
+        return (
+          <GroupedBytes
+            output={output.output}
+            byteGroups={[
+              { numGroups: 'infinity', groupBytesIn: 1, label: 'Integer' },
+            ]}
+            showBytesLength
+            focusedByteGroupingIndex={focusedByteGroupingIndex}
+            setFocusedByteGroupingIndex={setFocusedByteGroupingIndex}
+          />
+        );
+      })()}
+      <Label>EXPECTED OUTPUT</Label>
+      {!!expectedOutputHexStr ? (
+        <GroupedBytes
+          output={expectedOutputHexStr}
+          byteGroups={[
+            { numGroups: 'infinity', groupBytesIn: 1, label: 'Integer' },
+          ]}
+          showBytesLength
+          focusedByteGroupingIndex={focusedExpectedOutputByteGroupingIndex}
+          setFocusedByteGroupingIndex={
+            setFocusedExpectedOutputByteGroupingIndex
+          }
+        />
+      ) : (
+        <Text>-</Text>
+      )}
+      <PrimaryButton onClick={onSubmit} disabled={isButtonDisabled}>
+        SUBMIT ANSWER
+      </PrimaryButton>
+    </>
   );
 };
 
-const ErrorTable = styled.div`
-  > * + * {
-    margin-top: 12px;
-  }
-`;
+const useDefaultChallengeMetadata = (
+  refresh?: any,
+): Partial<ChallengeMetadata> => {
+  const [start, end] = useMemo(() => {
+    const delta = Math.round((0.5 + Math.random() * 0.5) * 25);
+    const start = Math.round(Math.random() * 25);
+    return [start, start + delta];
+  }, []);
+  const seed = useDefaultSeed();
+  return useMemo(() => {
+    return {
+      parameters: [start, end],
+      code: '',
+      seed,
+    };
+  }, [seed, start, end]);
+};
 
-const ErrorText = styled(Text)`
-  color: #f24c4c;
-`;
+const useSavedOrDefaultChallenge = (): Partial<ChallengeMetadata> => {
+  const defaultChallengeMetadata = useDefaultChallengeMetadata();
+
+  const router = useRouter();
+
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  const [savedChallengeMetadata, setSavedChallengeMetadata] = useState<
+    Partial<ChallengeMetadata>
+  >({});
+  useEffect(() => {
+    if (hasHydrated) {
+      return;
+    }
+    if (typeof router.query.save !== 'string') {
+      return;
+    }
+    try {
+      const save = router.query.save;
+      const obj = JSON.parse(atob(save));
+      if (Object.keys(obj).length !== 0) {
+        setHasHydrated(true);
+        setSavedChallengeMetadata({
+          ...defaultChallengeMetadata,
+          ...(obj as Partial<ChallengeMetadata>),
+        });
+        return;
+      }
+    } catch (e) {}
+    setHasHydrated(true);
+    setSavedChallengeMetadata(defaultChallengeMetadata);
+  }, [router]);
+
+  return useMemo(() => savedChallengeMetadata, [savedChallengeMetadata]);
+};
 
 const JumbotronText = styled(Text)`
   line-height: 20px;
