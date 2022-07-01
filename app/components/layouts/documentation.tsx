@@ -7,7 +7,7 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { SecondaryAnchorButton, TertiaryAnchorButton } from '../inputs/button';
-import { HeaderAnchor } from '../navs/anchor';
+import { HeaderAnchor } from '../navs/common';
 import { B, H1, Label, P } from '../texts';
 
 export const DropdownLinkTree: React.FC = () => {

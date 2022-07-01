@@ -74,3 +74,7 @@ export const OL = styled.ol`
     line-height: 20px;
   }
 `;
+
+export const MultiLineText = styled(Text)`
+  line-height: 16px;
+`;
