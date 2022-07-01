@@ -12,8 +12,8 @@ import { TokensEffect } from '../effects/TokensEffect';
 import { TransactionsEffect } from '../effects/TransactionsEffect';
 import { ThemedGlobalStyle } from '../theme';
 
-const DEFAULT_TITLE = `ABF`;
-const DEFAULT_DESCRIPTION = ``;
+const DEFAULT_TITLE = `ABF - ABSOLUTE BRAIN FUCK`;
+const DEFAULT_DESCRIPTION = `ABF is a hyperstructure to deploy, mint, and create on-chain generative art NFTs. No fees + fully self-controlled NFT contracts designed to last forever.`;
 
 export default class PobApp extends App {
   render() {
