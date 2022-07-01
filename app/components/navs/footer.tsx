@@ -1,42 +1,42 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
-import styled from 'styled-components';
+import { useWindowSize } from 'react-use';
+import { DISCORD_LINK, TWITTER_LINK } from '../../constants';
+import { BREAKPTS } from '../../constants/styles';
 import { Flex, FlexCenter } from '../flexs';
 import { Label } from '../texts';
-import { HeaderAnchor, HeaderLogoAnchor } from './anchor';
-
-const FooterRow = styled.div`
-  display: grid;
-  grid-template-columns: 200px 1fr 200px;
-  height: 180px;
-`;
-
-const FooterAnchorRow = styled(Flex)`
-  > ${HeaderAnchor} + ${HeaderAnchor} {
-    margin-left: 32px;
-  }
-`;
+import { HeaderAnchor, HeaderLogoAnchor, NavAnchorRow, NavRow } from './common';
 
 export const Footer: React.FC = () => {
-  const router = useRouter();
-
+  const { width } = useWindowSize();
   return (
-    <FooterRow>
-      <FooterAnchorRow>
-        <HeaderAnchor>TWITTER</HeaderAnchor>
-        <HeaderAnchor>DISCORD</HeaderAnchor>
-      </FooterAnchorRow>
+    <NavRow>
+      <NavAnchorRow>
+        <HeaderAnchor
+          href={TWITTER_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TWITTER
+        </HeaderAnchor>
+        <HeaderAnchor
+          href={DISCORD_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          DISCORD
+        </HeaderAnchor>
+      </NavAnchorRow>
       <FlexCenter>
         <Link passHref href={'/'}>
           <HeaderLogoAnchor style={{ fontWeight: 'bold' }}>
-            BY THE CORP
+            {width < BREAKPTS.MD ? 'ABFC' : 'BY THE CORP'}
           </HeaderLogoAnchor>
         </Link>
       </FlexCenter>
       <Flex style={{ flexDirection: 'row-reverse' }}>
-        <Label>VIRES IN STRUCTURAS.</Label>
+        <Label>VIRES IN STRUCTURAS</Label>
       </Flex>
-    </FooterRow>
+    </NavRow>
   );
 };

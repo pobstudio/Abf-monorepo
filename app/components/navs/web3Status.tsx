@@ -16,7 +16,7 @@ import {
 import { CHAIN_ID } from '../../constants';
 import { DropdownAnimation } from '../../constants/styles';
 import { useENSorHex } from '../../hooks/useENS';
-import { HeaderAnchor } from './anchor';
+import { HeaderAnchor } from './common';
 
 export const Web3ConnectWalletContent: FC = () => {
   return (

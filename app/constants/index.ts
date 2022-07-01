@@ -48,21 +48,22 @@ export const IPFS_FALLBACK_LINKS = [
 export const PRIVATE_GATEWAY_IPFS_LINK = `https://pob-studio.mypinata.cloud/ipfs`;
 export const STUDIO_PROD_LINK = 'https://pob.studio';
 export const SHOP_PROD_LINK = 'https://shop.pob.studio';
-export const PROD_LINK = 'https://TODO.pob.studio';
-export const SNAPSHOT_LINK = 'https://snapshot.org';
-export const BLOG_LINK = `https://pob.mirror.xyz/`;
-export const TWITTER_LINK = `https://twitter.com/prrfbeauty`;
-export const DISCORD_LINK = `https://discord.gg/pob`;
+export const PROD_LINK = 'https://abf.dev';
+
+export const TWITTER_LINK = `https://twitter.com/abf_dev`;
+export const DISCORD_LINK = `https://discord.gg/dvkey2pkyJ`;
+
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 export const OPENSEA_LINK = `https://opensea.io/collection/TODO`;
 export const GITHUB_LINK = `https://github.com/proofofbeauty/TODO`;
 export const PREVIEW_IMAGE_LINK = `https://hash-preview.vercel.app`;
+
 export const SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf`;
 export const TEST_SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf-goerli`;
 export const BRAINFUCK_DOCS_LINK = `https://gist.github.com/roachhd/dce54bec8ba55fb17d3a`;
 
 // OG banners
-export const GLOBAL_OG_BANNER = `${PROD_LINK}/assets/og/logo-repeat.png`;
+export const GLOBAL_OG_BANNER = `${PROD_LINK}/assets/og.png`;
 
 /**
  * Dimensions
