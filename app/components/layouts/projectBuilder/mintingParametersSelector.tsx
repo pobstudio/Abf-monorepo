@@ -4,13 +4,10 @@ import {
   useModifyProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import {
-  DetailTitleAnchorRow,
-  InteractiveDetailRowsContainer,
-} from '../../details/rows';
+import { DetailRowsContainer, DetailTitleAnchorRow } from '../../details/rows';
 import { Flex } from '../../flexs';
 import { CheckboxInput, InputWell, NumberInput } from '../../inputs/input';
-import { MultiLineText, Text, TextAnchor } from '../../texts';
+import { A, P, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
 
 export const MintingParametersSelector: FC = () => {
@@ -29,7 +26,7 @@ export const MintingParametersSelector: FC = () => {
     return (royaltyFractionInBps * 100) / HUNDRED_PERCENT_BPS;
   }, [royaltyFractionInBps]);
   return (
-    <InteractiveDetailRowsContainer>
+    <DetailRowsContainer>
       <DetailTitleAnchorRow>
         {['CONFIGURE MINTING PARAMETERS', `SPEC`]}
       </DetailTitleAnchorRow>
@@ -37,9 +34,7 @@ export const MintingParametersSelector: FC = () => {
         <Flex>
           <Text style={{ marginRight: 6 }}>SUPPLY</Text>
           <Tooltip direction={'left'}>
-            <MultiLineText>
-              Total supply mintable in this ABF NFT collection.
-            </MultiLineText>
+            <P>Total supply mintable in this ABF NFT collection.</P>
           </Tooltip>
         </Flex>
         <NumberInput
@@ -53,10 +48,10 @@ export const MintingParametersSelector: FC = () => {
         <Flex>
           <Text style={{ marginRight: 6 }}>PRICE</Text>
           <Tooltip direction={'left'}>
-            <MultiLineText>
+            <P>
               Price in ETH for a collector to mint this collection. ABF protocol
               extracts no fees, all minting profits go to creator.
-            </MultiLineText>
+            </P>
           </Tooltip>
         </Flex>
         <NumberInput
@@ -75,10 +70,10 @@ export const MintingParametersSelector: FC = () => {
             SECONDARY MARKET ROYALTY (0-100)
           </Text>
           <Tooltip direction={'left'}>
-            <MultiLineText>
+            <P>
               Set the secondary market royalty fee routed to creator; utilizes{' '}
-              <TextAnchor>EIP2981</TextAnchor>.
-            </MultiLineText>
+              <A>EIP2981</A>.
+            </P>
           </Tooltip>
         </Flex>
         <NumberInput
@@ -95,11 +90,11 @@ export const MintingParametersSelector: FC = () => {
         <Flex>
           <Text style={{ marginRight: 6 }}>ALLOW MINTING AT CREATION</Text>
           <Tooltip direction={'left'}>
-            <MultiLineText>
+            <P>
               If toggled, minting will immediately be available after contract
               creation. If not toggled, creator can enable minting at a late
               time.
-            </MultiLineText>
+            </P>
           </Tooltip>
         </Flex>
         <CheckboxInput
@@ -107,6 +102,6 @@ export const MintingParametersSelector: FC = () => {
           onClick={() => onIsActiveChange(!isActive)}
         />
       </InputWell>
-    </InteractiveDetailRowsContainer>
+    </DetailRowsContainer>
   );
 };

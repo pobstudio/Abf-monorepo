@@ -21,10 +21,35 @@ export const PrimaryButton = styled(BaseButton)`
   width: 100%;
 `;
 
+export const PrimaryAnchorButton = styled(PrimaryButton).attrs({ as: 'a' })`
+  display: block;
+  text-decoration: none;
+  text-align: center;
+`;
+
+export const SecondaryButton = styled(BaseButton)`
+  color: black;
+  background: #e0e0e0;
+  padding: 28px;
+  width: 100%;
+`;
+
+export const SecondaryAnchorButton = styled(SecondaryButton).attrs({ as: 'a' })`
+  display: block;
+  text-decoration: none;
+  text-align: center;
+`;
+
 export const TertiaryButton = styled(BaseButton)`
   background-color: white;
   color: black;
   border: 1px solid #e0e0e0;
   padding: 28px;
   width: 100%;
+`;
+
+export const TertiaryAnchorButton = styled(TertiaryButton).attrs({ as: 'a' })`
+  display: block;
+  text-decoration: none;
+  text-align: center;
 `;

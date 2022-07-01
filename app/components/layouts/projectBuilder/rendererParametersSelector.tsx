@@ -14,20 +14,11 @@ import {
 } from '../../../contexts/projectBuilder';
 import { useENSorHex } from '../../../hooks/useENS';
 import { useRendererLabel } from '../../../hooks/useRenderer';
-import {
-  DetailAnchorRow,
-  InteractiveDetailRowsContainer,
-} from '../../details/rows';
+import { DetailAnchorRow, DetailRowsContainer } from '../../details/rows';
 import { Flex, FlexEnds } from '../../flexs';
 import { InputWell, TextInput } from '../../inputs/input';
 import { HeaderAnchor } from '../../navs/anchor';
-import {
-  Label,
-  LabelAnchor,
-  MultiLineText,
-  Text,
-  TextAnchor,
-} from '../../texts';
+import { A, B, Label, LabelAnchor, P, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
 
 export const RendererParametersSelector: FC = () => {
@@ -70,18 +61,18 @@ export const RendererParametersSelector: FC = () => {
   }, [rawRenderer]);
 
   return (
-    <InteractiveDetailRowsContainer ref={clickAwayRef}>
+    <DetailRowsContainer style={{ position: 'relative' }} ref={clickAwayRef}>
       <FlexEnds>
         <Flex>
           <Text style={{ marginRight: 6 }}>
-            <strong>SELECT RENDERER</strong>
+            <B>SELECT RENDERER</B>
           </Text>
           <Tooltip direction={'left'}>
-            <MultiLineText style={{ cursor: 'text' }}>
+            <P style={{ cursor: 'text' }}>
               Renderers are on-chain contracts that interpret bytes into svg or
               html. Valid renderers for ABF must abide to the Renderer{' '}
-              <TextAnchor>Spec</TextAnchor>.
-            </MultiLineText>
+              <A>Spec</A>.
+            </P>
           </Tooltip>
         </Flex>
         <LabelAnchor href="/renderers">REGISTRY</LabelAnchor>
@@ -90,12 +81,10 @@ export const RendererParametersSelector: FC = () => {
         style={{ justifyContent: 'space-between', cursor: 'pointer' }}
         onClick={() => setIsDropdownOpen((s) => !s)}
       >
-        <Flex>
-          <Text>RENDERER</Text>
-        </Flex>
+        <Text>RENDERER</Text>
         <Flex>
           <HeaderAnchor>
-            <strong>{renderer ? rendererLabel : 'NONE SELECTED'}</strong>
+            <B>{renderer ? rendererLabel : 'NONE SELECTED'}</B>
           </HeaderAnchor>
           <Text style={{ marginLeft: 12 }}>{isDropdownOpen ? '▲' : '▼'}</Text>
         </Flex>
@@ -113,10 +102,10 @@ export const RendererParametersSelector: FC = () => {
           <Flex style={{ marginBottom: 8 }}>
             <Label style={{ marginRight: 6 }}>DEFAULT RENDERERS</Label>
             <Tooltip direction={'left'}>
-              <MultiLineText>
+              <P>
                 Default Renderers are written by the ABF Corp and vetted by the
                 BOARD.
-              </MultiLineText>
+              </P>
             </Tooltip>
           </Flex>
           <RendererRowGroup>
@@ -140,10 +129,10 @@ export const RendererParametersSelector: FC = () => {
           <Flex style={{ margin: '16px 0' }}>
             <Label style={{ marginRight: 6 }}>CUSTOM RENDERER</Label>
             <Tooltip direction={'left'}>
-              <MultiLineText>
-                Provide a custom written renderer. Consult the{' '}
-                <TextAnchor>registry</TextAnchor> for all discovered renderers.
-              </MultiLineText>
+              <P>
+                Provide a custom written renderer. Consult the <A>registry</A>{' '}
+                for all discovered renderers.
+              </P>
             </Tooltip>
           </Flex>
           {(() => {
@@ -192,7 +181,7 @@ export const RendererParametersSelector: FC = () => {
           {['DOCUMENTATION', 'FILE']}
         </DetailAnchorRow>
       )}
-    </InteractiveDetailRowsContainer>
+    </DetailRowsContainer>
   );
 };
 
@@ -242,7 +231,7 @@ const DropdownContainer = animated(styled.div`
   padding: 24px;
   opacity: 0;
   > * + * {
-    margin-top: 14px;
+    margin-top: 8px;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 `);
@@ -253,8 +242,4 @@ const DropdownSpacer = styled.div`
   height: 10px;
   position: absolute;
   pointer-events: none;
-`;
-
-const Web3StatusWrapper = styled.div`
-  position: relative;
 `;

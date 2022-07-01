@@ -3,10 +3,7 @@ import {
   useModifyProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import {
-  DetailTitleAnchorRow,
-  InteractiveDetailRowsContainer,
-} from '../../details/rows';
+import { DetailRowsContainer, DetailTitleAnchorRow } from '../../details/rows';
 import { InputWell, TextInput } from '../../inputs/input';
 import { Text } from '../../texts';
 
@@ -14,7 +11,7 @@ export const TokenParametersSelector: FC = () => {
   const { onNameChange, onSymbolChange } = useModifyProjectMetadata();
   const { name, symbol } = useRawProjectMetadata();
   return (
-    <InteractiveDetailRowsContainer>
+    <DetailRowsContainer>
       <DetailTitleAnchorRow>
         {['CONFIGURE COLLECTION PARAMETERS', `SPEC`]}
       </DetailTitleAnchorRow>
@@ -36,6 +33,6 @@ export const TokenParametersSelector: FC = () => {
           placeholder="ABF"
         />
       </InputWell>
-    </InteractiveDetailRowsContainer>
+    </DetailRowsContainer>
   );
 };

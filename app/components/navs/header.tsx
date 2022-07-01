@@ -6,7 +6,7 @@ import { useClickAway } from 'react-use';
 import styled from 'styled-components';
 import { DropdownAnimation } from '../../constants/styles';
 import { Flex, FlexCenter } from '../flexs';
-import { Label } from '../texts';
+import { DropdownLinkTree } from '../layouts/documentation';
 import { HeaderAnchor, HeaderLogoAnchor } from './anchor';
 import { Web3Status } from './web3Status';
 const HeaderRow = styled.div`
@@ -70,7 +70,7 @@ const Docs: React.FC = () => {
   }, [isDropdownOpen]);
 
   return (
-    <DocsContainer ref={clickAwayRef}>
+    <DropdownWrapper ref={clickAwayRef}>
       <DocAnchor onClick={() => setIsDropdownOpen(true)}>
         DOCUMENTATION
       </DocAnchor>
@@ -83,60 +83,10 @@ const Docs: React.FC = () => {
         }}
       >
         <DropdownContainerContent>
-          <DocsAnchorGroup>
-            <Label>ORIENTATION</Label>
-            <Link passHref href={'/exec'}>
-              <DocAnchor>EXEC SUMMARY</DocAnchor>
-            </Link>
-            <Link passHref href={'/origins'}>
-              <DocAnchor>ORIGINS</DocAnchor>
-            </Link>
-            {/* <Link passHref href={'/collection'}>
-              <DocAnchor>VALUES</DocAnchor>
-            </Link> */}
-            <Link passHref href={'/collection'}>
-              <DocAnchor>COMMON INQUIRES</DocAnchor>
-            </Link>
-          </DocsAnchorGroup>
-          {/* <DocsAnchorGroup>
-            <Label>GUIDES</Label>
-            <Link passHref href={'/collection'}>
-              <DocAnchor>"AMPLEXUS CHAOTICUS"</DocAnchor>
-            </Link>
-            <DocAnchor>"USUS INITIBUS"</DocAnchor>
-          </DocsAnchorGroup> */}
-          <DocsAnchorGroup>
-            <Label>SCHEMATICS</Label>
-            <Link passHref href={'/collection'}>
-              <DocAnchor>PROTOCOL DESIGN</DocAnchor>
-            </Link>
-            <Link passHref href={'/collection'}>
-              <DocAnchor>BRAINFUCK LANG</DocAnchor>
-            </Link>
-            <Link passHref href={'/collection'}>
-              <DocAnchor>RENDERER</DocAnchor>
-            </Link>
-            {/* <Link passHref href={'/collection'}>
-              <DocAnchor>GITHUB</DocAnchor>
-            </Link> */}
-          </DocsAnchorGroup>
-          <DocsAnchorGroup>
-            <Label>REGISTRIES</Label>
-            <Link passHref href={'/renderers'}>
-              <DocAnchor>RENDERER CONTRACTS</DocAnchor>
-            </Link>
-            <Link passHref href={'/renderers'}>
-              <DocAnchor>PROTOCOL CONTRACTS</DocAnchor>
-            </Link>
-          </DocsAnchorGroup>
-          {/* <DocsAnchorGroup>
-            <Label>TOOLING</Label>
-            <DocAnchor>{censorText('Pixel Art')}</DocAnchor>
-            <DocAnchor>{censorText('BF Debugger')}</DocAnchor>
-          </DocsAnchorGroup> */}
+          <DropdownLinkTree />
         </DropdownContainerContent>
       </DropdownContainer>
-    </DocsContainer>
+    </DropdownWrapper>
   );
 };
 
@@ -145,16 +95,12 @@ const DocAnchor = styled(HeaderAnchor)`
   cursor: pointer;
 `;
 
-const DocsContainer = styled.div`
+const DropdownWrapper = styled.div`
   position: relative;
 `;
 
 const DropdownContainerContent = styled.div`
   padding: 10px 24px 24px 24px;
-  > * + * {
-    margin-top: 14px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
 `;
 
 const DocsAnchorGroup = styled.div`

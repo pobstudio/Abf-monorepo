@@ -5,7 +5,7 @@ import {
   useProjectBuilderContext,
   useProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import { InteractiveDetailRowsContainer } from '../../details/rows';
+import { DetailRowsContainer } from '../../details/rows';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { Text } from '../../texts';
 
@@ -64,7 +64,7 @@ export const ContractSubmit: FC = () => {
   const account = usePriorityAccount();
 
   return (
-    <InteractiveDetailRowsContainer>
+    <DetailRowsContainer>
       <ErrorTable>
         {errorMessages.map((m, i) => (
           <ErrorText key={`error-text-messag-${i}`}>{m}</ErrorText>
@@ -74,6 +74,6 @@ export const ContractSubmit: FC = () => {
         {!account ? 'NEED CONNECTED WALLET' : 'CREATE COLLECTION'}
       </PrimaryButton>
       <TertiaryButton onClick={onRefresh}>RESET</TertiaryButton>
-    </InteractiveDetailRowsContainer>
+    </DetailRowsContainer>
   );
 };

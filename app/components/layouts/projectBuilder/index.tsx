@@ -33,9 +33,6 @@ export const ProjectBuilder: FC = () => {
             style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <TokenPreview />
-            {/* <FlexCenter>
-              <TokenIdSwitcher />
-            </FlexCenter> */}
           </TwoColumnContentContainer>
         </div>
       </TwoColumnContainer>

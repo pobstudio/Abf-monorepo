@@ -1,27 +1,24 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import {
   useRendererMetadata,
   useRendererMetadataStubByProvider,
 } from '../../hooks/useRenderer';
 import { RendererMetadata } from '../../types';
 import { getIPFSUrl } from '../../utils/urls';
+import { GroupedBytesWithHoverState } from '../bytes/groupedBytes';
 import {
   DetailAnchorRow,
   DetailRow,
   DetailRowsContainer,
-  DetailTitleRow,
 } from '../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
-import { Flex } from '../flexs';
 import { Render } from '../renders';
-import { Label, MultiLineText } from '../texts';
-import { GroupedBytes } from './projectBuilder/tokenPreview';
+import { H1, Label, P } from '../texts';
 
 export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
-  console.log(address);
   const rendererMetadataFromGraph = useRendererMetadata(address);
   const rendererMetadataStubFromProvider =
     useRendererMetadataStubByProvider(address);
@@ -34,27 +31,17 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
     [rendererMetadataFromGraph, rendererMetadataStubFromProvider],
   );
   console.log(rendererMetadataStub);
-  const [focusedByteGroupingIndex, setFocusedByteGroupingIndex] = useState<
-    null | number
-  >(null);
   return (
     <OneColumnContainer>
       <OneColumnContentContainer>
         <DetailRowsContainer>
-          <DetailTitleRow>
-            {[
-              `RENDERER DOCUMENTATION FOR R-${
-                rendererMetadataStub?.id?.toString().padStart(3, '0') ?? '???'
-              } "${rendererMetadataStub?.label}"`,
-              '',
-            ]}
-          </DetailTitleRow>
-          <Flex>
-            <Label>DESCRIPTION</Label>
-          </Flex>
-          <MultiLineText>
-            {rendererMetadataStub.additionalMetadata?.description ?? '-'}
-          </MultiLineText>
+          <H1>
+            {`R-${
+              rendererMetadataStub?.id?.toString().padStart(3, '0') ?? '???'
+            } "${rendererMetadataStub?.label}"`}
+          </H1>
+          <Label>DESCRIPTION</Label>
+          <P>{rendererMetadataStub.additionalMetadata?.description ?? '-'}</P>
           <Label>SAMPLE OUTPUT</Label>
           <Render
             output={
@@ -69,23 +56,17 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
             }
             rendererMetadata={rendererMetadataStub}
           />
-          <Flex>
-            <Label>SAMPLE BYTE INPUT</Label>
-          </Flex>
-          {!!rendererMetadataStub.additionalMetadata?.sampleOptions?.input && (
-            <GroupedBytes
-              output={
-                rendererMetadataStub.additionalMetadata?.sampleOptions?.input
-              }
-              byteGroups={
-                rendererMetadataStub.additionalMetadata?.previewOptions
-                  ?.byteGroups
-              }
-              showBytesLength={true}
-              focusedByteGroupingIndex={focusedByteGroupingIndex}
-              setFocusedByteGroupingIndex={setFocusedByteGroupingIndex}
-            />
-          )}
+          <Label>SAMPLE BYTE INPUT</Label>
+          <GroupedBytesWithHoverState
+            output={
+              rendererMetadataStub.additionalMetadata?.sampleOptions?.input
+            }
+            byteGroups={
+              rendererMetadataStub.additionalMetadata?.previewOptions
+                ?.byteGroups
+            }
+            showBytesLength={true}
+          />
           <DetailAnchorRow
             href={
               !!rendererMetadataStub.additionalMetadataURI
@@ -96,10 +77,10 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
             {['RAW FILE SOURCE', 'IPFS']}
           </DetailAnchorRow>
           <DetailRow>{['DOCUMENTATION VERSION', '0.1.0']}</DetailRow>
-          <MultiLineText style={{ opacity: 0.2 }}>
+          <P style={{ opacity: 0.2 }}>
             USE RENDERERS AT YOUR OWN RISK. PLEASE CONSULT DOCUMENTATION BEFORE
             DEPLOYMENT.
-          </MultiLineText>
+          </P>
         </DetailRowsContainer>
       </OneColumnContentContainer>
     </OneColumnContainer>

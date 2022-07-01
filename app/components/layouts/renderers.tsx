@@ -19,7 +19,8 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { Flex, FlexEnds } from '../flexs';
-import { Label, LabelAnchor, Text, TextAnchor } from '../texts';
+import { A, Label, LabelAnchor, P, Text } from '../texts';
+import { DocumentationFooter } from './documentation';
 
 export const Renderers: FC = () => {
   const rendererMetadatas = useAllRendererMetadata();
@@ -28,12 +29,17 @@ export const Renderers: FC = () => {
     <OneColumnContainer>
       <OneColumnContentContainer>
         <Jumbotron />
-        {rendererMetadatas?.map((rm) => (
-          <RendererMetadataTable
-            {...rm}
-            key={`renderer-metadata-table-${rm.id.toHexString()}`}
-          />
-        ))}
+        <DetailRowsContainer>
+          <RendererMetadataTableContainer>
+            {rendererMetadatas?.map((rm) => (
+              <RendererMetadataTable
+                {...rm}
+                key={`renderer-metadata-table-${rm.id.toHexString()}`}
+              />
+            ))}
+          </RendererMetadataTableContainer>
+          <DocumentationFooter />
+        </DetailRowsContainer>
       </OneColumnContentContainer>
     </OneColumnContainer>
   );
@@ -73,9 +79,9 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
       <FlexEnds>
         <Label style={{ textTransform: 'uppercase' }}>CONTRACT</Label>
         <Flex>
-          <TextAnchor href={getEtherscanAddressUrl(address)} target={'_blank'}>
+          <A href={getEtherscanAddressUrl(address)} target={'_blank'}>
             {shortenHexString(address)}
-          </TextAnchor>
+          </A>
           <LabelAnchor
             onClick={() => {
               copyToClipboard(address);
@@ -107,26 +113,28 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
   );
 };
 
+const RendererMetadataTableContainer = styled.div`
+  > div + div {
+    margin-top: 42px;
+  }
+`;
+
 const Jumbotron: FC = () => {
   return (
     <DetailRowsContainer>
       <div>
-        <JumbotronText>
+        <P>
           <strong>SUBJECT: CURRENT DECLASSIFIED LIST OF RENDERERS</strong>
-        </JumbotronText>
+        </P>
       </div>
       <div>
-        <JumbotronText>
+        <P>
           Contained in this document is the corp's up-to-date list of all
           Renderers excavated by the ABFC and the broader public sphere. This
           repository is by no means exhaustive. Please consult each renderer
           carefully before use.
-        </JumbotronText>
+        </P>
       </div>
     </DetailRowsContainer>
   );
 };
-
-const JumbotronText = styled(Text)`
-  line-height: 20px;
-`;

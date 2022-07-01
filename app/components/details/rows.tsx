@@ -1,21 +1,15 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { FlexEnds } from '../flexs';
-import { Label, LabelAnchor, Text, TextAnchor } from '../texts';
+import { A, Label, LabelAnchor, Text } from '../texts';
 
 const DetailRowContainer = styled(FlexEnds)``;
 
 export const DetailRowsContainer = styled.div`
   width: 500px;
   > * + * {
-    margin-top: 16px;
+    margin-top: 20px;
   }
-`;
-
-export const InteractiveDetailRowsContainer = styled(DetailRowsContainer)<{
-  disabled?: boolean;
-}>`
-  position: relative;
 `;
 
 export const DetailTitleAnchorRow: FC<{
@@ -63,9 +57,9 @@ export const DetailAnchorRow: FC<{
   return (
     <DetailRowContainer>
       <Label style={{ textTransform: 'uppercase' }}>{children[0]}</Label>
-      <TextAnchor target="_blank" href={href}>
+      <A target="_blank" href={href}>
         {children[1]}
-      </TextAnchor>
+      </A>
     </DetailRowContainer>
   );
 };

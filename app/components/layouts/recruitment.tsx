@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { INVITE_LINKS } from '../../data/discord';
 import { useDefaultSeed } from '../../hooks/useDefaults';
 import { useHydrateSave } from '../../hooks/useHydrateSave';
 import { RenderCodeOutputState } from '../../types';
 import { runBrainFuckCode } from '../../utils/brainFuck';
+import { GroupedBytesWithHoverState } from '../bytes/groupedBytes';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
@@ -14,63 +14,56 @@ import {
 import { FlexEnds } from '../flexs';
 import { PrimaryButton } from '../inputs/button';
 import { InputWell, TextArea } from '../inputs/input';
-import { Label, LabelAnchor, MultiLineText, Text } from '../texts';
-import { GroupedBytes } from './projectBuilder/tokenPreview';
+import { B, Label, LabelAnchor, P } from '../texts';
 
 export const Recruitment: React.FC = () => {
   return (
     <OneColumnContainer>
       <OneColumnContentContainer>
-        <Jumbotron />
+        <DetailRowsContainer>
+          <div>
+            <P>
+              <B>FROM: 001 (BOARD MEMBER)</B>
+            </P>
+            <P>
+              <B>SUBJECT: ABF CORP RECRUIMENT OF NEW MEMBERS</B>
+            </P>
+          </div>
+          <div>
+            <P>
+              In its current infancy, ABF is not revealed to the mass public,
+              but the protocol is <B>alive and humming.</B> We are in need of
+              new corp members.
+            </P>
+          </div>
+          <div>
+            <P>
+              The ABF Corp is the steward of the <B>ABF protocol</B>, but do not
+              be confused. The corp is NOT a DAO. We are not the owners of the
+              protocol (fuck fee extractors), simply its primary users, artists,
+              and researchers.
+            </P>
+          </div>
+          <div>
+            <P>Our goal is to make ABF flourish.</P>
+          </div>
+          <div>
+            <P>
+              <B>Joining the corp grants:</B> access to the early ABF protocol
+              build, the Corp's discord, and the opportunity to shape ABF's
+              future.
+            </P>
+          </div>
+          <div
+            style={{
+              margin: '82px 0',
+              borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+            }}
+          ></div>
+          <Challenge />
+        </DetailRowsContainer>
       </OneColumnContentContainer>
     </OneColumnContainer>
-  );
-};
-
-const Jumbotron: React.FC = () => {
-  return (
-    <DetailRowsContainer>
-      <div>
-        <JumbotronText>
-          <strong>FROM: 001 (BOARD MEMBER)</strong>
-        </JumbotronText>
-        {/* <JumbotronText>
-          <strong>TO: XXX</strong>
-        </JumbotronText> */}
-        <JumbotronText>
-          <strong>SUBJECT: ABF CORP RECRUIMENT OF NEW MEMBERS</strong>
-        </JumbotronText>
-      </div>
-      <div>
-        <JumbotronText>
-          In its current infancy, ABF is not revealed to the mass public, but
-          the protocol is <strong>alive and humming.</strong> We are in need of
-          new corp members.
-        </JumbotronText>
-      </div>
-      <div>
-        <JumbotronText>
-          The ABF Corp is the steward of the <strong>ABF protocol</strong>, but
-          do not be confused. The corp is NOT a DAO. We are not the owners of
-          the protocol (fuck fee extractors), simply its primary users, artists,
-          and researchers.
-        </JumbotronText>
-      </div>
-      <div>
-        <JumbotronText>Our goal is to make ABF flourish.</JumbotronText>
-      </div>
-      <div>
-        <JumbotronText>
-          <strong>Joining the corp grants:</strong> access to the early ABF
-          protocol build, the Corp's discord, and the opportunity to shape ABF's
-          future.
-        </JumbotronText>
-      </div>
-      <div
-        style={{ margin: '82px 0', borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
-      ></div>
-      <Challenge />
-    </DetailRowsContainer>
   );
 };
 
@@ -120,14 +113,6 @@ const Challenge: FC = () => {
     }
     return hexStr;
   }, [parameters]);
-  const [focusedByteGroupingIndex, setFocusedByteGroupingIndex] = useState<
-    null | number
-  >(null);
-  const [
-    focusedExpectedOutputByteGroupingIndex,
-    setFocusedExpectedOutputByteGroupingIndex,
-  ] = useState<null | number>(null);
-
   const isButtonDisabled = useMemo(() => {
     if (output?.status !== 'success') {
       return true;
@@ -150,19 +135,19 @@ const Challenge: FC = () => {
   return (
     <>
       <div>
-        <JumbotronText>
-          <strong>
+        <P>
+          <B>
             If this interests you, please complete the following BrainFuck
             challenge for entry.
-          </strong>
-        </JumbotronText>
+          </B>
+        </P>
       </div>
       <Label>CHALLENGE</Label>
-      <MultiLineText>
+      <P>
         Write a BrainFuck algorithmn that outputs every integer between{' '}
         {parameters?.[0]} and {parameters?.[1] + ' '}
         (inclusive).
-      </MultiLineText>
+      </P>
       <FlexEnds>
         <Label>ANSWER</Label>
         <LabelAnchor>BRAINFUCK DOCS</LabelAnchor>
@@ -177,40 +162,27 @@ const Challenge: FC = () => {
       </InputWell>
       <Label>OUTPUT</Label>
       {(() => {
-        if (!output) {
-          return <Text>-</Text>;
-        }
-        if (output.status === 'error') {
-          return <Text style={{ color: '#FF5D5D' }}>{output.message}</Text>;
+        if (output?.status === 'error') {
+          return <P style={{ color: '#FF5D5D' }}>{output.message}</P>;
         }
         return (
-          <GroupedBytes
-            output={output.output}
+          <GroupedBytesWithHoverState
+            output={output?.output}
             byteGroups={[
               { numGroups: 'infinity', groupBytesIn: 1, label: 'Integer' },
             ]}
             showBytesLength
-            focusedByteGroupingIndex={focusedByteGroupingIndex}
-            setFocusedByteGroupingIndex={setFocusedByteGroupingIndex}
           />
         );
       })()}
       <Label>EXPECTED OUTPUT</Label>
-      {!!expectedOutputHexStr ? (
-        <GroupedBytes
-          output={expectedOutputHexStr}
-          byteGroups={[
-            { numGroups: 'infinity', groupBytesIn: 1, label: 'Integer' },
-          ]}
-          showBytesLength
-          focusedByteGroupingIndex={focusedExpectedOutputByteGroupingIndex}
-          setFocusedByteGroupingIndex={
-            setFocusedExpectedOutputByteGroupingIndex
-          }
-        />
-      ) : (
-        <Text>-</Text>
-      )}
+      <GroupedBytesWithHoverState
+        output={expectedOutputHexStr}
+        byteGroups={[
+          { numGroups: 'infinity', groupBytesIn: 1, label: 'Integer' },
+        ]}
+        showBytesLength
+      />
       <PrimaryButton onClick={onSubmit} disabled={isButtonDisabled}>
         SUBMIT ANSWER
       </PrimaryButton>
@@ -271,7 +243,3 @@ const useSavedOrDefaultChallenge = (): Partial<ChallengeMetadata> => {
 
   return useMemo(() => savedChallengeMetadata, [savedChallengeMetadata]);
 };
-
-const JumbotronText = styled(Text)`
-  line-height: 20px;
-`;
