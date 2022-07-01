@@ -14,8 +14,8 @@ export const TwoColumnContainer = styled.div`
 
 export const TwoColumnContentContainer = styled(FlexCenterColumn)`
   width: 100%;
-  padding: 128px 0px;
+  padding: 100px;
   > div + div {
-    margin-top: 82px;
+    margin-top: 100px;
   }
 `;

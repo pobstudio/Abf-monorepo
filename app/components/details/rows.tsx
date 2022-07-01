@@ -6,9 +6,9 @@ import { Label, LabelAnchor, Text, TextAnchor } from '../texts';
 const DetailRowContainer = styled(FlexEnds)``;
 
 export const DetailRowsContainer = styled.div`
-  width: 500px;
+  width: 100%;
   > * + * {
-    margin-top: 16px;
+    margin-top: 20px;
   }
 `;
 
