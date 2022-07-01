@@ -1,51 +1,103 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
-import { useClickAway } from 'react-use';
+import { useClickAway, useWindowSize } from 'react-use';
 import styled from 'styled-components';
-import { DropdownAnimation } from '../../constants/styles';
+import { BREAKPTS, DropdownAnimation } from '../../constants/styles';
 import { Flex, FlexCenter } from '../flexs';
 import { DropdownLinkTree } from '../layouts/documentation';
-import { HeaderAnchor, HeaderLogoAnchor } from './anchor';
+import { HeaderAnchor, HeaderLogoAnchor, NavAnchorRow, NavRow } from './common';
 import { Web3Status } from './web3Status';
-const HeaderRow = styled.div`
-  display: grid;
-  grid-template-columns: 200px 1fr 200px;
-  height: 180px;
-`;
-
-const HeaderAnchorRow = styled(Flex)`
-  > * + * {
-    margin-left: 32px;
-  }
-`;
 
 export const Header: React.FC = () => {
-  const router = useRouter();
-
+  const { width } = useWindowSize();
   return (
-    <HeaderRow>
-      <HeaderAnchorRow>
-        <Docs />
-        {/* <Link passHref href={'/collection'}>
+    <NavRow>
+      <NavAnchorRow>
+        {width > BREAKPTS.LG && (
+          <>
+            <Docs />
+            {/* <Link passHref href={'/collection'}>
           <HeaderAnchor>COLLECTION</HeaderAnchor>
         </Link> */}
-        <Link passHref href={'/recruitment'}>
-          <HeaderAnchor>RECRUITMENT</HeaderAnchor>
-        </Link>
-      </HeaderAnchorRow>
+            <Link passHref href={'/recruitment'}>
+              <HeaderAnchor>RECRUITMENT</HeaderAnchor>
+            </Link>
+          </>
+        )}
+      </NavAnchorRow>
       <FlexCenter>
         <Link passHref href={'/'}>
           <HeaderLogoAnchor style={{ fontWeight: 'bold' }}>
-            ABS BRAIN FUCK (ALPHA ON GOERLI)
+            ABSOLUTE BRAIN FUCK [ALPHA]
           </HeaderLogoAnchor>
         </Link>
       </FlexCenter>
       <Flex style={{ flexDirection: 'row-reverse' }}>
-        <Web3Status />
+        {width < BREAKPTS.LG ? <MobileMenu /> : <Web3Status />}
       </Flex>
-    </HeaderRow>
+    </NavRow>
+  );
+};
+
+const MobileMenu: React.FC = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const clickAwayRef = useRef<HTMLDivElement | null>(null);
+  useClickAway(clickAwayRef, () => {
+    setIsDropdownOpen(false);
+  });
+
+  const [{ y, opacity, pointerEvents, userSelect }, set] = useSpring(
+    () => DropdownAnimation.hidden,
+  );
+
+  useEffect(() => {
+    if (isDropdownOpen) {
+      set(DropdownAnimation.visible);
+    } else {
+      set(DropdownAnimation.hidden);
+    }
+  }, [isDropdownOpen]);
+
+  return (
+    <DropdownExterior ref={clickAwayRef}>
+      <DropdownAnchor onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+        <HamburgerIcon />
+      </DropdownAnchor>
+      <DropdownContainer
+        style={{
+          transform: y.to((v: unknown) => `translateY(${v}%`),
+          opacity,
+          pointerEvents,
+          userSelect,
+          right: 0,
+        }}
+      >
+        <DropdownContainerContent>
+          <DropdownAnchorGroup>
+            <Docs />
+          </DropdownAnchorGroup>
+          <DropdownAnchorGroup>
+            <Link passHref href={'/recruitment'}>
+              <DropdownAnchor>RECRUITMENT</DropdownAnchor>
+            </Link>
+          </DropdownAnchorGroup>
+          <DropdownAnchorGroup>
+            <Web3Status />
+          </DropdownAnchorGroup>
+        </DropdownContainerContent>
+      </DropdownContainer>
+    </DropdownExterior>
+  );
+};
+
+const HamburgerIcon: React.FC = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none">
+      <path fill="#fff" d="M0 0h36v36H0z"></path>
+      <path stroke="#000" d="M8 12.5h20m-20 10h20m-20-5h20"></path>
+    </svg>
   );
 };
 
@@ -70,10 +122,10 @@ const Docs: React.FC = () => {
   }, [isDropdownOpen]);
 
   return (
-    <DropdownWrapper ref={clickAwayRef}>
-      <DocAnchor onClick={() => setIsDropdownOpen(true)}>
+    <DropdownExterior ref={clickAwayRef}>
+      <DropdownAnchor onClick={() => setIsDropdownOpen(true)}>
         DOCUMENTATION
-      </DocAnchor>
+      </DropdownAnchor>
       <DropdownContainer
         style={{
           transform: y.to((v: unknown) => `translateY(${v}%`),
@@ -86,16 +138,16 @@ const Docs: React.FC = () => {
           <DropdownLinkTree />
         </DropdownContainerContent>
       </DropdownContainer>
-    </DropdownWrapper>
+    </DropdownExterior>
   );
 };
 
-const DocAnchor = styled(HeaderAnchor)`
+const DropdownAnchor = styled(HeaderAnchor)`
   display: block;
   cursor: pointer;
 `;
 
-const DropdownWrapper = styled.div`
+const DropdownExterior = styled.div`
   position: relative;
 `;
 
@@ -103,8 +155,8 @@ const DropdownContainerContent = styled.div`
   padding: 10px 24px 24px 24px;
 `;
 
-const DocsAnchorGroup = styled.div`
-  padding: 12px 0 0 0;
+const DropdownAnchorGroup = styled.div`
+  padding: 13px 0 0 0;
   > * + * {
     margin-top: 12px;
   }

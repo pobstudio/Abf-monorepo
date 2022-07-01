@@ -17,7 +17,7 @@ import { useRendererLabel } from '../../../hooks/useRenderer';
 import { DetailAnchorRow, DetailRowsContainer } from '../../details/rows';
 import { Flex, FlexEnds } from '../../flexs';
 import { InputWell, TextInput } from '../../inputs/input';
-import { HeaderAnchor } from '../../navs/anchor';
+import { HeaderAnchor } from '../../navs/common';
 import { A, B, Label, LabelAnchor, P, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
 

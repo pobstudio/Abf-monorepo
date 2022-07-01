@@ -6,7 +6,7 @@ import { A, Label, LabelAnchor, Text } from '../texts';
 const DetailRowContainer = styled(FlexEnds)``;
 
 export const DetailRowsContainer = styled.div`
-  width: 500px;
+  width: 100%;
   > * + * {
     margin-top: 20px;
   }
