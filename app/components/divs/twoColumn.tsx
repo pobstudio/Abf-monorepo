@@ -18,6 +18,9 @@ export const TwoColumnContentContainer = styled(FlexCenterColumn)`
   padding: 100px;
   > div + div {
     margin-top: 100px;
+    @media (max-width: ${BREAKPTS.LG}px) {
+      margin-top: 50px;
+    }
   }
   @media (max-width: ${BREAKPTS.LG}px) {
     padding: 50px;
