@@ -1,18 +1,23 @@
 import { NextPage } from 'next';
 import React from 'react';
+import styled from 'styled-components';
 import { PageDiv } from '../../components/divs';
-import { Specification } from '../../components/layouts/specification';
+import { Origins } from '../../components/layouts/origin';
 import { Footer } from '../../components/navs/footer';
 import { Header } from '../../components/navs/header';
+import { Text } from '../../components/texts';
 
-const SpecificationPage: NextPage = () => {
+const OriginPage: NextPage = () => {
   return (
     <PageDiv>
       <Header />
-      <Specification />
+      <Origins />
       <Footer />
     </PageDiv>
   );
 };
 
-export default React.memo(SpecificationPage);
+const StyledText = styled(Text)`
+  line-height: 20px;
+`;
+export default React.memo(OriginPage);

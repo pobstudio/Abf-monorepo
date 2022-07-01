@@ -20,7 +20,7 @@ import {
 } from '../divs/oneColumn';
 import { Flex, FlexEnds } from '../flexs';
 import { A, Label, LabelAnchor, P, Text } from '../texts';
-import { DocumentationFooter } from './documentation';
+import { DocumentationFooter } from './docs';
 
 export const Renderers: FC = () => {
   const rendererMetadatas = useAllRendererMetadata();

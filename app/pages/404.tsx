@@ -10,7 +10,7 @@ const NotFoundPage: NextPage = () => {
     <PageDiv>
       <Header />
       <FlexCenter style={{ height: `calc(50vh)` }}>
-        <Label>{'>+++++++4+[>++++++<-]>++++.----.++++.'}</Label>
+        <Label>{'4>++++++++[>++++++<-0]>++++.----.++++.4'}</Label>
       </FlexCenter>
     </PageDiv>
   );

@@ -5,7 +5,7 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { B, H1, Label, P } from '../texts';
-import { DocumentationFooter } from './documentation';
+import { DocumentationFooter } from './docs';
 
 export const Origins: React.FC = () => {
   return (

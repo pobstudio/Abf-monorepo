@@ -3,9 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useClickAway, useWindowSize } from 'react-use';
 import styled from 'styled-components';
+import { ROUTES } from '../../constants/routes';
 import { BREAKPTS, DropdownAnimation } from '../../constants/styles';
 import { Flex, FlexCenter } from '../flexs';
-import { DropdownLinkTree } from '../layouts/documentation';
+import { DropdownLinkTree } from '../layouts/docs';
 import { HeaderAnchor, HeaderLogoAnchor, NavAnchorRow, NavRow } from './common';
 import { Web3Status } from './web3Status';
 
@@ -17,10 +18,7 @@ export const Header: React.FC = () => {
         {width > BREAKPTS.LG && (
           <>
             <Docs />
-            {/* <Link passHref href={'/collection'}>
-          <HeaderAnchor>COLLECTION</HeaderAnchor>
-        </Link> */}
-            <Link passHref href={'/recruitment'}>
+            <Link passHref href={ROUTES.RECRUIT}>
               <HeaderAnchor>RECRUITMENT</HeaderAnchor>
             </Link>
           </>
@@ -79,7 +77,7 @@ const MobileMenu: React.FC = () => {
             <Docs />
           </DropdownAnchorGroup>
           <DropdownAnchorGroup>
-            <Link passHref href={'/recruitment'}>
+            <Link passHref href={ROUTES.RECRUIT}>
               <DropdownAnchor>RECRUITMENT</DropdownAnchor>
             </Link>
           </DropdownAnchorGroup>

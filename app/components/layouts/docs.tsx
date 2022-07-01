@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
+import { ROUTES } from '../../constants/routes';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
@@ -15,31 +16,31 @@ export const DropdownLinkTree: React.FC = () => {
     <DocsAnchorGroupContainer>
       <DocsAnchorGroup>
         <Label>ORIENTATION</Label>
-        <Link passHref href={'/documentation/exec'}>
+        <Link passHref href={ROUTES.DOCS.EXEC}>
           <DocAnchor>EXEC SUMMARY</DocAnchor>
         </Link>
-        <Link passHref href={'/documentation/origins'}>
+        <Link passHref href={ROUTES.DOCS.ORIGIN}>
           <DocAnchor>ORIGINS</DocAnchor>
+        </Link>
+        <Link passHref href={ROUTES.BUILDER}>
+          <DocAnchor>BUILDER</DocAnchor>
         </Link>
       </DocsAnchorGroup>
       <DocsAnchorGroup>
         <Label>SCHEMATICS</Label>
-        <Link passHref href={'/documentation/specification'}>
+        <Link passHref href={ROUTES.DOCS.SPEC}>
           <DocAnchor>PROTOCOL DESIGN</DocAnchor>
         </Link>
-        <Link passHref href={'/documentation/brainfuck'}>
+        <Link passHref href={ROUTES.DOCS.BRAINFUCK}>
           <DocAnchor>BRAINFUCK</DocAnchor>
         </Link>
-        {/* <Link passHref href={'/collection'}>
-          <DocAnchor>RENDERER</DocAnchor>
-        </Link> */}
       </DocsAnchorGroup>
       <DocsAnchorGroup>
         <Label>REGISTRIES</Label>
-        <Link passHref href={'/documentation/renderers'}>
+        <Link passHref href={ROUTES.DOCS.ORIGIN}>
           <DocAnchor>RENDERER CONTRACTS</DocAnchor>
         </Link>
-        <Link passHref href={'/renderers'}>
+        <Link passHref href={'/renderer'}>
           <DocAnchor>PROTOCOL CONTRACTS</DocAnchor>
         </Link>
       </DocsAnchorGroup>
@@ -56,8 +57,8 @@ export const Documentation: React.FC = () => {
           <P>
             "ABF is this hair-pulling experience that you indulged yourself in.
             In some ways its kind of demented. But in more ways, its pure.
-            Within the constaints you work with, simpler things become so
-            scarce" <B>-001</B>
+            Within the constants you work with, simpler things become so scarce"{' '}
+            <B>-001</B>
           </P>
           <div
             style={{
@@ -91,10 +92,10 @@ export const DocumentationFooter: React.FC = () => {
       <P>
         <B>Ready to join the ABF corp?</B>
       </P>
-      <Link href={'/recruitment'}>
+      <Link href={ROUTES.RECRUIT}>
         <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>
       </Link>
-      <Link href={'/documentation'}>
+      <Link href={ROUTES.DOCS.INDEX}>
         <TertiaryAnchorButton as="a">READ DOCS</TertiaryAnchorButton>
       </Link>
     </>

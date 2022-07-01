@@ -5,7 +5,7 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { A, B, H1, P } from '../texts';
-import { DocumentationFooter } from './documentation';
+import { DocumentationFooter } from './docs';
 
 export const BrainFuck: React.FC = () => {
   return (

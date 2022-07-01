@@ -1,11 +1,12 @@
 import React from 'react';
+import { ROUTES } from '../../constants/routes';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { A, B, H1, I, Label, P } from '../texts';
-import { DocumentationFooter } from './documentation';
+import { DocumentationFooter } from './docs';
 
 export const Exec: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ export const Exec: React.FC = () => {
           <P>
             <B>001:</B> Before we start, I'd like you to welcome you to the{' '}
             <B>ABF Corp.</B> If you haven't already, please complete the{' '}
-            <A href={'/recruitment'}>recruitment onboarding</A> to gain access
+            <A href={ROUTES.RECRUIT}>recruitment onboarding</A> to gain access
             to all aspects of ABF.
           </P>
           <P>
