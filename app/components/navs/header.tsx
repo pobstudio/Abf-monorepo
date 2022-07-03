@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { ROUTES } from '../../constants/routes';
 import { BREAKPTS, DropdownAnimation } from '../../constants/styles';
 import { Flex, FlexCenter } from '../flexs';
+import { PrimaryButton, SecondaryAnchorButton, SecondaryButton } from '../inputs/button';
 import { DropdownLinkTree } from '../layouts/docs';
 import { HeaderAnchor, HeaderLogoAnchor, NavAnchorRow, NavRow } from './common';
 import { Web3Status } from './web3Status';
@@ -18,8 +19,11 @@ export const Header: React.FC = () => {
         {width > BREAKPTS.LG && (
           <>
             <Docs />
-            <Link passHref href={ROUTES.RECRUIT}>
-              <HeaderAnchor>RECRUITMENT</HeaderAnchor>
+            <Link passHref href={ROUTES.BUILDER}>
+              <HeaderAnchor>BUILD</HeaderAnchor>
+            </Link>
+            <Link passHref href={ROUTES.COLLECT.INDEX}>
+              <HeaderAnchor>COLLECT</HeaderAnchor>
             </Link>
           </>
         )}
@@ -77,8 +81,11 @@ const MobileMenu: React.FC = () => {
             <Docs />
           </DropdownAnchorGroup>
           <DropdownAnchorGroup>
-            <Link passHref href={ROUTES.RECRUIT}>
-              <DropdownAnchor>RECRUITMENT</DropdownAnchor>
+            <Link passHref href={ROUTES.BUILDER}>
+              <DropdownAnchor>BUILD</DropdownAnchor>
+            </Link>
+            <Link passHref href={ROUTES.COLLECT.INDEX}>
+              <DropdownAnchor>COLLECT</DropdownAnchor>
             </Link>
           </DropdownAnchorGroup>
           <DropdownAnchorGroup>
@@ -134,11 +141,23 @@ const Docs: React.FC = () => {
       >
         <DropdownContainerContent>
           <DropdownLinkTree />
+          <div
+          style={{
+            marginTop: 14,
+              borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+            }}
+          ></div>
+      <JoinTheCorpButton as="a" href={ROUTES.RECRUIT}>JOIN THE CORP</JoinTheCorpButton>
         </DropdownContainerContent>
       </DropdownContainer>
     </DropdownExterior>
   );
 };
+
+const JoinTheCorpButton = styled(SecondaryAnchorButton)`
+  margin-top: 14px;
+  padding: 18px;
+`;
 
 const DropdownAnchor = styled(HeaderAnchor)`
   display: block;

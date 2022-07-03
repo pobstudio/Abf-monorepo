@@ -9,6 +9,9 @@ export const ROUTES = {
     SPEC: '/docs/spec',
   },
   BUILDER: '/app',
+  COLLECT: {
+    INDEX: '/collect'
+  },
   RECRUIT: '/recruit',
   404: '/404',
   API: {

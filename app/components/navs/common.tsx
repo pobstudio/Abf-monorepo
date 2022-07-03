@@ -19,7 +19,7 @@ export const HeaderLogoAnchor = styled(HeaderAnchor)`
 
 export const NavRow = styled.div`
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
+  grid-template-columns: 250px 1fr 250px;
   height: 180px;
   @media (max-width: ${BREAKPTS.LG}px) {
     grid-template-columns: 1fr 1fr 1fr;

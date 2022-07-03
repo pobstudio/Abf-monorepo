@@ -49,8 +49,7 @@ export const Recruitment: React.FC = () => {
           </div>
           <div>
             <P>
-              <B>Joining the corp grants:</B> access to the early ABF protocol
-              build, the Corp's discord, and the opportunity to shape ABF's
+              <B>Joining the corp grants:</B> the Corp's discord, the latest developments around ABF, and the opportunity to shape ABF's
               future.
             </P>
           </div>

@@ -140,7 +140,7 @@ export const Web3Status: FC<{
             style={{ cursor: 'pointer' }}
             onClick={() => setIsDropdownOpen(true)}
           >
-            CONNECT
+            CONNECT [GOERLI]
           </HeaderAnchor>
         )}
         <DropdownSpacer />

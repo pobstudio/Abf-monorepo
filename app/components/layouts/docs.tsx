@@ -7,7 +7,7 @@ import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
-import { SecondaryAnchorButton, TertiaryAnchorButton } from '../inputs/button';
+import { PrimaryButton, SecondaryAnchorButton, TertiaryAnchorButton } from '../inputs/button';
 import { HeaderAnchor } from '../navs/common';
 import { B, H1, Label, P } from '../texts';
 
@@ -22,9 +22,6 @@ export const DropdownLinkTree: React.FC = () => {
         <Link passHref href={ROUTES.DOCS.ORIGIN}>
           <DocAnchor>ORIGINS</DocAnchor>
         </Link>
-        <Link passHref href={ROUTES.BUILDER}>
-          <DocAnchor>PROJECT BUILDER</DocAnchor>
-        </Link>
       </DocsAnchorGroup>
       <DocsAnchorGroup>
         <Label>SCHEMATICS</Label>
@@ -37,7 +34,7 @@ export const DropdownLinkTree: React.FC = () => {
       </DocsAnchorGroup>
       <DocsAnchorGroup>
         <Label>REGISTRIES</Label>
-        <Link passHref href={ROUTES.DOCS.ORIGIN}>
+        <Link passHref href={ROUTES.DOCS.RENDERER}>
           <DocAnchor>RENDERER CONTRACTS</DocAnchor>
         </Link>
         <Link passHref href={'/renderer'}>
@@ -58,7 +55,7 @@ export const Documentation: React.FC = () => {
             "ABF is this hair-pulling experience that you indulged yourself in.
             In some ways its kind of demented. But in more ways, its pure.
             Within the constants you work with, simpler things become so scarce"{' '}
-            <B>-001</B>
+            <B>-002</B>
           </P>
           <div
             style={{
@@ -69,6 +66,12 @@ export const Documentation: React.FC = () => {
           >
             <DropdownLinkTree />
           </div>
+      <P>
+        <B>Ready to join the ABF corp?</B>
+      </P>
+      <Link href={ROUTES.RECRUIT}>
+        <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>
+      </Link>
           <P style={{ opacity: 0.2 }}>
             {
               '-[------->+<]>++.-[--->+<]>.+.++++++++.-----------.-------.-.+++.--.--[--->+<]>-.++[->+++<]>.+++++++++.+++.[-->+++++<]>+++.[->+++<]>+.+++++++++++..'
