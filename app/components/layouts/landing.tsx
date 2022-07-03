@@ -15,7 +15,7 @@ export const Landing: React.FC = () => {
       <OneColumnContentContainer>
         <DetailRowsContainer>
           <div>
-            <H1 style={{ fontSize: 24 }}>NFT GEN-ART IS TOO FUCKING EASY.</H1>
+            <H1 style={{ fontSize: 24 }}>NFT GEN-ART IS TOO F**KING EASY.</H1>
           </div>
           <P>
             Enter <strong>ABF</strong>.
@@ -30,7 +30,7 @@ export const Landing: React.FC = () => {
             <A>BrainFuck</A>.
           </P>
           <P>
-            <strong>Wanna get your brain fucked?</strong>
+            <strong>Ready to get your brain f**ked?</strong>
           </P>
           <br />
           <br />
