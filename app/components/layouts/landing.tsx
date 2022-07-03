@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import React from 'react';
+import { ROUTES } from '../../constants/routes';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
@@ -30,8 +32,20 @@ export const Landing: React.FC = () => {
           <P>
             <strong>Wanna get your brain fucked?</strong>
           </P>
-          <PrimaryButton>JOIN THE CORP</PrimaryButton>
-          <TertiaryButton>READ THE DOCS</TertiaryButton>
+          <br />
+          <br />
+          <Link passHref href={ROUTES.RECRUIT}>
+            <a>
+              <PrimaryButton>JOIN THE CORP</PrimaryButton>
+            </a>
+          </Link>
+          <br />
+          <br />
+          <Link passHref href={ROUTES.DOCS.INDEX}>
+            <a>
+              <TertiaryButton>READ THE DOCS</TertiaryButton>
+            </a>
+          </Link>
           <P style={{ opacity: 0.2 }}>
             {
               '-[------->+<]>--.[->+++++<]>++.+++++++++.[----->++<]>+.+++[->++<]>+.--[--->+<]>---.++.[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.+[->+++<]>+.+.----.+++.[->+++<]>++.++[--->++<]>.++++++[->++<]>.+[--->+<]>.-.-------.-[--->+<]>--.++[--->++<]>.---.[->++++++<]>.+[->+++<]>.--[--->+<]>-.++[->+++<]>+.--.+++++++++.[----->++<]>+.+++[->++<]>+.--[--->+<]>---.++.[++>---<]>.'

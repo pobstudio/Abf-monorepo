@@ -23,7 +23,7 @@ export const DropdownLinkTree: React.FC = () => {
           <DocAnchor>ORIGINS</DocAnchor>
         </Link>
         <Link passHref href={ROUTES.BUILDER}>
-          <DocAnchor>BUILDER</DocAnchor>
+          <DocAnchor>PROJECT BUILDER</DocAnchor>
         </Link>
       </DocsAnchorGroup>
       <DocsAnchorGroup>
