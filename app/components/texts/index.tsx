@@ -5,7 +5,7 @@ export const Label = styled.p`
   margin: 0;
   font-size: 12px;
   opacity: 0.2;
-  line-height: 12px;
+  line-height: 16px;
 `;
 
 export const LabelAnchor = styled.a`
@@ -15,14 +15,14 @@ export const LabelAnchor = styled.a`
   opacity: 0.2;
   color: black;
   text-decoration: underline;
-  line-height: 12px;
+  line-height: 16px;
 `;
 
 export const Text = styled.p`
   padding: 0;
   margin: 0;
   font-size: 12px;
-  line-height: 12px;
+  line-height: 16px;
 `;
 
 export const P = styled(Text)`
@@ -47,7 +47,7 @@ export const A = styled.a`
   text-decoration: underline;
   color: black;
   font-size: 12px;
-  line-height: 12px;
+  line-height: 16px;
 `;
 
 export const Code = styled.code`
@@ -73,4 +73,8 @@ export const OL = styled.ol`
     font-size: 12px;
     line-height: 20px;
   }
+`;
+
+export const MultiLineText = styled(Text)`
+  line-height: 16px;
 `;

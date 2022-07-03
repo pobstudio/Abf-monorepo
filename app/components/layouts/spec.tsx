@@ -7,7 +7,7 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { A, B, BlockCode, Code, H1, H2, I, Label, OL, P } from '../texts';
-import { DocumentationFooter } from './documentation';
+import { DocumentationFooter } from './docs';
 
 export const Specification: React.FC = () => {
   return (

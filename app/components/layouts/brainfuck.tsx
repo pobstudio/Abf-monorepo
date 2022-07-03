@@ -6,7 +6,7 @@ import {
 } from '../divs/oneColumn';
 import { PrimaryButton, TertiaryButton } from '../inputs/button';
 import { A, B, H1, P } from '../texts';
-import { DocumentationFooter } from './documentation';
+import { DocumentationFooter } from './docs';
 
 export const BrainFuck: React.FC = () => {
   return (
