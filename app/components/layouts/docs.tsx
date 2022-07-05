@@ -7,7 +7,7 @@ import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
-import { PrimaryButton, SecondaryAnchorButton, TertiaryAnchorButton } from '../inputs/button';
+import { SecondaryAnchorButton, TertiaryAnchorButton } from '../inputs/button';
 import { HeaderAnchor } from '../navs/common';
 import { B, H1, Label, P } from '../texts';
 
@@ -66,12 +66,12 @@ export const Documentation: React.FC = () => {
           >
             <DropdownLinkTree />
           </div>
-      <P>
-        <B>Ready to join the ABF corp?</B>
-      </P>
-      <Link href={ROUTES.RECRUIT}>
-        <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>
-      </Link>
+          <P>
+            <B>Ready to join the ABF corp?</B>
+          </P>
+          <Link href={ROUTES.RECRUIT}>
+            <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>
+          </Link>
           <P style={{ opacity: 0.2 }}>
             {
               '-[------->+<]>++.-[--->+<]>.+.++++++++.-----------.-------.-.+++.--.--[--->+<]>-.++[->+++<]>.+++++++++.+++.[-->+++++<]>+++.[->+++<]>+.+++++++++++..'

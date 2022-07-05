@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { ROUTES } from '../../constants/routes';
 import { BREAKPTS, DropdownAnimation } from '../../constants/styles';
 import { Flex, FlexCenter } from '../flexs';
-import { PrimaryButton, SecondaryAnchorButton, SecondaryButton } from '../inputs/button';
+import { SecondaryAnchorButton } from '../inputs/button';
 import { DropdownLinkTree } from '../layouts/docs';
 import { HeaderAnchor, HeaderLogoAnchor, NavAnchorRow, NavRow } from './common';
 import { Web3Status } from './web3Status';
@@ -142,12 +142,14 @@ const Docs: React.FC = () => {
         <DropdownContainerContent>
           <DropdownLinkTree />
           <div
-          style={{
-            marginTop: 14,
+            style={{
+              marginTop: 14,
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
             }}
           ></div>
-      <JoinTheCorpButton as="a" href={ROUTES.RECRUIT}>JOIN THE CORP</JoinTheCorpButton>
+          <JoinTheCorpButton as="a" href={ROUTES.RECRUIT}>
+            JOIN THE CORP
+          </JoinTheCorpButton>
         </DropdownContainerContent>
       </DropdownContainer>
     </DropdownExterior>

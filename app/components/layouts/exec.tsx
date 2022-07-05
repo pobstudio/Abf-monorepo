@@ -46,7 +46,7 @@ export const Exec: React.FC = () => {
           </P>
           <P>
             Practically, this means anybody can hop on ABF and write some
-            BrainFuck code and produce on-chain art.
+            Brainfuck code and produce on-chain art.
           </P>
           <P>
             But really, beyond the atomic breakdowns of the composition of ABF,
@@ -81,7 +81,7 @@ export const Exec: React.FC = () => {
             blessings.
           </P>
           <P>
-            To the fault of BrainFuck's esoterism, creating gen-art with ABF
+            To the fault of Brainfuck's esoterism, creating gen-art with ABF
             rewires the brain. You aren't thinking about token supplies, mint
             prices, or marketing. It's just about getting 8 op-codes working the
             way you want.

@@ -15,7 +15,7 @@ export const Jumbotron: FC = () => {
         forever.
       </P>
       <P>
-        The catch? You need to write your generative art with <A>BrainFuck</A>.
+        The catch? You need to write your generative art with <A>Brainfuck</A>.
       </P>
     </DetailRowsContainer>
   );

@@ -27,7 +27,7 @@ export const Landing: React.FC = () => {
           </P>
           <P>
             The catch? You need to write your generative art with{' '}
-            <A>BrainFuck</A>.
+            <A>Brainfuck</A>.
           </P>
           <P>
             <strong>Ready to get your brain f**ked?</strong>

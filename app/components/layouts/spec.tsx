@@ -52,8 +52,8 @@ export const Specification: React.FC = () => {
             </P>
             <OL>
               <li>
-                The NFT's stored <B>BrainFuck</B> code is ran with the{' '}
-                <A>BrainFuckVM</A> Contract. Running the <B>BrainFuck</B> code
+                The NFT's stored <B>Brainfuck</B> code is ran with the{' '}
+                <A>BrainfuckVM</A> Contract. Running the <B>Brainfuck</B> code
                 produces an output, in bytes.
               </li>
               <li>
@@ -71,7 +71,7 @@ export const Specification: React.FC = () => {
             </OL>
             <P>
               In many ways, your NFT is the product of two integral components:
-              the <B>BrainFuck</B> code and the <B>renderer</B> contracts. The
+              the <B>Brainfuck</B> code and the <B>renderer</B> contracts. The
               best ABF NFTs will be the result of unique use of a well chosen
               renderer.
             </P>
@@ -79,7 +79,7 @@ export const Specification: React.FC = () => {
           <DetailRowsContainer id="utilizing-renderers-to-the-max">
             <H2>UTILIZING RENDERERS TO THE MAX</H2>
             <P>
-              Beyond your capabilities to write <B>BrainFuck</B> code, your
+              Beyond your capabilities to write <B>Brainfuck</B> code, your
               understanding of a <B>renderer</B> contract will level up your
               artistry with ABF.
             </P>
@@ -120,7 +120,7 @@ export const Specification: React.FC = () => {
           <DetailRowsContainer id="configuring-input-bytes-seed">
             <H2>CONFIGURING INPUT BYTES + SEED</H2>
             <P>
-              In <B>BrainFuck's</B> 8 opcodes, the <Code>,</Code> opcode stands
+              In <B>Brainfuck's</B> 8 opcodes, the <Code>,</Code> opcode stands
               to be one of the most powerful when utilized correctly.
             </P>
             <P>
@@ -130,7 +130,7 @@ export const Specification: React.FC = () => {
             </P>
             <P>
               In layman terms, the <Code>,</Code> opcode allows a{' '}
-              <B>BrainFuck</B> code to receive parameters.
+              <B>Brainfuck</B> code to receive parameters.
             </P>
             <P>
               <B>ABF</B> provides 64 bytes (you can use <Code>,</Code> 64 times
@@ -139,8 +139,8 @@ export const Specification: React.FC = () => {
             <P>The 64 bytes provided are shaped as the following</P>
             <BlockCode>
               <P>
-                <B>32</B> bytes set by user + <B>32</B> bytes of determistically
-                random bytes
+                <B>32</B> bytes set by user + <B>32</B> bytes of
+                deterministically random bytes
               </P>
             </BlockCode>
             <P>
@@ -173,7 +173,7 @@ export const Specification: React.FC = () => {
             </P>
             <P>
               With the use of input bytes, you can easily access numbers,
-              colors, and a source of random in your <B>BrainFuck</B> code.
+              colors, and a source of random in your <B>Brainfuck</B> code.
             </P>
           </DetailRowsContainer>
           <div
@@ -192,12 +192,12 @@ export const Specification: React.FC = () => {
             <H2>RENDERERS</H2>
             <P>
               As described earlier, Renderers are contracts that ingest bytes
-              and produce a determinstic output.
+              and produce a deterministic output.
             </P>
             <P>
               <B>NOTE:</B> Renderer contracts have no understanding of "how" the
               inputted bytes are produced, as in they don't know about the{' '}
-              <B>BrainFuck</B> code. They are only concerned with rendering the
+              <B>Brainfuck</B> code. They are only concerned with rendering the
               bytes into something.
             </P>
             <P>
@@ -274,7 +274,7 @@ interface IRenderer is IERC165 {
             </P>
             <P>
               At NFT creation you can configure the following (beyond the
-              obvious need of the <B>BrainFuck</B> code and related
+              obvious need of the <B>Brainfuck</B> code and related
               data/settings):
             </P>
             <OL>
@@ -295,7 +295,7 @@ interface IRenderer is IERC165 {
             <P>There is 2 main means to mint an ABF NFT:</P>
             <OL>
               <li>
-                <Code>mint(adrress to, uint256 numMints)</Code>: standard
+                <Code>mint(address to, uint256 numMints)</Code>: standard
                 minting function, can mint up to 6 in one call, pay the{' '}
                 <Code>price</Code> or reverts.
               </li>
@@ -343,7 +343,7 @@ interface IRenderer is IERC165 {
             <H2>BRAINFUCK VM</H2>
             <P>
               The library <Code>BrainFuckVM</Code> is the canonical{' '}
-              <B>BrainFuck</B> interpreter utilized by the ABF protocol.
+              <B>Brainfuck</B> interpreter utilized by the ABF protocol.
             </P>
             <P>
               There is one function, <Code>runBrainFuckCode</Code> that takes
@@ -353,8 +353,8 @@ interface IRenderer is IERC165 {
           <DetailRowsContainer id="brainfuck-uri-constructor">
             <H2>BRAINFUCK URI CONSTRUCTOR</H2>
             <P>
-              The library <Code>BrainFuckVM</Code> is the canonical{' '}
-              <B>BrainFuck</B> JSON constructor utility contract utilized by ABF
+              The library <Code>BrainfuckVM</Code> is the canonical{' '}
+              <B>Brainfuck</B> JSON constructor utility contract utilized by ABF
               protocol in the <Code>contractURI</Code> + <Code>tokenURI</Code>{' '}
               functions.
             </P>
@@ -371,7 +371,7 @@ interface IRenderer is IERC165 {
             <P>
               While the ABF dapp is a complete experience to deploy an{' '}
               <B>ABF</B> NFT, we do not provide the best experience with working
-              with <Code>BrainFuck</Code>. Here's some tooling created that can
+              with <Code>Brainfuck</Code>. Here's some tooling created that can
               help:
             </P>
             <P>
@@ -384,13 +384,13 @@ interface IRenderer is IERC165 {
             </P>
             <P>
               <A href={'https://esolangs.org/wiki/Brainfuck_constants'}>
-                Generating numbers in BrainFuck
+                Generating numbers in Brainfuck
               </A>
             </P>
           </DetailRowsContainer>
           <DetailRowsContainer id="bf-links">
             <H2>LINKS</H2>
-            <P>[COMING SOON]: Github opensource dapp</P>
+            <P>[COMING SOON]: GitHub open source dapp</P>
             <P>
               <A href={SUBGRAPH_LINK}>SUBGRAPH</A>
             </P>

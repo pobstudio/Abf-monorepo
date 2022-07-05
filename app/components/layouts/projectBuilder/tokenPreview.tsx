@@ -34,7 +34,7 @@ export const TokenPreview: FC = () => {
           <P>
             Bytes specific to{' '}
             <strong>token id {currentSampleTokenRenderState.tokenId}</strong>{' '}
-            provided to the BrainFuck code readable via the <Code>,</Code>{' '}
+            provided to the Brainfuck code readable via the <Code>,</Code>{' '}
             opcode.
           </P>
         </Tooltip>
@@ -48,7 +48,7 @@ export const TokenPreview: FC = () => {
         <Label style={{ marginRight: 6 }}>BF CODE OUTPUT</Label>
         <Tooltip direction={'left'}>
           <P>
-            Bytes produced by BrainFuck code is inputted to a renderer which
+            Bytes produced by Brainfuck code is inputted to a renderer which
             interprets as a SVG or HTML.
           </P>
         </Tooltip>
@@ -83,7 +83,7 @@ export const TokenPreview: FC = () => {
           <Tooltip direction={'left'}>
             <P>
               Renderers typically expect an exact amount of output bytes from
-              BrainFuck to correctly render a SVG or HTML; ensure your code
+              Brainfuck to correctly render a SVG or HTML; ensure your code
               output provides the required output length.
             </P>
           </Tooltip>

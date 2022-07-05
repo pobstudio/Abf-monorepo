@@ -49,7 +49,8 @@ export const Recruitment: React.FC = () => {
           </div>
           <div>
             <P>
-              <B>Joining the corp grants:</B> the Corp's discord, the latest developments around ABF, and the opportunity to shape ABF's
+              <B>Joining the corp grants:</B> the Corp's discord, the latest
+              developments around ABF, and the opportunity to shape ABF's
               future.
             </P>
           </div>
@@ -136,14 +137,14 @@ const Challenge: FC = () => {
       <div>
         <P>
           <B>
-            If this interests you, please complete the following BrainFuck
+            If this interests you, please complete the following Brainfuck
             challenge for entry.
           </B>
         </P>
       </div>
       <Label>CHALLENGE</Label>
       <P>
-        Write a BrainFuck algorithmn that outputs every integer between{' '}
+        Write a Brainfuck algorithmn that outputs every integer between{' '}
         {parameters?.[0]} and {parameters?.[1] + ' '}
         (inclusive).
       </P>

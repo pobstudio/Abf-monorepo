@@ -10,7 +10,7 @@ export const ROUTES = {
   },
   BUILDER: '/app',
   COLLECT: {
-    INDEX: '/collect'
+    INDEX: '/collect',
   },
   RECRUIT: '/recruit',
   404: '/404',
