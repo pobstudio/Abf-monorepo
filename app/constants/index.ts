@@ -50,8 +50,12 @@ export const STUDIO_PROD_LINK = 'https://pob.studio';
 export const SHOP_PROD_LINK = 'https://shop.pob.studio';
 export const PROD_LINK = 'https://abf.dev';
 
+export const TWITTER_HANDLE = `@abf_dev`;
 export const TWITTER_LINK = `https://twitter.com/abf_dev`;
 export const DISCORD_LINK = `https://discord.gg/dvkey2pkyJ`;
+
+export const DEFAULT_TITLE = `ABF - Absolute Brain F**k. ${TWITTER_HANDLE}`;
+export const DEFAULT_DESCRIPTION = `ABF is a hyperstructure to deploy, mint, and create on-chain generative art NFTs. No fees + fully self-controlled NFT contracts designed to last forever. `;
 
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 export const OPENSEA_LINK = `https://opensea.io/collection/TODO`;
