@@ -4,7 +4,12 @@ import App from 'next/app';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { subgraphClient } from '../clients/subgraph';
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, GLOBAL_OG_BANNER, PROD_LINK } from '../constants';
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  GLOBAL_OG_BANNER,
+  PROD_LINK,
+} from '../constants';
 import { AppProvider } from '../contexts/app';
 import { BlockchainEffect } from '../effects/BlockchainEffect';
 import { EagerConnectEffect } from '../effects/EagerConnectEffect';

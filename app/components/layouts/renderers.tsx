@@ -97,18 +97,18 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
           </LabelAnchor>
         </Flex>
       </FlexEnds>
+      <DetailAnchorRow href={`/renderer/${address}`}>
+        {['DOCUMENTATION', 'VIEW FILE']}
+      </DetailAnchorRow>
+      <DetailRow>
+        {['REQUIRED INPUT BYTE STRING SIZE', prettifyCountableNumber(outSize)]}
+      </DetailRow>
       <DetailRow>
         {[
           'DISCOVERED AT',
           format(new Date(registeredAt * 1000), 'yyyy-MM-dd hh:mm'),
         ]}
       </DetailRow>
-      <DetailRow>
-        {['REQUIRED INPUT BYTE STRING SIZE', prettifyCountableNumber(outSize)]}
-      </DetailRow>
-      <DetailAnchorRow href={`/renderer/${address}`}>
-        {['DOCUMENTATION', 'FILE']}
-      </DetailAnchorRow>
     </DetailRowsContainer>
   );
 };
