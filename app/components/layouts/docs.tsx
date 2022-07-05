@@ -34,7 +34,7 @@ export const DropdownLinkTree: React.FC = () => {
       </DocsAnchorGroup>
       <DocsAnchorGroup>
         <Label>REGISTRIES</Label>
-        <Link passHref href={ROUTES.DOCS.RENDERER}>
+        <Link passHref href={ROUTES.DOCS.RENDERERS}>
           <DocAnchor>RENDERER CONTRACTS</DocAnchor>
         </Link>
         <Link passHref href={'/renderer'}>
