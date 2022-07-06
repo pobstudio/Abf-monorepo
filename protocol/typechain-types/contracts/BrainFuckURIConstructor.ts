@@ -15,6 +15,7 @@ import type {
 } from 'ethers';
 import type {
   OnEvent,
+  PromiseOrValue,
   TypedEvent,
   TypedEventFilter,
   TypedListener,
@@ -34,19 +35,30 @@ export interface BrainFuckURIConstructorInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: 'contractURI',
-    values: [string, string],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: 'debug',
-    values: [BytesLike, BigNumberish],
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'tokenSeed',
-    values: [BytesLike, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'tokenURI',
-    values: [BigNumberish, string, BytesLike, BytesLike, BytesLike, string],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+    ],
   ): string;
 
   decodeFunctionResult(
@@ -88,91 +100,91 @@ export interface BrainFuckURIConstructor extends BaseContract {
 
   functions: {
     contractURI(
-      name: string,
-      nft: string,
+      name: PromiseOrValue<string>,
+      nft: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     debug(
-      seed: BytesLike,
-      tokenId: BigNumberish,
+      seed: PromiseOrValue<BytesLike>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     tokenSeed(
-      seed: BytesLike,
-      tokenId: BigNumberish,
-      constants: BytesLike,
+      seed: PromiseOrValue<BytesLike>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      constants: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     tokenURI(
-      tokenId: BigNumberish,
-      name: string,
-      seed: BytesLike,
-      constants: BytesLike,
-      code: BytesLike,
-      renderer: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      seed: PromiseOrValue<BytesLike>,
+      constants: PromiseOrValue<BytesLike>,
+      code: PromiseOrValue<BytesLike>,
+      renderer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
   };
 
   contractURI(
-    name: string,
-    nft: string,
+    name: PromiseOrValue<string>,
+    nft: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   debug(
-    seed: BytesLike,
-    tokenId: BigNumberish,
+    seed: PromiseOrValue<BytesLike>,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   tokenSeed(
-    seed: BytesLike,
-    tokenId: BigNumberish,
-    constants: BytesLike,
+    seed: PromiseOrValue<BytesLike>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    constants: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   tokenURI(
-    tokenId: BigNumberish,
-    name: string,
-    seed: BytesLike,
-    constants: BytesLike,
-    code: BytesLike,
-    renderer: string,
+    tokenId: PromiseOrValue<BigNumberish>,
+    name: PromiseOrValue<string>,
+    seed: PromiseOrValue<BytesLike>,
+    constants: PromiseOrValue<BytesLike>,
+    code: PromiseOrValue<BytesLike>,
+    renderer: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   callStatic: {
     contractURI(
-      name: string,
-      nft: string,
+      name: PromiseOrValue<string>,
+      nft: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     debug(
-      seed: BytesLike,
-      tokenId: BigNumberish,
+      seed: PromiseOrValue<BytesLike>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     tokenSeed(
-      seed: BytesLike,
-      tokenId: BigNumberish,
-      constants: BytesLike,
+      seed: PromiseOrValue<BytesLike>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      constants: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     tokenURI(
-      tokenId: BigNumberish,
-      name: string,
-      seed: BytesLike,
-      constants: BytesLike,
-      code: BytesLike,
-      renderer: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      seed: PromiseOrValue<BytesLike>,
+      constants: PromiseOrValue<BytesLike>,
+      code: PromiseOrValue<BytesLike>,
+      renderer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<string>;
   };
@@ -181,62 +193,62 @@ export interface BrainFuckURIConstructor extends BaseContract {
 
   estimateGas: {
     contractURI(
-      name: string,
-      nft: string,
+      name: PromiseOrValue<string>,
+      nft: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     debug(
-      seed: BytesLike,
-      tokenId: BigNumberish,
+      seed: PromiseOrValue<BytesLike>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     tokenSeed(
-      seed: BytesLike,
-      tokenId: BigNumberish,
-      constants: BytesLike,
+      seed: PromiseOrValue<BytesLike>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      constants: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     tokenURI(
-      tokenId: BigNumberish,
-      name: string,
-      seed: BytesLike,
-      constants: BytesLike,
-      code: BytesLike,
-      renderer: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      seed: PromiseOrValue<BytesLike>,
+      constants: PromiseOrValue<BytesLike>,
+      code: PromiseOrValue<BytesLike>,
+      renderer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     contractURI(
-      name: string,
-      nft: string,
+      name: PromiseOrValue<string>,
+      nft: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     debug(
-      seed: BytesLike,
-      tokenId: BigNumberish,
+      seed: PromiseOrValue<BytesLike>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     tokenSeed(
-      seed: BytesLike,
-      tokenId: BigNumberish,
-      constants: BytesLike,
+      seed: PromiseOrValue<BytesLike>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      constants: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     tokenURI(
-      tokenId: BigNumberish,
-      name: string,
-      seed: BytesLike,
-      constants: BytesLike,
-      code: BytesLike,
-      renderer: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      seed: PromiseOrValue<BytesLike>,
+      constants: PromiseOrValue<BytesLike>,
+      code: PromiseOrValue<BytesLike>,
+      renderer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

@@ -8,7 +8,6 @@ export type { IERC2981 } from './@openzeppelin/contracts/interfaces/IERC2981';
 export type { Pausable } from './@openzeppelin/contracts/security/Pausable';
 export type { ERC2981 } from './@openzeppelin/contracts/token/common/ERC2981';
 export type { ERC721 } from './@openzeppelin/contracts/token/ERC721/ERC721';
-export type { ERC721Royalty } from './@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty';
 export type { IERC721Metadata } from './@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata';
 export type { IERC721 } from './@openzeppelin/contracts/token/ERC721/IERC721';
 export type { IERC721Receiver } from './@openzeppelin/contracts/token/ERC721/IERC721Receiver';
@@ -38,7 +37,6 @@ export { IERC2981__factory } from './factories/@openzeppelin/contracts/interface
 export { Pausable__factory } from './factories/@openzeppelin/contracts/security/Pausable__factory';
 export { ERC2981__factory } from './factories/@openzeppelin/contracts/token/common/ERC2981__factory';
 export { ERC721__factory } from './factories/@openzeppelin/contracts/token/ERC721/ERC721__factory';
-export { ERC721Royalty__factory } from './factories/@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty__factory';
 export { IERC721Metadata__factory } from './factories/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata__factory';
 export { IERC721Receiver__factory } from './factories/@openzeppelin/contracts/token/ERC721/IERC721Receiver__factory';
 export { IERC721__factory } from './factories/@openzeppelin/contracts/token/ERC721/IERC721__factory';

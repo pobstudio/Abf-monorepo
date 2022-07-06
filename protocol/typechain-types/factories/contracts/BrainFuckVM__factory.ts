@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { Provider, TransactionRequest } from '@ethersproject/providers';
 import { Contract, ContractFactory, Overrides, Signer, utils } from 'ethers';
+import type { PromiseOrValue } from '../../common';
 import type {
   BrainFuckVM,
   BrainFuckVMInterface,
@@ -82,12 +83,12 @@ export class BrainFuckVM__factory extends ContractFactory {
   }
 
   override deploy(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<BrainFuckVM> {
     return super.deploy(overrides || {}) as Promise<BrainFuckVM>;
   }
   override getDeployTransaction(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): TransactionRequest {
     return super.getDeployTransaction(overrides || {});
   }

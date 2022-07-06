@@ -4,6 +4,7 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
+    "build": "echo \"Nothing to build\"",
     "dev:build": "tsc -p tsconfig.json",
     "watch": "tsc -w -p tsconfig.json"
   },

@@ -7,6 +7,7 @@ import {
   HardhatEthersHelpers as HardhatEthersHelpersBase,
 } from '@nomiclabs/hardhat-ethers/types';
 import { ethers } from 'ethers';
+
 import * as Contracts from '.';
 
 declare module 'hardhat/types/runtime' {
@@ -31,10 +32,6 @@ declare module 'hardhat/types/runtime' {
       name: 'ERC721',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721__factory>;
-    getContractFactory(
-      name: 'ERC721Royalty',
-      signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.ERC721Royalty__factory>;
     getContractFactory(
       name: 'IERC721Metadata',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -153,11 +150,6 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.ERC721>;
-    getContractAt(
-      name: 'ERC721Royalty',
-      address: string,
-      signer?: ethers.Signer,
-    ): Promise<Contracts.ERC721Royalty>;
     getContractAt(
       name: 'IERC721Metadata',
       address: string,
