@@ -14,6 +14,7 @@ import type {
 } from 'ethers';
 import type {
   OnEvent,
+  PromiseOrValue,
   TypedEvent,
   TypedEventFilter,
   TypedListener,
@@ -49,22 +50,25 @@ export interface IRendererInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: 'attributes',
-    values: [BytesLike],
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'propsSize', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'render', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'render',
+    values: [PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'renderAttributeKey',
     values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'renderRaw',
-    values: [BytesLike],
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
     functionFragment: 'supportsInterface',
-    values: [BytesLike],
+    values: [PromiseOrValue<BytesLike>],
   ): string;
 
   decodeFunctionResult(
@@ -117,60 +121,87 @@ export interface IRenderer extends BaseContract {
   functions: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    attributes(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    attributes(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     propsSize(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    render(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    render(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
 
-    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    renderRaw(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
   };
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  attributes(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+  attributes(
+    props: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   propsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
-  render(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+  render(
+    props: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
-  renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+  renderRaw(
+    props: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   supportsInterface(
-    interfaceId: BytesLike,
+    interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
   callStatic: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    attributes(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+    attributes(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     propsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
-    render(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+    render(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
-    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+    renderRaw(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
   };
@@ -180,20 +211,29 @@ export interface IRenderer extends BaseContract {
   estimateGas: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    attributes(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    attributes(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     propsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
-    render(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    render(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    renderRaw(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
@@ -204,7 +244,7 @@ export interface IRenderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     attributes(
-      props: BytesLike,
+      props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -213,7 +253,7 @@ export interface IRenderer extends BaseContract {
     propsSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     render(
-      props: BytesLike,
+      props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -222,12 +262,12 @@ export interface IRenderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     renderRaw(
-      props: BytesLike,
+      props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

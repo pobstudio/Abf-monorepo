@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useClickAway, useMountedState } from 'react-use';
 import styled from 'styled-components';

@@ -15,6 +15,7 @@ import type {
 } from 'ethers';
 import type {
   OnEvent,
+  PromiseOrValue,
   TypedEvent,
   TypedEventFilter,
   TypedListener,
@@ -50,31 +51,39 @@ export interface SvgUtilsInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'ONE_UNIT', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'decimals',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'lerpWithDecimals',
-    values: [BigNumberish, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'padZeros',
-    values: [string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'toColorHexString',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'toColorHexStringByBytes',
-    values: [BytesLike, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'toDecimalString',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'wholeNumber',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
 
   decodeFunctionResult(functionFragment: 'DECIMALS', data: BytesLike): Result;
@@ -136,40 +145,43 @@ export interface SvgUtils extends BaseContract {
 
     ONE_UNIT(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    decimals(n: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    decimals(
+      n: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     lerpWithDecimals(
-      min: BigNumberish,
-      max: BigNumberish,
-      scale: BytesLike,
+      min: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      scale: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     padZeros(
-      s: string,
-      len: BigNumberish,
+      s: PromiseOrValue<string>,
+      len: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     toColorHexString(
-      value: BigNumberish,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     toColorHexStringByBytes(
-      r: BytesLike,
-      g: BytesLike,
-      b: BytesLike,
+      r: PromiseOrValue<BytesLike>,
+      g: PromiseOrValue<BytesLike>,
+      b: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     toDecimalString(
-      n: BigNumberish,
+      n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string] & { s: string }>;
 
     wholeNumber(
-      n: BigNumberish,
+      n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
   };
@@ -178,75 +190,90 @@ export interface SvgUtils extends BaseContract {
 
   ONE_UNIT(overrides?: CallOverrides): Promise<BigNumber>;
 
-  decimals(n: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  decimals(
+    n: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   lerpWithDecimals(
-    min: BigNumberish,
-    max: BigNumberish,
-    scale: BytesLike,
+    min: PromiseOrValue<BigNumberish>,
+    max: PromiseOrValue<BigNumberish>,
+    scale: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   padZeros(
-    s: string,
-    len: BigNumberish,
+    s: PromiseOrValue<string>,
+    len: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   toColorHexString(
-    value: BigNumberish,
+    value: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   toColorHexStringByBytes(
-    r: BytesLike,
-    g: BytesLike,
-    b: BytesLike,
+    r: PromiseOrValue<BytesLike>,
+    g: PromiseOrValue<BytesLike>,
+    b: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  toDecimalString(n: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  toDecimalString(
+    n: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  wholeNumber(n: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  wholeNumber(
+    n: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   callStatic: {
     DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
     ONE_UNIT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    decimals(n: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    decimals(
+      n: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     lerpWithDecimals(
-      min: BigNumberish,
-      max: BigNumberish,
-      scale: BytesLike,
+      min: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      scale: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     padZeros(
-      s: string,
-      len: BigNumberish,
+      s: PromiseOrValue<string>,
+      len: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     toColorHexString(
-      value: BigNumberish,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     toColorHexStringByBytes(
-      r: BytesLike,
-      g: BytesLike,
-      b: BytesLike,
+      r: PromiseOrValue<BytesLike>,
+      g: PromiseOrValue<BytesLike>,
+      b: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     toDecimalString(
-      n: BigNumberish,
+      n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    wholeNumber(n: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    wholeNumber(
+      n: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   filters: {};
@@ -256,39 +283,45 @@ export interface SvgUtils extends BaseContract {
 
     ONE_UNIT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    decimals(n: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    decimals(
+      n: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     lerpWithDecimals(
-      min: BigNumberish,
-      max: BigNumberish,
-      scale: BytesLike,
+      min: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      scale: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     padZeros(
-      s: string,
-      len: BigNumberish,
+      s: PromiseOrValue<string>,
+      len: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     toColorHexString(
-      value: BigNumberish,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     toColorHexStringByBytes(
-      r: BytesLike,
-      g: BytesLike,
-      b: BytesLike,
+      r: PromiseOrValue<BytesLike>,
+      g: PromiseOrValue<BytesLike>,
+      b: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     toDecimalString(
-      n: BigNumberish,
+      n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    wholeNumber(n: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    wholeNumber(
+      n: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -297,42 +330,42 @@ export interface SvgUtils extends BaseContract {
     ONE_UNIT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(
-      n: BigNumberish,
+      n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     lerpWithDecimals(
-      min: BigNumberish,
-      max: BigNumberish,
-      scale: BytesLike,
+      min: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      scale: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     padZeros(
-      s: string,
-      len: BigNumberish,
+      s: PromiseOrValue<string>,
+      len: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     toColorHexString(
-      value: BigNumberish,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     toColorHexStringByBytes(
-      r: BytesLike,
-      g: BytesLike,
-      b: BytesLike,
+      r: PromiseOrValue<BytesLike>,
+      g: PromiseOrValue<BytesLike>,
+      b: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     toDecimalString(
-      n: BigNumberish,
+      n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     wholeNumber(
-      n: BigNumberish,
+      n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

@@ -38,7 +38,7 @@ export default class PobDocument extends Document {
 
   render() {
     return (
-      <>
+      <React.Fragment>
         <Html lang={'en'} dir={'ltr'}>
           <Head>
             <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -87,7 +87,7 @@ export default class PobDocument extends Document {
             <NextScript />
           </body>
         </Html>
-      </>
+      </React.Fragment>
     );
   }
 }
