@@ -56,6 +56,7 @@ export const useCreateCollection = () => {
         royaltyFraction: projectMetadata.royaltyFractionInBps ?? 0,
         isActive: projectMetadata.isActive ?? false,
         rendererRoyaltyFraction: projectMetadata.rendererRoyaltyFraction ?? 0,
+        whitelistToken: projectMetadata.whitelistToken ?? NULL_ADDRESS,
       };
 
       const res = await factory.createNFT(config);
