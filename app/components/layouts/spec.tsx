@@ -109,14 +109,28 @@ export const Specification: React.FC = () => {
               vision, a more bespoke renderer can be created and utilized.
             </P>
             <P>
-              A <A>registry</A>, maintained by the Corp, provides a up to date
-              list of all known renderers, both written by the Corp and external
-              users.
+              A{' '}
+              <A
+                href={ROUTES.DOCS.RENDERERS}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                registry
+              </A>
+              , maintained by the Corp, provides a up to date list of all known
+              renderers, both written by the Corp and external users.
             </P>
             <P>
               We recommend learning in depth how a renderer works before you use
-              it. Consult a renderer's <A>file</A> to learn how it can be
-              utilized.
+              it. Consult a renderer's{' '}
+              <A
+                href={`${ROUTES.RENDERER}/0x5b1b723f6619bf110e83fe315943f28560a0ac3a`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                file
+              </A>{' '}
+              to learn how it can be utilized.
             </P>
           </DetailRowsContainer>
           <DetailRowsContainer id="configuring-input-bytes-seed">
@@ -394,15 +408,29 @@ interface IRenderer is IERC165 {
               help:
             </P>
             <P>
-              <A href={'https://copy.sh/brainfuck/'}>Debugger + Runner</A>
+              <A
+                href={'https://copy.sh/brainfuck/'}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Debugger + Runner
+              </A>
             </P>
             <P>
-              <A href={'https://gist.github.com/roachhd/dce54bec8ba55fb17d3a'}>
+              <A
+                href={'https://gist.github.com/roachhd/dce54bec8ba55fb17d3a'}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Guide to common design patterns in BF
               </A>
             </P>
             <P>
-              <A href={'https://esolangs.org/wiki/Brainfuck_constants'}>
+              <A
+                href={'https://esolangs.org/wiki/Brainfuck_constants'}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Generating numbers in Brainfuck
               </A>
             </P>

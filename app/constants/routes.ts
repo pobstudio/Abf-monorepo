@@ -14,6 +14,7 @@ export const ROUTES = {
   },
   RECRUIT: '/recruit',
   404: '/404',
+  RENDERER: '/renderer',
   API: {
     DISCORD_BOT_VERIFY: '/api/discord-bot-verify',
   },
