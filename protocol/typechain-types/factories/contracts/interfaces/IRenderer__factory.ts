@@ -27,7 +27,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'bytes',
-        name: 'out',
+        name: 'props',
         type: 'bytes',
       },
     ],
@@ -44,19 +44,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'outSize',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'pure',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'owner',
     outputs: [
       {
@@ -69,10 +56,23 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'propsSize',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'bytes',
-        name: 'out',
+        name: 'props',
         type: 'bytes',
       },
     ],
@@ -104,7 +104,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'bytes',
-        name: 'out',
+        name: 'props',
         type: 'bytes',
       },
     ],

@@ -1,5 +1,5 @@
 import { task } from 'hardhat/config';
-import { SvgUtils } from '../typechain-types';
+import { BrainFuckFactory, BrainFuckURIConstructor } from '../typechain-types';
 
 task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
   const owner = (await hre.ethers.getSigners())[0];
@@ -14,43 +14,43 @@ task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
 
   // console.log('BrainFuckVM address deployed to:', brainFuckVM.address);
 
-  // const BrainFuckURIConstructor = await hre.ethers.getContractFactory(
-  //   'BrainFuckURIConstructor',
-  //   {
-  //     libraries: {
-  //       BrainFuckVM: brainFuckVM.address,
-  //     },
-  //   },
-  // );
-  // const brainFuckURIConstructor =
-  //   (await BrainFuckURIConstructor.deploy()) as BrainFuckURIConstructor;
-  // await brainFuckURIConstructor.deployed();
+  const BrainFuckURIConstructor = await hre.ethers.getContractFactory(
+    'BrainFuckURIConstructor',
+    {
+      libraries: {
+        BrainFuckVM: '0xA0FFF5ecFab911b8A000eE377A0C31c0052Adf5D',
+      },
+    },
+  );
+  const brainFuckURIConstructor =
+    (await BrainFuckURIConstructor.deploy()) as BrainFuckURIConstructor;
+  await brainFuckURIConstructor.deployed();
 
-  // console.log(
-  //   'BrainFuckURIConstructor address deployed to:',
-  //   brainFuckURIConstructor.address,
-  // );
+  console.log(
+    'BrainFuckURIConstructor address deployed to:',
+    brainFuckURIConstructor.address,
+  );
 
-  const SvgUtils = await hre.ethers.getContractFactory('SvgUtils');
-  const svgUtils = (await SvgUtils.deploy()) as SvgUtils;
-  await svgUtils.deployed();
+  // const SvgUtils = await hre.ethers.getContractFactory('SvgUtils');
+  // const svgUtils = (await SvgUtils.deploy()) as SvgUtils;
+  // await svgUtils.deployed();
 
-  console.log('SvgUtils address deployed to:', svgUtils.address);
+  // console.log('SvgUtils address deployed to:', svgUtils.address);
 
-  // const BrainFuckFactory = await hre.ethers.getContractFactory(
-  //   'BrainFuckFactory',
-  //   {
-  //     libraries: {
-  //       BrainFuckURIConstructor: brainFuckURIConstructor.address,
-  //     },
-  //   },
-  // );
-  // const brainFuckFactory =
-  //   (await BrainFuckFactory.deploy()) as BrainFuckFactory;
-  // await brainFuckFactory.deployed();
+  const BrainFuckFactory = await hre.ethers.getContractFactory(
+    'BrainFuckFactory',
+    {
+      libraries: {
+        BrainFuckURIConstructor: brainFuckURIConstructor.address,
+      },
+    },
+  );
+  const brainFuckFactory =
+    (await BrainFuckFactory.deploy()) as BrainFuckFactory;
+  await brainFuckFactory.deployed();
 
-  // console.log(
-  //   'BrainFuckFactory address deployed to:',
-  //   brainFuckFactory.address,
-  // );
+  console.log(
+    'BrainFuckFactory address deployed to:',
+    brainFuckFactory.address,
+  );
 });

@@ -29,7 +29,8 @@ import type {
 export interface RendererRegistryInterface extends utils.Interface {
   functions: {
     'addressToId(address)': FunctionFragment;
-    'idIndex()': FunctionFragment;
+    'editRenderer(address,address)': FunctionFragment;
+    'idCounter()': FunctionFragment;
     'idToAddress(uint256)': FunctionFragment;
     'registerRenderer(address)': FunctionFragment;
   };
@@ -37,13 +38,18 @@ export interface RendererRegistryInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | 'addressToId'
-      | 'idIndex'
+      | 'editRenderer'
+      | 'idCounter'
       | 'idToAddress'
       | 'registerRenderer',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'addressToId', values: [string]): string;
-  encodeFunctionData(functionFragment: 'idIndex', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'editRenderer',
+    values: [string, string],
+  ): string;
+  encodeFunctionData(functionFragment: 'idCounter', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'idToAddress',
     values: [BigNumberish],
@@ -57,7 +63,11 @@ export interface RendererRegistryInterface extends utils.Interface {
     functionFragment: 'addressToId',
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: 'idIndex', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'editRenderer',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'idCounter', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'idToAddress',
     data: BytesLike,
@@ -77,7 +87,7 @@ export interface RendererRegistryInterface extends utils.Interface {
 export interface RegisteredRendererEventObject {
   id: BigNumber;
   renderer: string;
-  outSize: BigNumber;
+  propsSize: BigNumber;
   additionalMetadataURI: string;
 }
 export type RegisteredRendererEvent = TypedEvent<
@@ -117,7 +127,13 @@ export interface RendererRegistry extends BaseContract {
   functions: {
     addressToId(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    idIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
+    editRenderer(
+      _oldRenderer: string,
+      _renderer: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    idCounter(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     idToAddress(
       arg0: BigNumberish,
@@ -132,7 +148,13 @@ export interface RendererRegistry extends BaseContract {
 
   addressToId(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  idIndex(overrides?: CallOverrides): Promise<BigNumber>;
+  editRenderer(
+    _oldRenderer: string,
+    _renderer: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
   idToAddress(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -144,7 +166,13 @@ export interface RendererRegistry extends BaseContract {
   callStatic: {
     addressToId(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    idIndex(overrides?: CallOverrides): Promise<BigNumber>;
+    editRenderer(
+      _oldRenderer: string,
+      _renderer: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     idToAddress(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -158,13 +186,13 @@ export interface RendererRegistry extends BaseContract {
     'RegisteredRenderer(uint256,address,uint256,string)'(
       id?: null,
       renderer?: null,
-      outSize?: null,
+      propsSize?: null,
       additionalMetadataURI?: null,
     ): RegisteredRendererEventFilter;
     RegisteredRenderer(
       id?: null,
       renderer?: null,
-      outSize?: null,
+      propsSize?: null,
       additionalMetadataURI?: null,
     ): RegisteredRendererEventFilter;
   };
@@ -172,7 +200,13 @@ export interface RendererRegistry extends BaseContract {
   estimateGas: {
     addressToId(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    idIndex(overrides?: CallOverrides): Promise<BigNumber>;
+    editRenderer(
+      _oldRenderer: string,
+      _renderer: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     idToAddress(
       arg0: BigNumberish,
@@ -191,7 +225,13 @@ export interface RendererRegistry extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    idIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    editRenderer(
+      _oldRenderer: string,
+      _renderer: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    idCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     idToAddress(
       arg0: BigNumberish,

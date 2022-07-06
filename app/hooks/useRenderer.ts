@@ -22,9 +22,10 @@ const GET_RENDERER_METADATAS = gql`
     renderers(first: ${RENDERER_PAGE_SIZE}, skip: $skip) {
       id
       address
-      outSize
+      propsSize
       additionalMetadataURI
       registeredAt
+      owner
     }
   }
 `;
@@ -34,9 +35,10 @@ const GET_RENDERER_METADATA_BY_ADDRESS = gql`
     renderers(where: { address: $address }) {
       id
       address
-      outSize
+      propsSize
       additionalMetadataURI
       registeredAt
+      owner
     }
   }
 `;
@@ -105,9 +107,10 @@ export const useAllRendererMetadata = (): RendererMetadata[] => {
         ({
           address: r.address,
           id: BigNumber.from(r.id),
-          outSize: BigNumber.from(r.outSize),
+          propsSize: BigNumber.from(r.propsSize),
           additionalMetadataURI: r.additionalMetadataURI,
           registeredAt: parseInt(r.registeredAt),
+          owner: r.owner,
         } as RendererMetadata),
     );
   }, [data]);
@@ -139,11 +142,12 @@ export const useRendererMetadata = (address: string | undefined) => {
     return {
       address: r.address,
       id: BigNumber.from(r.id),
-      outSize: BigNumber.from(r.outSize),
+      propsSize: BigNumber.from(r.propsSize),
       additionalMetadataURI: r.additionalMetadataURI,
       registeredAt: parseInt(r.registeredAt),
       additionalMetadata,
       label,
+      owner: r.owner,
     } as RendererMetadata;
   }, [data, label, additionalMetadata]);
 };
@@ -183,12 +187,14 @@ export const useRendererMetadataStubByProvider = (
           return;
         }
         const additionalMetadataURI = await renderer.additionalMetadataURI();
-        const outSize = await renderer.outSize();
+        const propsSize = await renderer.propsSize();
+        const owner = await renderer.owner();
         setRendererMetadataStub({
           address,
           additionalMetadataURI,
-          outSize,
+          propsSize,
           label,
+          owner,
         });
       } catch (e) {
         return;

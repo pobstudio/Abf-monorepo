@@ -31,8 +31,8 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     'RADIUS_MIN()': FunctionFragment;
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
-    'outSize()': FunctionFragment;
     'owner()': FunctionFragment;
+    'propsSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
     'renderAttributeKey()': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
@@ -47,8 +47,8 @@ export interface DotMatrixRendererInterface extends utils.Interface {
       | 'RADIUS_MIN'
       | 'additionalMetadataURI'
       | 'attributes'
-      | 'outSize'
       | 'owner'
+      | 'propsSize'
       | 'render'
       | 'renderAttributeKey'
       | 'renderRaw'
@@ -73,8 +73,8 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     functionFragment: 'attributes',
     values: [BytesLike],
   ): string;
-  encodeFunctionData(functionFragment: 'outSize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'propsSize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'render', values: [BytesLike]): string;
   encodeFunctionData(
     functionFragment: 'renderAttributeKey',
@@ -104,8 +104,8 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'renderAttributeKey',
@@ -177,17 +177,17 @@ export interface DotMatrixRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    attributes(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
-
-    outSize(overrides?: CallOverrides): Promise<[BigNumber]>;
+    attributes(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    render(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    propsSize(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    render(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
 
-    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -210,17 +210,17 @@ export interface DotMatrixRenderer extends BaseContract {
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  attributes(out: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-  outSize(overrides?: CallOverrides): Promise<BigNumber>;
+  attributes(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+  propsSize(overrides?: CallOverrides): Promise<BigNumber>;
+
+  render(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
-  renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+  renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> },
@@ -243,17 +243,17 @@ export interface DotMatrixRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    attributes(out: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-    outSize(overrides?: CallOverrides): Promise<BigNumber>;
+    attributes(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+    propsSize(overrides?: CallOverrides): Promise<BigNumber>;
+
+    render(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
-    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -286,17 +286,17 @@ export interface DotMatrixRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    attributes(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-    outSize(overrides?: CallOverrides): Promise<BigNumber>;
+    attributes(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    render(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    propsSize(overrides?: CallOverrides): Promise<BigNumber>;
+
+    render(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -323,16 +323,16 @@ export interface DotMatrixRenderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     attributes(
-      out: BytesLike,
+      props: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    outSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    propsSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     render(
-      out: BytesLike,
+      props: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -341,7 +341,7 @@ export interface DotMatrixRenderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     renderRaw(
-      out: BytesLike,
+      props: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

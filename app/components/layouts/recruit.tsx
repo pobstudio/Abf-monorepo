@@ -129,7 +129,7 @@ const Challenge: FC = () => {
       return;
     }
     confirm(
-      `Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page. You will need it for verification in discord.`,
+      `Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the corp!`,
     );
   }, [isButtonDisabled]);
   return (

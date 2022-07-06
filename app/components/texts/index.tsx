@@ -75,6 +75,16 @@ export const OL = styled.ol`
   }
 `;
 
+export const UL = styled.ul`
+  list-style-type: none;
+  > li {
+    padding: 4px 0;
+    margin: 0;
+    font-size: 12px;
+    line-height: 20px;
+  }
+`;
+
 export const MultiLineText = styled(Text)`
   line-height: 16px;
 `;

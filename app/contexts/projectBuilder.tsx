@@ -142,6 +142,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
   }, [rawProjectMetadata]);
 
   const renderer = useAddress(rawProjectMetadata.renderer);
+  const whitelistToken = useAddress(rawProjectMetadata.whitelistToken);
   const rendererMetadata = useRendererMetadata(renderer);
   const rendererMetadataStub = useRendererMetadataStubByProvider(renderer);
 
@@ -150,10 +151,12 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       ...rawProjectMetadata,
       inputConstants,
       renderer,
+      whitelistToken,
       seed,
       rendererMetadataStub: rendererMetadataStub ?? rendererMetadata,
     };
   }, [
+    whitelistToken,
     renderer,
     seed,
     inputConstants,
@@ -194,9 +197,9 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
         const extraWarnings: string[] = [];
 
         if (
-          !!projectMetadata?.rendererMetadataStub?.outSize &&
-          !MAX_UINT.eq(projectMetadata.rendererMetadataStub.outSize) &&
-          projectMetadata.rendererMetadataStub.outSize.lt(
+          !!projectMetadata?.rendererMetadataStub?.propsSize &&
+          !MAX_UINT.eq(projectMetadata.rendererMetadataStub.propsSize) &&
+          projectMetadata.rendererMetadataStub.propsSize.lt(
             getHexStringNumBytes(output),
           )
         ) {
@@ -405,7 +408,19 @@ export const useModifyProjectMetadata = () => {
     [setRawProjectMetadata],
   );
 
+  const onWhitelistTokenChange = useCallback(
+    (address: string) => {
+      setRawProjectMetadata?.(
+        produce((u) => {
+          u.whitelistToken = address;
+        }),
+      );
+    },
+    [setRawProjectMetadata],
+  );
+
   return {
+    onWhitelistTokenChange,
     onSeedChange,
     onInputConstantsChange,
     onSymbolChange,

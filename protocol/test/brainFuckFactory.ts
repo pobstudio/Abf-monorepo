@@ -101,15 +101,16 @@ describe('BrainFuckFactory', function () {
       const config = {
         name: 'TEST',
         symbol: 'ABF',
-        additionalMetadataURI: 'ipfs://test',
         seed: '0x01',
-        constants: '0xaabbccddeeff0000',
+        constants:
+          '0xaabbccddeeff0000aabbccddeeff0000aabbccddeeff0000aabbccddeeff0000',
         code: '0x02',
         renderer: debugRenderer.address,
         mintingSupply: BigNumber.from(100),
         royaltyFraction: BigNumber.from(1000),
+        rendererRoyaltyFraction: BigNumber.from(1000),
         price: ethers.utils.parseEther('0.1'),
-        isActive: true,
+        whitelistToken: await rando.getAddress(),
       };
       await brainFuckFactory.createNFT(config);
       expect(await brainFuckFactory.projectIdIndex()).to.eq(BigNumber.from(1));
@@ -131,13 +132,14 @@ describe('BrainFuckFactory', function () {
 
       expect(await brainFuck.name()).to.eq(config.name);
       expect(await brainFuck.symbol()).to.eq(config.symbol);
-      expect(await brainFuck.additionalMetadataURI()).to.eq(
-        config.additionalMetadataURI,
-      );
       expect(await brainFuck.seed()).to.eq(config.seed);
       expect(await brainFuck.code()).to.eq(config.code);
       expect(await brainFuck.renderer()).to.eq(config.renderer);
-      expect(await brainFuck.mintingSupply()).to.eq(config.mintingSupply);
+      expect(await brainFuck.renderer()).to.eq(config.renderer);
+      expect(await brainFuck.whitelistToken()).to.eq(config.whitelistToken);
+      expect(await brainFuck.rendererRoyaltyFraction()).to.eq(
+        config.rendererRoyaltyFraction,
+      );
       expect(await brainFuck.price()).to.eq(config.price);
       const royaltyData = await brainFuck.royaltyInfo(
         0,
@@ -145,7 +147,7 @@ describe('BrainFuckFactory', function () {
       );
       expect(royaltyData[0]).to.eq(await owner.getAddress());
       expect(royaltyData[1]).to.eq(ethers.utils.parseEther('0.1'));
-      expect(await brainFuck.isActive()).to.eq(config.isActive);
+      // expect(await brainFuck.isActive()).to.eq(config.isActive);
     });
   });
 });

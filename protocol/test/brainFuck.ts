@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { BigNumber, Signer } from 'ethers';
 import { ethers } from 'hardhat';
+import { NULL_ADDRESS } from '../../app/constants';
 import {
   BrainFuck,
   BrainFuckURIConstructor,
@@ -36,10 +37,9 @@ const NAME = 'Absolute Brain Fuck';
 const SYMBOL = 'ABF';
 const CONSTANTS =
   '0xaabbccddeeff0000aabbccddeeff0000aabbccddeeff0000aabbccddeeff0000';
-const CODE = convertToHexStr(
-  '>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.',
-);
-const TEST_URI = 'ipfs://test';
+const PLAINTEXT_CODE =
+  '>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.';
+const CODE = convertToHexStr(PLAINTEXT_CODE);
 const SEED = '0xab';
 const MINTING_SUPPLY = BigNumber.from(10);
 const PRICE = ethers.utils.parseEther('0.01');
@@ -97,7 +97,6 @@ describe('BrainFuck', function () {
     brainFuck = (await BrainFuck.deploy(
       NAME,
       SYMBOL,
-      TEST_URI,
       SEED,
       CONSTANTS,
       CODE,
@@ -105,6 +104,7 @@ describe('BrainFuck', function () {
       MINTING_SUPPLY,
       PRICE,
       RENDERER_ROYALTY_FRACTION,
+      NULL_ADDRESS,
     )) as BrainFuck;
     await brainFuck.deployed();
   });
@@ -114,12 +114,12 @@ describe('BrainFuck', function () {
       expect(await brainFuck.name()).to.eq(NAME);
       expect(await brainFuck.symbol()).to.eq(SYMBOL);
       expect(await brainFuck.isActive()).to.eq(false);
-      expect(await brainFuck.additionalMetadataURI()).to.eq(TEST_URI);
       expect(await brainFuck.seed()).to.eq(SEED);
       expect(await brainFuck.code()).to.eq(CODE);
       expect(await brainFuck.renderer()).to.eq(debugRenderer.address);
       expect(await brainFuck.mintingSupply()).to.eq(MINTING_SUPPLY);
       expect(await brainFuck.price()).to.eq(PRICE);
+      expect(await brainFuck.whitelistToken()).to.eq(NULL_ADDRESS);
     });
   });
 
@@ -216,6 +216,7 @@ describe('BrainFuck', function () {
 
   describe('mint', () => {
     let tippingBrainFuck: BrainFuck;
+    let whitelistedBrainFuck: BrainFuck;
 
     const TIPPING_RENDERER_ROYALTY_FRACTION = 1000;
 
@@ -226,10 +227,9 @@ describe('BrainFuck', function () {
         },
       });
 
-      tippingBrainFuck = (await BrainFuck.connect(rando).deploy(
+      whitelistedBrainFuck = (await BrainFuck.connect(rando).deploy(
         NAME,
         SYMBOL,
-        TEST_URI,
         SEED,
         CONSTANTS,
         CODE,
@@ -237,6 +237,22 @@ describe('BrainFuck', function () {
         MINTING_SUPPLY,
         PRICE,
         TIPPING_RENDERER_ROYALTY_FRACTION,
+        brainFuck.address,
+      )) as BrainFuck;
+      await whitelistedBrainFuck.deployed();
+      await whitelistedBrainFuck.connect(rando).setIsActive(true);
+
+      tippingBrainFuck = (await BrainFuck.connect(rando).deploy(
+        NAME,
+        SYMBOL,
+        SEED,
+        CONSTANTS,
+        CODE,
+        debugRenderer.address,
+        MINTING_SUPPLY,
+        PRICE,
+        TIPPING_RENDERER_ROYALTY_FRACTION,
+        NULL_ADDRESS,
       )) as BrainFuck;
       await tippingBrainFuck.deployed();
       await tippingBrainFuck.connect(rando).setIsActive(true);
@@ -291,6 +307,27 @@ describe('BrainFuck', function () {
       const afterBalance = await owner.getBalance();
       expect(afterBalance.sub(beforeBalance)).to.eq(PRICE.mul(10));
     });
+    it('correctly mints with whitelisted token', async () => {
+      await brainFuck.mint(await owner.getAddress(), 1, {
+        value: PRICE.mul(1),
+      });
+
+      await whitelistedBrainFuck
+        .connect(owner)
+        .mint(await owner.getAddress(), 2, { value: PRICE.mul(2) });
+      expect(await whitelistedBrainFuck.ownerOf(0)).to.eq(
+        await owner.getAddress(),
+      );
+      expect(await whitelistedBrainFuck.ownerOf(1)).to.eq(
+        await owner.getAddress(),
+      );
+      await expect(
+        whitelistedBrainFuck.mint(await rando.getAddress(), 1, {
+          value: PRICE.mul(1),
+        }),
+      ).to.revertedWith('not whitelisted');
+    });
+
     it('correctly mints and routes tip to renderer owner', async () => {
       const beforeBalanceRendererOwner = await owner.getBalance();
       const beforeBalanceOwner = await rando.getBalance();
@@ -334,9 +371,7 @@ describe('BrainFuck', function () {
       console.log('metadataJsonStr', metadataJsonStr);
       console.log(metadata);
       expect(metadata.name).to.eq(`${NAME} #${tokenId}`);
-      expect(metadata.description).to.eq(
-        `Generative art written in BrainFuck.`,
-      );
+      expect(metadata.description).to.eq(PLAINTEXT_CODE);
       expect(metadata.image).to.eq('Hello, World!'); // running hello world brain fuck code
       expect(metadata.aspect_ratio).to.eq(1);
       const rendererAttribute = metadata.attributes.find(
@@ -363,7 +398,6 @@ describe('BrainFuck', function () {
       brainFuck = (await BrainFuck.deploy(
         NAME,
         SYMBOL,
-        TEST_URI,
         '0x',
         CONSTANTS,
         CODE,
@@ -371,6 +405,7 @@ describe('BrainFuck', function () {
         MINTING_SUPPLY,
         PRICE,
         RENDERER_ROYALTY_FRACTION,
+        NULL_ADDRESS,
       )) as BrainFuck;
       await brainFuck.deployed();
       await brainFuck.connect(owner).setIsActive(true);
@@ -414,7 +449,6 @@ describe('BrainFuck', function () {
       const brainFuck = (await BrainFuck.deploy(
         NAME,
         SYMBOL,
-        TEST_URI,
         SEED,
         '0x68656c6c6f21212168656c6c6f21212168656c6c6f21212168656c6c6f212121',
         convertToHexStr('++++++++[>,.<-]'),
@@ -422,6 +456,7 @@ describe('BrainFuck', function () {
         MINTING_SUPPLY,
         PRICE,
         RENDERER_ROYALTY_FRACTION,
+        NULL_ADDRESS,
       )) as BrainFuck;
       await brainFuck.deployed();
 

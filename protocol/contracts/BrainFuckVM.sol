@@ -14,7 +14,7 @@ library BrainFuckVM {
     uint ptr = 0;
     bool isLooping = false;
     uint innerLoops = 0;
-    // technically a max of 2056 nested loops
+    // technically a max of 4096 nested loops
     uint[] memory loopingStack = new uint[](LOOPING_STACK_SIZE);
     uint loopingStackIndex = 0;
 

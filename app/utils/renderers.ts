@@ -1,14 +1,14 @@
-import { OUTSIZE_MISMATCH_ERROR_MESSAGE } from '../constants/errors';
+import { PROPSSIZE_MISMATCH_ERROR_MESSAGE } from '../constants/errors';
 import { OfflineRenderer } from '../types';
 import { svgUtils } from './svgUtils';
 
 export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
   dotMatrix: {
-    outSize: 256,
+    propsSize: 256,
     renderRaw: (out: string) => {
       const prunedOut = out.slice(2);
       if (prunedOut.length / 2 !== 256) {
-        throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
+        throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
       }
       const circles = [
         'cy="60" cx="60"',
@@ -286,11 +286,11 @@ export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
     },
   },
   pixelGrid8: {
-    outSize: 64 * 3,
+    propsSize: 64 * 3,
     renderRaw: (out: string) => {
       const prunedOut = out.slice(2);
       if (prunedOut.length / 2 !== 64 * 3) {
-        throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
+        throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
       }
       const rects = [
         'y="0" x="0"',
@@ -370,11 +370,11 @@ export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
     },
   },
   pixelGrid16: {
-    outSize: 256 * 3,
+    propsSize: 256 * 3,
     renderRaw: (out: string) => {
       const prunedOut = out.slice(2);
       if (prunedOut.length / 2 !== 256 * 3) {
-        throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
+        throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
       }
       const rects = [
         'y="0" x="0"',
@@ -646,11 +646,11 @@ export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
     },
   },
   pixelGrid24: {
-    outSize: 576 * 3,
+    propsSize: 576 * 3,
     renderRaw: (out: string) => {
       const prunedOut = out.slice(2);
       if (prunedOut.length / 2 !== 576 * 3) {
-        throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
+        throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
       }
       const rects = [
         'y="0" x="0"',
@@ -1242,11 +1242,11 @@ export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
     },
   },
   monoPixelGrid8: {
-    outSize: 64,
+    propsSize: 64,
     renderRaw: (out: string) => {
       const prunedOut = out.slice(2);
       if (prunedOut.length / 2 !== 64) {
-        throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
+        throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
       }
       const rects = [
         'y="0" x="0"',
@@ -1326,11 +1326,11 @@ export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
     },
   },
   monoPixelGrid16: {
-    outSize: 256,
+    propsSize: 256,
     renderRaw: (out: string) => {
       const prunedOut = out.slice(2);
       if (prunedOut.length / 2 !== 256) {
-        throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
+        throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
       }
       const rects = [
         'y="0" x="0"',
@@ -1602,11 +1602,11 @@ export const OFFLINE_RENDERERS: { [renderer: string]: OfflineRenderer } = {
     },
   },
   monoPixelGrid24: {
-    outSize: 576,
+    propsSize: 576,
     renderRaw: (out: string) => {
       const prunedOut = out.slice(2);
       if (prunedOut.length / 2 !== 576) {
-        throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
+        throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
       }
       const rects = [
         'y="0" x="0"',

@@ -3,10 +3,8 @@
 pragma solidity ^0.8.4;
 
 import "./BrainFuck.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "./BrainFuckVM.sol";
 
-contract BrainFuckFactory is ReentrancyGuard {
+contract BrainFuckFactory {
 
     uint constant public VERSION = 1;
 
@@ -18,7 +16,6 @@ contract BrainFuckFactory is ReentrancyGuard {
     struct CreateBrainFuckNFTConfig {
       string name;
       string symbol;
-      string additionalMetadataURI;
       bytes seed;
       bytes32 constants;
       bytes code; 
@@ -26,8 +23,8 @@ contract BrainFuckFactory is ReentrancyGuard {
       uint256 mintingSupply;
       uint256 price;
       uint96 royaltyFraction;
-      bool isActive;
       uint96 rendererRoyaltyFraction;
+      address whitelistToken;
     }
 
     event CreatedBrainFuckNFT(
@@ -43,17 +40,16 @@ contract BrainFuckFactory is ReentrancyGuard {
       BrainFuck nft = new BrainFuck(
         config.name,
         config.symbol,
-        config.additionalMetadataURI,
         config.seed,
         config.constants,
         config.code,
         config.renderer,
         config.mintingSupply,
         config.price,
-        config.rendererRoyaltyFraction
+        config.rendererRoyaltyFraction,
+        config.whitelistToken
       );
       nft.setRoyalty(msg.sender, config.royaltyFraction);
-      nft.setIsActive(config.isActive);
       nft.transferOwnership(msg.sender);
       projectIdIndex++;
       projectIdToAddress[projectIdIndex] = address(nft);

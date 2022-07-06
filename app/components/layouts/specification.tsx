@@ -1,14 +1,12 @@
-import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 import { SUBGRAPH_LINK } from '../../constants';
-import { ROUTES } from '../../constants/routes';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
-import { A, B, BlockCode, Code, H1, H2, I, Label, OL, P, UL } from '../texts';
+import { A, B, BlockCode, Code, H1, H2, I, Label, OL, P } from '../texts';
 import { DocumentationFooter } from './docs';
 
 export const Specification: React.FC = () => {
@@ -54,8 +52,8 @@ export const Specification: React.FC = () => {
             </P>
             <OL>
               <li>
-                The NFT's stored <B>Brainfuck</B> code is ran with the{' '}
-                <A>BrainfuckVM</A> Contract. Running the <B>Brainfuck</B> code
+                The NFT's stored <B>BrainFuck</B> code is ran with the{' '}
+                <A>BrainFuckVM</A> Contract. Running the <B>BrainFuck</B> code
                 produces an output, in bytes.
               </li>
               <li>
@@ -73,7 +71,7 @@ export const Specification: React.FC = () => {
             </OL>
             <P>
               In many ways, your NFT is the product of two integral components:
-              the <B>Brainfuck</B> code and the <B>renderer</B> contracts. The
+              the <B>BrainFuck</B> code and the <B>renderer</B> contracts. The
               best ABF NFTs will be the result of unique use of a well chosen
               renderer.
             </P>
@@ -81,7 +79,7 @@ export const Specification: React.FC = () => {
           <DetailRowsContainer id="utilizing-renderers-to-the-max">
             <H2>UTILIZING RENDERERS TO THE MAX</H2>
             <P>
-              Beyond your capabilities to write <B>Brainfuck</B> code, your
+              Beyond your capabilities to write <B>BrainFuck</B> code, your
               understanding of a <B>renderer</B> contract will level up your
               artistry with ABF.
             </P>
@@ -122,7 +120,7 @@ export const Specification: React.FC = () => {
           <DetailRowsContainer id="configuring-input-bytes-seed">
             <H2>CONFIGURING INPUT BYTES + SEED</H2>
             <P>
-              In <B>Brainfuck's</B> 8 opcodes, the <Code>,</Code> opcode stands
+              In <B>BrainFuck's</B> 8 opcodes, the <Code>,</Code> opcode stands
               to be one of the most powerful when utilized correctly.
             </P>
             <P>
@@ -132,7 +130,7 @@ export const Specification: React.FC = () => {
             </P>
             <P>
               In layman terms, the <Code>,</Code> opcode allows a{' '}
-              <B>Brainfuck</B> code to receive parameters.
+              <B>BrainFuck</B> code to receive parameters.
             </P>
             <P>
               <B>ABF</B> provides 64 bytes (you can use <Code>,</Code> 64 times
@@ -141,8 +139,8 @@ export const Specification: React.FC = () => {
             <P>The 64 bytes provided are shaped as the following</P>
             <BlockCode>
               <P>
-                <B>32</B> bytes set by user + <B>32</B> bytes of
-                deterministically random bytes
+                <B>32</B> bytes set by user + <B>32</B> bytes of determistically
+                random bytes
               </P>
             </BlockCode>
             <P>
@@ -175,7 +173,7 @@ export const Specification: React.FC = () => {
             </P>
             <P>
               With the use of input bytes, you can easily access numbers,
-              colors, and a source of random in your <B>Brainfuck</B> code.
+              colors, and a source of random in your <B>BrainFuck</B> code.
             </P>
           </DetailRowsContainer>
           <div
@@ -194,12 +192,12 @@ export const Specification: React.FC = () => {
             <H2>RENDERERS</H2>
             <P>
               As described earlier, Renderers are contracts that ingest bytes
-              and produce a deterministic output.
+              and produce a determinstic output.
             </P>
             <P>
               <B>NOTE:</B> Renderer contracts have no understanding of "how" the
               inputted bytes are produced, as in they don't know about the{' '}
-              <B>Brainfuck</B> code. They are only concerned with rendering the
+              <B>BrainFuck</B> code. They are only concerned with rendering the
               bytes into something.
             </P>
             <P>
@@ -218,9 +216,9 @@ interface IRenderer is IERC165 {
   function propsSize() returns (uint256);
   function additionalMetadataURI() returns (string);
   function renderAttributeKey() returns (string);
-  function renderRaw(bytes calldata props) returns (string);
-  function render(bytes calldata props) returns (string);
-  function attributes(bytes calldata props) returns (string);
+  function renderRaw(bytes calldata out) returns (string);
+  function render(bytes calldata out) returns (string);
+  function attributes(bytes calldata out) returns (string);
 }
       `}
               </P>
@@ -276,10 +274,10 @@ interface IRenderer is IERC165 {
             </P>
             <P>
               At NFT creation you can configure the following (beyond the
-              obvious need of the <B>Brainfuck</B> code and related
+              obvious need of the <B>BrainFuck</B> code and related
               data/settings):
             </P>
-            <UL>
+            <OL>
               <li>
                 <Code>mintingSupply</Code>: the amount of this NFT that can be
                 minted.
@@ -293,16 +291,11 @@ interface IRenderer is IERC165 {
                 profits (in bps) directed to the renderer contract's{' '}
                 <Code>owner</Code>.
               </li>
+            </OL>
+            <P>There is 2 main means to mint an ABF NFT:</P>
+            <OL>
               <li>
-                <Code>whitelistToken</Code>: A ERC721 or ERC20 token address, if
-                set, enforces that minters must own <Code>whitelistToken</Code>{' '}
-                to mint this ABF NFT.
-              </li>
-            </UL>
-            <P>There is 3 main means to mint an ABF NFT:</P>
-            <UL>
-              <li>
-                <Code>mint(address to, uint256 numMints)</Code>: standard
+                <Code>mint(adrress to, uint256 numMints)</Code>: standard
                 minting function, can mint up to 6 in one call, pay the{' '}
                 <Code>price</Code> or reverts.
               </li>
@@ -311,12 +304,7 @@ interface IRenderer is IERC165 {
                 admin only function, used to distribute NFTs in an airdrop
                 scheme.
               </li>
-              <li>
-                <Code>mint(address to, uint256 numMints)</Code> (with
-                whitelistToken set): behaves just live standard mint but needs
-                minter to own the whitelistToken.
-              </li>
-            </UL>
+            </OL>
             <P>
               <B>NOTE:</B> Both minting functions abide to the{' '}
               <Code>mintingSupply</Code>. There is no way to exceed the
@@ -326,7 +314,7 @@ interface IRenderer is IERC165 {
               The admin of the ABF NFT contract has a number of admin-only
               functions:
             </P>
-            <UL>
+            <OL>
               <li>
                 <Code>setIsActive(bool isActive)</Code>: toggles if{' '}
                 <Code>mint</Code> can be called or not.
@@ -336,7 +324,7 @@ interface IRenderer is IERC165 {
                 you can set the seed at a later point to mitigate rarity abusing
                 minting.
               </li>
-            </UL>
+            </OL>
           </DetailRowsContainer>
           <DetailRowsContainer id="brainfuck-nft-factory">
             <H2>ABF NFT FACTORY</H2>
@@ -355,25 +343,18 @@ interface IRenderer is IERC165 {
             <H2>BRAINFUCK VM</H2>
             <P>
               The library <Code>BrainFuckVM</Code> is the canonical{' '}
-              <B>Brainfuck</B> interpreter utilized by the ABF protocol.
+              <B>BrainFuck</B> interpreter utilized by the ABF protocol.
             </P>
             <P>
               There is one function, <Code>runBrainFuckCode</Code> that takes
               your code and input and runs it, returning the output.
             </P>
-            <P>
-              Consult the{' '}
-              <Link passHref href={ROUTES.DOCS.BRAINFUCK}>
-                <A>Brainfuck language</A>
-              </Link>{' '}
-              docs for more implementation details.
-            </P>
           </DetailRowsContainer>
           <DetailRowsContainer id="brainfuck-uri-constructor">
             <H2>BRAINFUCK URI CONSTRUCTOR</H2>
             <P>
-              The library <Code>BrainfuckVM</Code> is the canonical{' '}
-              <B>Brainfuck</B> JSON constructor utility contract utilized by ABF
+              The library <Code>BrainFuckVM</Code> is the canonical{' '}
+              <B>BrainFuck</B> JSON constructor utility contract utilized by ABF
               protocol in the <Code>contractURI</Code> + <Code>tokenURI</Code>{' '}
               functions.
             </P>
@@ -390,7 +371,7 @@ interface IRenderer is IERC165 {
             <P>
               While the ABF dapp is a complete experience to deploy an{' '}
               <B>ABF</B> NFT, we do not provide the best experience with working
-              with <Code>Brainfuck</Code>. Here's some tooling created that can
+              with <Code>BrainFuck</Code>. Here's some tooling created that can
               help:
             </P>
             <P>
@@ -403,13 +384,13 @@ interface IRenderer is IERC165 {
             </P>
             <P>
               <A href={'https://esolangs.org/wiki/Brainfuck_constants'}>
-                Generating numbers in Brainfuck
+                Generating numbers in BrainFuck
               </A>
             </P>
           </DetailRowsContainer>
           <DetailRowsContainer id="bf-links">
             <H2>LINKS</H2>
-            <P>[COMING SOON]: GitHub open source dapp</P>
+            <P>[COMING SOON]: Github opensource dapp</P>
             <P>
               <A href={SUBGRAPH_LINK}>SUBGRAPH</A>
             </P>

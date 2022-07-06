@@ -8,13 +8,11 @@ import "./interfaces/IRenderer.sol";
 import "./tokens/ERC721A.sol";
 
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Base64.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
 import '@openzeppelin/contracts/access/Ownable.sol';
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
+import '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 
 contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
-    using Strings for uint256;
 
     uint public constant MAX_MINTING_PER_TX = 6;
 
@@ -23,35 +21,42 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
     uint256 public immutable mintingSupply;
     uint256 public immutable price;
 
-    string public additionalMetadataURI;
+    uint256 public immutable rendererRoyaltyFraction;
+    address public immutable whitelistToken;
+    bytes32 public immutable constants;
+
     bytes public seed;
     bytes public code;
-    bytes32 public constants;
-    bool public isActive = false;
-    uint256 public rendererRoyaltyFraction;
+    bool public isActive; 
 
-    uint256 public constant VERSION = 1;
-    
+    event ChangedIsActive(
+      bool isActive
+    );
+
+    event SetSeed(
+      bytes seed
+    );
+
     constructor (
       string memory _name,
       string memory _symbol,
-      string memory _additionalMetadataURI,
       bytes memory _seed,
       bytes32 _constants,
       bytes memory _code,
       address _renderer,
       uint256 _mintingSupply,
       uint256 _price,
-      uint96 _rendererRoyaltyFraction
+      uint96 _rendererRoyaltyFraction,
+      address _whitelistToken
     ) ERC721A(_name, _symbol) {
       constants = _constants;
-      additionalMetadataURI = _additionalMetadataURI;
       seed = _seed;
       code = _code;
       renderer = IRenderer(_renderer);
       mintingSupply = _mintingSupply;
       price = _price;
       rendererRoyaltyFraction = _rendererRoyaltyFraction;
+      whitelistToken = _whitelistToken;
     } 
 
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721A, ERC2981) returns (bool) {
@@ -64,11 +69,13 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
 
     function setIsActive(bool _isActive) public onlyOwner {
       isActive = _isActive; 
+      emit ChangedIsActive(isActive);
     }
 
     function setSeed(bytes calldata _seed) public onlyOwner {
       require(seed.length == 0, "BrainFuck: Seed is already set");
       seed = _seed; 
+      emit SetSeed(seed);
     }
 
     function contractURI() public view returns (string memory) {
@@ -91,7 +98,12 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       _;
     }
 
-    function mint(address to, uint256 numMints) onlyIsActive onlyUnderMaxSupply(numMints) public payable nonReentrant {
+    modifier onlyPublicMintOrWhitelist() {
+      require(whitelistToken == address(0) || IERC721(whitelistToken).balanceOf(msg.sender) > 0, 'not whitelisted');
+      _;
+    }
+
+    function mint(address to, uint256 numMints) onlyIsActive onlyUnderMaxSupply(numMints) onlyPublicMintOrWhitelist() public payable nonReentrant {
       require(numMints <= MAX_MINTING_PER_TX, "exceeded number of mint in single call");
       _mint(to, numMints, '', false);
       uint256 totalPrice = price * numMints;

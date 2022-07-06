@@ -8,7 +8,7 @@ import { CHAIN_ID } from '../../constants';
 import {
   INCORRECT_CHAIN_ID,
   NO_CONNECTED_WALLET,
-  OUTSIZE_MISMATCH_ERROR_MESSAGE,
+  PROPSSIZE_MISMATCH_ERROR_MESSAGE,
   RENDERER_NOT_FOUND,
 } from '../../constants/errors';
 import { useRendererContract } from '../../hooks/useContracts';
@@ -97,10 +97,10 @@ export const Render: FC<{
           throw new Error(INCORRECT_CHAIN_ID);
         } else if (
           !!renderer &&
-          !!rendererMetadata?.outSize &&
-          rendererMetadata.outSize.gt(getHexStringNumBytes(output.output))
+          !!rendererMetadata?.propsSize &&
+          rendererMetadata.propsSize.gt(getHexStringNumBytes(output.output))
         ) {
-          throw new Error(OUTSIZE_MISMATCH_ERROR_MESSAGE);
+          throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
         } else if (!!renderer) {
           console.log('node render', renderer.address);
           setIsRenderLoading(true);
@@ -113,7 +113,7 @@ export const Render: FC<{
         }
       } catch (e: any) {
         console.log(e.message);
-        if (e.message.indexOf(OUTSIZE_MISMATCH_ERROR_MESSAGE) !== -1) {
+        if (e.message.indexOf(PROPSSIZE_MISMATCH_ERROR_MESSAGE) !== -1) {
           setErrorMessage('OUTPUT BYTES NOT AT REQUIRED SIZE.');
         } else if (e.message.indexOf(INCORRECT_CHAIN_ID) !== -1) {
           setErrorMessage('INCORRECT CHAIN CONNECTED.');

@@ -29,8 +29,8 @@ export interface PixelGrid24RendererInterface extends utils.Interface {
   functions: {
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
-    'outSize()': FunctionFragment;
     'owner()': FunctionFragment;
+    'propsSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
     'renderAttributeKey()': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
@@ -43,8 +43,8 @@ export interface PixelGrid24RendererInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'additionalMetadataURI'
       | 'attributes'
-      | 'outSize'
       | 'owner'
+      | 'propsSize'
       | 'render'
       | 'renderAttributeKey'
       | 'renderRaw'
@@ -61,8 +61,8 @@ export interface PixelGrid24RendererInterface extends utils.Interface {
     functionFragment: 'attributes',
     values: [BytesLike],
   ): string;
-  encodeFunctionData(functionFragment: 'outSize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'propsSize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'render', values: [BytesLike]): string;
   encodeFunctionData(
     functionFragment: 'renderAttributeKey',
@@ -90,8 +90,8 @@ export interface PixelGrid24RendererInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'outSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'renderAttributeKey',
@@ -159,17 +159,17 @@ export interface PixelGrid24Renderer extends BaseContract {
   functions: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    attributes(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
-
-    outSize(overrides?: CallOverrides): Promise<[BigNumber]>;
+    attributes(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    render(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    propsSize(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    render(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
 
-    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -188,17 +188,17 @@ export interface PixelGrid24Renderer extends BaseContract {
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  attributes(out: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-  outSize(overrides?: CallOverrides): Promise<BigNumber>;
+  attributes(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+  propsSize(overrides?: CallOverrides): Promise<BigNumber>;
+
+  render(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
-  renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+  renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> },
@@ -217,17 +217,17 @@ export interface PixelGrid24Renderer extends BaseContract {
   callStatic: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    attributes(out: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-    outSize(overrides?: CallOverrides): Promise<BigNumber>;
+    attributes(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    render(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+    propsSize(overrides?: CallOverrides): Promise<BigNumber>;
+
+    render(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
-    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<string>;
+    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -256,17 +256,17 @@ export interface PixelGrid24Renderer extends BaseContract {
   estimateGas: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    attributes(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-    outSize(overrides?: CallOverrides): Promise<BigNumber>;
+    attributes(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    render(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    propsSize(overrides?: CallOverrides): Promise<BigNumber>;
+
+    render(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renderRaw(out: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -289,16 +289,16 @@ export interface PixelGrid24Renderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     attributes(
-      out: BytesLike,
+      props: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    outSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    propsSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     render(
-      out: BytesLike,
+      props: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -307,7 +307,7 @@ export interface PixelGrid24Renderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     renderRaw(
-      out: BytesLike,
+      props: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

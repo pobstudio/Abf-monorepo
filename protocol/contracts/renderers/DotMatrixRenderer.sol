@@ -286,7 +286,7 @@ contract DotMatrixRenderer is IRenderer, Ownable, ERC165 {
       super.supportsInterface(interfaceId);
   }
 
-  function outSize() external override pure returns (uint256) {
+  function propsSize() external override pure returns (uint256) {
     return 256;
   }
   
@@ -298,10 +298,10 @@ contract DotMatrixRenderer is IRenderer, Ownable, ERC165 {
     return "image";
   }
   
-  function renderRaw(bytes calldata out) public override view returns (string memory) {
+  function renderRaw(bytes calldata props) public override view returns (string memory) {
     string memory content = '';
     for (uint i = 0; i < 256; ++i) {
-      content = string(abi.encodePacked(content, circlePrefix, circles[i], ' r="', SvgUtils.toDecimalString(SvgUtils.lerpWithDecimals(RADIUS_MIN, RADIUS_MAX, out[i])), circleSuffix));
+      content = string(abi.encodePacked(content, circlePrefix, circles[i], ' r="', SvgUtils.toDecimalString(SvgUtils.lerpWithDecimals(RADIUS_MIN, RADIUS_MAX, props[i])), circleSuffix));
     }
 
     return string(abi.encodePacked(
@@ -312,18 +312,18 @@ contract DotMatrixRenderer is IRenderer, Ownable, ERC165 {
     );
   }
 
-  function render(bytes calldata out) external override view returns (string memory) {
+  function render(bytes calldata props) external override view returns (string memory) {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(out))) 
+        Base64.encode(bytes(renderRaw(props))) 
       )
     );
   }
 
-  function attributes(bytes calldata out) external override pure returns (string memory) {
+  function attributes(bytes calldata props) external override pure returns (string memory) {
     uint i = 0;
-    while(out[i] != 0x00) {
+    while(props[i] != 0x00) {
       i++;
     }
       return string(

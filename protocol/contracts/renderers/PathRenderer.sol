@@ -20,7 +20,7 @@ contract PathRenderer is IRenderer, Ownable, ERC165 {
       super.supportsInterface(interfaceId);
   }
 
-  function outSize() external override pure returns (uint256) {
+  function propsSize() external override pure returns (uint256) {
     return 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
   }
   
@@ -32,12 +32,12 @@ contract PathRenderer is IRenderer, Ownable, ERC165 {
     return "image";
   }
 
-  function renderRaw(bytes calldata out) public override pure returns (string memory) {
+  function renderRaw(bytes calldata props) public override pure returns (string memory) {
     string memory content = '';
     uint i = 0;
-    while((i * 3 + 2) < out.length) {
-      if (out[i * 3] == 0x4C || out[i * 3] == 0x4D || out[i * 3] == 0x6C || out[i * 3] == 0x6D) {
-        content = string(abi.encodePacked(content, ' ', out[i * 3], (uint(uint8(out[i * 3 + 1])) + 16).toString(), ' ', (uint(uint8(out[i * 3 + 2])) + 16).toString()));
+    while((i * 3 + 2) < props.length) {
+      if (props[i * 3] == 0x4C || props[i * 3] == 0x4D || props[i * 3] == 0x6C || props[i * 3] == 0x6D) {
+        content = string(abi.encodePacked(content, ' ', props[i * 3], (uint(uint8(props[i * 3 + 1])) + 16).toString(), ' ', (uint(uint8(props[i * 3 + 2])) + 16).toString()));
       }
       i++;
     }
@@ -49,19 +49,19 @@ contract PathRenderer is IRenderer, Ownable, ERC165 {
     );
   }
 
-  function render(bytes calldata out) external override pure returns (string memory) {
+  function render(bytes calldata props) external override pure returns (string memory) {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(out))) 
+        Base64.encode(bytes(renderRaw(props))) 
       )
     );
   }
 
-  function attributes(bytes calldata out) external override pure returns (string memory) {
+  function attributes(bytes calldata props) external override pure returns (string memory) {
       return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', (out.length / 3).toString(), '},'
+              '{"trait_type": "Data Length", "value":', (props.length / 3).toString(), '},'
             )
           );
   }

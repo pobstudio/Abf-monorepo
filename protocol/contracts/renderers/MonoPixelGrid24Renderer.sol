@@ -603,7 +603,7 @@ contract MonoPixelGrid24Renderer is IRenderer, Ownable, ERC165 {
       super.supportsInterface(interfaceId);
   }
 
-  function outSize() external override pure returns (uint256) {
+  function propsSize() external override pure returns (uint256) {
     return 576;
   }
   
@@ -615,10 +615,10 @@ contract MonoPixelGrid24Renderer is IRenderer, Ownable, ERC165 {
     return "image";
   }
 
-  function renderRaw(bytes calldata out) public override view returns (string memory) {
+  function renderRaw(bytes calldata props) public override view returns (string memory) {
     string memory content = '';
     for (uint i = 0; i < 576; ++i) {
-      content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(out[i], out[i], out[i]), rectSuffix));
+      content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(props[i], props[i], props[i]), rectSuffix));
     }
 
     return string(abi.encodePacked(
@@ -629,18 +629,18 @@ contract MonoPixelGrid24Renderer is IRenderer, Ownable, ERC165 {
     );
   }
 
-  function render(bytes calldata out) external override view returns (string memory) {
+  function render(bytes calldata props) external override view returns (string memory) {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(out))) 
+        Base64.encode(bytes(renderRaw(props))) 
       )
     );
   }
 
-  function attributes(bytes calldata out) external override pure returns (string memory) {
+  function attributes(bytes calldata props) external override pure returns (string memory) {
     uint i = 0;
-    while(out[i] != 0x00) {
+    while(props[i] != 0x00) {
       i++;
     }
       return string(

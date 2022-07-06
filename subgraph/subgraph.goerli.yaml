@@ -6,9 +6,9 @@ dataSources:
     name: RendererRegistry 
     network: goerli
     source:
-      address: "0x75AdDdA954c14446303865D968961F10e3436B04"
+      address: "0x9E150e10F0a866C99c66A6955DDf9568AC9309b5"
       abi: RendererRegistry
-      startBlock: 7106660 
+      startBlock: 7176678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -16,10 +16,31 @@ dataSources:
       entities:
         - Renderer
       abis:
+        - name: Renderer
+          file: ./abis/Renderer.json
         - name: RendererRegistry
           file: ./abis/RendererRegistry.json
       eventHandlers:
         - event: RegisteredRenderer(uint256,address,uint256,string)
           handler: handleRegisteredRenderer
+      file: ./src/rendererRegistry.ts
+templates:
+  - kind: ethereum/contract
+    name: Renderer 
+    network: goerli
+    source:
+      abi: Renderer
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Renderer
+      abis:
+        - name: Renderer
+          file: ./abis/Renderer.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleRendererOwnershipTransferred
       file: ./src/rendererRegistry.ts
      

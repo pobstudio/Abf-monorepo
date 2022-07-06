@@ -113,10 +113,10 @@ describe('SvgUtils', function () {
         '100000',
       );
       expect(await svgUtils.lerpWithDecimals(10, 110, '0x01')).to.equal(
-        '103906',
+        '103921',
       );
       expect(await svgUtils.lerpWithDecimals(10, 110, '0x11')).to.equal(
-        '166406',
+        '166666',
       );
       expect(await svgUtils.lerpWithDecimals(10, 110, '0xFF')).to.equal(
         '1100000',

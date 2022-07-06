@@ -19,7 +19,7 @@ contract DebugRenderer is IRenderer, Ownable, ERC165 {
       super.supportsInterface(interfaceId);
   }
 
-  function outSize() external override pure returns (uint256) {
+  function propsSize() external override pure returns (uint256) {
     return 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
   }
   function additionalMetadataURI() external override pure returns (string memory) {
@@ -30,24 +30,24 @@ contract DebugRenderer is IRenderer, Ownable, ERC165 {
     return "image";
   }
 
-  function renderRaw(bytes calldata out) public override pure returns (string memory) {
+  function renderRaw(bytes calldata props) public override pure returns (string memory) {
     string memory output = "";
     uint i = 0;
-    while(i < out.length) {
-      output = string(abi.encodePacked(output, out[i]));      
+    while(i < props.length) {
+      output = string(abi.encodePacked(output, props[i]));      
       i++;
     }
     return output;
   }
 
-  function render(bytes calldata out) external override pure returns (string memory) {
-    return renderRaw(out);
+  function render(bytes calldata props) external override pure returns (string memory) {
+    return renderRaw(props);
   }
 
-  function attributes(bytes calldata out) external override pure returns (string memory) {
+  function attributes(bytes calldata props) external override pure returns (string memory) {
     return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', out.length.toString(), '},'
+              '{"trait_type": "Data Length", "value":', props.length.toString(), '},'
             )
           );
   }

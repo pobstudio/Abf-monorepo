@@ -89,8 +89,8 @@ export const TokenPreview: FC = () => {
           </Tooltip>
         </Flex>
         <Text>{`${(() => {
-          if (!rendererMetadataStub?.outSize) return '-';
-          return prettifyCountableNumber(rendererMetadataStub.outSize);
+          if (!rendererMetadataStub?.propsSize) return '-';
+          return prettifyCountableNumber(rendererMetadataStub.propsSize);
         })()} BYTES`}</Text>
       </FlexEnds>
       {!!rendererMetadataStub?.additionalMetadataURI && (

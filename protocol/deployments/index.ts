@@ -15,7 +15,7 @@ export const deployments: Deployments = {
       svgUtils: '0x445E3b9a05F81F8fFBa8c84c9D71AF840Ebd7c8C',
     },
     interfaceID: {
-      renderer: '0x7258682b',
+      renderer: '0x32ce7999',
     },
     pob: {
       multisig: '0x28558Ba4343FeB2709ed7A9531B72402a7794D8D',
@@ -23,29 +23,29 @@ export const deployments: Deployments = {
   },
   5: {
     core: {
-      factory: '0x9FB2167ACcaf576F16990D49AA665885218c5F51',
+      factory: '0x63939e6F3043294753fACA9923BFcF1d404D5603',
     },
     renderers: {
-      debug: '0xC32f21aFc1317a17F9522e2DD3A7B21BeF6c8B54',
-      dotMatrix: '0x0Cb0475C7CEb543f1292965b1CB4899410584189',
+      debug: '0x5B1b723F6619bf110E83FE315943F28560a0aC3A',
+      dotMatrix: '0x8151eFeBd2D48DE96f06372d0C77D1EC67108128',
       // path: '0x8E397cf230763F7E29Ef0cE5a6e4e94F4cF08E5e',
-      pixelGrid8: '0xdc4324dd4A4998aeED035bcb1339E1D1aB823B3E',
-      pixelGrid16: '0xfd90057A326557520Ac40BF88ACf322617594c6B',
-      pixelGrid24: '0xb26C0DD52E383cfF6eE0680b210Fe057C86BCD0E',
-      monoPixelGrid8: '0x52aBcf54A83f968a0fAF9Df75CF956C9cEe189cD',
-      monoPixelGrid16: '0xE658B09f9d9BAf240Ae06506d85190186FeA3932',
-      monoPixelGrid24: '0x1eB73B76467C9F05B178d6cc1798a8FcCA3E83D1',
+      pixelGrid8: '0x74eB501872d7F3DB25B19f6Ef7c593e93AA4d026',
+      pixelGrid16: '0x3815baCB6b0161aa4598A70616F55007EcD72A7D',
+      pixelGrid24: '0xEE752f0eC43Ed6e138e43db5D7068d70ca980CE4',
+      monoPixelGrid8: '0xAbAcd6137E088d0600760bb59bbd2F02C9dd022f',
+      monoPixelGrid16: '0xD94ef232b562609a84f4c80455C077DAe3B19e93',
+      monoPixelGrid24: '0x0CD410939F2cAbAEDC5b12aB4d072BA1F3E13095',
     },
     registries: {
-      renderer: '0x75AdDdA954c14446303865D968961F10e3436B04',
+      renderer: '0x9E150e10F0a866C99c66A6955DDf9568AC9309b5',
     },
     libraries: {
-      vm: '0xdE42371247e0BbCE02312E69D9De8cFAF17FaF6B',
-      uriConstructor: '0xCE0b1438d0f5F67E7874e73C593FCd3d5324c538',
-      svgUtils: '0x71C0bE0Db072f94954086b9B365BaC017c548549',
+      vm: '0xA0FFF5ecFab911b8A000eE377A0C31c0052Adf5D',
+      uriConstructor: '0x255f2a7712CC06944AEef4Ea78349C54C22ffe1f',
+      svgUtils: '0x59a3148D164469FB872983fB7efe22D784a30651',
     },
     interfaceID: {
-      renderer: '0x7258682b',
+      renderer: '0x32ce7999',
     },
     pob: {
       multisig: '0x00',

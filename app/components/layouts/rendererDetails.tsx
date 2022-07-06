@@ -1,4 +1,5 @@
 import { FC, useMemo } from 'react';
+import { useENSorHex } from '../../hooks/useENS';
 import {
   useRendererMetadata,
   useRendererMetadataStubByProvider,
@@ -30,6 +31,7 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
       } as RendererMetadata),
     [rendererMetadataFromGraph, rendererMetadataStubFromProvider],
   );
+  const name = useENSorHex(rendererMetadataStub?.owner);
   console.log(rendererMetadataStub);
   return (
     <OneColumnContainer>
@@ -40,6 +42,7 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
               rendererMetadataStub?.id?.toString().padStart(3, '0') ?? '???'
             } "${rendererMetadataStub?.label}"`}
           </H1>
+          <DetailRow>{['CREATED BY', name ?? '-']}</DetailRow>
           <Label>DESCRIPTION</Label>
           <P>{rendererMetadataStub.additionalMetadata?.description ?? '-'}</P>
           <Label>SAMPLE OUTPUT</Label>

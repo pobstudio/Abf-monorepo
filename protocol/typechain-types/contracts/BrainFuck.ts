@@ -30,8 +30,6 @@ import type {
 export interface BrainFuckInterface extends utils.Interface {
   functions: {
     'MAX_MINTING_PER_TX()': FunctionFragment;
-    'VERSION()': FunctionFragment;
-    'additionalMetadataURI()': FunctionFragment;
     'airdropMint(address[],uint256)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
@@ -64,13 +62,12 @@ export interface BrainFuckInterface extends utils.Interface {
     'totalSupply()': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
+    'whitelistToken()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'MAX_MINTING_PER_TX'
-      | 'VERSION'
-      | 'additionalMetadataURI'
       | 'airdropMint'
       | 'approve'
       | 'balanceOf'
@@ -102,16 +99,12 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'tokenURI'
       | 'totalSupply'
       | 'transferFrom'
-      | 'transferOwnership',
+      | 'transferOwnership'
+      | 'whitelistToken',
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: 'MAX_MINTING_PER_TX',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(functionFragment: 'VERSION', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'additionalMetadataURI',
     values?: undefined,
   ): string;
   encodeFunctionData(
@@ -209,14 +202,13 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'transferOwnership',
     values: [string],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'whitelistToken',
+    values?: undefined,
+  ): string;
 
   decodeFunctionResult(
     functionFragment: 'MAX_MINTING_PER_TX',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'VERSION', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'additionalMetadataURI',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -299,17 +291,25 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'transferOwnership',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: 'whitelistToken',
+    data: BytesLike,
+  ): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
+    'ChangedIsActive(bool)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
+    'SetSeed(bytes)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ChangedIsActive'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetSeed'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
@@ -337,6 +337,16 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
+export interface ChangedIsActiveEventObject {
+  isActive: boolean;
+}
+export type ChangedIsActiveEvent = TypedEvent<
+  [boolean],
+  ChangedIsActiveEventObject
+>;
+
+export type ChangedIsActiveEventFilter = TypedEventFilter<ChangedIsActiveEvent>;
+
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
@@ -348,6 +358,13 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface SetSeedEventObject {
+  seed: string;
+}
+export type SetSeedEvent = TypedEvent<[string], SetSeedEventObject>;
+
+export type SetSeedEventFilter = TypedEventFilter<SetSeedEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -389,10 +406,6 @@ export interface BrainFuck extends BaseContract {
 
   'functions': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    VERSION(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
     airdropMint(
       to: string[],
@@ -524,13 +537,11 @@ export interface BrainFuck extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    whitelistToken(overrides?: CallOverrides): Promise<[string]>;
   };
 
   MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
-
-  VERSION(overrides?: CallOverrides): Promise<BigNumber>;
-
-  additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
   airdropMint(
     to: string[],
@@ -657,12 +668,10 @@ export interface BrainFuck extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
+  whitelistToken(overrides?: CallOverrides): Promise<string>;
+
   'callStatic': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    VERSION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
     airdropMint(
       to: string[],
@@ -780,6 +789,8 @@ export interface BrainFuck extends BaseContract {
       newOwner: string,
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    whitelistToken(overrides?: CallOverrides): Promise<string>;
   };
 
   'filters': {
@@ -805,6 +816,9 @@ export interface BrainFuck extends BaseContract {
       approved?: null,
     ): ApprovalForAllEventFilter;
 
+    'ChangedIsActive(bool)'(isActive?: null): ChangedIsActiveEventFilter;
+    ChangedIsActive(isActive?: null): ChangedIsActiveEventFilter;
+
     'OwnershipTransferred(address,address)'(
       previousOwner?: string | null,
       newOwner?: string | null,
@@ -813,6 +827,9 @@ export interface BrainFuck extends BaseContract {
       previousOwner?: string | null,
       newOwner?: string | null,
     ): OwnershipTransferredEventFilter;
+
+    'SetSeed(bytes)'(seed?: null): SetSeedEventFilter;
+    SetSeed(seed?: null): SetSeedEventFilter;
 
     'Transfer(address,address,uint256)'(
       from?: string | null,
@@ -828,10 +845,6 @@ export interface BrainFuck extends BaseContract {
 
   'estimateGas': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    VERSION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     airdropMint(
       to: string[],
@@ -963,16 +976,12 @@ export interface BrainFuck extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
+
+    whitelistToken(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   'populateTransaction': {
     MAX_MINTING_PER_TX(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    VERSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    additionalMetadataURI(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1111,5 +1120,7 @@ export interface BrainFuck extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    whitelistToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

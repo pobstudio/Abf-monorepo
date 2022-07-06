@@ -38,6 +38,7 @@ export interface CreateProjectConfig {
   royaltyFraction: BigNumber;
   isActive: boolean;
   rendererRoyaltyFraction: BigNumber;
+  whitelistToken: string;
 }
 
 export interface ProjectMetadata {
@@ -54,6 +55,7 @@ export interface ProjectMetadata {
   inputConstants: string;
   royaltyFractionInBps: number;
   rendererRoyaltyFraction: number;
+  whitelistToken: string;
   isActive: boolean;
 }
 
@@ -61,8 +63,9 @@ export interface RendererMetadataStub {
   label: string | undefined;
   address: string;
   additionalMetadataURI: string;
-  outSize: BigNumber;
+  propsSize: BigNumber;
   additionalMetadata: RendererAdditionalMetadata;
+  owner?: string;
 }
 
 export interface RendererAdditionalMetadata {
@@ -87,6 +90,6 @@ export interface RendererMetadata extends RendererMetadataStub {
 }
 
 export interface OfflineRenderer {
-  outSize: number;
+  propsSize: number;
   renderRaw: (out: string) => string;
 }

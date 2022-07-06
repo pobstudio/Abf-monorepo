@@ -57,7 +57,7 @@ describe('Renderer', function () {
 
   describe('introspection', () => {
     it('ERC165 standard check', async function () {
-      expect(await debugRenderer.supportsInterface('0x7258682b')).to.eq(true);
+      expect(await debugRenderer.supportsInterface('0x32ce7999')).to.eq(true);
     });
   });
   describe('owner', () => {

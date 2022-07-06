@@ -48,7 +48,7 @@ export const Renderers: FC = () => {
 const RendererMetadataTable: FC<RendererMetadata> = ({
   id,
   address,
-  outSize,
+  propsSize,
   additionalMetadataURI,
   registeredAt,
 }) => {
@@ -101,7 +101,10 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
         {['DOCUMENTATION', 'VIEW FILE']}
       </DetailAnchorRow>
       <DetailRow>
-        {['REQUIRED INPUT BYTE STRING SIZE', prettifyCountableNumber(outSize)]}
+        {[
+          'REQUIRED INPUT BYTE STRING SIZE',
+          prettifyCountableNumber(propsSize),
+        ]}
       </DetailRow>
       <DetailRow>
         {[
