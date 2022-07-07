@@ -10,7 +10,7 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { Flex, FlexEnds } from '../flexs';
-import { A, Label, LabelAnchor, P, Text } from '../texts';
+import { A, B, Label, LabelAnchor, P, Text } from '../texts';
 import { DocumentationFooter } from './docs';
 
 const Jumbotron: FC = () => {
@@ -42,9 +42,33 @@ export const ProtocolContracts: FC = () => {
           <DetailRowsTableContainer>
             <ProtocolContractsTable
               address={contracts.core.factory}
-              title={`Jiggle`}
-              description={`wiggle a day keeps the doctor away`}
-              label={'nft'}
+              title={`BrainFuck Factory`}
+              description={`Factory contract to deploy + index BrainFuck NFTs.`}
+              label={'factory'}
+            />
+            <ProtocolContractsTable
+              address={contracts.registries.renderer}
+              title={`Renderer Registry`}
+              description={`Registry of all ABFC known renderers`}
+              label={'registry'}
+            />
+            <ProtocolContractsTable
+              address={contracts.libraries.vm}
+              title={`BrainfuckVM`}
+              description={`On-chain BrainFuck language interpreter`}
+              label={'library'}
+            />
+                        <ProtocolContractsTable
+              address={contracts.libraries.vm}
+              title={`Brainfuck URI Constructor`}
+              description={`On-chain URI utility library to construct tokenURI + contractURI metadata`}
+              label={'library'}
+            />
+                        <ProtocolContractsTable
+              address={contracts.libraries.svgUtils}
+              title={`Svg Utils`}
+              description={`Common math + style utils for renderers`}
+              label={'library'}
             />
           </DetailRowsTableContainer>
           <DocumentationFooter />
@@ -78,7 +102,7 @@ const ProtocolContractsTable: FC<any> = ({
     <DetailRowsContainer>
       <Flex>
         <Text style={{ textTransform: 'uppercase', marginRight: 12 }}>
-          <strong>{title}</strong>
+          <B>{title}</B>
           <LabelAnchor
             style={{
               textDecoration: 'none',
@@ -87,11 +111,11 @@ const ProtocolContractsTable: FC<any> = ({
           >
             ({label})
           </LabelAnchor>
-          <br />
-          <br />
-          {description}
         </Text>
       </Flex>
+      <P>
+      {description}
+      </P>
       <FlexEnds>
         <Label style={{ textTransform: 'uppercase' }}>CONTRACT</Label>
         <Flex>
