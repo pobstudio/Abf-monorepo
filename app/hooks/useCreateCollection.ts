@@ -1,7 +1,7 @@
 import { utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
 import { usePriorityAccount } from '../connectors/priority';
-import { NULL_ADDRESS } from '../constants';
+import { NULL_ADDRESS, NULL_HASH } from '../constants';
 import { useProjectBuilderContext } from '../contexts/projectBuilder';
 import { useTransactionsStore } from '../stores/transaction';
 import { TransactionStatus } from '../types/transaction';
@@ -48,7 +48,7 @@ export const useCreateCollection = () => {
         symbol: projectMetadata.symbol ?? '',
         additionalMetadataURI: projectMetadata.additionalMetadataURI ?? '',
         seed: projectMetadata.seed ?? '0x00',
-        constants: projectMetadata.constants ?? '0x00',
+        constants: projectMetadata.constants ?? NULL_HASH,
         code: convertStrToHexStr(projectMetadata.code ?? ''),
         renderer: projectMetadata.renderer ?? NULL_ADDRESS,
         mintingSupply: projectMetadata.mintingSupply ?? 0,

@@ -26,6 +26,7 @@ export const DEFAULT_PROJECT_METADATA_STUB: Partial<ProjectMetadata> = {
   isActive: false,
   royaltyFractionInBps: 0,
   code: ',[.-].',
+  mintingSupply: 4,
 };
 
 export const useDefaultProjectMetadata = (

@@ -9,6 +9,7 @@ import { Jumbotron } from './jumbotron';
 import { MintingParametersSelector } from './mintingParametersSelector';
 import { RendererParametersSelector } from './rendererParametersSelector';
 import { ContractSubmit } from './submit';
+import { TokenParametersSelector } from './tokenParametersSelector';
 import { TokenPreview } from './tokenPreview';
 
 export const ProjectBuilder: FC = () => {
@@ -24,6 +25,7 @@ export const ProjectBuilder: FC = () => {
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
+            <TokenParametersSelector/>
             <MintingParametersSelector />
             <ContractSubmit />
           </TwoColumnContentContainer>

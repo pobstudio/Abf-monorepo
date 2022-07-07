@@ -1,10 +1,12 @@
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
-import { usePriorityAccount } from '../../../connectors/priority';
+import { usePriorityAccount, usePriorityChainId } from '../../../connectors/priority';
+import { CHAIN_ID } from '../../../constants';
 import {
   useProjectBuilderContext,
   useProjectMetadata,
 } from '../../../contexts/projectBuilder';
+import { useCreateCollection } from '../../../hooks/useCreateCollection';
 import { DetailRowsContainer } from '../../details/rows';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { Text } from '../../texts';
@@ -62,7 +64,30 @@ export const ContractSubmit: FC = () => {
   }, [projectMetadata]);
 
   const account = usePriorityAccount();
+  const chainId = usePriorityChainId();
+  const { create, txStatus, error, isLoading } = useCreateCollection();
 
+  const buttonText = useMemo(() => {
+    if (!account) {
+      return 'NEED CONNECTED WALLET'
+    }
+    if (chainId !== CHAIN_ID) {
+      return 'WRONG NETWORK'
+    }
+    if (isLoading || txStatus === 'in-progress') {
+      return 'CREATING...';
+    }
+    if (txStatus === 'failed' || !!error) {
+      return 'CREATE';
+    }
+    if (txStatus === 'success') {
+      return 'CREATED.';
+    }
+    return `CREATE NFT`;
+  }, [isLoading, chainId, txStatus, error]);
+  const disabled = useMemo(() => {
+    return chainId !== CHAIN_ID || !account || errorMessages.length !== 0 || isLoading || txStatus === 'in-progress' || txStatus === 'success';
+  }, [isLoading, txStatus, account, chainId, errorMessages]);
   return (
     <DetailRowsContainer>
       <ErrorTable>
@@ -70,8 +95,8 @@ export const ContractSubmit: FC = () => {
           <ErrorText key={`error-text-messag-${i}`}>{m}</ErrorText>
         ))}
       </ErrorTable>
-      <PrimaryButton disabled={!account || errorMessages.length !== 0}>
-        {!account ? 'NEED CONNECTED WALLET' : 'CREATE COLLECTION'}
+      <PrimaryButton onClick={create} disabled={disabled}>
+        {buttonText}
       </PrimaryButton>
       <TertiaryButton onClick={onRefresh}>RESET</TertiaryButton>
     </DetailRowsContainer>
