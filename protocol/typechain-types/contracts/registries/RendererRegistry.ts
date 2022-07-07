@@ -21,6 +21,7 @@ import type {
 } from 'ethers';
 import type {
   OnEvent,
+  PromiseOrValue,
   TypedEvent,
   TypedEventFilter,
   TypedListener,
@@ -44,19 +45,22 @@ export interface RendererRegistryInterface extends utils.Interface {
       | 'registerRenderer',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addressToId', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'addressToId',
+    values: [PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'editRenderer',
-    values: [string, string],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(functionFragment: 'idCounter', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'idToAddress',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'registerRenderer',
-    values: [string],
+    values: [PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
@@ -125,59 +129,74 @@ export interface RendererRegistry extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    addressToId(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    addressToId(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     editRenderer(
-      _oldRenderer: string,
-      _renderer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oldRenderer: PromiseOrValue<string>,
+      _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     idCounter(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     idToAddress(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     registerRenderer(
-      _renderer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  addressToId(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  addressToId(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   editRenderer(
-    _oldRenderer: string,
-    _renderer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _oldRenderer: PromiseOrValue<string>,
+    _renderer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
-  idToAddress(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  idToAddress(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   registerRenderer(
-    _renderer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _renderer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addressToId(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    addressToId(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     editRenderer(
-      _oldRenderer: string,
-      _renderer: string,
+      _oldRenderer: PromiseOrValue<string>,
+      _renderer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
-    idToAddress(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    idToAddress(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     registerRenderer(
-      _renderer: string,
+      _renderer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
   };
@@ -198,49 +217,52 @@ export interface RendererRegistry extends BaseContract {
   };
 
   estimateGas: {
-    addressToId(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    addressToId(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     editRenderer(
-      _oldRenderer: string,
-      _renderer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oldRenderer: PromiseOrValue<string>,
+      _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     idToAddress(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     registerRenderer(
-      _renderer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addressToId(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     editRenderer(
-      _oldRenderer: string,
-      _renderer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oldRenderer: PromiseOrValue<string>,
+      _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     idCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     idToAddress(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     registerRenderer(
-      _renderer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

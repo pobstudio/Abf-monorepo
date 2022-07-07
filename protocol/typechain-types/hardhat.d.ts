@@ -5,9 +5,10 @@
 import {
   FactoryOptions,
   HardhatEthersHelpers as HardhatEthersHelpersBase,
-} from "@nomiclabs/hardhat-ethers/types";
-import { ethers } from "ethers";
-import * as Contracts from ".";
+} from '@nomiclabs/hardhat-ethers/types';
+import { ethers } from 'ethers';
+
+import * as Contracts from '.';
 
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
@@ -32,12 +33,8 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721__factory>;
     getContractFactory(
-      name: "ERC721Royalty",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721Royalty__factory>;
-    getContractFactory(
-      name: "IERC721Metadata",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'IERC721Metadata',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC721Metadata__factory>;
     getContractFactory(
       name: "IERC721",
@@ -154,12 +151,7 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERC721>;
     getContractAt(
-      name: "ERC721Royalty",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC721Royalty>;
-    getContractAt(
-      name: "IERC721Metadata",
+      name: 'IERC721Metadata',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC721Metadata>;

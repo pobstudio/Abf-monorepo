@@ -24,7 +24,7 @@ export default class PobApp extends App {
     const { err } = this.props as any;
     const modifiedPageProps = { ...pageProps, err };
     return (
-      <>
+      <React.Fragment>
         <DefaultSeo
           title={DEFAULT_TITLE}
           description={DEFAULT_DESCRIPTION}
@@ -74,7 +74,7 @@ export default class PobApp extends App {
             <Component {...modifiedPageProps} />
           </ApolloProvider>
         </AppProvider>
-      </>
+      </React.Fragment>
     );
   }
 }

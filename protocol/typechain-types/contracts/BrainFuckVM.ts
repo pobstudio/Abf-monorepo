@@ -14,6 +14,7 @@ import type {
 } from 'ethers';
 import type {
   OnEvent,
+  PromiseOrValue,
   TypedEvent,
   TypedEventFilter,
   TypedListener,
@@ -40,7 +41,7 @@ export interface BrainFuckVMInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'TAPE_SIZE', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'runBrainFuckCode',
-    values: [BytesLike, BytesLike],
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
   ): string;
 
   decodeFunctionResult(
@@ -88,8 +89,8 @@ export interface BrainFuckVM extends BaseContract {
     TAPE_SIZE(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     runBrainFuckCode(
-      code: BytesLike,
-      input: BytesLike,
+      code: PromiseOrValue<BytesLike>,
+      input: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string] & { out: string }>;
   };
@@ -99,8 +100,8 @@ export interface BrainFuckVM extends BaseContract {
   TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
   runBrainFuckCode(
-    code: BytesLike,
-    input: BytesLike,
+    code: PromiseOrValue<BytesLike>,
+    input: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
@@ -110,8 +111,8 @@ export interface BrainFuckVM extends BaseContract {
     TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
     runBrainFuckCode(
-      code: BytesLike,
-      input: BytesLike,
+      code: PromiseOrValue<BytesLike>,
+      input: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
   };
@@ -124,8 +125,8 @@ export interface BrainFuckVM extends BaseContract {
     TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
     runBrainFuckCode(
-      code: BytesLike,
-      input: BytesLike,
+      code: PromiseOrValue<BytesLike>,
+      input: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
@@ -138,8 +139,8 @@ export interface BrainFuckVM extends BaseContract {
     TAPE_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     runBrainFuckCode(
-      code: BytesLike,
-      input: BytesLike,
+      code: PromiseOrValue<BytesLike>,
+      input: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

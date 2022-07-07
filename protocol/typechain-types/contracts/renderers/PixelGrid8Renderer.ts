@@ -20,6 +20,7 @@ import type {
 } from "ethers";
 import type {
   OnEvent,
+  PromiseOrValue,
   TypedEvent,
   TypedEventFilter,
   TypedListener,
@@ -58,31 +59,34 @@ export interface PixelGrid8RendererInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "attributes",
-    values: [BytesLike]
+    functionFragment: 'attributes',
+    values: [PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "propsSize", values?: undefined): string;
-  encodeFunctionData(functionFragment: "render", values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'propsSize', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'render',
+    values: [PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(
     functionFragment: "renderAttributeKey",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "renderRaw",
-    values: [BytesLike]
+    functionFragment: 'renderRaw',
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
+    functionFragment: 'supportsInterface',
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
@@ -159,127 +163,163 @@ export interface PixelGrid8Renderer extends BaseContract {
   functions: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    attributes(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    attributes(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     propsSize(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    render(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    render(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
 
-    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    renderRaw(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  attributes(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+  attributes(
+    props: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   propsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
-  render(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+  render(
+    props: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
-  renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+  renderRaw(
+    props: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   supportsInterface(
-    interfaceId: BytesLike,
-    overrides?: CallOverrides
+    interfaceId: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    attributes(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+    attributes(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     propsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
-    render(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+    render(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
-    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<string>;
+    renderRaw(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: CallOverrides
+      newOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
+    'OwnershipTransferred(address,address)'(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    attributes(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    attributes(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     propsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
-    render(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    render(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renderRaw(props: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    renderRaw(
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -289,8 +329,8 @@ export interface PixelGrid8Renderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     attributes(
-      props: BytesLike,
-      overrides?: CallOverrides
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -298,8 +338,8 @@ export interface PixelGrid8Renderer extends BaseContract {
     propsSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     render(
-      props: BytesLike,
-      overrides?: CallOverrides
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renderAttributeKey(
@@ -307,22 +347,22 @@ export interface PixelGrid8Renderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     renderRaw(
-      props: BytesLike,
-      overrides?: CallOverrides
+      props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }
