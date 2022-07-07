@@ -6,6 +6,7 @@ export const ROUTES = {
     ORIGIN: '/docs/origin',
     BRAINFUCK: '/docs/brainfuck',
     RENDERERS: '/docs/renderers',
+    PROTOCOL: '/docs/protocol',
     SPEC: '/docs/spec',
   },
   BUILDER: '/app',

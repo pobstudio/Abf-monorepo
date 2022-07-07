@@ -12,6 +12,12 @@ export const DetailRowsContainer = styled.div`
   }
 `;
 
+export const DetailRowsTableContainer = styled.div`
+  > div + div {
+    margin-top: 42px;
+  }
+`;
+
 export const DetailTitleAnchorRow: FC<{
   children: [string, string];
   href?: string;

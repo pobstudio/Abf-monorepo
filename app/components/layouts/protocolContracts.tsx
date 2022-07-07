@@ -1,19 +1,10 @@
-import { format } from 'date-fns';
+import { deployments } from '@abf-monorepo/protocol';
 import { FC, useEffect, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
-import {
-  useAllRendererMetadata,
-  useRendererLabel,
-} from '../../hooks/useRenderer';
-import { RendererMetadata } from '../../types';
-import { prettifyCountableNumber, shortenHexString } from '../../utils/hex';
+import { CHAIN_ID } from '../../constants';
+import { shortenHexString } from '../../utils/hex';
 import { getEtherscanAddressUrl } from '../../utils/urls';
-import {
-  DetailAnchorRow,
-  DetailRow,
-  DetailRowsContainer,
-  DetailRowsTableContainer,
-} from '../details/rows';
+import { DetailRowsContainer, DetailRowsTableContainer } from '../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
@@ -27,36 +18,34 @@ const Jumbotron: FC = () => {
     <DetailRowsContainer>
       <div>
         <P>
-          <strong>SUBJECT: CURRENT DECLASSIFIED LIST OF RENDERERS</strong>
+          <strong>SUBJECT: ABF PROTOCOL CONTRACTS</strong>
         </P>
       </div>
       <div>
         <P>
-          Contained in this document is the corp's up-to-date list of all
-          Renderers excavated by the ABFC and the broader public sphere. This
-          repository is by no means exhaustive. Please consult each renderer
-          carefully before use.
+          Contained in this document are the currently in use [ALPHA] contracts
+          for the ABF protocol. These contracts have been prepared for use by
+          anyone and are not subject to copyright.
         </P>
       </div>
     </DetailRowsContainer>
   );
 };
 
-export const Renderers: FC = () => {
-  const rendererMetadatas = useAllRendererMetadata();
-
+export const ProtocolContracts: FC = () => {
+  const contracts = deployments[CHAIN_ID];
   return (
     <OneColumnContainer>
       <OneColumnContentContainer>
         <Jumbotron />
         <DetailRowsContainer>
           <DetailRowsTableContainer>
-            {rendererMetadatas?.map((rm) => (
-              <RendererMetadataTable
-                {...rm}
-                key={`renderer-metadata-table-${rm.id.toHexString()}`}
-              />
-            ))}
+            <ProtocolContractsTable
+              address={contracts.core.factory}
+              title={`Jiggle`}
+              description={`wiggle a day keeps the doctor away`}
+              label={'nft'}
+            />
           </DetailRowsTableContainer>
           <DocumentationFooter />
         </DetailRowsContainer>
@@ -65,14 +54,12 @@ export const Renderers: FC = () => {
   );
 };
 
-const RendererMetadataTable: FC<RendererMetadata> = ({
-  id,
+const ProtocolContractsTable: FC<any> = ({
+  title,
+  description,
+  label,
   address,
-  propsSize,
-  additionalMetadataURI,
-  registeredAt,
 }) => {
-  const rendererLabel = useRendererLabel(address);
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>(false);
   useEffect(() => {
@@ -91,9 +78,18 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
     <DetailRowsContainer>
       <Flex>
         <Text style={{ textTransform: 'uppercase', marginRight: 12 }}>
-          <strong>{`R-${id
-            .toString()
-            .padStart(3, '0')} "${rendererLabel}"`}</strong>
+          <strong>{title}</strong>
+          <LabelAnchor
+            style={{
+              textDecoration: 'none',
+              marginLeft: 12,
+            }}
+          >
+            ({label})
+          </LabelAnchor>
+          <br />
+          <br />
+          {description}
         </Text>
       </Flex>
       <FlexEnds>
@@ -117,21 +113,6 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
           </LabelAnchor>
         </Flex>
       </FlexEnds>
-      <DetailAnchorRow href={`/renderer/${address}`}>
-        {['DOCUMENTATION', 'VIEW FILE']}
-      </DetailAnchorRow>
-      <DetailRow>
-        {[
-          'REQUIRED INPUT BYTE STRING SIZE',
-          prettifyCountableNumber(propsSize),
-        ]}
-      </DetailRow>
-      <DetailRow>
-        {[
-          'DISCOVERED AT',
-          format(new Date(registeredAt * 1000), 'yyyy-MM-dd hh:mm'),
-        ]}
-      </DetailRow>
     </DetailRowsContainer>
   );
 };
