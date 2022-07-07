@@ -7,7 +7,7 @@ import type { PromiseOrValue } from '../../../common';
 import type {
   PixelGrid8Renderer,
   PixelGrid8RendererInterface,
-} from "../../../contracts/renderers/PixelGrid8Renderer";
+} from '../../../contracts/renderers/PixelGrid8Renderer';
 
 const _abi = [
   {
@@ -15,167 +15,167 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
       },
       {
         indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
       },
     ],
-    name: "OwnershipTransferred",
-    type: "event",
+    name: 'OwnershipTransferred',
+    type: 'event',
   },
   {
     inputs: [],
-    name: "additionalMetadataURI",
+    name: 'additionalMetadataURI',
     outputs: [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
     ],
-    stateMutability: "pure",
-    type: "function",
+    stateMutability: 'pure',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "bytes",
-        name: "props",
-        type: "bytes",
+        internalType: 'bytes',
+        name: 'props',
+        type: 'bytes',
       },
     ],
-    name: "attributes",
+    name: 'attributes',
     outputs: [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
     ],
-    stateMutability: "pure",
-    type: "function",
+    stateMutability: 'pure',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "owner",
+    name: 'owner',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "propsSize",
+    name: 'propsSize',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "pure",
-    type: "function",
+    stateMutability: 'pure',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "bytes",
-        name: "props",
-        type: "bytes",
+        internalType: 'bytes',
+        name: 'props',
+        type: 'bytes',
       },
     ],
-    name: "render",
+    name: 'render',
     outputs: [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "renderAttributeKey",
+    name: 'renderAttributeKey',
     outputs: [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
     ],
-    stateMutability: "pure",
-    type: "function",
+    stateMutability: 'pure',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "bytes",
-        name: "props",
-        type: "bytes",
+        internalType: 'bytes',
+        name: 'props',
+        type: 'bytes',
       },
     ],
-    name: "renderRaw",
+    name: 'renderRaw',
     outputs: [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "renounceOwnership",
+    name: 'renounceOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "bytes4",
-        name: "interfaceId",
-        type: "bytes4",
+        internalType: 'bytes4',
+        name: 'interfaceId',
+        type: 'bytes4',
       },
     ],
-    name: "supportsInterface",
+    name: 'supportsInterface',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
       },
     ],
-    name: "transferOwnership",
+    name: 'transferOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
 ];
 
@@ -187,7 +187,7 @@ type PixelGrid8RendererConstructorParams =
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: PixelGrid8RendererConstructorParams
+  xs: PixelGrid8RendererConstructorParams,
 ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
 
 export class PixelGrid8Renderer__factory extends ContractFactory {
@@ -223,7 +223,7 @@ export class PixelGrid8Renderer__factory extends ContractFactory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): PixelGrid8Renderer {
     return new Contract(address, _abi, signerOrProvider) as PixelGrid8Renderer;
   }

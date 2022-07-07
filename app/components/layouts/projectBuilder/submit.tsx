@@ -1,6 +1,9 @@
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
-import { usePriorityAccount, usePriorityChainId } from '../../../connectors/priority';
+import {
+  usePriorityAccount,
+  usePriorityChainId,
+} from '../../../connectors/priority';
 import { CHAIN_ID } from '../../../constants';
 import {
   useProjectBuilderContext,
@@ -69,10 +72,10 @@ export const ContractSubmit: FC = () => {
 
   const buttonText = useMemo(() => {
     if (!account) {
-      return 'NEED CONNECTED WALLET'
+      return 'NEED CONNECTED WALLET';
     }
     if (chainId !== CHAIN_ID) {
-      return 'WRONG NETWORK'
+      return 'WRONG NETWORK';
     }
     if (isLoading || txStatus === 'in-progress') {
       return 'CREATING...';
@@ -86,7 +89,14 @@ export const ContractSubmit: FC = () => {
     return `CREATE NFT`;
   }, [isLoading, chainId, txStatus, error]);
   const disabled = useMemo(() => {
-    return chainId !== CHAIN_ID || !account || errorMessages.length !== 0 || isLoading || txStatus === 'in-progress' || txStatus === 'success';
+    return (
+      chainId !== CHAIN_ID ||
+      !account ||
+      errorMessages.length !== 0 ||
+      isLoading ||
+      txStatus === 'in-progress' ||
+      txStatus === 'success'
+    );
   }, [isLoading, txStatus, account, chainId, errorMessages]);
   return (
     <DetailRowsContainer>
