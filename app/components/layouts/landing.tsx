@@ -27,7 +27,10 @@ export const Landing: React.FC = () => {
           </P>
           <P>
             The catch? You need to write your generative art with{' '}
-            <A>Brainfuck</A>.
+            <Link passHref href={ROUTES.DOCS.BRAINFUCK}>
+              <A>Brainfuck</A>
+            </Link>
+            .
           </P>
           <P>
             <strong>Ready to get your brain f**ked?</strong>
