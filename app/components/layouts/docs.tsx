@@ -67,7 +67,7 @@ export const Documentation: React.FC = () => {
             <DropdownLinkTree />
           </div>
           <P>
-            <B>Ready to join the ABF corp?</B>
+            <B>Ready to join the ABF Corp?</B>
           </P>
           <Link href={ROUTES.RECRUIT}>
             <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>
@@ -93,7 +93,7 @@ export const DocumentationFooter: React.FC = () => {
         }}
       ></div>
       <P>
-        <B>Ready to join the ABF corp?</B>
+        <B>Ready to join the ABF Corp?</B>
       </P>
       <Link href={ROUTES.RECRUIT}>
         <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>
