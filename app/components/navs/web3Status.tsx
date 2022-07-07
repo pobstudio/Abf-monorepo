@@ -65,7 +65,7 @@ const ConnectWalletWalletConnectOption = () => {
         walletConnect.activate(CHAIN_ID);
       }}
     >
-      {isActivating ? 'Connecting' : 'Wallet Connect'}
+      {isActivating ? 'Connecting' : 'WalletConnect'}
     </ActionRowButton>
   );
 };
