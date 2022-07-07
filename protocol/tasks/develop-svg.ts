@@ -76,7 +76,7 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
       'PixelGrid8Renderer',
       {
         libraries: {
-          SvgUtils: svgUtils.address,
+          // SvgUtils: svgUtils.address,
         },
       },
     );
@@ -88,6 +88,8 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     // });
     const renderer = (await PixelGrid8Renderer.deploy()) as PixelGrid8Renderer;
     await renderer.deployed();
+    console.log(await renderer.renderRaw(GRAYSCALE_BYTES));
+
     const res = await renderer.render(GRAYSCALE_BYTES);
     const estimation = await renderer.estimateGas.renderRaw(GRAYSCALE_BYTES);
     console.log('Gas used for call:', estimation.toNumber());
