@@ -1,10 +1,7 @@
-import { useMemo } from 'react';
-import { useEffect } from 'react';
-import { useProvider } from './useProvider';
-import { useState } from 'react';
-import { useBlockchainStore } from '../stores/blockchain';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePriorityAccount } from '../connectors/priority';
+import { useBlockchainStore } from '../stores/blockchain';
+import { useProvider } from './useProvider';
 export const useBalance = () => {
   const provider = useProvider(true);
   const account = usePriorityAccount();

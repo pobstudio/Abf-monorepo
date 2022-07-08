@@ -1,13 +1,6 @@
 import { useRouter } from 'next/router';
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { animated, config, SpringConfig, useSpring } from 'react-spring';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { animated, useSpring } from 'react-spring';
 import { useClickAway, useMountedState } from 'react-use';
 import styled from 'styled-components';
 import { hooks as metaMaskHooks, metaMask } from '../../connectors/metaMask';
@@ -21,30 +14,12 @@ import {
   walletConnect,
 } from '../../connectors/walletConnect';
 import { CHAIN_ID } from '../../constants';
+import { DropdownAnimation } from '../../constants/styles';
 import { useENSorHex } from '../../hooks/useENS';
-import { HeaderAnchor } from './anchor';
-
-interface ExtendedCssProps extends React.CSSProperties {
-  y: number;
-  config: SpringConfig;
-}
-
-const DropdownAnimation: { [key: string]: ExtendedCssProps } = {
-  hidden: {
-    y: 8,
-    opacity: 0,
-    pointerEvents: 'none',
-    userSelect: 'none',
-    config: config.stiff,
-  },
-  visible: {
-    y: 0,
-    opacity: 1,
-    pointerEvents: 'auto',
-    userSelect: 'auto',
-    config: config.stiff,
-  },
-};
+import { useNumPendingTx } from '../../hooks/useNumPendingTx';
+import { Flex } from '../flexs';
+import { Label } from '../texts';
+import { HeaderAnchor } from './common';
 
 export const Web3ConnectWalletContent: FC = () => {
   return (
@@ -93,7 +68,7 @@ const ConnectWalletWalletConnectOption = () => {
         walletConnect.activate(CHAIN_ID);
       }}
     >
-      {isActivating ? 'Connecting' : 'Wallet Connect'}
+      {isActivating ? 'Connecting' : 'WalletConnect'}
     </ActionRowButton>
   );
 };
@@ -152,23 +127,31 @@ export const Web3Status: FC<{
   const isMounted = useMountedState();
   const isActivating = usePriorityIsActivating();
 
+  const numPendingTx = useNumPendingTx();
   return (
     <>
       <Web3StatusWrapper ref={clickAwayRef}>
         {!!account && (
-          <HeaderAnchor
-            style={{ cursor: 'pointer' }}
-            onClick={() => setIsDropdownOpen(true)}
-          >
-            {ensOrHex}
-          </HeaderAnchor>
+          <Flex>
+            {!!numPendingTx && (
+              <Label style={{ marginRight: 16 }}>
+                {numPendingTx} PENDING TX(S)
+              </Label>
+            )}
+            <HeaderAnchor
+              style={{ cursor: 'pointer' }}
+              onClick={() => setIsDropdownOpen(true)}
+            >
+              {ensOrHex}
+            </HeaderAnchor>
+          </Flex>
         )}
         {!account && !isActivating && (
           <HeaderAnchor
             style={{ cursor: 'pointer' }}
             onClick={() => setIsDropdownOpen(true)}
           >
-            CONNECT
+            CONNECT [GOERLI]
           </HeaderAnchor>
         )}
         <DropdownSpacer />

@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
+import { Contract, Signer, utils } from 'ethers';
 import type {
   IRenderer,
   IRendererInterface,
@@ -20,14 +20,14 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'bytes',
-        name: 'out',
+        name: 'props',
         type: 'bytes',
       },
     ],
@@ -44,7 +44,20 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'outSize',
+    name: 'owner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'propsSize',
     outputs: [
       {
         internalType: 'uint256',
@@ -52,14 +65,14 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'bytes',
-        name: 'out',
+        name: 'props',
         type: 'bytes',
       },
     ],
@@ -75,10 +88,23 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'renderAttributeKey',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'bytes',
-        name: 'out',
+        name: 'props',
         type: 'bytes',
       },
     ],
@@ -88,6 +114,25 @@ const _abi = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes4',
+        name: 'interfaceId',
+        type: 'bytes4',
+      },
+    ],
+    name: 'supportsInterface',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',

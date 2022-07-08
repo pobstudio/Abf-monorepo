@@ -1,9 +1,8 @@
-import { EventEmitter } from 'events';
-import { createServer } from 'http';
-import getPort from 'get-port';
-import fs from 'fs';
-import path from 'path';
 import chokidar from 'chokidar';
+import { EventEmitter } from 'events';
+import getPort from 'get-port';
+import { createServer } from 'http';
+import path from 'path';
 
 export const getSvgHotLoadingServer = async (
   handler: () => Promise<string>,

@@ -1,14 +1,14 @@
 import { FC, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { usePriorityAccount, usePriorityChainId } from '../connectors/priority';
+import { DEFAULT_TOAST_STYLES } from '../constants/styles';
 import { useProvider } from '../hooks/useProvider';
 import { useBlockchainStore } from '../stores/blockchain';
 import { useTransactionsStore } from '../stores/transaction';
-import { DEFAULT_TOAST_STYLES } from '../constants/styles';
 export const TransactionsEffect: FC = () => {
   const blockNumber = useBlockchainStore((s) => s.blockNumber);
   const account = usePriorityAccount();
-  const provider = useProvider(true);
+  const provider = useProvider(false);
   const chainId = usePriorityChainId();
   const { transactionMap, updateTransactionMap } = useTransactionsStore();
 

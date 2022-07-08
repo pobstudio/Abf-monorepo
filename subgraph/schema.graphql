@@ -1,0 +1,24 @@
+type Renderer @entity {
+  id: ID!
+  owner: Bytes!
+  address: Bytes!
+  propsSize: BigInt!
+  additionalMetadataURI: String!
+  registeredAt: BigInt!
+}
+
+# type NFT @entity {
+#   id: ID! 
+#   owner: Bytes!
+#   name: String!
+#   symbol: String! 
+#   seed: Bytes! 
+#   constants: Bytes! 
+#   code: Bytes! 
+#   renderer: Bytes! 
+#   mintingSupply: BigInt!
+#   mintedSupply: BigInt!
+#   price: BigInt! 
+#   rendererRoyaltyFraction: BigInt! 
+#   whitelistToken: Bytes
+# }

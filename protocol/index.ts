@@ -1,2 +1,2 @@
-export * from './typechain-types';
 export * from './deployments';
+export * from './typechain-types';

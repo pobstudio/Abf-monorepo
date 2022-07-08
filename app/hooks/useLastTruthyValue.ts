@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { usePrevious } from 'react-use';
+import { useEffect, useState } from 'react';
 
 export const useLastTruthyValue = <T>(value: T) => {
   const [truthyValue, setValue] = useState<T | undefined>(undefined);

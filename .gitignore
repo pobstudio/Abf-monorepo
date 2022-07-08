@@ -13,4 +13,6 @@
 /**/generated-sketches
 /**/dist
 /**/.parcel-cache
+/**/generated/
+/**/build/
 .vercel

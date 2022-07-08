@@ -1,26 +1,8 @@
-import create from 'zustand';
 import produce from 'immer';
-import { TransactionReceipt } from '@ethersproject/providers';
-
-export type TransactionStatus = 'in-progress' | 'success' | 'failed';
-
-export interface MintingTransactionMetadata {
-  type: 'minting';
-}
-
-export type TransactionMetadata =
-  | MintingTransactionMetadata;
-
-export interface TransactionObject {
-  hash: string;
-  status: TransactionStatus;
-  metadata: TransactionMetadata;
-  receipt?: TransactionReceipt;
-  lastBlockNumChecked?: number;
-}
+import create from 'zustand';
+import { TransactionMetadata, TransactionObject } from '../types/transaction';
 
 export type TransactionMap = { [hash: string]: TransactionObject };
-
 type State = {
   transactionMap: TransactionMap;
   updateTransactionMap: (updateFn: (update: any) => void) => void;

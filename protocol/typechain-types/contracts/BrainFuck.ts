@@ -2,6 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  EventFragment,
+  FunctionFragment,
+  Result,
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type {
   BaseContract,
   BigNumber,
   BigNumberish,
@@ -15,27 +21,24 @@ import type {
   utils,
 } from 'ethers';
 import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from '@ethersproject/abi';
-import type { Listener, Provider } from '@ethersproject/providers';
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
   OnEvent,
+  PromiseOrValue,
+  TypedEvent,
+  TypedEventFilter,
+  TypedListener,
 } from '../common';
 
 export interface BrainFuckInterface extends utils.Interface {
   functions: {
     'MAX_MINTING_PER_TX()': FunctionFragment;
-    'additionalMetadataURI()': FunctionFragment;
+    'airdropMint(address[],uint256)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
     'code()': FunctionFragment;
+    'constants()': FunctionFragment;
     'contractURI()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'isActive()': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'mint(address,uint256)': FunctionFragment;
     'mintingSupply()': FunctionFragment;
@@ -44,30 +47,36 @@ export interface BrainFuckInterface extends utils.Interface {
     'ownerOf(uint256)': FunctionFragment;
     'price()': FunctionFragment;
     'renderer()': FunctionFragment;
+    'rendererRoyaltyFraction()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'royaltyInfo(uint256,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
     'seed()': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
+    'setIsActive(bool)': FunctionFragment;
     'setRoyalty(address,uint96)': FunctionFragment;
+    'setSeed(bytes)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
     'tokenURI(uint256)': FunctionFragment;
     'totalSupply()': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
+    'whitelistToken()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'MAX_MINTING_PER_TX'
-      | 'additionalMetadataURI'
+      | 'airdropMint'
       | 'approve'
       | 'balanceOf'
       | 'code'
+      | 'constants'
       | 'contractURI'
       | 'getApproved'
+      | 'isActive'
       | 'isApprovedForAll'
       | 'mint'
       | 'mintingSupply'
@@ -76,19 +85,23 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'ownerOf'
       | 'price'
       | 'renderer'
+      | 'rendererRoyaltyFraction'
       | 'renounceOwnership'
       | 'royaltyInfo'
       | 'safeTransferFrom(address,address,uint256)'
       | 'safeTransferFrom(address,address,uint256,bytes)'
       | 'seed'
       | 'setApprovalForAll'
+      | 'setIsActive'
       | 'setRoyalty'
+      | 'setSeed'
       | 'supportsInterface'
       | 'symbol'
       | 'tokenURI'
       | 'totalSupply'
       | 'transferFrom'
-      | 'transferOwnership',
+      | 'transferOwnership'
+      | 'whitelistToken',
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -96,30 +109,35 @@ export interface BrainFuckInterface extends utils.Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: 'additionalMetadataURI',
-    values?: undefined,
+    functionFragment: 'airdropMint',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'approve',
-    values: [string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOf',
+    values: [PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'code', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'constants', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'contractURI',
     values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'getApproved',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'isActive', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'isApprovedForAll',
-    values: [string, string],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: 'mint',
-    values: [string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'mintingSupply',
@@ -129,43 +147,64 @@ export interface BrainFuckInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'ownerOf',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'price', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renderer', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'rendererRoyaltyFraction',
+    values?: undefined,
+  ): string;
   encodeFunctionData(
     functionFragment: 'renounceOwnership',
     values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'royaltyInfo',
-    values: [BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [string, string, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'seed', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setApprovalForAll',
-    values: [string, boolean],
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setIsActive',
+    values: [PromiseOrValue<boolean>],
   ): string;
   encodeFunctionData(
     functionFragment: 'setRoyalty',
-    values: [string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setSeed',
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
     functionFragment: 'supportsInterface',
-    values: [BytesLike],
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'tokenURI',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'totalSupply',
@@ -173,11 +212,19 @@ export interface BrainFuckInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: 'transferFrom',
-    values: [string, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'transferOwnership',
-    values: [string],
+    values: [PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'whitelistToken',
+    values?: undefined,
   ): string;
 
   decodeFunctionResult(
@@ -185,12 +232,13 @@ export interface BrainFuckInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'additionalMetadataURI',
+    functionFragment: 'airdropMint',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'code', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'constants', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'contractURI',
     data: BytesLike,
@@ -199,6 +247,7 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'getApproved',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'isActive', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'isApprovedForAll',
     data: BytesLike,
@@ -213,6 +262,10 @@ export interface BrainFuckInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'price', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renderer', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'rendererRoyaltyFraction',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: 'renounceOwnership',
     data: BytesLike,
@@ -234,7 +287,12 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'setApprovalForAll',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setIsActive',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: 'setRoyalty', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSeed', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'supportsInterface',
     data: BytesLike,
@@ -253,17 +311,25 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'transferOwnership',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: 'whitelistToken',
+    data: BytesLike,
+  ): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
+    'ChangedIsActive(bool)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
+    'SetSeed(bytes)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ChangedIsActive'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetSeed'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
@@ -291,6 +357,16 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
+export interface ChangedIsActiveEventObject {
+  isActive: boolean;
+}
+export type ChangedIsActiveEvent = TypedEvent<
+  [boolean],
+  ChangedIsActiveEventObject
+>;
+
+export type ChangedIsActiveEventFilter = TypedEventFilter<ChangedIsActiveEvent>;
+
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
@@ -302,6 +378,13 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface SetSeedEventObject {
+  seed: string;
+}
+export type SetSeedEvent = TypedEvent<[string], SetSeedEventObject>;
+
+export type SetSeedEventFilter = TypedEventFilter<SetSeedEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -344,35 +427,46 @@ export interface BrainFuck extends BaseContract {
   'functions': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
-
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    airdropMint(
+      to: PromiseOrValue<string>[],
+      numMintsEach: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    approve(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    balanceOf(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     code(overrides?: CallOverrides): Promise<[string]>;
+
+    constants(overrides?: CallOverrides): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
     getApproved(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
+    isActive(overrides?: CallOverrides): Promise<[boolean]>;
+
     isApprovedForAll(
-      owner: string,
-      operator: string,
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     mint(
-      to: string,
-      numMints: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      numMints: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mintingSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -382,7 +476,7 @@ export interface BrainFuck extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
@@ -390,103 +484,128 @@ export interface BrainFuck extends BaseContract {
 
     renderer(overrides?: CallOverrides): Promise<[string]>;
 
+    rendererRoyaltyFraction(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, BigNumber]>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     seed(overrides?: CallOverrides): Promise<[string]>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    setIsActive(
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRoyalty(
-      newReceiver: string,
-      newRoyaltyFraction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReceiver: PromiseOrValue<string>,
+      newRoyaltyFraction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    setSeed(
+      _seed: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     tokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    whitelistToken(overrides?: CallOverrides): Promise<[string]>;
   };
 
   MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
-  additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
-
-  approve(
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+  airdropMint(
+    to: PromiseOrValue<string>[],
+    numMintsEach: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  approve(
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  balanceOf(
+    owner: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   code(overrides?: CallOverrides): Promise<string>;
+
+  constants(overrides?: CallOverrides): Promise<string>;
 
   contractURI(overrides?: CallOverrides): Promise<string>;
 
   getApproved(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
+  isActive(overrides?: CallOverrides): Promise<boolean>;
+
   isApprovedForAll(
-    owner: string,
-    operator: string,
+    owner: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
   mint(
-    to: string,
-    numMints: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    numMints: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mintingSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -495,105 +614,136 @@ export interface BrainFuck extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   price(overrides?: CallOverrides): Promise<BigNumber>;
 
   renderer(overrides?: CallOverrides): Promise<string>;
 
+  rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
+
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   royaltyInfo(
-    _tokenId: BigNumberish,
-    _salePrice: BigNumberish,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _salePrice: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[string, BigNumber]>;
 
   'safeTransferFrom(address,address,uint256)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   seed(overrides?: CallOverrides): Promise<string>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  setIsActive(
+    _isActive: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRoyalty(
-    newReceiver: string,
-    newRoyaltyFraction: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newReceiver: PromiseOrValue<string>,
+    newRoyaltyFraction: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  setSeed(
+    _seed: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   supportsInterface(
-    interfaceId: BytesLike,
+    interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  whitelistToken(overrides?: CallOverrides): Promise<string>;
 
   'callStatic': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
-    additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
-
-    approve(
-      to: string,
-      tokenId: BigNumberish,
+    airdropMint(
+      to: PromiseOrValue<string>[],
+      numMintsEach: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    balanceOf(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     code(overrides?: CallOverrides): Promise<string>;
+
+    constants(overrides?: CallOverrides): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
     getApproved(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
+    isActive(overrides?: CallOverrides): Promise<boolean>;
+
     isApprovedForAll(
-      owner: string,
-      operator: string,
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     mint(
-      to: string,
-      numMints: BigNumberish,
+      to: PromiseOrValue<string>,
+      numMints: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -603,149 +753,186 @@ export interface BrainFuck extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     price(overrides?: CallOverrides): Promise<BigNumber>;
 
     renderer(overrides?: CallOverrides): Promise<string>;
 
+    rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, BigNumber]>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     seed(overrides?: CallOverrides): Promise<string>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setIsActive(
+      _isActive: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setRoyalty(
-      newReceiver: string,
-      newRoyaltyFraction: BigNumberish,
+      newReceiver: PromiseOrValue<string>,
+      newRoyaltyFraction: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setSeed(
+      _seed: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     transferOwnership(
-      newOwner: string,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    whitelistToken(overrides?: CallOverrides): Promise<string>;
   };
 
   'filters': {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
     Approval(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
     ApprovalForAll(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
 
+    'ChangedIsActive(bool)'(isActive?: null): ChangedIsActiveEventFilter;
+    ChangedIsActive(isActive?: null): ChangedIsActiveEventFilter;
+
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
+    'SetSeed(bytes)'(seed?: null): SetSeedEventFilter;
+    SetSeed(seed?: null): SetSeedEventFilter;
+
     'Transfer(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
     Transfer(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
   };
 
   'estimateGas': {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
-    additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    airdropMint(
+      to: PromiseOrValue<string>[],
+      numMintsEach: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     code(overrides?: CallOverrides): Promise<BigNumber>;
+
+    constants(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     getApproved(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    isActive(overrides?: CallOverrides): Promise<BigNumber>;
+
     isApprovedForAll(
-      owner: string,
-      operator: string,
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     mint(
-      to: string,
-      numMints: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      numMints: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mintingSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -755,7 +942,7 @@ export interface BrainFuck extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -763,70 +950,84 @@ export interface BrainFuck extends BaseContract {
 
     renderer(overrides?: CallOverrides): Promise<BigNumber>;
 
+    rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     seed(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setIsActive(
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRoyalty(
-      newReceiver: string,
-      newRoyaltyFraction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReceiver: PromiseOrValue<string>,
+      newRoyaltyFraction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setSeed(
+      _seed: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
+
+    whitelistToken(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   'populateTransaction': {
@@ -834,40 +1035,46 @@ export interface BrainFuck extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    additionalMetadataURI(
-      overrides?: CallOverrides,
+    airdropMint(
+      to: PromiseOrValue<string>[],
+      numMintsEach: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      owner: string,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     code(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    constants(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getApproved(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    isActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     isApprovedForAll(
-      owner: string,
-      operator: string,
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     mint(
-      to: string,
-      numMints: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      numMints: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mintingSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -877,7 +1084,7 @@ export interface BrainFuck extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -885,69 +1092,85 @@ export interface BrainFuck extends BaseContract {
 
     renderer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    rendererRoyaltyFraction(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     seed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setIsActive(
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRoyalty(
-      newReceiver: string,
-      newRoyaltyFraction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReceiver: PromiseOrValue<string>,
+      newRoyaltyFraction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setSeed(
+      _seed: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    whitelistToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

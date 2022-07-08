@@ -1,7 +1,5 @@
 import { invert } from 'lodash';
 import { useCallback, useEffect, useMemo } from 'react';
-import useSWR from 'swr';
-import { ROUTES } from '../constants/routes';
 import { useEnsStore } from '../stores/ens';
 import { shortenHexString } from '../utils/hex';
 import { useProvider } from './useProvider';

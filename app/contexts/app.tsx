@@ -1,6 +1,5 @@
-import React, { useMemo, useEffect, useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useLocalStorage } from 'react-use';
-import { STUDIO_PROD_LINK } from '../constants';
 
 const BANNER_ENABLED = true;
 const BANNER_KEY = 'new-pob-studio';

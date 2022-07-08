@@ -1,11 +1,10 @@
 require('dotenv').config();
+import '@nomiclabs/hardhat-etherscan';
 import '@nomiclabs/hardhat-waffle';
 import '@typechain/hardhat';
-import '@nomiclabs/hardhat-etherscan';
-
+import 'hardhat-gas-reporter';
 import { HardhatUserConfig } from 'hardhat/config';
 import { NetworksUserConfig } from 'hardhat/types';
-
 import './tasks';
 
 // You need to export an object to set up your config
@@ -15,6 +14,8 @@ const {
   RINKEBY_MNEMONIC,
   MAINNET_PRIVATE_KEY,
   MAINNET_NETWORK_RPC_URL,
+  GOERLI_PRIVATE_KEY,
+  GOERLI_NETWORK_RPC_URL,
   ETHERSCAN_API_KEY,
 } = process.env;
 
@@ -44,4 +45,10 @@ if (MAINNET_NETWORK_RPC_URL && MAINNET_PRIVATE_KEY) {
   };
 }
 
+if (GOERLI_NETWORK_RPC_URL && GOERLI_PRIVATE_KEY) {
+  (config.networks as NetworksUserConfig).goerli = {
+    url: GOERLI_NETWORK_RPC_URL,
+    accounts: [GOERLI_PRIVATE_KEY],
+  };
+}
 export default config;

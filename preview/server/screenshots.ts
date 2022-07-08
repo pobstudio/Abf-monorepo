@@ -1,5 +1,4 @@
 import { launch, Page } from 'puppeteer-core';
-import { RENDER_URL, OG_GRAPH_BANNER } from './constants';
 import { getOptions } from './options';
 import { FileType } from './types';
 

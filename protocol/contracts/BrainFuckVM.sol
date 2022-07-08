@@ -3,17 +3,19 @@
 pragma solidity ^0.8.4;
 
 library BrainFuckVM {
-  function runBrainFuckCode(bytes calldata code, bytes calldata input, uint outSize) public pure returns (bytes memory out) {
-    out = new bytes(outSize);
-    bytes memory tape = new bytes(32);
+  uint constant public TAPE_SIZE = 30000; 
+  uint constant public LOOPING_STACK_SIZE = 4096;
 
-    uint writeIndex = 0;
+  function runBrainFuckCode(bytes calldata code, bytes calldata input) public pure returns (bytes memory out) {
+    out = "";
+    bytes memory tape = new bytes(TAPE_SIZE);
+
     uint readIndex = 0;
     uint ptr = 0;
     bool isLooping = false;
     uint innerLoops = 0;
-    // technically a max of 1028 nested loops
-    uint[] memory loopingStack = new uint[](1028);
+    // technically a max of 4096 nested loops
+    uint[] memory loopingStack = new uint[](LOOPING_STACK_SIZE);
     uint loopingStackIndex = 0;
 
     for (uint i = 0; i < code.length; ++i) {
@@ -31,11 +33,11 @@ library BrainFuckVM {
       } else {
         // +
         if (opcode == 0x2B) {
-          tape[ptr] = bytes1(uint8(tape[ptr]) + 1);
+          tape[ptr] = tape[ptr] == bytes1(0xFF) ? bytes1(0x00) : bytes1(uint8(tape[ptr]) + 1);
         }
         // -
         if (opcode == 0x2D) {
-          tape[ptr] = bytes1(uint8(tape[ptr]) - 1);
+          tape[ptr] = tape[ptr] == bytes1(0x00) ? bytes1(0xFF) : bytes1(uint8(tape[ptr]) - 1);
         }
         // ,
         if (opcode == 0x2C) {
@@ -44,8 +46,7 @@ library BrainFuckVM {
         }
         // .
         if (opcode == 0x2E) {
-          out[writeIndex] = tape[ptr];
-          writeIndex++;
+          out = abi.encodePacked(out, tape[ptr]);
         }
         // >
         if (opcode == 0x3E) {

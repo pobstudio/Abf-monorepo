@@ -15,13 +15,14 @@
     "sketch-utils"
   ],
   "scripts": {
-    "build": "yarn workspaces run build",
+    "build": "yarn workspaces run build && yarn prettier",
     "prettier": "prettier --write \"**/*.{ts,tsx,js,json,css,yml,md}\""
   },
   "devDependencies": {
-    "typescript": "^4.3.2",
-    "prettier": "^2.6.2",
-    "ts-node": "^9.1.1"
+    "prettier": "^2.7.1",
+    "prettier-plugin-organize-imports": "^3.0.0",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4"
   },
   "dependencies": {}
 }

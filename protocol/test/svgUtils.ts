@@ -1,13 +1,7 @@
-import { ethers } from 'hardhat';
-import { BigNumber, Signer } from 'ethers';
-import {
-  BrainFuckVM,
-  BrainFuck,
-  DebugRenderer,
-  BrainFuckURIConstructor,
-  SvgUtils,
-} from '../typechain-types';
 import { expect } from 'chai';
+import { BigNumber, Signer } from 'ethers';
+import { ethers } from 'hardhat';
+import { SvgUtils } from '../typechain-types';
 
 const TOKEN_ID_ZERO = BigNumber.from(0);
 const ZERO = BigNumber.from(0);
@@ -119,14 +113,31 @@ describe('SvgUtils', function () {
         '100000',
       );
       expect(await svgUtils.lerpWithDecimals(10, 110, '0x01')).to.equal(
-        '103906',
+        '103921',
       );
       expect(await svgUtils.lerpWithDecimals(10, 110, '0x11')).to.equal(
-        '166406',
+        '166666',
       );
       expect(await svgUtils.lerpWithDecimals(10, 110, '0xFF')).to.equal(
         '1100000',
       );
+    });
+  });
+
+  describe('toColorHexString', () => {
+    it('correctly return value as color hex code from uint', async function () {
+      expect(await svgUtils.toColorHexString('0xffffff')).to.equal('#ffffff');
+      expect(await svgUtils.toColorHexString('0xab3dcd')).to.equal('#ab3dcd');
+    });
+  });
+  describe('toColorHexStringByBytes', () => {
+    it('correctly return value as color hex code from bytes', async function () {
+      expect(
+        await svgUtils.toColorHexStringByBytes('0xff', '0xff', '0xff'),
+      ).to.equal('#ffffff');
+      expect(
+        await svgUtils.toColorHexStringByBytes('0xab', '0x3d', '0xcd'),
+      ).to.equal('#ab3dcd');
     });
   });
 });

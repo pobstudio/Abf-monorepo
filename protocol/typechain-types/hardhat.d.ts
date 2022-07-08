@@ -2,11 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { ethers } from 'ethers';
 import {
   FactoryOptions,
   HardhatEthersHelpers as HardhatEthersHelpersBase,
 } from '@nomiclabs/hardhat-ethers/types';
+import { ethers } from 'ethers';
 
 import * as Contracts from '.';
 
@@ -32,10 +32,6 @@ declare module 'hardhat/types/runtime' {
       name: 'ERC721',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721__factory>;
-    getContractFactory(
-      name: 'ERC721Royalty',
-      signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.ERC721Royalty__factory>;
     getContractFactory(
       name: 'IERC721Metadata',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -85,6 +81,10 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.SvgUtils__factory>;
     getContractFactory(
+      name: 'RendererRegistry',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.RendererRegistry__factory>;
+    getContractFactory(
       name: 'DebugRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DebugRenderer__factory>;
@@ -93,9 +93,33 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DotMatrixRenderer__factory>;
     getContractFactory(
-      name: 'PixelGridRenderer',
+      name: 'MonoPixelGrid16Renderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.PixelGridRenderer__factory>;
+    ): Promise<Contracts.MonoPixelGrid16Renderer__factory>;
+    getContractFactory(
+      name: 'MonoPixelGrid24Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.MonoPixelGrid24Renderer__factory>;
+    getContractFactory(
+      name: 'MonoPixelGrid8Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.MonoPixelGrid8Renderer__factory>;
+    getContractFactory(
+      name: 'PathRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.PathRenderer__factory>;
+    getContractFactory(
+      name: 'PixelGrid16Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.PixelGrid16Renderer__factory>;
+    getContractFactory(
+      name: 'PixelGrid24Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.PixelGrid24Renderer__factory>;
+    getContractFactory(
+      name: 'PixelGrid8Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.PixelGrid8Renderer__factory>;
     getContractFactory(
       name: 'ERC721A',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -126,11 +150,6 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.ERC721>;
-    getContractAt(
-      name: 'ERC721Royalty',
-      address: string,
-      signer?: ethers.Signer,
-    ): Promise<Contracts.ERC721Royalty>;
     getContractAt(
       name: 'IERC721Metadata',
       address: string,
@@ -192,6 +211,11 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.SvgUtils>;
     getContractAt(
+      name: 'RendererRegistry',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.RendererRegistry>;
+    getContractAt(
       name: 'DebugRenderer',
       address: string,
       signer?: ethers.Signer,
@@ -202,10 +226,40 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.DotMatrixRenderer>;
     getContractAt(
-      name: 'PixelGridRenderer',
+      name: 'MonoPixelGrid16Renderer',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.PixelGridRenderer>;
+    ): Promise<Contracts.MonoPixelGrid16Renderer>;
+    getContractAt(
+      name: 'MonoPixelGrid24Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.MonoPixelGrid24Renderer>;
+    getContractAt(
+      name: 'MonoPixelGrid8Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.MonoPixelGrid8Renderer>;
+    getContractAt(
+      name: 'PathRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.PathRenderer>;
+    getContractAt(
+      name: 'PixelGrid16Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.PixelGrid16Renderer>;
+    getContractAt(
+      name: 'PixelGrid24Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.PixelGrid24Renderer>;
+    getContractAt(
+      name: 'PixelGrid8Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.PixelGrid8Renderer>;
     getContractAt(
       name: 'ERC721A',
       address: string,
