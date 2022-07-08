@@ -58,13 +58,13 @@ export const ProtocolContracts: FC = () => {
               description={`On-chain BrainFuck language interpreter`}
               label={'library'}
             />
-                        <ProtocolContractsTable
+            <ProtocolContractsTable
               address={contracts.libraries.vm}
               title={`Brainfuck URI Constructor`}
               description={`On-chain URI utility library to construct tokenURI + contractURI metadata`}
               label={'library'}
             />
-                        <ProtocolContractsTable
+            <ProtocolContractsTable
               address={contracts.libraries.svgUtils}
               title={`Svg Utils`}
               description={`Common math + style utils for renderers`}
@@ -113,9 +113,7 @@ const ProtocolContractsTable: FC<any> = ({
           </LabelAnchor>
         </Text>
       </Flex>
-      <P>
-      {description}
-      </P>
+      <P>{description}</P>
       <FlexEnds>
         <Label style={{ textTransform: 'uppercase' }}>CONTRACT</Label>
         <Flex>
