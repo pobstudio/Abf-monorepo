@@ -197,6 +197,7 @@ export const Specification: React.FC = () => {
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
               margin: '24px 0 24px 0',
             }}
+            id="contracts"
           />
           <H2 style={{ opacity: 0.2 }}>CONTRACTS</H2>
           <P>
@@ -281,7 +282,7 @@ interface IRenderer is IERC165 {
               sample Renderer variants to help new developers.
             </P>
           </DetailRowsContainer>
-          <DetailRowsContainer id="brainfuck-nft">
+          <DetailRowsContainer id="abf-nft">
             <H2>ABF NFT</H2>
             <P>
               The ABF NFT is a <Code>ERC721A</Code> derived +{' '}
@@ -352,7 +353,7 @@ interface IRenderer is IERC165 {
               </li>
             </UL>
           </DetailRowsContainer>
-          <DetailRowsContainer id="brainfuck-nft-factory">
+          <DetailRowsContainer id="abf-nft-factory">
             <H2>ABF NFT FACTORY</H2>
             <P>
               The ABF NFT factory is a handy utility contract to easily (and
@@ -397,6 +398,7 @@ interface IRenderer is IERC165 {
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
               margin: '24px 0 24px 0',
             }}
+            id="other-resources"
           ></div>
           <H2 style={{ opacity: 0.2 }}>OTHER RESOURCES</H2>
           <DetailRowsContainer id="bf-resources">
@@ -472,25 +474,23 @@ const TableOfContents = () => {
         <TableOfContentsAnchor href={'#renderers'}>
           RENDERERS
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'brainfuck-nft'}>
-          ABF NFT
-        </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'brainfuck-nft-factory'}>
+        <TableOfContentsAnchor href={'#abf-nft'}>ABF NFT</TableOfContentsAnchor>
+        <TableOfContentsAnchor href={'#abf-nft-factory'}>
           ABF NFT FACTORY
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'brainfuck-vm'}>
+        <TableOfContentsAnchor href={'#brainfuck-vm'}>
           BRAINFUCK VM
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'brainfuck-uri-constructor'}>
+        <TableOfContentsAnchor href={'#brainfuck-uri-constructor'}>
           BRAINFUCK URI CONSTRUCTOR
         </TableOfContentsAnchor>
       </LinkGroup>
       <LinkGroup>
         <Label>OTHER RESOURCES</Label>
-        <TableOfContentsAnchor href={'bf-resources'}>
+        <TableOfContentsAnchor href={'#bf-resources'}>
           BF RESOURCES
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'bf-links'}>LINKS</TableOfContentsAnchor>
+        <TableOfContentsAnchor href={'#bf-links'}>LINKS</TableOfContentsAnchor>
       </LinkGroup>
     </TableOfContentsContainer>
   );

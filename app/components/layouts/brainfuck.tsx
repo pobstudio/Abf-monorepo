@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
@@ -12,9 +13,7 @@ export const BrainFuck: React.FC = () => {
     <OneColumnContainer>
       <OneColumnContentContainer>
         <DetailRowsContainer>
-          <div>
-            <H1 style={{ fontSize: 24 }}>Brainfuck, the language</H1>
-          </div>
+          <H1 style={{ fontSize: 24 }}>Brainfuck, the language</H1>
           <P>
             <B>NOTE:</B> This is not an exhaustive documentation/representation
             of the <B>Brainfuck</B> language, merely a documentation for
@@ -22,8 +21,8 @@ export const BrainFuck: React.FC = () => {
           </P>
           <P>
             Consult the{' '}
-            <A href={'https://en.wikipedia.org/wiki/Brainfuck'}>wiki</A> for the
-            history + full 'spec' of the BrainFuck language.
+            <A href={'https://en.wikipedia.org/wiki/Brainfuck'}>wikipedia</A>{' '}
+            for the full history of the Brainfuck language.
           </P>
           <P>
             Brainfuck is an esoteric programing language that is "technically"
@@ -89,20 +88,92 @@ export const BrainFuck: React.FC = () => {
             These limitations are the result of the constraints of the EVM
             environment, we do not expect many ABF NFTs to hit these bounds.
           </P>
+
+          <br />
           <H2>Inputting + Outputting Bytes</H2>
           <P>
             ABF provides 64 bytes as input to your Brainfuck code, each byte
-            read via the <Code>,</Code> opcode from the most signifigant byte,
+            read via the <Code>,</Code> opcode from the most significant byte,
             in a little-endian context, to the least. (From left to right)
           </P>
           <P>
             Outputted bytes, via the <Code>.</Code> code, are appended the the
-            output bytes from the most signifigant byte, in a little-endian
+            output bytes from the most significant byte, in a little-endian
             context. (From left to right)
           </P>
+
+          <br />
+          <H2>Resources</H2>
+          <P>
+            Writing in Brainfuck is quite literally a 'brainfuck'. Consult these
+            various resources as well as Google to dive deeper into the
+            language. It's more fun than Assembly and just as f**king annoying.
+          </P>
+
+          <LinkGroup>
+            <LinkGroupAnchor
+              href={'https://gist.github.com/roachhd/dce54bec8ba55fb17d3a'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              BASICS OF BRAINFUCK
+            </LinkGroupAnchor>
+            <LinkGroupAnchor
+              href={'https://en.wikipedia.org/wiki/Brainfuck'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              BRAINFUCK WIKIPEDIA
+            </LinkGroupAnchor>
+            <LinkGroupAnchor
+              href={'https://esolangs.org/wiki/Brainfuck_algorithms'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              BRAINFUCK SNIPPETS & ALGORITHMS
+            </LinkGroupAnchor>
+            <LinkGroupAnchor
+              href={'https://sange.fi/esoteric/brainfuck/bf-source/prog/'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              BRAINFUCK CODE ARCHIVE
+            </LinkGroupAnchor>
+            <LinkGroupAnchor
+              href={'http://brainfuck.org/'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              MORE BRAINFUCK CODE
+            </LinkGroupAnchor>
+            <LinkGroupAnchor
+              href={'https://copy.sh/brainfuck/'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              BRAINFUCK INTERPRETER
+            </LinkGroupAnchor>
+            <LinkGroupAnchor
+              href={'https://copy.sh/brainfuck/text.html'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TEXT TO BRAINFUCK GENERATOR
+            </LinkGroupAnchor>
+          </LinkGroup>
           <DocumentationFooter />
         </DetailRowsContainer>
       </OneColumnContentContainer>
     </OneColumnContainer>
   );
 };
+
+const LinkGroup = styled.div`
+  > * + * {
+    margin-top: 12px;
+  }
+`;
+const LinkGroupAnchor = styled(A)`
+  display: block;
+  cursor: pointer;
+`;
