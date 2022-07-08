@@ -15,7 +15,6 @@ export const BackButtonAnchor = styled(Label)`
   }
 `;
 
-
 export const LabelAnchor = styled.a`
   padding: 0;
   margin: 0;

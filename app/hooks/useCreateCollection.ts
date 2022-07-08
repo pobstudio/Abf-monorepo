@@ -1,4 +1,3 @@
-import { BrainFuck } from '@abf-monorepo/protocol';
 import { utils } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePriorityAccount } from '../connectors/priority';
@@ -77,7 +76,9 @@ export const useCreateCollection = () => {
     setIsLoading(false);
   }, [factory, setIsLoading, hashedProjectMetadata, projectMetadata, account]);
 
-  const [contractAddress, setContractAddress] = useState<string | undefined | null>(undefined);
+  const [contractAddress, setContractAddress] = useState<
+    string | undefined | null
+  >(undefined);
   const provider = useProvider();
   useEffect(() => {
     if (contractAddress !== undefined) {
@@ -91,19 +92,26 @@ export const useCreateCollection = () => {
     }
     const getContractAddress = async () => {
       const receipt = await provider.getTransactionReceipt(tx.hash);
-      const filteredLogs = receipt.logs.filter(l => l.topics[0] === '0x070a766594eff59d7909f901e86526c662cf0e0d9ae3feee0824792b06d2c0ee');
+      const filteredLogs = receipt.logs.filter(
+        (l) =>
+          l.topics[0] ===
+          '0x070a766594eff59d7909f901e86526c662cf0e0d9ae3feee0824792b06d2c0ee',
+      );
       if (filteredLogs.length !== 1) {
-        setContractAddress(null)
+        setContractAddress(null);
         return;
       }
-      const decodedLogData = utils.defaultAbiCoder.decode(['address', 'address'], filteredLogs[0].data);
+      const decodedLogData = utils.defaultAbiCoder.decode(
+        ['address', 'address'],
+        filteredLogs[0].data,
+      );
       if (!!decodedLogData[0]) {
         setContractAddress(decodedLogData[0]);
       }
-    }
+    };
     getContractAddress();
   }, [provider, tx]);
-  
+
   return useMemo(() => {
     return {
       error,

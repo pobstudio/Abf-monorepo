@@ -32,9 +32,15 @@ export const Exec: React.FC = () => {
             [001 proceeds to pull out the ABF recruitment brochure and reads]
           </P>
           <P>
-            <B>001:</B> ABF is a <A href={'https://jacob.energy/hyperstructures.html'} target={'_blank'}>hyperstructure</A> to deploy, mint, and
-            create on-chain generative art NFTs. No fees + fully self-controlled
-            NFT contracts designed to last forever.
+            <B>001:</B> ABF is a{' '}
+            <A
+              href={'https://jacob.energy/hyperstructures.html'}
+              target={'_blank'}
+            >
+              hyperstructure
+            </A>{' '}
+            to deploy, mint, and create on-chain generative art NFTs. No fees +
+            fully self-controlled NFT contracts designed to last forever.
           </P>
           <P>
             <B>001:</B> What does all that crap mean? A <B>hyperstructure</B>, a

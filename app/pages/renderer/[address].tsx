@@ -3,7 +3,6 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
 import { PageDiv } from '../../components/divs';
 import { ArrowIcon } from '../../components/icons/arrow';
 import { RendererDetails } from '../../components/layouts/rendererDetails';

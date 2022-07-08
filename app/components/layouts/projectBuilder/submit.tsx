@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import {
@@ -72,7 +71,8 @@ export const ContractSubmit: FC = () => {
 
   const account = usePriorityAccount();
   const chainId = usePriorityChainId();
-  const { contractAddress, create, txStatus, error, isLoading } = useCreateCollection();
+  const { contractAddress, create, txStatus, error, isLoading } =
+    useCreateCollection();
 
   const buttonText = useMemo(() => {
     if (!account) {
@@ -103,21 +103,21 @@ export const ContractSubmit: FC = () => {
     );
   }, [isLoading, txStatus, account, chainId, errorMessages]);
 
-  const name = useENSorHex(contractAddress)
+  const name = useENSorHex(contractAddress);
   if (!!contractAddress) {
     return (
       <DetailRowsContainer>
         <FlexEnds>
           <P>NFT Collection Created.</P>
-          <A href={getOpenSeaUrl(contractAddress, '0')} target={'_blank'}>{name}</A> 
+          <A href={getOpenSeaUrl(contractAddress, '0')} target={'_blank'}>
+            {name}
+          </A>
         </FlexEnds>
-        <TertiaryButton disabled>
-          VIEW COLLECTION (COMING SOON)
-        </TertiaryButton>
+        <TertiaryButton disabled>VIEW COLLECTION (COMING SOON)</TertiaryButton>
       </DetailRowsContainer>
-    )
+    );
   }
-  
+
   return (
     <DetailRowsContainer>
       <ErrorTable>

@@ -133,13 +133,17 @@ export const Web3Status: FC<{
       <Web3StatusWrapper ref={clickAwayRef}>
         {!!account && (
           <Flex>
-            {!!numPendingTx && <Label style={{marginRight: 16}}>{numPendingTx} PENDING TX(S)</Label>}
-          <HeaderAnchor
-            style={{ cursor: 'pointer' }}
-            onClick={() => setIsDropdownOpen(true)}
-          >
-            {ensOrHex}
-          </HeaderAnchor>
+            {!!numPendingTx && (
+              <Label style={{ marginRight: 16 }}>
+                {numPendingTx} PENDING TX(S)
+              </Label>
+            )}
+            <HeaderAnchor
+              style={{ cursor: 'pointer' }}
+              onClick={() => setIsDropdownOpen(true)}
+            >
+              {ensOrHex}
+            </HeaderAnchor>
           </Flex>
         )}
         {!account && !isActivating && (

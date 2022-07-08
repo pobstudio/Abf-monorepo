@@ -10,7 +10,7 @@
     "develop-svg": "hardhat develop-svg",
     "deploy": "hardhat deploy",
     "deploy-renderers": "hardhat deploy-renderers",
-    "verify": "hardhat verify"
+    "verify": "hardhat verify-contracts"
   },
   "author": "",
   "license": "ISC",

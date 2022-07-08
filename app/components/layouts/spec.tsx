@@ -57,8 +57,8 @@ export const Specification: React.FC = () => {
             <OL>
               <li>
                 The NFT's stored <B>Brainfuck</B> code is ran with the{' '}
-                <A href={'#brainfuck-vm'}>BrainfuckVM</A> Contract. Running the <B>Brainfuck</B> code
-                produces an output, in bytes.
+                <A href={'#brainfuck-vm'}>BrainfuckVM</A> Contract. Running the{' '}
+                <B>Brainfuck</B> code produces an output, in bytes.
               </li>
               <li>
                 These <B>bytes</B> are then provided to the renderer contract
@@ -206,7 +206,7 @@ export const Specification: React.FC = () => {
             ABF is a conglomeration of a few contracts, some user written and
             some canonically deployed by the ABF Corp's <B>Board</B>.{' '}
             <Link href={ROUTES.DOCS.PROTOCOL} passHref>
-            <A>Registry of canonical contracts.</A>
+              <A>Registry of canonical contracts.</A>
             </Link>
           </P>
           <DetailRowsContainer id={'renderers'}>
@@ -260,7 +260,14 @@ interface IRenderer is IERC165 {
             <P>
               <Code>additionalMetadataURI</Code>: a ipfs file pointing to a json
               that provides documentation around using the renderer.{' '}
-              <A target={'_blank'} href={getIPFSUrl('bafkreib7mkx3c7owpn5uwkqtviddhspu376t52u2wljh3o5gnz2kfmn7de')}>Example</A>
+              <A
+                target={'_blank'}
+                href={getIPFSUrl(
+                  'bafkreib7mkx3c7owpn5uwkqtviddhspu376t52u2wljh3o5gnz2kfmn7de',
+                )}
+              >
+                Example
+              </A>
             </P>
             <P>
               <Code>renderAttributeKey</Code>: the key within the NFT metadata

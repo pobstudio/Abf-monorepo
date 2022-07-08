@@ -153,8 +153,7 @@ const Challenge: FC = () => {
       <FlexEnds>
         <Label>ANSWER</Label>
         <Link href={ROUTES.DOCS.BRAINFUCK} passHref>
-        <LabelAnchor>BRAINFUCK DOCS</LabelAnchor>
-
+          <LabelAnchor>BRAINFUCK DOCS</LabelAnchor>
         </Link>
       </FlexEnds>
       <InputWell>
