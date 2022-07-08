@@ -4,7 +4,7 @@ import {
   usePriorityAccount,
   usePriorityChainId,
 } from '../../connectors/priority';
-import { CHAIN_ID } from '../../constants';
+import { CHAIN_ID, MAX_UINT } from '../../constants';
 import {
   INCORRECT_CHAIN_ID,
   NO_CONNECTED_WALLET,
@@ -98,6 +98,7 @@ export const Render: FC<{
         } else if (
           !!renderer &&
           !!rendererMetadata?.propsSize &&
+          !rendererMetadata?.propsSize.eq(MAX_UINT) &&
           rendererMetadata.propsSize.gt(getHexStringNumBytes(output.output))
         ) {
           throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);

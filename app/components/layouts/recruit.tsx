@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { ROUTES } from '../../constants/routes';
 import { INVITE_LINKS } from '../../data/discord';
 import { useDefaultSeed } from '../../hooks/useDefaults';
 import { useHydrateSave } from '../../hooks/useHydrateSave';
@@ -150,7 +152,10 @@ const Challenge: FC = () => {
       </P>
       <FlexEnds>
         <Label>ANSWER</Label>
+        <Link href={ROUTES.DOCS.BRAINFUCK} passHref>
         <LabelAnchor>BRAINFUCK DOCS</LabelAnchor>
+
+        </Link>
       </FlexEnds>
       <InputWell>
         <TextArea

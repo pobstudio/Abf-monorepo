@@ -1,5 +1,6 @@
+import { BrainFuck } from '@abf-monorepo/protocol';
 import { utils } from 'ethers';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePriorityAccount } from '../connectors/priority';
 import { NULL_ADDRESS, NULL_HASH } from '../constants';
 import { useProjectBuilderContext } from '../contexts/projectBuilder';
@@ -7,6 +8,7 @@ import { useTransactionsStore } from '../stores/transaction';
 import { TransactionStatus } from '../types/transaction';
 import { convertStrToHexStr } from '../utils/hex';
 import { useBrainFuckFactoryContract } from './useContracts';
+import { useProvider } from './useProvider';
 import { useTxn } from './useTxn';
 
 export const useCreateCollection = () => {
@@ -75,13 +77,41 @@ export const useCreateCollection = () => {
     setIsLoading(false);
   }, [factory, setIsLoading, hashedProjectMetadata, projectMetadata, account]);
 
+  const [contractAddress, setContractAddress] = useState<string | undefined | null>(undefined);
+  const provider = useProvider();
+  useEffect(() => {
+    if (contractAddress !== undefined) {
+      return;
+    }
+    if (tx?.status !== 'success') {
+      return;
+    }
+    if (!provider) {
+      return;
+    }
+    const getContractAddress = async () => {
+      const receipt = await provider.getTransactionReceipt(tx.hash);
+      const filteredLogs = receipt.logs.filter(l => l.topics[0] === '0x070a766594eff59d7909f901e86526c662cf0e0d9ae3feee0824792b06d2c0ee');
+      if (filteredLogs.length !== 1) {
+        setContractAddress(null)
+        return;
+      }
+      const decodedLogData = utils.defaultAbiCoder.decode(['address', 'address'], filteredLogs[0].data);
+      if (!!decodedLogData[0]) {
+        setContractAddress(decodedLogData[0]);
+      }
+    }
+    getContractAddress();
+  }, [provider, tx]);
+  
   return useMemo(() => {
     return {
       error,
       tx,
       txStatus,
       create,
+      contractAddress,
       isLoading,
     };
-  }, [isLoading, error, tx, txStatus, create]);
+  }, [isLoading, contractAddress, error, tx, txStatus, create]);
 };

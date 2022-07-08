@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import {
@@ -10,9 +11,12 @@ import {
   useProjectMetadata,
 } from '../../../contexts/projectBuilder';
 import { useCreateCollection } from '../../../hooks/useCreateCollection';
+import { useENSorHex } from '../../../hooks/useENS';
+import { getOpenSeaUrl } from '../../../utils/urls';
 import { DetailRowsContainer } from '../../details/rows';
+import { FlexEnds } from '../../flexs';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
-import { Text } from '../../texts';
+import { A, P, Text } from '../../texts';
 
 const ErrorTable = styled.div`
   > * + * {
@@ -68,7 +72,7 @@ export const ContractSubmit: FC = () => {
 
   const account = usePriorityAccount();
   const chainId = usePriorityChainId();
-  const { create, txStatus, error, isLoading } = useCreateCollection();
+  const { contractAddress, create, txStatus, error, isLoading } = useCreateCollection();
 
   const buttonText = useMemo(() => {
     if (!account) {
@@ -98,6 +102,22 @@ export const ContractSubmit: FC = () => {
       txStatus === 'success'
     );
   }, [isLoading, txStatus, account, chainId, errorMessages]);
+
+  const name = useENSorHex(contractAddress)
+  if (!!contractAddress) {
+    return (
+      <DetailRowsContainer>
+        <FlexEnds>
+          <P>NFT Collection Created.</P>
+          <A href={getOpenSeaUrl(contractAddress, '0')} target={'_blank'}>{name}</A> 
+        </FlexEnds>
+        <TertiaryButton disabled>
+          VIEW COLLECTION (COMING SOON)
+        </TertiaryButton>
+      </DetailRowsContainer>
+    )
+  }
+  
   return (
     <DetailRowsContainer>
       <ErrorTable>

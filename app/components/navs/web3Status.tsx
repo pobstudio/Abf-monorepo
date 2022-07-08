@@ -16,6 +16,9 @@ import {
 import { CHAIN_ID } from '../../constants';
 import { DropdownAnimation } from '../../constants/styles';
 import { useENSorHex } from '../../hooks/useENS';
+import { useNumPendingTx } from '../../hooks/useNumPendingTx';
+import { Flex } from '../flexs';
+import { Label } from '../texts';
 import { HeaderAnchor } from './common';
 
 export const Web3ConnectWalletContent: FC = () => {
@@ -124,16 +127,20 @@ export const Web3Status: FC<{
   const isMounted = useMountedState();
   const isActivating = usePriorityIsActivating();
 
+  const numPendingTx = useNumPendingTx();
   return (
     <>
       <Web3StatusWrapper ref={clickAwayRef}>
         {!!account && (
+          <Flex>
+            {!!numPendingTx && <Label style={{marginRight: 16}}>{numPendingTx} PENDING TX(S)</Label>}
           <HeaderAnchor
             style={{ cursor: 'pointer' }}
             onClick={() => setIsDropdownOpen(true)}
           >
             {ensOrHex}
           </HeaderAnchor>
+          </Flex>
         )}
         {!account && !isActivating && (
           <HeaderAnchor

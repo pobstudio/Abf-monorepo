@@ -9,7 +9,7 @@ import { ArrowIcon } from '../../components/icons/arrow';
 import { RendererDetails } from '../../components/layouts/rendererDetails';
 import { Footer } from '../../components/navs/footer';
 import { Header } from '../../components/navs/header';
-import { Label } from '../../components/texts';
+import { BackButtonAnchor } from '../../components/texts';
 import { ROUTES } from '../../constants/routes';
 
 const RendererPage: NextPage = () => {
@@ -31,10 +31,10 @@ const RendererPage: NextPage = () => {
     <PageDiv>
       <Header />
       <Link passHref href={ROUTES.DOCS.RENDERERS}>
-        <BackButton as={'a'}>
+        <BackButtonAnchor as={'a'}>
           <ArrowIcon />
           &nbsp;&nbsp;VIEW ALL
-        </BackButton>
+        </BackButtonAnchor>
       </Link>
       <br />
       <br />
@@ -44,10 +44,3 @@ const RendererPage: NextPage = () => {
   );
 };
 export default React.memo(RendererPage);
-
-const BackButton = styled(Label)`
-  text-decoration: none;
-  svg {
-    transform: translateY(1.5px);
-  }
-`;

@@ -23,8 +23,8 @@ const Jumbotron: FC = () => {
       </div>
       <div>
         <P>
-          Contained in this document are the currently in use [ALPHA] contracts
-          for the ABF protocol. These contracts have been prepared for use by
+          Contained in this document are the canonical [ALPHA] contracts
+          for the ABF protocol deployed by the board. These contracts have been prepared for use by
           anyone and are not subject to copyright.
         </P>
       </div>

@@ -1,8 +1,10 @@
+import { deployments } from '@abf-monorepo/protocol';
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
-import { SUBGRAPH_LINK } from '../../constants';
+import { CHAIN_ID, SUBGRAPH_LINK } from '../../constants';
 import { ROUTES } from '../../constants/routes';
+import { getIPFSUrl } from '../../utils/urls';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
@@ -55,7 +57,7 @@ export const Specification: React.FC = () => {
             <OL>
               <li>
                 The NFT's stored <B>Brainfuck</B> code is ran with the{' '}
-                <A>BrainfuckVM</A> Contract. Running the <B>Brainfuck</B> code
+                <A href={'#brainfuck-vm'}>BrainfuckVM</A> Contract. Running the <B>Brainfuck</B> code
                 produces an output, in bytes.
               </li>
               <li>
@@ -124,7 +126,7 @@ export const Specification: React.FC = () => {
               We recommend learning in depth how a renderer works before you use
               it. Consult a renderer's{' '}
               <A
-                href={`${ROUTES.RENDERER}/0x5b1b723f6619bf110e83fe315943f28560a0ac3a`}
+                href={`${ROUTES.RENDERER}/${deployments[CHAIN_ID].renderers['dotMatrix']}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -202,7 +204,9 @@ export const Specification: React.FC = () => {
           <P>
             ABF is a conglomeration of a few contracts, some user written and
             some canonically deployed by the ABF Corp's <B>Board</B>.{' '}
+            <Link href={ROUTES.DOCS.PROTOCOL} passHref>
             <A>Registry of canonical contracts.</A>
+            </Link>
           </P>
           <DetailRowsContainer id={'renderers'}>
             <H2>RENDERERS</H2>
@@ -239,9 +243,9 @@ interface IRenderer is IERC165 {
       `}
               </P>
             </BlockCode>
-            <P>
+            {/* <P>
               A more complete spec can be found <A>here</A>
-            </P>
+            </P> */}
             <P>
               <Code>owner</Code>: an address representing the creator of the
               renderer; useful to provide credit in a NFT to the renderer
@@ -255,7 +259,7 @@ interface IRenderer is IERC165 {
             <P>
               <Code>additionalMetadataURI</Code>: a ipfs file pointing to a json
               that provides documentation around using the renderer.{' '}
-              <A>Example</A>
+              <A target={'_blank'} href={getIPFSUrl('bafkreib7mkx3c7owpn5uwkqtviddhspu376t52u2wljh3o5gnz2kfmn7de')}>Example</A>
             </P>
             <P>
               <Code>renderAttributeKey</Code>: the key within the NFT metadata
@@ -472,25 +476,25 @@ const TableOfContents = () => {
         <TableOfContentsAnchor href={'#renderers'}>
           RENDERERS
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'brainfuck-nft'}>
+        <TableOfContentsAnchor href={'#brainfuck-nft'}>
           ABF NFT
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'brainfuck-nft-factory'}>
+        <TableOfContentsAnchor href={'#brainfuck-nft-factory'}>
           ABF NFT FACTORY
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'brainfuck-vm'}>
+        <TableOfContentsAnchor href={'#brainfuck-vm'}>
           BRAINFUCK VM
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'brainfuck-uri-constructor'}>
+        <TableOfContentsAnchor href={'#brainfuck-uri-constructor'}>
           BRAINFUCK URI CONSTRUCTOR
         </TableOfContentsAnchor>
       </LinkGroup>
       <LinkGroup>
         <Label>OTHER RESOURCES</Label>
-        <TableOfContentsAnchor href={'bf-resources'}>
+        <TableOfContentsAnchor href={'#bf-resources'}>
           BF RESOURCES
         </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'bf-links'}>LINKS</TableOfContentsAnchor>
+        <TableOfContentsAnchor href={'#bf-links'}>LINKS</TableOfContentsAnchor>
       </LinkGroup>
     </TableOfContentsContainer>
   );
