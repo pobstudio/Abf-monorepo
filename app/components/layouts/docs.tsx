@@ -37,7 +37,7 @@ export const DropdownLinkTree: React.FC = () => {
         <Link passHref href={ROUTES.DOCS.RENDERERS}>
           <DocAnchor>RENDERER CONTRACTS</DocAnchor>
         </Link>
-        <Link passHref href={'/renderer'}>
+        <Link passHref href={ROUTES.DOCS.PROTOCOL}>
           <DocAnchor>PROTOCOL CONTRACTS</DocAnchor>
         </Link>
       </DocsAnchorGroup>
@@ -67,7 +67,7 @@ export const Documentation: React.FC = () => {
             <DropdownLinkTree />
           </div>
           <P>
-            <B>Ready to join the ABF corp?</B>
+            <B>Ready to join the ABF Corp?</B>
           </P>
           <Link href={ROUTES.RECRUIT}>
             <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>
@@ -93,7 +93,7 @@ export const DocumentationFooter: React.FC = () => {
         }}
       ></div>
       <P>
-        <B>Ready to join the ABF corp?</B>
+        <B>Ready to join the ABF Corp?</B>
       </P>
       <Link href={ROUTES.RECRUIT}>
         <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>

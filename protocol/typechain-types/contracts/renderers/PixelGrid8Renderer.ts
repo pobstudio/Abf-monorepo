@@ -5,8 +5,8 @@ import type {
   EventFragment,
   FunctionFragment,
   Result,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   BaseContract,
   BigNumber,
@@ -17,46 +17,46 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
   OnEvent,
   PromiseOrValue,
   TypedEvent,
   TypedEventFilter,
   TypedListener,
-} from "../../common";
+} from '../../common';
 
 export interface PixelGrid8RendererInterface extends utils.Interface {
   functions: {
-    "additionalMetadataURI()": FunctionFragment;
-    "attributes(bytes)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "propsSize()": FunctionFragment;
-    "render(bytes)": FunctionFragment;
-    "renderAttributeKey()": FunctionFragment;
-    "renderRaw(bytes)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    'additionalMetadataURI()': FunctionFragment;
+    'attributes(bytes)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'propsSize()': FunctionFragment;
+    'render(bytes)': FunctionFragment;
+    'renderAttributeKey()': FunctionFragment;
+    'renderRaw(bytes)': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "additionalMetadataURI"
-      | "attributes"
-      | "owner"
-      | "propsSize"
-      | "render"
-      | "renderAttributeKey"
-      | "renderRaw"
-      | "renounceOwnership"
-      | "supportsInterface"
-      | "transferOwnership"
+      | 'additionalMetadataURI'
+      | 'attributes'
+      | 'owner'
+      | 'propsSize'
+      | 'render'
+      | 'renderAttributeKey'
+      | 'renderRaw'
+      | 'renounceOwnership'
+      | 'supportsInterface'
+      | 'transferOwnership',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "additionalMetadataURI",
-    values?: undefined
+    functionFragment: 'additionalMetadataURI',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'attributes',
@@ -69,16 +69,16 @@ export interface PixelGrid8RendererInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "renderAttributeKey",
-    values?: undefined
+    functionFragment: 'renderAttributeKey',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'renderRaw',
     values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'supportsInterface',
@@ -90,36 +90,36 @@ export interface PixelGrid8RendererInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "additionalMetadataURI",
-    data: BytesLike
+    functionFragment: 'additionalMetadataURI',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "attributes", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "propsSize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "render", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renderAttributeKey",
-    data: BytesLike
+    functionFragment: 'renderAttributeKey',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "renderRaw", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
+    functionFragment: 'supportsInterface',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
@@ -144,15 +144,15 @@ export interface PixelGrid8Renderer extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -325,7 +325,7 @@ export interface PixelGrid8Renderer extends BaseContract {
 
   populateTransaction: {
     additionalMetadataURI(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     attributes(
@@ -343,7 +343,7 @@ export interface PixelGrid8Renderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     renderAttributeKey(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renderRaw(

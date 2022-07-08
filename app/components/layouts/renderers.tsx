@@ -1,7 +1,6 @@
 import { format } from 'date-fns';
 import { FC, useEffect, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
-import styled from 'styled-components';
 import {
   useAllRendererMetadata,
   useRendererLabel,
@@ -13,6 +12,7 @@ import {
   DetailAnchorRow,
   DetailRow,
   DetailRowsContainer,
+  DetailRowsTableContainer,
 } from '../details/rows';
 import {
   OneColumnContainer,
@@ -22,6 +22,26 @@ import { Flex, FlexEnds } from '../flexs';
 import { A, Label, LabelAnchor, P, Text } from '../texts';
 import { DocumentationFooter } from './docs';
 
+const Jumbotron: FC = () => {
+  return (
+    <DetailRowsContainer>
+      <div>
+        <P>
+          <strong>SUBJECT: CURRENT DECLASSIFIED LIST OF RENDERERS</strong>
+        </P>
+      </div>
+      <div>
+        <P>
+          Contained in this document is the corp's up-to-date list of all
+          Renderers excavated by the ABFC and the broader public sphere. This
+          repository is by no means exhaustive. Please consult each renderer
+          carefully before use.
+        </P>
+      </div>
+    </DetailRowsContainer>
+  );
+};
+
 export const Renderers: FC = () => {
   const rendererMetadatas = useAllRendererMetadata();
 
@@ -30,14 +50,14 @@ export const Renderers: FC = () => {
       <OneColumnContentContainer>
         <Jumbotron />
         <DetailRowsContainer>
-          <RendererMetadataTableContainer>
+          <DetailRowsTableContainer>
             {rendererMetadatas?.map((rm) => (
               <RendererMetadataTable
                 {...rm}
                 key={`renderer-metadata-table-${rm.id.toHexString()}`}
               />
             ))}
-          </RendererMetadataTableContainer>
+          </DetailRowsTableContainer>
           <DocumentationFooter />
         </DetailRowsContainer>
       </OneColumnContentContainer>
@@ -112,32 +132,6 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
           format(new Date(registeredAt * 1000), 'yyyy-MM-dd hh:mm'),
         ]}
       </DetailRow>
-    </DetailRowsContainer>
-  );
-};
-
-const RendererMetadataTableContainer = styled.div`
-  > div + div {
-    margin-top: 42px;
-  }
-`;
-
-const Jumbotron: FC = () => {
-  return (
-    <DetailRowsContainer>
-      <div>
-        <P>
-          <strong>SUBJECT: CURRENT DECLASSIFIED LIST OF RENDERERS</strong>
-        </P>
-      </div>
-      <div>
-        <P>
-          Contained in this document is the corp's up-to-date list of all
-          Renderers excavated by the ABFC and the broader public sphere. This
-          repository is by no means exhaustive. Please consult each renderer
-          carefully before use.
-        </P>
-      </div>
     </DetailRowsContainer>
   );
 };

@@ -25,7 +25,7 @@ export const ProjectBuilder: FC = () => {
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
-            <TokenParametersSelector/>
+            <TokenParametersSelector />
             <MintingParametersSelector />
             <ContractSubmit />
           </TwoColumnContentContainer>
