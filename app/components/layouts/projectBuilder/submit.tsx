@@ -91,7 +91,7 @@ export const ContractSubmit: FC = () => {
       return 'CREATED.';
     }
     return `CREATE NFT`;
-  }, [isLoading, chainId, txStatus, error]);
+  }, [isLoading, chainId, account, txStatus, error]);
   const disabled = useMemo(() => {
     return (
       chainId !== CHAIN_ID ||

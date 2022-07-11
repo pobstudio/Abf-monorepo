@@ -47,19 +47,18 @@ export const useCreateCollection = () => {
       const config = {
         name: projectMetadata.name ?? '',
         symbol: projectMetadata.symbol ?? '',
-        additionalMetadataURI: projectMetadata.additionalMetadataURI ?? '',
         seed: projectMetadata.seed ?? '0x00',
-        constants: projectMetadata.constants ?? NULL_HASH,
+        constants: projectMetadata.inputConstants ?? NULL_HASH,
         code: convertStrToHexStr(projectMetadata.code ?? ''),
         renderer: projectMetadata.renderer ?? NULL_ADDRESS,
         mintingSupply: projectMetadata.mintingSupply ?? 0,
         price: utils.parseEther(projectMetadata.priceInEth?.toString() ?? '0'),
         royaltyFraction: projectMetadata.royaltyFractionInBps ?? 0,
-        isActive: projectMetadata.isActive ?? false,
         rendererRoyaltyFraction: projectMetadata.rendererRoyaltyFraction ?? 0,
         whitelistToken: projectMetadata.whitelistToken ?? NULL_ADDRESS,
       };
 
+      console.log(config);
       const res = await factory.createNFT(config);
 
       if (!!res) {
