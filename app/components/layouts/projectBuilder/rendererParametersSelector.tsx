@@ -6,6 +6,7 @@ import { useClickAway } from 'react-use';
 import styled from 'styled-components';
 import { usePriorityChainId } from '../../../connectors/priority';
 import { CHAIN_ID } from '../../../constants';
+import { ROUTES } from '../../../constants/routes';
 import { DropdownAnimation } from '../../../constants/styles';
 import {
   useModifyProjectMetadata,
@@ -75,7 +76,13 @@ export const RendererParametersSelector: FC = () => {
             </P>
           </Tooltip>
         </Flex>
-        <LabelAnchor href="/renderers">REGISTRY</LabelAnchor>
+        <LabelAnchor
+          href={ROUTES.DOCS.RENDERERS}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          REGISTRY
+        </LabelAnchor>
       </FlexEnds>
       <InputWell
         style={{ justifyContent: 'space-between', cursor: 'pointer' }}
@@ -178,7 +185,7 @@ export const RendererParametersSelector: FC = () => {
       </DropdownContainer>
       {renderer && (
         <DetailAnchorRow href={`/renderer/${renderer}`}>
-          {['DOCUMENTATION', 'FILE']}
+          {['DOCUMENTATION', 'VIEW FILE']}
         </DetailAnchorRow>
       )}
     </DetailRowsContainer>
