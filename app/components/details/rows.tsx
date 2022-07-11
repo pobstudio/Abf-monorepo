@@ -8,7 +8,7 @@ const DetailRowContainer = styled(FlexEnds)``;
 export const DetailRowsContainer = styled.div`
   width: 100%;
   > * + * {
-    margin-top: 20px;
+    margin-top: 20px !important;
   }
 `;
 

@@ -106,6 +106,8 @@ export const Origins: React.FC = () => {
             Strength in structures. ABF is a hyper-structure, but so will this
             community.
           </P>
+          <br />
+          <br />
           <DocumentationFooter />
         </DetailRowsContainer>
       </OneColumnContentContainer>

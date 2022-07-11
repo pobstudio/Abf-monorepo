@@ -161,6 +161,8 @@ export const BrainFuck: React.FC = () => {
               TEXT TO BRAINFUCK GENERATOR
             </LinkGroupAnchor>
           </LinkGroup>
+          <br />
+          <br />
           <DocumentationFooter />
         </DetailRowsContainer>
       </OneColumnContentContainer>

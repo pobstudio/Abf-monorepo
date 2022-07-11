@@ -122,6 +122,8 @@ export const Exec: React.FC = () => {
           <P>
             <I>[RECORDING OVER]</I>
           </P>
+          <br />
+          <br />
           <DocumentationFooter />
         </DetailRowsContainer>
       </OneColumnContentContainer>

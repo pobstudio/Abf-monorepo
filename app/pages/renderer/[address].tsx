@@ -30,13 +30,11 @@ const RendererPage: NextPage = () => {
     <PageDiv>
       <Header />
       <Link passHref href={ROUTES.DOCS.RENDERERS}>
-        <BackButtonAnchor as={'a'}>
+        <BackButtonAnchor>
           <ArrowIcon />
           &nbsp;&nbsp;VIEW ALL
         </BackButtonAnchor>
       </Link>
-      <br />
-      <br />
       <RendererDetails address={rendererAddress} />
       <Footer />
     </PageDiv>

@@ -71,6 +71,8 @@ export const ProtocolContracts: FC = () => {
               label={'library'}
             />
           </DetailRowsTableContainer>
+          <br />
+          <br />
           <DocumentationFooter />
         </DetailRowsContainer>
       </OneColumnContentContainer>
@@ -109,7 +111,7 @@ const ProtocolContractsTable: FC<any> = ({
               marginLeft: 12,
             }}
           >
-            ({label})
+            [{label}]
           </LabelAnchor>
         </Text>
       </Flex>
@@ -117,9 +119,6 @@ const ProtocolContractsTable: FC<any> = ({
       <FlexEnds>
         <Label style={{ textTransform: 'uppercase' }}>CONTRACT</Label>
         <Flex>
-          <A href={getEtherscanAddressUrl(address)} target={'_blank'}>
-            {shortenHexString(address)}
-          </A>
           <LabelAnchor
             onClick={() => {
               copyToClipboard(address);
@@ -128,11 +127,14 @@ const ProtocolContractsTable: FC<any> = ({
             style={{
               cursor: 'pointer',
               textDecoration: 'none',
-              marginLeft: 12,
+              marginRight: 12,
             }}
           >
             {copied ? '(COPIED)' : '(COPY)'}
           </LabelAnchor>
+          <A href={getEtherscanAddressUrl(address)} target={'_blank'}>
+            {shortenHexString(address)}
+          </A>
         </Flex>
       </FlexEnds>
     </DetailRowsContainer>

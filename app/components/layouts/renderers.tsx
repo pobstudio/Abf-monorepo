@@ -58,6 +58,8 @@ export const Renderers: FC = () => {
               />
             ))}
           </DetailRowsTableContainer>
+          <br />
+          <br />
           <DocumentationFooter />
         </DetailRowsContainer>
       </OneColumnContentContainer>
@@ -96,12 +98,12 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
             .padStart(3, '0')} "${rendererLabel}"`}</strong>
         </Text>
       </Flex>
+      <DetailAnchorRow href={`/renderer/${address}`}>
+        {['DOCUMENTATION', 'VIEW FILE']}
+      </DetailAnchorRow>
       <FlexEnds>
         <Label style={{ textTransform: 'uppercase' }}>CONTRACT</Label>
         <Flex>
-          <A href={getEtherscanAddressUrl(address)} target={'_blank'}>
-            {shortenHexString(address)}
-          </A>
           <LabelAnchor
             onClick={() => {
               copyToClipboard(address);
@@ -110,26 +112,26 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
             style={{
               cursor: 'pointer',
               textDecoration: 'none',
-              marginLeft: 12,
+              marginRight: 12,
             }}
           >
             {copied ? '(COPIED)' : '(COPY)'}
           </LabelAnchor>
+          <A href={getEtherscanAddressUrl(address)} target={'_blank'}>
+            {shortenHexString(address)}
+          </A>
         </Flex>
       </FlexEnds>
-      <DetailAnchorRow href={`/renderer/${address}`}>
-        {['DOCUMENTATION', 'VIEW FILE']}
-      </DetailAnchorRow>
-      <DetailRow>
-        {[
-          'REQUIRED INPUT BYTE STRING SIZE',
-          prettifyCountableNumber(propsSize),
-        ]}
-      </DetailRow>
       <DetailRow>
         {[
           'DISCOVERED AT',
           format(new Date(registeredAt * 1000), 'yyyy-MM-dd hh:mm'),
+        ]}
+      </DetailRow>
+      <DetailRow>
+        {[
+          'REQUIRED INPUT BYTE STRING SIZE',
+          prettifyCountableNumber(propsSize),
         ]}
       </DetailRow>
     </DetailRowsContainer>

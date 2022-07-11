@@ -14,7 +14,7 @@ const SpecificationPage: NextPage = () => {
     <PageDiv>
       <Header />
       <Link passHref href={ROUTES.DOCS.INDEX}>
-        <BackButtonAnchor as={'a'}>
+        <BackButtonAnchor>
           <ArrowIcon />
           &nbsp;&nbsp;VIEW DOCS HOME
         </BackButtonAnchor>

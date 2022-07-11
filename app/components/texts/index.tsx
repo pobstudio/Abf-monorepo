@@ -8,8 +8,13 @@ export const Label = styled.p`
   line-height: 16px;
 `;
 
-export const BackButtonAnchor = styled(Label)`
+export const BackButtonAnchor = styled(Label).attrs({
+  as: 'a',
+})`
+  color: black;
   text-decoration: none;
+  display: block;
+  margin-bottom: 16px;
   svg {
     transform: translateY(1.5px);
   }

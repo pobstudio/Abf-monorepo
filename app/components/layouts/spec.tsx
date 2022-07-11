@@ -455,6 +455,8 @@ interface IRenderer is IERC165 {
               <A href={SUBGRAPH_LINK}>SUBGRAPH</A>
             </P>
           </DetailRowsContainer>
+          <br />
+          <br />
           <DocumentationFooter />
         </DetailRowsContainer>
       </OneColumnContentContainer>

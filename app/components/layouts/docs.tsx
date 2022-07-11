@@ -66,6 +66,8 @@ export const Documentation: React.FC = () => {
           >
             <DropdownLinkTree />
           </div>
+          <br />
+          <br />
           <P>
             <B>Ready to join the ABF Corp?</B>
           </P>
@@ -89,7 +91,7 @@ export const DocumentationFooter: React.FC = () => {
       <div
         style={{
           borderTop: '1px solid rgba(0, 0, 0, 0.1)',
-          margin: '82px 0 24px 0',
+          margin: '50px 0 25px 0',
         }}
       ></div>
       <P>
