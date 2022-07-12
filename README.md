@@ -18,6 +18,7 @@ ABF is a hyperstructure to deploy, mint, and create on-chain generative art NFTs
 ## Useful links
 
 [abf.dev/docs](https://www.abf.dev/docs)
+[twitter.com/abf_dev](https://twitter.com/abf_dev)
 
 ## Running the monorepo
 
