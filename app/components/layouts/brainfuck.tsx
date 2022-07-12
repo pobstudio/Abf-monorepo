@@ -89,7 +89,6 @@ export const BrainFuck: React.FC = () => {
             environment, we do not expect many ABF NFTs to hit these bounds.
           </P>
 
-          <br />
           <H2>Inputting + Outputting Bytes</H2>
           <P>
             ABF provides 64 bytes as input to your Brainfuck code, each byte
@@ -102,7 +101,6 @@ export const BrainFuck: React.FC = () => {
             context. (From left to right)
           </P>
 
-          <br />
           <H2>Resources</H2>
           <P>
             Writing in Brainfuck is quite literally a 'brainfuck'. Consult these

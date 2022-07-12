@@ -2,7 +2,7 @@ import { deployments } from '@abf-monorepo/protocol';
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
-import { CHAIN_ID, SUBGRAPH_LINK } from '../../constants';
+import { CHAIN_ID, GITHUB_LINK, SUBGRAPH_LINK } from '../../constants';
 import { ROUTES } from '../../constants/routes';
 import { getIPFSUrl } from '../../utils/urls';
 import { DetailRowsContainer } from '../details/rows';
@@ -33,6 +33,7 @@ export const Specification: React.FC = () => {
             }}
           ></div>
           <TableOfContents />
+
           <div
             style={{
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
@@ -40,7 +41,6 @@ export const Specification: React.FC = () => {
             }}
           ></div>
           <H2 style={{ opacity: 0.2 }}>HIGH LEVEL CONCEPTS</H2>
-
           <DetailRowsContainer id={'bf-code-to-art'}>
             <H2>BF CODE TO ART</H2>
             <P>
@@ -80,6 +80,7 @@ export const Specification: React.FC = () => {
               renderer.
             </P>
           </DetailRowsContainer>
+
           <DetailRowsContainer id="utilizing-renderers-to-the-max">
             <H2>UTILIZING RENDERERS TO THE MAX</H2>
             <P>
@@ -135,6 +136,7 @@ export const Specification: React.FC = () => {
               to learn how it can be utilized.
             </P>
           </DetailRowsContainer>
+
           <DetailRowsContainer id="configuring-input-bytes-seed">
             <H2>CONFIGURING INPUT BYTES + SEED</H2>
             <P>
@@ -194,6 +196,7 @@ export const Specification: React.FC = () => {
               colors, and a source of random in your <B>Brainfuck</B> code.
             </P>
           </DetailRowsContainer>
+
           <div
             style={{
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
@@ -293,6 +296,109 @@ interface IRenderer is IERC165 {
               sample Renderer variants to help new developers.
             </P>
           </DetailRowsContainer>
+
+          <DetailRowsContainer id="create-renderer">
+            <H2>CREATE A RENDERER</H2>
+            <P>
+              Renderers are vital to the ABF ecosystem as well as extremely
+              useful for pushing the boundaries of on-chain art. We are
+              committed to fostering the development of Renderers and open to
+              feedback on the current spec.
+            </P>
+            <P>
+              Renderers can be registered for viewing / availability on the ABF
+              site via the{' '}
+              <A target={'_blank'} href={ROUTES.DOCS.PROTOCOL}>
+                Renderer Registry Contract
+              </A>
+              . This allows anyone to create and upload a Renderer to the ABF
+              Protocol for usage. To register, simply navigate to the contract
+              on Etherscan and use the Write functions.
+            </P>
+            <P>
+              Additionally, the Brainfuck NFT supports an optional royalty
+              system for Renderer creators so Brainfuck artists who use a
+              "third-party" Renderer contract can award funds automatically.
+            </P>
+            <P>
+              To get started building a Renderer, view code created by the ABFC
+              over at the{' '}
+              <A target={'_blank'} href={GITHUB_LINK}>
+                ABF Monorepo
+              </A>{' '}
+              in the <Code>/protocol/contracts/renderers</Code> folder. Here you
+              can see some of the default Renderers available in the{' '}
+              <A target={'_blank'} href={ROUTES.BUILDER}>
+                Project Builder
+              </A>
+              .
+            </P>
+            <P>
+              The <Code>additionalMetadataURI</Code> field should point to a URI
+              that hosts a standardized documentation stub. Currently, we upload
+              a JSON object to IPFS and store the CID in the Renderer. The
+              thought process here is that without some minor description by the
+              contract creator, these Renderers can be highly proprietary.
+            </P>
+            <P>
+              In order facilitate the developer experience and hyperstructure
+              qualities, we included a light specification around documentation.
+              The ABF website conforms to this specification which allows it to
+              directly pull Renderer data and documentation for a user friendly{' '}
+              <A target={'_blank'} href={ROUTES.DOCS.RENDERERS}>
+                Renderer Registry
+              </A>
+              .
+            </P>
+            <BlockCode>
+              <P style={{ whiteSpace: 'pre-wrap' }}>
+                {`
+interface RendererAdditionalMetadata {
+  description: string;
+  sampleOptions?: {
+    input?: string;
+  };
+  previewOptions?: {
+    byteGroups: RendererAdditionalMetadataByteGroup[];
+  };
+}
+
+interface RendererAdditionalMetadataByteGroup {
+  numGroups: number | 'infinity';
+  groupBytesIn: number;
+  label?: string;
+}
+
+// Example Upload
+const additionalMetadata = {
+  name: 'monoPixelGrid24',
+  description:
+    'A 24 by 24 mono-chrome renderer. 
+    Bytes map to grayscale colors (0x00 is black, 0xFF is black). 
+    Provide 576 bytes in a continuous hex-string.',
+  sampleOptions: {
+    input: '0x000102030405060708090a0...',
+  },
+  previewOptions: {
+    byteGroups: [{ 
+      numGroups: 'infinity', 
+      groupBytesIn: 1, 
+      label: 'Pixel' 
+    }],
+  },
+};
+      `}
+              </P>
+            </BlockCode>
+            <P>
+              To view a Renderer's additional metadata from the{' '}
+              <Code>abf.dev{ROUTES.DOCS.RENDERERS}</Code> page, click on{' '}
+              <Code>VIEW FILE</Code> and scroll down to{' '}
+              <Code>RAW FILE SOURCE</Code> and click on the <Code>IPFS</Code>{' '}
+              link.
+            </P>
+          </DetailRowsContainer>
+
           <DetailRowsContainer id="abf-nft">
             <H2>ABF NFT</H2>
             <P>
@@ -364,6 +470,7 @@ interface IRenderer is IERC165 {
               </li>
             </UL>
           </DetailRowsContainer>
+
           <DetailRowsContainer id="abf-nft-factory">
             <H2>ABF NFT FACTORY</H2>
             <P>
@@ -377,6 +484,7 @@ interface IRenderer is IERC165 {
               allows for your NFT to be discoverable via the dapp.
             </P>
           </DetailRowsContainer>
+
           <DetailRowsContainer id="brainfuck-vm">
             <H2>BRAINFUCK VM</H2>
             <P>
@@ -395,6 +503,7 @@ interface IRenderer is IERC165 {
               docs for more implementation details.
             </P>
           </DetailRowsContainer>
+
           <DetailRowsContainer id="brainfuck-uri-constructor">
             <H2>BRAINFUCK URI CONSTRUCTOR</H2>
             <P>
@@ -404,6 +513,7 @@ interface IRenderer is IERC165 {
               functions.
             </P>
           </DetailRowsContainer>
+
           <div
             style={{
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
@@ -448,11 +558,18 @@ interface IRenderer is IERC165 {
               </A>
             </P>
           </DetailRowsContainer>
+
           <DetailRowsContainer id="bf-links">
             <H2>LINKS</H2>
-            <P>[COMING SOON]: GitHub open source dapp</P>
             <P>
-              <A href={SUBGRAPH_LINK}>SUBGRAPH</A>
+              <A href={GITHUB_LINK} target="_blank" rel="noopener noreferrer">
+                ABF-MONOREPO @ GITHUB
+              </A>
+            </P>
+            <P>
+              <A href={SUBGRAPH_LINK} target="_blank" rel="noopener noreferrer">
+                SUBGRAPH
+              </A>
             </P>
           </DetailRowsContainer>
           <br />
@@ -486,6 +603,9 @@ const TableOfContents = () => {
         <Label>CONTRACTS</Label>
         <TableOfContentsAnchor href={'#renderers'}>
           RENDERERS
+        </TableOfContentsAnchor>
+        <TableOfContentsAnchor href={'#create-renderer'}>
+          CREATE A RENDERER
         </TableOfContentsAnchor>
         <TableOfContentsAnchor href={'#abf-nft'}>ABF NFT</TableOfContentsAnchor>
         <TableOfContentsAnchor href={'#abf-nft-factory'}>
