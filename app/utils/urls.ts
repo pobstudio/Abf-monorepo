@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers';
-import { CHAIN_ID, IPFS_LINK } from '../constants';
+import { CHAIN_ID, CHAIN_ID_TO_NETWORK_NAME, IPFS_LINK } from '../constants';
 
 export const getOpenSeaUrl = (address: string, tokenId: string) => {
   return `https://${
@@ -14,12 +14,14 @@ export const getOpenSeaAccountUrl = (address: string) => {
 };
 
 export const getEtherscanTxUrl = (txhash: string) => {
-  return `https://${CHAIN_ID === 1 ? '' : 'goerli.'}etherscan.io/tx/${txhash}`;
+  return `https://${
+    CHAIN_ID === 1 ? '' : `${CHAIN_ID_TO_NETWORK_NAME[CHAIN_ID]}.`
+  }etherscan.io/tx/${txhash}`;
 };
 
 export const getEtherscanAddressUrl = (address: string) => {
   return `https://${
-    CHAIN_ID === 1 ? '' : 'goerli.'
+    CHAIN_ID === 1 ? '' : `${CHAIN_ID_TO_NETWORK_NAME[CHAIN_ID]}.`
   }etherscan.io/address/${address}`;
 };
 

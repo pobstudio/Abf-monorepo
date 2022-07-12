@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers';
 /**
  * Global app related constants
  */
-export const CHAIN_ID = parseInt('5'); // process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
+export const CHAIN_ID = parseInt('4'); // process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
 
 /**
  * Data constants
@@ -18,6 +18,7 @@ export const ZERO = BigNumber.from(0);
 export const MIN_BLOCK_CONFIRMATIONS = 35;
 export const HUNDRED_PERCENT_BPS = 10000;
 export const CHAIN_ID_TO_NETWORK_NAME: { [chainId: number]: string } = {
+  4: 'rinkeby',
   5: 'goerli',
   1: 'mainnet',
 };
@@ -62,8 +63,9 @@ export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 export const OPENSEA_LINK = `https://opensea.io/collection/TODO`;
 export const PREVIEW_IMAGE_LINK = `https://abf-preview.vercel.app`;
 
-export const SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf`;
-export const TEST_SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf-goerli`;
+export const SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf${
+  CHAIN_ID === 1 ? '' : `-${CHAIN_ID_TO_NETWORK_NAME[CHAIN_ID]}`
+}`;
 export const BRAINFUCK_DOCS_LINK = `https://gist.github.com/roachhd/dce54bec8ba55fb17d3a`;
 
 // OG banners

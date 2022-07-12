@@ -13,7 +13,7 @@ import {
   hooks as walletConnectHooks,
   walletConnect,
 } from '../../connectors/walletConnect';
-import { CHAIN_ID } from '../../constants';
+import { CHAIN_ID, CHAIN_ID_TO_NETWORK_NAME } from '../../constants';
 import { DropdownAnimation } from '../../constants/styles';
 import { useENSorHex } from '../../hooks/useENS';
 import { useNumPendingTx } from '../../hooks/useNumPendingTx';
@@ -151,7 +151,7 @@ export const Web3Status: FC<{
             style={{ cursor: 'pointer' }}
             onClick={() => setIsDropdownOpen(true)}
           >
-            CONNECT [GOERLI]
+            CONNECT [{CHAIN_ID_TO_NETWORK_NAME[CHAIN_ID].toUpperCase()}]
           </HeaderAnchor>
         )}
         <DropdownSpacer />

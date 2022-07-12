@@ -21,6 +21,35 @@ export const deployments: Deployments = {
       multisig: '0x28558Ba4343FeB2709ed7A9531B72402a7794D8D',
     },
   },
+  4: {
+    core: {
+      factory: '0x4a597DbD7a6C1DE06A9f3CDEA2946f8d1929c31A',
+    },
+    renderers: {
+      debug: '0xb883CD6348aEA68f9b050F0bA0CFd09E702304a0',
+      dotMatrix: '0xb4DD948B5277f244a5e0FaF358DA191EDA7cA12b',
+      pixelGrid8: '0x2E9fD819EB1CC6bB8812aB5ceec71461Dea05662',
+      pixelGrid16: '0x3bFf11B683B94E8bD8f7e7F2775CbFEfc00807De',
+      pixelGrid24: '0xc2Cad9f7cd0F19a0608fA8Db9AdBE1EDe9233e8d',
+      monoPixelGrid8: '0x163F0b21EFE1400E089C662a181CE9eC716b4228',
+      monoPixelGrid16: '0xedA4D0a68751Dfb95f06419bB7482D694124B013',
+      monoPixelGrid24: '0x0525E64C8465afeb131BDD3aD092F23d8599cf35',
+    },
+    registries: {
+      renderer: '0xE4B49D2b77dBbBeB65e0C5f49Af734D7E8803494',
+    },
+    libraries: {
+      vm: '0xE18a32192ED95b0FE9D70D19e5025f103475d7BA',
+      uriConstructor: '0xaeb18fB50e9fb01c79e40fB4D3f3633c7339d2E0',
+      svgUtils: '0x68FbfBEf1c3A69EC7F0B503D00F6Bf962F8B3aa4',
+    },
+    interfaceID: {
+      renderer: '0x32ce7999',
+    },
+    pob: {
+      multisig: '0x00',
+    },
+  },
   5: {
     core: {
       factory: '0x63939e6F3043294753fACA9923BFcF1d404D5603',
@@ -54,15 +83,15 @@ export const deployments: Deployments = {
 };
 
 export const RENDERER_LOCAL_IPFS_CID: { [renderer: string]: string } = {
-  debug: 'bafkreihr36qxterrstglrcflg256cgd3ki7akvqn633m3tmoubgpapjsnu',
-  dotMatrix: 'bafkreicjep2quvpcieqfx7vunky7oez3ppfqq4r64atopzu4ptw3pdcq2u',
+  debug: 'bafkreiaowcb6vqtrrpvgldihr6cbb4vlexrhhxocnyh2fel7q4fku7aruu',
+  dotMatrix: 'bafkreihfszq76yxcmkux4xbvpx3pbdnrvo3aaporhfwft4xkvsno3ogzzq',
   // path: 'bafkreihiv6ghb32wnx65czsq6ufhiojreai5m35m5ouy445bzuepudinqa',
-  pixelGrid8: 'bafkreiabzwvptb7vv6j73qemafui7eztiig3ywntifddepsu53tv63bqmu',
-  pixelGrid16: 'bafkreiekrwsczhkr56szlzxi6e3mj5je62grye6nxlivmvin6pe3xiheby',
-  pixelGrid24: 'bafkreifn7nfxbb5du4c7tyvbicqvh5t4kzlbbbe7flr3iswedlxdbd3qdq',
-  monoPixelGrid8: 'bafkreigqow75ec5b7ei3majzwf3zvyv7o4won3pkyqy2bclfqjvdrcdkxe',
+  pixelGrid8: 'bafkreiefwasohc2tghe5aug34hev6lqsubahng3vovaicrt3ljaykydcyu',
+  pixelGrid16: 'bafkreifbr5qnfohid4qp3ar4drxes5yrx3c2z5ckfnx6am7erqe3pbvg6i',
+  pixelGrid24: 'bafkreibcvbszypkoql6wrl7pzn6segwpkz5klw4nmap52q4lfyayaqybbi',
+  monoPixelGrid8: 'bafkreiagbea4rsh5ytw5z2bm7s3nf23zsngt4iyhh4wh3b2hotdgm7xvym',
   monoPixelGrid16:
-    'bafkreib7mkx3c7owpn5uwkqtviddhspu376t52u2wljh3o5gnz2kfmn7de',
+    'bafkreih3jlcbcofw4bq5x22luehji46bhvs7flqtkgs5nsdnfxwd2elxc4',
   monoPixelGrid24:
-    'bafkreibwqrjl52gn2n7tbtry4q5uogf2b6tpohfine3f3nu6ydtfqatqiq',
+    'bafkreibu73vdkmxtgf3uqrhhuwt7l4nq7npcbga3x3ms32zwdxeurlibpq',
 };

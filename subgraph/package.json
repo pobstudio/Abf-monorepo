@@ -7,6 +7,7 @@
     "build": "graph build",
     "deploy": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ proofofbeauty/hash",
     "deploy-goerli": "graph deploy --node https://api.thegraph.com/deploy/ proofofbeauty/abf-goerli ./subgraph.goerli.yaml",
+    "deploy-rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ proofofbeauty/abf-rinkeby ./subgraph.rinkeby.yaml",
     "create-local": "graph create --node http://localhost:8020/ proofofbeauty/Subgraph",
     "remove-local": "graph remove --node http://localhost:8020/ proofofbeauty/Subgraph",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 proofofbeauty/Subgraph"

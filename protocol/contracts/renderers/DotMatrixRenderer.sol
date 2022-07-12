@@ -291,7 +291,7 @@ contract DotMatrixRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreicjep2quvpcieqfx7vunky7oez3ppfqq4r64atopzu4ptw3pdcq2u";
+    return "ipfs://bafkreihfszq76yxcmkux4xbvpx3pbdnrvo3aaporhfwft4xkvsno3ogzzq";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {

@@ -29,7 +29,7 @@ task('debug', 'Debug task', async (args, hre) => {
     },
   });
   const brainFuck = (await BrainFuck.attach(
-    '0x933a74d5a736d573f8E76BAfd5e1C0DAf8e713f3',
+    '0x2862aec293260037c502d218E4B7c16b165446D1',
   )) as BrainFuck;
   await brainFuck.deployed();
 

@@ -96,7 +96,7 @@ contract PixelGrid8Renderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreiabzwvptb7vv6j73qemafui7eztiig3ywntifddepsu53tv63bqmu";
+    return "ipfs://bafkreiefwasohc2tghe5aug34hev6lqsubahng3vovaicrt3ljaykydcyu";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
@@ -105,19 +105,10 @@ contract PixelGrid8Renderer is IRenderer, Ownable, ERC165 {
 
   function renderRaw(bytes calldata props) public override view returns (string memory) {
     string memory content = '';
-    bytes memory pixels = new bytes(65536);
-    pixels[0] = 0xff;
 
-    for (uint i = 0; i < 256; ++i) {
-
-      for (uint j = 0; j < 256; ++j) {
-
-      }
+    for (uint i = 0; i < 64; ++i) {
+      content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(props[i * 3], props[i * 3 + 1], props[i * 3 + 2]), rectSuffix));
     }
-
-    // for (uint i = 0; i < 65536; ++i) {
-    //   // content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(props[i * 3], props[i * 3 + 1], props[i * 3 + 2]), rectSuffix));
-    // }
 
     return string(abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" style="background:#F1F1F1">',

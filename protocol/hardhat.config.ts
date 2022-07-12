@@ -11,7 +11,7 @@ import './tasks';
 // Go to https://hardhat.org/config/ to learn more
 const {
   RINKEBY_NETWORK_RPC_URL,
-  RINKEBY_MNEMONIC,
+  RINKEBY_PRIVATE_KEY,
   MAINNET_PRIVATE_KEY,
   MAINNET_NETWORK_RPC_URL,
   GOERLI_PRIVATE_KEY,
@@ -29,12 +29,10 @@ const config: HardhatUserConfig = {
   },
 };
 
-if (RINKEBY_NETWORK_RPC_URL && RINKEBY_MNEMONIC) {
+if (RINKEBY_NETWORK_RPC_URL && RINKEBY_PRIVATE_KEY) {
   (config.networks as NetworksUserConfig).rinkeby = {
     url: RINKEBY_NETWORK_RPC_URL,
-    accounts: {
-      mnemonic: RINKEBY_MNEMONIC,
-    },
+    accounts: [RINKEBY_PRIVATE_KEY],
   };
 }
 

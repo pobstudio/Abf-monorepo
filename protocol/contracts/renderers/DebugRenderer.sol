@@ -19,11 +19,15 @@ contract DebugRenderer is IRenderer, Ownable, ERC165 {
       super.supportsInterface(interfaceId);
   }
 
+  function debug() external pure returns (bytes4) {
+    return type(IRenderer).interfaceId;
+  }
+
   function propsSize() external override pure returns (uint256) {
     return 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
   }
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreihr36qxterrstglrcflg256cgd3ki7akvqn633m3tmoubgpapjsnu";
+    return "ipfs://bafkreiaowcb6vqtrrpvgldihr6cbb4vlexrhhxocnyh2fel7q4fku7aruu";
   }
   
   function renderAttributeKey() external override pure returns (string memory) {

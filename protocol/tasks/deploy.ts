@@ -1,5 +1,10 @@
 import { task } from 'hardhat/config';
-import { BrainFuckFactory, BrainFuckURIConstructor } from '../typechain-types';
+import {
+  BrainFuckFactory,
+  BrainFuckURIConstructor,
+  BrainFuckVM,
+  SvgUtils,
+} from '../typechain-types';
 
 task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
   const owner = (await hre.ethers.getSigners())[0];
@@ -8,17 +13,17 @@ task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
 
   console.log(`deploying with ${await owner.getAddress()}`);
 
-  // const BrainFuckVM = await hre.ethers.getContractFactory('BrainFuckVM');
-  // const brainFuckVM = (await BrainFuckVM.deploy()) as BrainFuckVM;
-  // await brainFuckVM.deployed();
+  const BrainFuckVM = await hre.ethers.getContractFactory('BrainFuckVM');
+  const brainFuckVM = (await BrainFuckVM.deploy()) as BrainFuckVM;
+  await brainFuckVM.deployed();
 
-  // console.log('BrainFuckVM address deployed to:', brainFuckVM.address);
+  console.log('BrainFuckVM address deployed to:', brainFuckVM.address);
 
   const BrainFuckURIConstructor = await hre.ethers.getContractFactory(
     'BrainFuckURIConstructor',
     {
       libraries: {
-        BrainFuckVM: '0xA0FFF5ecFab911b8A000eE377A0C31c0052Adf5D',
+        BrainFuckVM: brainFuckVM.address,
       },
     },
   );
@@ -31,11 +36,11 @@ task('deploy', 'Deploys BrainFuck Contracts', async (args, hre) => {
     brainFuckURIConstructor.address,
   );
 
-  // const SvgUtils = await hre.ethers.getContractFactory('SvgUtils');
-  // const svgUtils = (await SvgUtils.deploy()) as SvgUtils;
-  // await svgUtils.deployed();
+  const SvgUtils = await hre.ethers.getContractFactory('SvgUtils');
+  const svgUtils = (await SvgUtils.deploy()) as SvgUtils;
+  await svgUtils.deployed();
 
-  // console.log('SvgUtils address deployed to:', svgUtils.address);
+  console.log('SvgUtils address deployed to:', svgUtils.address);
 
   const BrainFuckFactory = await hre.ethers.getContractFactory(
     'BrainFuckFactory',

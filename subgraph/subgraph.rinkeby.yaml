@@ -1,0 +1,46 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: RendererRegistry 
+    network: rinkeby 
+    source:
+      address: "0xE4B49D2b77dBbBeB65e0C5f49Af734D7E8803494"
+      abi: RendererRegistry
+      startBlock: 11012471 
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Renderer
+      abis:
+        - name: Renderer
+          file: ./abis/Renderer.json
+        - name: RendererRegistry
+          file: ./abis/RendererRegistry.json
+      eventHandlers:
+        - event: RegisteredRenderer(uint256,address,uint256,string)
+          handler: handleRegisteredRenderer
+      file: ./src/rendererRegistry.ts
+templates:
+  - kind: ethereum/contract
+    name: Renderer 
+    network: rinkeby
+    source:
+      abi: Renderer
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Renderer
+      abis:
+        - name: Renderer
+          file: ./abis/Renderer.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleRendererOwnershipTransferred
+      file: ./src/rendererRegistry.ts
+     

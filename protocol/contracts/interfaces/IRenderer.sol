@@ -7,7 +7,7 @@ import '@openzeppelin/contracts/utils/introspection/IERC165.sol';
 interface IRenderer is IERC165 {
   function owner() external view returns (address);
   function propsSize() external pure returns (uint256);
-  function additionalMetadataURI() external pure returns (string memory);
+  function additionalMetadataURI() external view returns (string memory);
   function renderAttributeKey() external pure returns (string memory);
   function renderRaw(bytes calldata props) external view returns (string memory);
   function render(bytes calldata props) external view returns (string memory);
