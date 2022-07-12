@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import styled from 'styled-components';
 import { ROUTES } from '../../constants/routes';
 import { DetailRowsContainer } from '../details/rows';
 import {
@@ -14,6 +15,9 @@ export const Landing: React.FC = () => {
     <OneColumnContainer>
       <OneColumnContentContainer>
         <DetailRowsContainer>
+          <AbfLogo>
+            <img src="/assets/logo-round.svg" />
+          </AbfLogo>
           <div>
             <H1 style={{ fontSize: 24 }}>NFT GEN-ART IS TOO F**KING EASY.</H1>
           </div>
@@ -59,3 +63,16 @@ export const Landing: React.FC = () => {
     </OneColumnContainer>
   );
 };
+
+const AbfLogo = styled.div`
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  justify-content: center;
+  align-items: center;
+  margin-top: -50px;
+  margin-bottom: 50px;
+  img {
+    width: 100px;
+  }
+`;
