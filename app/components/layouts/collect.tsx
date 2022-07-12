@@ -17,7 +17,7 @@ export const Collect: React.FC = () => {
           <P>
             Pardon the dust, the ABF Corp is currently building a
             minting/collecting experience for ABF NFTs. Stay tuned for when the{' '}
-            <B>ABF BETA</B> drops.
+            <B>ABF [BETA]</B> drops.
           </P>
           <P style={{ opacity: 0.2 }}>
             {

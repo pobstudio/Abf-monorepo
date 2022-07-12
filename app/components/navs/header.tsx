@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
               <HeaderAnchor>BUILD</HeaderAnchor>
             </Link>
             <Link passHref href={ROUTES.COLLECT.INDEX}>
-              <HeaderAnchor>COLLECT</HeaderAnchor>
+              <HeaderAnchor>EXPLORE</HeaderAnchor>
             </Link>
           </>
         )}
@@ -86,7 +86,7 @@ const MobileMenu: React.FC = () => {
               <DropdownAnchor>BUILD</DropdownAnchor>
             </Link>
             <Link passHref href={ROUTES.COLLECT.INDEX}>
-              <DropdownAnchor>COLLECT</DropdownAnchor>
+              <DropdownAnchor>EXPLORE</DropdownAnchor>
             </Link>
           </DropdownAnchorGroup>
           <DropdownAnchorGroup>

@@ -1,6 +1,8 @@
 import { format } from 'date-fns';
+import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
+import { ROUTES } from '../../constants/routes';
 import {
   useAllRendererMetadata,
   useRendererLabel,
@@ -37,6 +39,13 @@ const Jumbotron: FC = () => {
           repository is by no means exhaustive. Please consult each renderer
           carefully before use.
         </P>
+      </div>
+      <div>
+        <Link passHref href={`${ROUTES.DOCS.SPEC}#renderers`}>
+          <LabelAnchor style={{ cursor: 'pointer' }}>
+            VIEW RENDERER DOCUMENTATION
+          </LabelAnchor>
+        </Link>
       </div>
     </DetailRowsContainer>
   );

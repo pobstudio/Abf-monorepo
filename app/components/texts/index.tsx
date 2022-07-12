@@ -48,10 +48,17 @@ export const H1 = styled.h1`
   font-weight: bold;
 `;
 
-export const H2 = styled.h1`
+export const H2 = styled.h2`
   padding: 0;
   margin: 0;
   font-size: 18px;
+  font-weight: bold;
+`;
+
+export const H3 = styled.h3`
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
   font-weight: bold;
 `;
 

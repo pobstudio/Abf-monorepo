@@ -28,14 +28,14 @@ export const Recruitment: React.FC = () => {
               <B>FROM: 001 (BOARD MEMBER)</B>
             </P>
             <P>
-              <B>SUBJECT: ABF CORP RECRUIMENT OF NEW MEMBERS</B>
+              <B>SUBJECT: ABF CORP RECRUITMENT OF NEW MEMBERS</B>
             </P>
           </div>
           <div>
             <P>
               In its current infancy, ABF is not revealed to the mass public,
               but the protocol is <B>alive and humming.</B> We are in need of
-              new corp members.
+              new Corp members.
             </P>
           </div>
           <div>
@@ -51,14 +51,14 @@ export const Recruitment: React.FC = () => {
           </div>
           <div>
             <P>
-              <B>Joining the corp grants:</B> the Corp's discord, the latest
+              <B>Joining the Corp grants:</B> the Corp's Discord, the latest
               developments around ABF, and the opportunity to shape ABF's
               future.
             </P>
           </div>
           <div
             style={{
-              margin: '82px 0',
+              margin: '50px 0',
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
             }}
           ></div>
