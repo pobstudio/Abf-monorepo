@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 import { ROUTES } from '../../constants/routes';
+import { BREAKPTS } from '../../constants/styles';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
@@ -19,7 +20,7 @@ export const Landing: React.FC = () => {
             <img src="/assets/logo-round.svg" />
           </AbfLogo>
           <div>
-            <H1 style={{ fontSize: 24 }}>NFT GEN-ART IS TOO F**KING EASY.</H1>
+            <H1>NFT GEN-ART IS TOO F**KING EASY.</H1>
           </div>
           <P>
             Enter <strong>ABF</strong>.
@@ -70,9 +71,14 @@ const AbfLogo = styled.div`
   height: fit-content;
   justify-content: center;
   align-items: center;
-  margin-top: -50px;
-  margin-bottom: 50px;
+  margin: -50px auto 50px;
   img {
     width: 100px;
+  }
+  @media (max-width: ${BREAKPTS.LG}px) {
+    margin: 0 auto 40px;
+    img {
+      width: 75px;
+    }
   }
 `;

@@ -53,14 +53,14 @@ export const PROD_LINK = 'https://abf.dev';
 export const TWITTER_HANDLE = `@abf_dev`;
 export const TWITTER_LINK = `https://twitter.com/abf_dev`;
 export const DISCORD_LINK = `https://discord.gg/dvkey2pkyJ`;
+export const GITHUB_LINK = `https://github.com/proofofbeauty/ABF-monorepo`;
 
 export const DEFAULT_TITLE = `ABF - Absolute Brain F**k. ${TWITTER_HANDLE}`;
 export const DEFAULT_DESCRIPTION = `ABF is a hyperstructure to deploy, mint, and create on-chain generative art NFTs. No fees + fully self-controlled NFT contracts designed to last forever. `;
 
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 export const OPENSEA_LINK = `https://opensea.io/collection/TODO`;
-export const GITHUB_LINK = `https://github.com/proofofbeauty/TODO`;
-export const PREVIEW_IMAGE_LINK = `https://hash-preview.vercel.app`;
+export const PREVIEW_IMAGE_LINK = `https://abf-preview.vercel.app`;
 
 export const SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf`;
 export const TEST_SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf-goerli`;

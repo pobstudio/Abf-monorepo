@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useClickAway, useWindowSize } from 'react-use';
 import styled from 'styled-components';
+import { DISCORD_LINK, GITHUB_LINK, TWITTER_LINK } from '../../constants';
 import { ROUTES } from '../../constants/routes';
 import { BREAKPTS, DropdownAnimation } from '../../constants/styles';
 import { Flex, FlexCenter } from '../flexs';
@@ -91,6 +92,32 @@ const MobileMenu: React.FC = () => {
           </DropdownAnchorGroup>
           <DropdownAnchorGroup>
             <Web3Status />
+          </DropdownAnchorGroup>
+          <hr style={{ marginTop: 24 }} />
+          <DropdownAnchorGroup>
+            <DropdownAnchor
+              href={TWITTER_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TWITTER
+            </DropdownAnchor>
+
+            <DropdownAnchor
+              href={DISCORD_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              DISCORD
+            </DropdownAnchor>
+
+            <DropdownAnchor
+              href={GITHUB_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GITHUB
+            </DropdownAnchor>
           </DropdownAnchorGroup>
         </DropdownContainerContent>
       </DropdownContainer>
@@ -181,4 +208,8 @@ const DropdownContainer = animated(styled.div<{}>`
   min-width: 256px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   opacity: 0;
+  hr {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
 `);
