@@ -1,32 +1,30 @@
-# POB Monorepo boilerplate
+```                                                                                            
+
+      >>       >=>>=>    >=======>     >=>    
+     >>=>      >>   >=>  >=>        >=>   >=> 
+    >> >=>     >>    >=> >=>       >=>        
+   >=>  >=>    >==>>=>   >=====>   >=>        
+  >=====>>=>   >>    >=> >=>       >=>        
+ >=>      >=>  >>     >> >=>        >=>   >=> 
+>=>        >=> >===>>=>  >=>          >===>   
+
+```
+# ABF - Absolute Brain F**k
 
 ---
 
-[UNDER CONSTRUCTION] POB monorepo boilerplate to get projects off the ground FAST. Contains project front ends, lambdas, admin scripts, and protocol.
+ABF is a hyperstructure to deploy, mint, and create on-chain generative art NFTs. No fees + fully self-controlled NFT contracts designed to last forever. Join the Corp.
 
 ## Useful links
 
-[vercel dashboard](https://vercel.com/pob)
-
-If you can not access the dashboard, ping David (@dave4506)
-
-## Packages
-
-The POB repo is structured as a monorepo containing many packages that reach all aspects of the POB ecosystem.
-
-| Package                 | Description                                                                                  |
-| ----------------------- | -------------------------------------------------------------------------------------------- |
-| [`app`](/app)           | Core next.js webapp of pob.studio and HASH and lambdas                                       |
-| [`protocol`](/protocol) | Core protocol of POB, contains the ERC1155 token, minter contracts, and other future things. |
-| [`sketches`](/sketches) | Shared generative algorithm utils                                                            |
-| [`scripts`](/scripts)   | Some administrative scripts to help with running POB (ie refresh opensea metadata)           |
+[abf.dev/docs](https://www.abf.dev/docs)
 
 ## Running the monorepo
 
 In the root of the directory:
 
 ```
-$ yarn install
+$ yarn
 ```
 
 ### Running app
@@ -40,7 +38,7 @@ $ npm i -g vercel
 Then login to vercel
 
 ```
-vercel login
+vercel
 ```
 
 Then run `vercel` and link to `app`
@@ -51,37 +49,16 @@ Run
 $ vercel dev
 ```
 
-All the local dev envs will be automagically pulled.
-
-Walla! visit `localhost:3000` to see your build running locally!
-
 ## Contributing + Usage
 
-Node version 10.x is required.
-
-In the root of the directory:
+Node version 16.x is required. Remember to saturate .env files where required. Exs:
 
 ```
-$ yarn install
+NETWORK_RPC_URL=""
+PRIVATE_KEY=""
+RINKEBY_NETWORK_RPC_URL=""
+RINKEBY_MNEMONIC=""
+MAINNET_NETWORK_RPC_URL=""
+MAINNET_PRIVATE_KEY=""
+ETHERSCAN_API_KEY=""
 ```
-
-`sketches`
-
-```
-NETWORK_RPC_URL="OPTIONAL"
-PRIVATE_KEY="OPTIONAL"
-```
-
-The private key and rpc is used if you want to deploy the algorithmn to the Ethereum blockchain.
-
-`protocol`
-
-```
-RINKEBY_NETWORK_RPC_URL="OPTIONAL"
-RINKEBY_MNEMONIC="OPTIONAL"
-MAINNET_NETWORK_RPC_URL="OPTIONAL"
-MAINNET_PRIVATE_KEY="OPTIONAL"
-ETHERSCAN_API_KEY="OPTIONAL"
-```
-
-Provide either networks corresponding url and key.
