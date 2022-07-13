@@ -32,7 +32,7 @@ const RendererPage: NextPage = () => {
       <Link passHref href={ROUTES.DOCS.RENDERERS}>
         <BackButtonAnchor>
           <ArrowIcon />
-          &nbsp;&nbsp;VIEW ALL
+          &nbsp;&nbsp;VIEW ALL RENDERERS
         </BackButtonAnchor>
       </Link>
       <RendererDetails address={rendererAddress} />

@@ -69,6 +69,7 @@ export interface RendererMetadataStub {
 }
 
 export interface RendererAdditionalMetadata {
+  name: string;
   description: string;
   sampleOptions?: {
     input?: string;

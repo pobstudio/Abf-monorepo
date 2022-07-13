@@ -5,7 +5,8 @@ import {
   useRendererMetadataStubByProvider,
 } from '../../hooks/useRenderer';
 import { RendererMetadata } from '../../types';
-import { getIPFSUrl } from '../../utils/urls';
+import { shortenHexString } from '../../utils/hex';
+import { getEtherscanAddressUrl, getIPFSUrl } from '../../utils/urls';
 import { GroupedBytesWithHoverState } from '../bytes/groupedBytes';
 import {
   DetailAnchorRow,
@@ -32,7 +33,6 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
     [rendererMetadataFromGraph, rendererMetadataStubFromProvider],
   );
   const name = useENSorHex(rendererMetadataStub?.owner);
-  console.log(rendererMetadataStub);
   return (
     <OneColumnContainer>
       <OneColumnContentContainer>
@@ -40,11 +40,38 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
           <H1>
             {`R-${
               rendererMetadataStub?.id?.toString().padStart(3, '0') ?? '???'
-            } "${rendererMetadataStub?.label}"`}
+            } "${
+              rendererMetadataStub?.additionalMetadata?.name ??
+              rendererMetadataStub?.label
+            }"`}
           </H1>
-          <DetailRow>{['CREATED BY', name ?? '-']}</DetailRow>
+
+          <DetailAnchorRow
+            href={!!address ? getEtherscanAddressUrl(address) : '#'}
+          >
+            {['CONTRACT', address ? shortenHexString(address) : '-']}
+          </DetailAnchorRow>
+          <DetailAnchorRow
+            href={
+              !!rendererMetadataStub?.owner
+                ? getEtherscanAddressUrl(rendererMetadataStub?.owner)
+                : '#'
+            }
+          >
+            {['CREATED BY', name]}
+          </DetailAnchorRow>
+          <DetailAnchorRow
+            href={
+              !!rendererMetadataStub.additionalMetadataURI
+                ? getIPFSUrl(rendererMetadataStub.additionalMetadataURI)
+                : '#'
+            }
+          >
+            {['RAW FILE SOURCE', 'IPFS']}
+          </DetailAnchorRow>
           <Label>DESCRIPTION</Label>
           <P>{rendererMetadataStub.additionalMetadata?.description ?? '-'}</P>
+
           <Label>SAMPLE OUTPUT</Label>
           <Render
             output={
@@ -70,15 +97,7 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
             }
             showBytesLength={true}
           />
-          <DetailAnchorRow
-            href={
-              !!rendererMetadataStub.additionalMetadataURI
-                ? getIPFSUrl(rendererMetadataStub.additionalMetadataURI)
-                : '#'
-            }
-          >
-            {['RAW FILE SOURCE', 'IPFS']}
-          </DetailAnchorRow>
+
           <DetailRow>{['DOCUMENTATION VERSION', '0.1.0']}</DetailRow>
           <P style={{ opacity: 0.2 }}>
             USE RENDERERS AT YOUR OWN RISK. PLEASE CONSULT DOCUMENTATION BEFORE

@@ -146,10 +146,10 @@ export const useRendererMetadata = (address: string | undefined) => {
       additionalMetadataURI: r.additionalMetadataURI,
       registeredAt: parseInt(r.registeredAt),
       additionalMetadata,
-      label,
+      label: additionalMetadata?.name || label,
       owner: r.owner,
     } as RendererMetadata;
-  }, [data, label, additionalMetadata]);
+  }, [data, label, additionalMetadata, additionalMetadata?.name]);
 };
 
 export const useRendererMetadataStubByProvider = (
