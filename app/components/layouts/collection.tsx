@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCollection } from '../../hooks/useCollections';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
@@ -9,6 +10,8 @@ import { B, H1, P } from '../texts';
 export const Collection: React.FC<{ address: string | undefined }> = ({
   address,
 }) => {
+  const collection = useCollection(address);
+  console.log(collection, 'collection');
   return (
     <>
       <OneColumnContainer>
