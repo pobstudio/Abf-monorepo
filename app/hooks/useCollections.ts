@@ -32,7 +32,7 @@ export const useCollections = (): CollectionMetadataStub[] | undefined => {
           symbol: r.symbol,
         } as any),
     );
-  }, [data]);
+  }, [data, data?.collections]);
 };
 
 export const useCollection = (
@@ -53,10 +53,10 @@ export const useCollection = (
     if (!data) {
       return undefined;
     }
-    if (!data.collection) {
+    if (!data.collections) {
       return undefined;
     }
-    const r = data.collection;
+    const r = data.collections[0];
     return {
       address: r.id,
       code: r.code,
@@ -71,7 +71,7 @@ export const useCollection = (
       symbol: r.symbol,
       whitelistToken: r.whitelistToken,
     };
-  }, [data]);
+  }, [address, data, data?.collection]);
 };
 
 export const EXPLORE_PAGE_SIZE = 100;
@@ -97,7 +97,7 @@ export const GET_COLLECTIONS = gql`
 
 export const GET_COLLECTION = gql`
   query GetCollection($address: String!) {
-    collection(where: { id: $address }) {
+    collections(where: { id: $address }) {
       id
       code
       constants
