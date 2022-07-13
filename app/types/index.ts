@@ -60,29 +60,29 @@ export interface ProjectMetadata {
 }
 
 export interface CollectionMetadata {
-  address: any | undefined;
-  code: any;
-  constants: any;
-  mintingSupply: any;
-  name: any;
-  owner: any;
-  price: any;
-  renderer: any;
-  rendererRoyaltyFraction: any;
-  seed: any;
-  symbol: any;
-  whitelistToken: any;
+  address: string | undefined;
+  code: string;
+  constants: string;
+  mintingSupply: string;
+  name: string;
+  owner: string;
+  price: string;
+  renderer: string;
+  rendererRoyaltyFraction: string;
+  seed: string;
+  symbol: string;
+  whitelistToken: string;
 }
 
 export interface CollectionMetadataStub {
-  address: any | undefined;
-  code: any;
-  mintingSupply: any;
-  name: any;
-  owner: any;
-  price: any;
-  renderer: any;
-  symbol: any;
+  address: string | undefined;
+  code: string;
+  mintingSupply: string;
+  name: string;
+  owner: string;
+  price: string;
+  renderer: string;
+  symbol: string;
 }
 
 export interface RendererMetadataStub {

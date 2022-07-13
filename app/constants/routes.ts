@@ -10,9 +10,10 @@ export const ROUTES = {
     SPEC: '/docs/spec',
   },
   BUILDER: '/app',
-  COLLECT: {
+  EXPLORE: {
     INDEX: '/explore',
   },
+  COLLECTION: '/collection',
   RECRUIT: '/recruit',
   404: '/404',
   RENDERER: '/renderer',

@@ -18,9 +18,9 @@ import { OFFLINE_RENDERERS } from '../../utils/renderers';
 import { MultiLineText } from '../texts';
 
 export const PlaceholderRender = styled.div`
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.1);
   width: 100%;
-  height: 0;
+  height: 100px;
   position: relative;
 `;
 

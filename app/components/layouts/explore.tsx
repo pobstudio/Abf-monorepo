@@ -1,35 +1,28 @@
 import React from 'react';
+import { useCollections } from '../../hooks/useCollections';
 import { DetailRowsContainer } from '../details/rows';
-import {
-  OneColumnContainer,
-  OneColumnContentContainer,
-} from '../divs/oneColumn';
-import { B, H1, P } from '../texts';
-// import { ProjectGrid } from './projectGrid';
+import { H1, P } from '../texts';
+import { CollectionsGrid } from './collectionsGrid';
 
 export const Explore: React.FC = () => {
+  const collections = useCollections();
+  console.log(collections, 'collections');
   return (
     <>
-      <OneColumnContainer>
-        <OneColumnContentContainer>
-          <DetailRowsContainer>
-            <div>
-              <H1 style={{ opacity: 0.2 }}>COMING SOON</H1>
-            </div>
-            <P>
-              Pardon the dust, the ABF Corp is currently building a
-              minting/collecting experience for ABF NFTs. Stay tuned for when
-              the <B>ABF [BETA]</B> drops.
-            </P>
-            <P style={{ opacity: 0.2 }}>
-              {
-                '++[---------->+<]>.+[--->++++<]>+.+++++.++++++.[++>---<]>--.------------.---[->++++<]>-.-----------.-------.--[--->+<]>---.-------------.-[->+++<]>.------------.+[->+++<]>++.[--->+<]>+.--------.----.+++.+++.-------------.--[--->+<]>-.[->++<]>+.+.++++.'
-              }
-            </P>
-          </DetailRowsContainer>
-        </OneColumnContentContainer>
-        {/* <ProjectGrid /> */}
-      </OneColumnContainer>
+      <DetailRowsContainer>
+        <div>
+          <H1 style={{ opacity: 0.2 }}>EXPLORE COLLECTIONS</H1>
+        </div>
+        <P>
+          These are Brainfuck NFT Collections minted via the Project Builder.
+        </P>
+        <P style={{ opacity: 0.2 }}>
+          {
+            '++[---------->+<]>.+[--->++++<]>+.+++++.++++++.[++>---<]>--.------------.---[->++++<]>-.-----------.-------.--[--->+<]>---.-------------.-[->+++<]>.------------.+[->+++<]>++.[--->+<]>+.--------.----.+++.+++.-------------.--[--->+<]>-.[->++<]>+.+.++++.'
+          }
+        </P>
+      </DetailRowsContainer>
+      <CollectionsGrid collections={collections} />
     </>
   );
 };

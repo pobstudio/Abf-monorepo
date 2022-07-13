@@ -1,5 +1,4 @@
 import { gql, useQuery } from '@apollo/client';
-import { BigNumber } from 'ethers';
 import { useMemo } from 'react';
 import { CollectionMetadata, CollectionMetadataStub } from '../types';
 import { useLastTruthyValue } from './useLastTruthyValue';
@@ -23,7 +22,7 @@ export const useCollections = (): CollectionMetadataStub[] | undefined => {
     return data.collections.map(
       (r: any) =>
         ({
-          address: BigNumber.from(r.id),
+          address: r.id,
           code: r.code,
           mintingSupply: r.mintingSupply,
           name: r.name,
@@ -44,13 +43,13 @@ export const useCollection = (
   }
 
   const results = useQuery(GET_COLLECTION, {
-    variables: { address },
+    variables: { address: address.toLowerCase() },
   });
 
   const data = useLastTruthyValue(results.data);
 
   return useMemo(() => {
-    console.log(data, 'GET_COLLECTIONS');
+    console.log(data, 'GET_COLLECTION');
     if (!data) {
       return undefined;
     }
@@ -59,7 +58,7 @@ export const useCollection = (
     }
     const r = data.collection;
     return {
-      address: BigNumber.from(r.id),
+      address: r.id,
       code: r.code,
       constants: r.constants,
       mintingSupply: r.mintingSupply,
