@@ -5,10 +5,9 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { B, H1, P } from '../texts';
+// import { ProjectGrid } from './projectGrid';
 
-export const Collection: React.FC<{ address: string | undefined }> = ({
-  address,
-}) => {
+export const Explore: React.FC = () => {
   return (
     <>
       <OneColumnContainer>
@@ -29,6 +28,7 @@ export const Collection: React.FC<{ address: string | undefined }> = ({
             </P>
           </DetailRowsContainer>
         </OneColumnContentContainer>
+        {/* <ProjectGrid /> */}
       </OneColumnContainer>
     </>
   );
