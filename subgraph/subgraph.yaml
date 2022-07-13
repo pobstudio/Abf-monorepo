@@ -34,7 +34,7 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - BrainFuckNFT
+        - Collection
       abis:
         - name: BrainFuck
           file: ./abis/BrainFuck.json
@@ -42,7 +42,7 @@ dataSources:
           file: ./abis/BrainFuckFactory.json
       eventHandlers:
         - event: CreatedBrainFuckNFT(address,address)
-          handler: handleCreatedBrainFuckNFT
+          handler: handleCreatedCollection
       file: ./src/brainFuck.ts
 templates:
   - kind: ethereum/contract
@@ -73,7 +73,7 @@ templates:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - BrainFuckNFT
+        - Collection
       abis:
         - name: BrainFuck
           file: ./abis/BrainFuck.json

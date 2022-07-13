@@ -7,7 +7,7 @@ type Renderer @entity {
   registeredAt: BigInt!
 }
 
-type BrainFuckNFT @entity {
+type Collection @entity {
   id: ID! 
   owner: Bytes! # Transfer ownership
   name: String!

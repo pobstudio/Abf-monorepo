@@ -1,15 +1,15 @@
 import { CreatedBrainFuckNFT } from '../generated/BrainFuckFactory/BrainFuckFactory';
-import { BrainFuckNFT } from '../generated/schema';
+import { Collection } from '../generated/schema';
 import { BrainFuck as BrainFuckTemplate } from '../generated/templates';
 import {
   OwnershipTransferred,
   BrainFuck as BrainFuckContract,
 } from '../generated/templates/BrainFuck/BrainFuck';
 
-export function handleCreatedBrainFuckNFT(event: CreatedBrainFuckNFT): void {
-  let nft = BrainFuckNFT.load(event.params.nft.toHexString());
+export function handleCreatedCollection(event: CreatedBrainFuckNFT): void {
+  let nft = Collection.load(event.params.nft.toHexString());
   if (nft == null) {
-    nft = new BrainFuckNFT(event.params.nft.toHexString());
+    nft = new Collection(event.params.nft.toHexString());
   }
   nft.owner = event.params.creator;
 
@@ -33,7 +33,7 @@ export function handleCreatedBrainFuckNFT(event: CreatedBrainFuckNFT): void {
 export function handleBrainFuckOwnershipTransferred(
   event: OwnershipTransferred,
 ): void {
-  let nft = BrainFuckNFT.load(event.address.toHexString());
+  let nft = Collection.load(event.address.toHexString());
   if (nft != null) {
     nft.owner = event.params.newOwner;
     nft.save();
