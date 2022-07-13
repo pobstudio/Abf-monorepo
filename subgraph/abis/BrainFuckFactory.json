@@ -1,0 +1,160 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "nft",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      }
+    ],
+    "name": "CreatedBrainFuckNFT",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "VERSION",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "addressToProjectId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "bytes",
+            "name": "seed",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "constants",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "code",
+            "type": "bytes"
+          },
+          {
+            "internalType": "address",
+            "name": "renderer",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "mintingSupply",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint96",
+            "name": "royaltyFraction",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint96",
+            "name": "rendererRoyaltyFraction",
+            "type": "uint96"
+          },
+          {
+            "internalType": "address",
+            "name": "whitelistToken",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct BrainFuckFactory.CreateBrainFuckNFTConfig",
+        "name": "config",
+        "type": "tuple"
+      }
+    ],
+    "name": "createNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "projectIdIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "projectIdToAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

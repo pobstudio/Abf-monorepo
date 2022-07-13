@@ -22,6 +22,28 @@ dataSources:
         - event: RegisteredRenderer(uint256,address,uint256,string)
           handler: handleRegisteredRenderer
       file: ./src/rendererRegistry.ts
+  - kind: ethereum/contract
+    name: BrainFuckFactory 
+    network: goerli 
+    source:
+      address: "0x4a597DbD7a6C1DE06A9f3CDEA2946f8d1929c31A"
+      abi: BrainFuckFactory
+      startBlock: 11012449 
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - BrainFuckNFT
+      abis:
+        - name: BrainFuck
+          file: ./abis/BrainFuck.json
+        - name: BrainFuckFactory
+          file: ./abis/BrainFuckFactory.json
+      eventHandlers:
+        - event: CreatedBrainFuckNFT(address,address)
+          handler: handleCreatedBrainFuckNFT
+      file: ./src/brainFuck.ts
 templates:
   - kind: ethereum/contract
     name: Renderer 
@@ -41,3 +63,21 @@ templates:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleRendererOwnershipTransferred
       file: ./src/rendererRegistry.ts 
+  - kind: ethereum/contract
+    name: BrainFuck 
+    network: goerli 
+    source:
+      abi: BrainFuck
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - BrainFuckNFT
+      abis:
+        - name: BrainFuck
+          file: ./abis/BrainFuck.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleBrainFuckOwnershipTransferred
+      file: ./src/brainFuck.ts  

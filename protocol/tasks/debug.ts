@@ -29,7 +29,7 @@ task('debug', 'Debug task', async (args, hre) => {
     },
   });
   const brainFuck = (await BrainFuck.attach(
-    '0x2862aec293260037c502d218E4B7c16b165446D1',
+    '0x4e21b73684f0908e81fbc3192e3b4ce97de1d3fb',
   )) as BrainFuck;
   await brainFuck.deployed();
 
@@ -37,9 +37,10 @@ task('debug', 'Debug task', async (args, hre) => {
   // console.log(await brainFuck.tokenURI(0));
   console.log(await brainFuck.mintingSupply());
   console.log(await brainFuck.seed());
-  console.log(await brainFuck.price());
+  console.log(await brainFuck.name());
+  console.log(await brainFuck.symbol());
+  console.log(await brainFuck.renderer());
+  console.log(await brainFuck.estimateGas.tokenURI(0))
   // await brainFuck.setIsActive(true);
   // await brainFuck.mint(await owner.getAddress(), 1, { value: await brainFuck.price() })
-  console.log(await brainFuck.ownerOf(0));
-  console.log(await brainFuck.tokenURI(0));
 });
