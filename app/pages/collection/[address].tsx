@@ -10,9 +10,9 @@ import { Header } from '../../components/navs/header';
 
 const EXPLORE_PAGE_SIZE = 100;
 
-const GET_BRAINFUCK_NFTS = gql`
-  query GetBrainFuckNFTs($skip: Int!) {
-    brainFuckNFTs(first: ${EXPLORE_PAGE_SIZE}, skip: $skip) {
+const GET_COLLECTIONS = gql`
+  query GetCollections($skip: Int!) {
+    collections(first: ${EXPLORE_PAGE_SIZE}, skip: $skip) {
       id
       code
       constants
@@ -29,9 +29,9 @@ const GET_BRAINFUCK_NFTS = gql`
   }
 `;
 
-const GET_BRAINFUCK_NFT_BY_ADDRESS = gql`
-  query GetBrainFuckNFT($address: String!) {
-    brainFuckNFT(where: { id: $address }) {
+const GET_COLLECTION = gql`
+  query GetCollection($address: String!) {
+    collection(where: { id: $address }) {
       id
       code
       constants
