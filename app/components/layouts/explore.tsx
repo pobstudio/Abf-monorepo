@@ -11,7 +11,7 @@ export const Explore: React.FC = () => {
     <>
       <DetailRowsContainer>
         <div>
-          <H1 style={{ opacity: 0.2 }}>EXPLORE COLLECTIONS</H1>
+          <H1 style={{ opacity: 0.2 }}>ABF COLLECTIONS</H1>
         </div>
         <P>
           These are Brainfuck NFT Collections created via the Project Builder.

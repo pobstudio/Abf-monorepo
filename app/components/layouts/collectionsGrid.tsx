@@ -1,11 +1,15 @@
 import Link from 'next/link';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { ROUTES } from '../../constants/routes';
+import {
+  CollectionProvider,
+  useCollectionContext,
+} from '../../contexts/collection';
 import { CollectionMetadataStub } from '../../types';
 import { DetailRow, DetailRowsContainer } from '../details/rows';
 import { GridContainer, GridContentContainer } from '../divs/grid';
 import { PrimaryButton, TertiaryButton } from '../inputs/button';
-import { PlaceholderRender } from '../renders';
+import { Render } from '../renders';
 import { CleanA } from '../texts';
 
 export const CollectionsGrid: FC<{
@@ -14,10 +18,13 @@ export const CollectionsGrid: FC<{
   return (
     <GridContainer>
       {collections?.map((collection: CollectionMetadataStub, index: number) => (
-        <CollectionGridItem
-          {...collection}
+        <React.Fragment
           key={`${collection.address}-collection-grid-item-${index}`}
-        />
+        >
+          <CollectionProvider address={collection.address}>
+            <CollectionGridItem {...collection} />
+          </CollectionProvider>
+        </React.Fragment>
       ))}
     </GridContainer>
   );
@@ -31,11 +38,11 @@ const CollectionGridItem: FC<CollectionMetadataStub> = ({
   price,
   mintingSupply,
 }) => {
+  const { currentSampleTokenRenderState: output, rendererMetadata } =
+    useCollectionContext();
   return (
     <GridContentContainer>
-      <DetailRowsContainer>
-        <PlaceholderRender />
-      </DetailRowsContainer>
+      <Render output={output} rendererMetadata={rendererMetadata} />
       <DetailRowsContainer>
         <DetailRow>{['NAME', name]}</DetailRow>
         <DetailRow>{['SUPPLY', mintingSupply]}</DetailRow>
