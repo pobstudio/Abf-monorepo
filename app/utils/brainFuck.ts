@@ -8,6 +8,15 @@ const SEED_CONSTANTS_TYPE_MASK =
 
 export const INPUT_CONSTANT_BYTES_SIZE = 32;
 
+export const convertHexStrToAscii = (hexStr: string) => {
+  let asciiStr = '';
+  for (let i = 2; i < hexStr.length; i += 2) {
+    const byte = hexStr.slice(i, i + 2);
+    asciiStr += String.fromCharCode(BigNumber.from('0x' + byte).toNumber());
+  }
+  return asciiStr;
+};
+
 export const getTokenSeed = (
   seed: BytesLike,
   tokenId: BigNumber,
