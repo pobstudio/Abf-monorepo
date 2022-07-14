@@ -12,7 +12,7 @@ import { useProvider } from './useProvider';
 
 export const useRendererContract = (
   address: string | undefined,
-  shouldUseFallback: boolean = false,
+  shouldUseFallback: boolean = true,
 ) => {
   const account = usePriorityAccount();
   const provider = useProvider(shouldUseFallback);

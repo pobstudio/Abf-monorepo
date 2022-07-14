@@ -38,12 +38,8 @@ export const useCollections = (): CollectionMetadataStub[] | undefined => {
 export const useCollection = (
   address: string | undefined,
 ): CollectionMetadata | undefined => {
-  if (!address) {
-    return undefined;
-  }
-
   const results = useQuery(GET_COLLECTION, {
-    variables: { address: address.toLowerCase() },
+    variables: { address: address?.toLowerCase() },
   });
 
   const data = useLastTruthyValue(results.data);

@@ -61,7 +61,6 @@ export const Render: FC<{
   output: RenderCodeOutputState | undefined;
   rendererMetadata: RendererMetadataStub | undefined;
 }> = ({ output, rendererMetadata }) => {
-  // console.log(output, 'output');
   const account = usePriorityAccount();
   const chainId = usePriorityChainId();
   const renderer = useRendererContract(rendererMetadata?.address);
