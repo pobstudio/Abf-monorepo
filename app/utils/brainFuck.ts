@@ -1,4 +1,5 @@
 import { BigNumber, BytesLike, utils } from 'ethers';
+import { SampleTokenRenderDebugState, SampleTokenRenderState } from '../types';
 
 const TAPE_SIZE = 30000;
 const LOOPING_STACK_SIZE = 2056;
@@ -7,6 +8,18 @@ const SEED_CONSTANTS_TYPE_MASK =
   '0x0000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF';
 
 export const INPUT_CONSTANT_BYTES_SIZE = 32;
+
+export const DEFAULT_CURRENT_SAMPLE_TOKEN_RENDER_STATE: SampleTokenRenderState =
+  {
+    tokenId: 0,
+    tokenSeed: '0x00',
+    codeOutput: undefined,
+  };
+
+export const DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE: SampleTokenRenderDebugState =
+  {
+    focusedByteGroupingIndex: undefined,
+  };
 
 export const convertHexStrToAscii = (hexStr: string) => {
   let asciiStr = '';
@@ -26,6 +39,14 @@ export const getTokenSeed = (
   return `0x${inputConstants
     .slice(2)
     .padEnd(INPUT_CONSTANT_BYTES_SIZE * 2, '0')}${hash.slice(2)}`;
+};
+
+export const tokenSeedToInputTape = (tokenSeed: string) => {
+  const input: number[] = [];
+  for (let i = 2; i < tokenSeed.length; i += 2) {
+    input.push(parseInt(tokenSeed.slice(i, i + 2), 16));
+  }
+  return input;
 };
 
 const MAX_IS_LOOPING_COUNTER = 10000;

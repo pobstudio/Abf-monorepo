@@ -6,6 +6,7 @@ import { PageDiv } from '../../components/divs';
 import { Collection } from '../../components/layouts/collection';
 import { Footer } from '../../components/navs/footer';
 import { Header } from '../../components/navs/header';
+import { CollectionProvider } from '../../contexts/collection';
 
 const CollectionIndexPage: NextPage = () => {
   const router = useRouter();
@@ -24,7 +25,9 @@ const CollectionIndexPage: NextPage = () => {
   return (
     <PageDiv>
       <Header />
-      <Collection address={address} />
+      <CollectionProvider address={address}>
+        <Collection />
+      </CollectionProvider>
       <Footer />
     </PageDiv>
   );

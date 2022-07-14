@@ -1,17 +1,7 @@
-import { BigNumber } from 'ethers';
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useCollection } from '../../../hooks/useCollections';
-import {
-  useRendererLabel,
-  useRendererMetadataStubByProvider,
-} from '../../../hooks/useRenderer';
-import { RenderCodeOutputState } from '../../../types';
-import {
-  convertHexStrToAscii,
-  getTokenSeed,
-  runBrainFuckCode,
-} from '../../../utils/brainFuck';
+import { useCollectionContext } from '../../../contexts/collection';
+import { convertHexStrToAscii } from '../../../utils/brainFuck';
 import { shortenHexString } from '../../../utils/hex';
 import { getEtherscanAddressUrl } from '../../../utils/urls';
 import {
@@ -27,47 +17,19 @@ import { PrimaryButton } from '../../inputs/button';
 import { Render } from '../../renders';
 import { H1, Label, LabelAnchor } from '../../texts';
 
-export const Collection: React.FC<{ address: string | undefined }> = ({
-  address,
-}) => {
-  const collection = useCollection(address);
-  const rendererLabel = useRendererLabel(collection?.renderer);
-  const rendererMetadataStub = useRendererMetadataStubByProvider(
-    collection?.renderer ?? '',
-  );
-  const output = useMemo((): RenderCodeOutputState | undefined => {
-    const code = convertHexStrToAscii(collection?.code ?? '');
-    const tokenSeed =
-      collection?.constants && collection?.seed
-        ? getTokenSeed(collection.seed, BigNumber.from(0), collection.constants)
-        : undefined;
-    if (!code || !tokenSeed) {
-      return undefined;
-    }
-    try {
-      const input: number[] = [];
-      for (let i = 2; i < tokenSeed.length; i += 2) {
-        input.push(parseInt(tokenSeed.slice(i, i + 2), 16));
-      }
-      const output = runBrainFuckCode(code, input);
-      return {
-        output,
-        status: 'success',
-        warnings: [],
-      };
-    } catch (e: any) {
-      return {
-        message: e.message,
-        status: 'error',
-      };
-    }
-  }, [collection?.code]);
+export const Collection: React.FC = () => {
+  const {
+    collectionMetadata: collection,
+    currentSampleTokenRenderState: output,
+    rendererMetadata,
+    rendererLabel,
+  } = useCollectionContext();
   return (
     <>
       <TwoColumnContainer>
         <div>
           <TwoColumnContentContainer style={{ padding: 0 }}>
-            <Render output={output} rendererMetadata={rendererMetadataStub} />
+            <Render output={output} rendererMetadata={rendererMetadata} />
           </TwoColumnContentContainer>
 
           <TwoColumnContentContainer

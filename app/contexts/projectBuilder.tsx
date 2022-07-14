@@ -26,6 +26,8 @@ import {
   SampleTokenRenderState,
 } from '../types';
 import {
+  DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE,
+  DEFAULT_CURRENT_SAMPLE_TOKEN_RENDER_STATE,
   getTokenSeed,
   INPUT_CONSTANT_BYTES_SIZE,
   runBrainFuckCode,
@@ -50,16 +52,6 @@ export interface ProjectBuilderProviderContext {
 }
 
 export type ProjectBuilderProviderState = ProjectBuilderProviderContext;
-
-const DEFAULT_CURRENT_SAMPLE_TOKEN_RENDER_STATE: SampleTokenRenderState = {
-  tokenId: 0,
-  tokenSeed: '0x00',
-  codeOutput: undefined,
-};
-
-const DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE: SampleTokenRenderDebugState = {
-  focusedByteGroupingIndex: undefined,
-};
 
 const initialState: ProjectBuilderProviderState = {
   currentSampleTokenDebugState: DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE,
