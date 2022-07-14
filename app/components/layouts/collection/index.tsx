@@ -1,32 +1,51 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useCollection } from '../../../hooks/useCollections';
+import {
+  useRendererLabel,
+  useRendererMetadataStubByProvider,
+} from '../../../hooks/useRenderer';
 import { convertHexStrToAscii } from '../../../utils/brainFuck';
-import { DetailRow, DetailRowsContainer } from '../../details/rows';
+import { shortenHexString } from '../../../utils/hex';
+import { getEtherscanAddressUrl } from '../../../utils/urls';
+import {
+  DetailAnchorRow,
+  DetailRow,
+  DetailRowsContainer,
+} from '../../details/rows';
 import {
   TwoColumnContainer,
   TwoColumnContentContainer,
 } from '../../divs/twoColumn';
 import { PrimaryButton } from '../../inputs/button';
-import { PlaceholderRender } from '../../renders';
-import { H1, Label } from '../../texts';
+import { Render } from '../../renders';
+import { H1, Label, LabelAnchor } from '../../texts';
 
 export const Collection: React.FC<{ address: string | undefined }> = ({
   address,
 }) => {
   const collection = useCollection(address);
-  console.log(collection, 'collection');
+  const rendererLabel = useRendererLabel(collection?.renderer);
+  const rendererMetadataStub = useRendererMetadataStubByProvider(
+    collection?.renderer ?? '',
+  );
   return (
     <>
-      <DetailRowsContainer>
-        <PlaceholderRender />
-      </DetailRowsContainer>
-      <br />
-      <br />
-
       <TwoColumnContainer>
         <div>
-          <TwoColumnContentContainer>
+          <TwoColumnContentContainer style={{ padding: 0 }}>
+            <Render
+              output={{
+                status: 'success',
+                output: `${collection?.code}`,
+              }}
+              rendererMetadata={rendererMetadataStub}
+            />
+          </TwoColumnContentContainer>
+
+          <TwoColumnContentContainer
+            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+          >
             <BrainfuckCodeContainer>
               {convertHexStrToAscii(collection?.code ?? '')}
             </BrainfuckCodeContainer>
@@ -36,8 +55,16 @@ export const Collection: React.FC<{ address: string | undefined }> = ({
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <DetailRowsContainer>
-              <DetailRow>{['OWNER', collection?.owner ?? '-']}</DetailRow>
-              <DetailRow>{['RENDERER', collection?.renderer ?? '-']}</DetailRow>
+              <DetailAnchorRow
+                href={getEtherscanAddressUrl(collection?.owner ?? '')}
+              >
+                {['OWNER', shortenHexString(collection?.owner ?? '') ?? '-']}
+              </DetailAnchorRow>
+              <DetailAnchorRow
+                href={getEtherscanAddressUrl(collection?.renderer ?? '')}
+              >
+                {['RENDERER', rendererLabel ?? '-']}
+              </DetailAnchorRow>
               <DetailRow>
                 {[
                   'RENDERER ROYALTY',
@@ -45,16 +72,35 @@ export const Collection: React.FC<{ address: string | undefined }> = ({
                 ]}
               </DetailRow>
               <DetailRow>{['SEED', collection?.seed ?? '-']}</DetailRow>
-              <DetailRow>
+              {/* <DetailRow>
                 {['CONSTANTS', collection?.constants ?? '-']}
-              </DetailRow>
+              </DetailRow> */}
             </DetailRowsContainer>
+          </TwoColumnContentContainer>
+
+          <TwoColumnContentContainer
+            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+          >
+            <LinksContainer>
+              <LabelAnchor
+                href={`ROUTES.DOCS.RENDERERS`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                VIEW ON OPENSEA
+              </LabelAnchor>
+              <LabelAnchor
+                href={`ROUTES.DOCS.RENDERERS`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                VIEW ON ETHERSCAN
+              </LabelAnchor>
+            </LinksContainer>
           </TwoColumnContentContainer>
         </div>
         <div>
-          <TwoColumnContentContainer
-            style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}
-          >
+          <TwoColumnContentContainer>
             <TitleContainer>
               <Label>TITLE</Label>
               <H1>{collection?.name}</H1>
@@ -78,6 +124,15 @@ export const Collection: React.FC<{ address: string | undefined }> = ({
   );
 };
 
+const LinksContainer = styled(DetailRowsContainer)`
+  ${LabelAnchor} {
+    display: block;
+  }
+  > ${LabelAnchor} + ${LabelAnchor} {
+    margin-top: 20px;
+  }
+`;
+
 const TitleContainer = styled.div`
   text-align: left;
   width: 100%;
@@ -95,9 +150,9 @@ const TitleContainer = styled.div`
 const BrainfuckCodeContainer = styled.div`
   width: 100%;
   height: fit-content;
-  padding: 100px;
+  /* padding: 100px; */
   font-size: 12px;
   line-height: 16px;
   overflow-wrap: anywhere;
-  background: rgba(0, 0, 0, 0.05);
+  /* background: rgba(0, 0, 0, 0.05); */
 `;

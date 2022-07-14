@@ -12,7 +12,7 @@ export const useCollections = (): CollectionMetadataStub[] | undefined => {
   const data = useLastTruthyValue(results.data);
 
   return useMemo(() => {
-    console.log(data, 'GET_COLLECTIONS');
+    // console.log(data, 'GET_COLLECTIONS');
     if (!data) {
       return undefined;
     }
@@ -49,7 +49,7 @@ export const useCollection = (
   const data = useLastTruthyValue(results.data);
 
   return useMemo(() => {
-    console.log(data, 'GET_COLLECTION');
+    // console.log(data, 'GET_COLLECTION');
     if (!data) {
       return undefined;
     }

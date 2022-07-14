@@ -14,7 +14,7 @@ export const Explore: React.FC = () => {
           <H1 style={{ opacity: 0.2 }}>EXPLORE COLLECTIONS</H1>
         </div>
         <P>
-          These are Brainfuck NFT Collections minted via the Project Builder.
+          These are Brainfuck NFT Collections created via the Project Builder.
         </P>
         <P style={{ opacity: 0.2 }}>
           {
