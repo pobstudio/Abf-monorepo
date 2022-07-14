@@ -53,6 +53,9 @@ export const useMinimizedProjectMetadata = (
         if (key === 'rendererMetadataStub') {
           continue;
         }
+        if (key === 'postProcessedCode') {
+          continue;
+        }
         minimizedObject[key] = (metadata as any)[key];
       }
     }

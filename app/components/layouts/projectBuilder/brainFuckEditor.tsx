@@ -1,48 +1,63 @@
-import { FC, useEffect } from 'react';
+import { FC, useState } from 'react';
+import styled from 'styled-components';
 import {
   useModifyProjectMetadata,
   useProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import {
-  findAllTemplateInserts,
-  transpileTemplatedBf,
-} from '../../../utils/brainFuck/template';
-import {
-  DetailRow,
-  DetailRowsContainer,
-  DetailTitleAnchorRow,
-} from '../../details/rows';
+import { DetailRow, DetailRowsContainer } from '../../details/rows';
 import { ExpandoContentContainer, ExpandoGroup } from '../../expando';
-import { Flex } from '../../flexs';
+import { Flex, FlexEnds } from '../../flexs';
+import { BaseButton } from '../../inputs/button';
 import { InputWell, TextArea, TextInput } from '../../inputs/input';
-import { Code, P, Text } from '../../texts';
+import { B, Code, Label, P, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
+
+type BrainFuckEditorViewState = 'raw' | 'postProcessed';
 
 export const BrainFuckEditor: FC = () => {
   const { onCodeChange, onInputConstantsChange } = useModifyProjectMetadata();
-  const { code, inputConstants: validInputConstants } = useProjectMetadata();
+  const {
+    code,
+    inputConstants: validInputConstants,
+    postProcessedCode,
+  } = useProjectMetadata();
   const { inputConstants } = useRawProjectMetadata();
 
-  useEffect(() => {
-    if (!code) {
-      return;
-    }
-    const inserts = findAllTemplateInserts(code);
-    console.log(inserts);
-    const transpiledCode = transpileTemplatedBf(code);
-    console.log(transpiledCode);
-  }, [code]);
+  const [brainFuckEditorViewState, setBrainFuckEditorViewState] =
+    useState<BrainFuckEditorViewState>('raw');
 
   return (
     <>
       <DetailRowsContainer>
-        <DetailTitleAnchorRow>
-          {['WRITE BRAINFUCK!', `DOCS`]}
-        </DetailTitleAnchorRow>
+        <FlexEnds>
+          <Text>
+            <B>WRITE BRAINFUCK!</B>
+          </Text>
+          <Flex>
+            <ToggleButton
+              onClick={() => setBrainFuckEditorViewState('raw')}
+              isActive={brainFuckEditorViewState === 'raw'}
+            >
+              WRITTEN
+            </ToggleButton>
+            <Label style={{ margin: '0 4px' }}>/</Label>
+            <ToggleButton
+              onClick={() => setBrainFuckEditorViewState('postProcessed')}
+              isActive={brainFuckEditorViewState === 'postProcessed'}
+            >
+              TRANSPILED
+            </ToggleButton>
+          </Flex>
+        </FlexEnds>
         <InputWell>
           <TextArea
-            value={code ?? ''}
+            disabled={brainFuckEditorViewState === 'postProcessed'}
+            value={
+              brainFuckEditorViewState === 'postProcessed'
+                ? postProcessedCode ?? ''
+                : code ?? ''
+            }
             onChange={(e) => onCodeChange(e.target.value)}
             style={{ minHeight: 240 }}
             placeholder="-[--->+<]>-.[---->+++++<]>-.+.++++++++++.+[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.[-->+++++++<]>.++.-------------.[--->+<]>---..+++++.-[---->+<]>++.+[->+++<]>.++++++++++++..---.[-->+<]>--------."
@@ -110,3 +125,10 @@ const AdvancedControls: FC = () => {
     </ExpandoGroup>
   );
 };
+
+const ToggleButton = styled(BaseButton)<{ isActive?: boolean }>`
+  opacity: ${(p) => (p.isActive ? 1 : 0.4)};
+  :hover {
+    opacity: ${(p) => (p.isActive ? 1 : 0.6)};
+  }
+`;

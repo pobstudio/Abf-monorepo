@@ -49,7 +49,7 @@ export const useCreateCollection = () => {
         symbol: projectMetadata.symbol ?? '',
         seed: projectMetadata.seed ?? '0x00',
         constants: projectMetadata.inputConstants ?? NULL_HASH,
-        code: convertStrToHexStr(projectMetadata.code ?? ''),
+        code: convertStrToHexStr(projectMetadata.postProcessedCode ?? ''),
         renderer: projectMetadata.renderer ?? NULL_ADDRESS,
         mintingSupply: projectMetadata.mintingSupply ?? 0,
         price: utils.parseEther(projectMetadata.priceInEth?.toString() ?? '0'),

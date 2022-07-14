@@ -48,6 +48,7 @@ export interface ProjectMetadata {
   seed: string;
   constants: string;
   code: string;
+  postProcessedCode?: string;
   renderer: string;
   rendererMetadataStub?: RendererMetadataStub;
   mintingSupply: number;
