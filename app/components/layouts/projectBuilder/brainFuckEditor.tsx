@@ -1,9 +1,13 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import {
   useModifyProjectMetadata,
   useProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
+import {
+  findAllTemplateInserts,
+  transpileTemplatedBf,
+} from '../../../utils/brainFuck/template';
 import {
   DetailRow,
   DetailRowsContainer,
@@ -19,6 +23,17 @@ export const BrainFuckEditor: FC = () => {
   const { onCodeChange, onInputConstantsChange } = useModifyProjectMetadata();
   const { code, inputConstants: validInputConstants } = useProjectMetadata();
   const { inputConstants } = useRawProjectMetadata();
+
+  useEffect(() => {
+    if (!code) {
+      return;
+    }
+    const inserts = findAllTemplateInserts(code);
+    console.log(inserts);
+    const transpiledCode = transpileTemplatedBf(code);
+    console.log(transpiledCode);
+  }, [code]);
+
   return (
     <>
       <DetailRowsContainer>
