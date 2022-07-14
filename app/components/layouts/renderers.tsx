@@ -34,7 +34,7 @@ const Jumbotron: FC = () => {
       </div>
       <div>
         <P>
-          Contained in this document is the corp's up-to-date list of all
+          Contained in this document is the Corps' up-to-date list of all
           Renderers excavated by the ABFC and the broader public sphere. This
           repository is by no means exhaustive. Please consult each renderer
           carefully before use.

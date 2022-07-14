@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
       <FlexCenter>
         <Link passHref href={'/'}>
           <HeaderLogoAnchor style={{ fontWeight: 'bold' }}>
-            {width < BREAKPTS.MD ? 'ABFC' : 'BY THE CORP'}
+            {width < BREAKPTS.MD ? 'ABFC' : 'BY THE CORPS'}
           </HeaderLogoAnchor>
         </Link>
       </FlexCenter>

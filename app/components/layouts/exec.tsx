@@ -15,11 +15,11 @@ export const Exec: React.FC = () => {
         <DetailRowsContainer>
           <H1>ABF, IN SUMMARY</H1>
           <Label>
-            RECORDING OF 001 WELCOMING THE FIRST CLASS OF CORP MEMBERS
+            RECORDING OF 001 WELCOMING THE FIRST CLASS OF CORPS MEMBERS
           </Label>
           <P>
             <B>001:</B> Before we start, I'd like you to welcome you to the{' '}
-            <B>ABF Corp.</B> If you haven't already, please complete the{' '}
+            <B>ABF Corps.</B> If you haven't already, please complete the{' '}
             <A href={ROUTES.RECRUIT}>recruitment onboarding</A> to gain access
             to all aspects of ABF.
           </P>
@@ -71,7 +71,7 @@ export const Exec: React.FC = () => {
           <P>
             Fuck gated access to creation tools. Fuck 10% fee extraction. Fuck
             sticking IPFS in a NFT and calling it a day. Fuck random p5
-            wave-function fidenza look-a-likes.
+            wave-function Fidenza look-a-likes.
           </P>
           <P>
             Gen-art now has become all theatrics. It's about the "alpha" you
@@ -83,7 +83,7 @@ export const Exec: React.FC = () => {
           </P>
           <P>
             <B>001: </B>See, ABF breaks it all down. We slow it all down. No
-            gates to ABF, no IPFS pngs, no DAO extracting fees or selling their
+            gates to ABF, no IPFS PNGs, no DAO extracting fees or selling their
             blessings.
           </P>
           <P>
@@ -104,7 +104,7 @@ export const Exec: React.FC = () => {
             who dare to do it.
           </P>
           <P>
-            That is why we want you in the corp. Not to band together to pump a
+            That is why we want you in the Corps. Not to band together to pump a
             token, but to celebrate together. To struggle together. To ask each
             other to be better.
           </P>
@@ -116,7 +116,7 @@ export const Exec: React.FC = () => {
             right pair of hands.
           </P>
           <P>
-            Anyways, I welcome you to the corp. Please treat each other with
+            Anyways, I welcome you to the Corps. Please treat each other with
             respect. You are all here for the same reason.
           </P>
           <P>

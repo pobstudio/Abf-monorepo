@@ -166,16 +166,16 @@ const Docs: React.FC = () => {
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
             }}
           ></div>
-          <JoinTheCorpButton as="a" href={ROUTES.RECRUIT}>
-            JOIN THE CORP
-          </JoinTheCorpButton>
+          <JoinTheCorpsButton as="a" href={ROUTES.RECRUIT}>
+            JOIN THE CORPS
+          </JoinTheCorpsButton>
         </DropdownContainerContent>
       </DropdownContainer>
     </DropdownExterior>
   );
 };
 
-const JoinTheCorpButton = styled(SecondaryAnchorButton)`
+const JoinTheCorpsButton = styled(SecondaryAnchorButton)`
   margin-top: 14px;
   padding: 18px;
 `;
