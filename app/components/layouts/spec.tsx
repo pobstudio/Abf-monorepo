@@ -21,7 +21,7 @@ export const Specification: React.FC = () => {
           <H1>ABF PROTOCOL, IN DETAIL</H1>
           <P>
             <B>TLDR</B> ABF, at its core, takes on many design patterns
-            reflective of modern front-end libraries. Brainfuck code you write
+            reflective of modern front-end libraries. Brainfuck! code you write
             provides the 'state' to the NFT that is rendered by renderers.
             Renderers are pure function contracts, providing a deterministic
             output based on its provided inputs (props).
@@ -42,11 +42,11 @@ export const Specification: React.FC = () => {
           ></div>
           <H2 style={{ opacity: 0.2 }}>HIGH LEVEL CONCEPTS</H2>
           <DetailRowsContainer id={'bf-code-to-art'}>
-            <H2>BF CODE TO ART</H2>
+            <H2>BF! CODE TO ART</H2>
             <P>
               The best way to appreciate the ABF protocol is to, as the old
               adage goes, follow the code. In this case, we will follow the
-              Brainfuck code all the way to the actual svg produced in a
+              Brainfuck! code all the way to the actual svg produced in a
               renderer.
             </P>
             <P>
@@ -56,9 +56,9 @@ export const Specification: React.FC = () => {
             </P>
             <OL>
               <li>
-                The NFT's stored <B>Brainfuck</B> code is ran with the{' '}
+                The NFT's stored <B>Brainfuck!</B> code is ran with the{' '}
                 <A href={'#brainfuck-vm'}>BrainfuckVM</A> Contract. Running the{' '}
-                <B>Brainfuck</B> code produces an output, in bytes.
+                <B>Brainfuck!</B> code produces an output, in bytes.
               </li>
               <li>
                 These <B>bytes</B> are then provided to the renderer contract
@@ -75,7 +75,7 @@ export const Specification: React.FC = () => {
             </OL>
             <P>
               In many ways, your NFT is the product of two integral components:
-              the <B>Brainfuck</B> code and the <B>renderer</B> contracts. The
+              the <B>Brainfuck!</B> code and the <B>renderer</B> contracts. The
               best ABF NFTs will be the result of unique use of a well chosen
               renderer.
             </P>
@@ -84,7 +84,7 @@ export const Specification: React.FC = () => {
           <DetailRowsContainer id="utilizing-renderers-to-the-max">
             <H2>UTILIZING RENDERERS TO THE MAX</H2>
             <P>
-              Beyond your capabilities to write <B>Brainfuck</B> code, your
+              Beyond your capabilities to write <B>Brainfuck!</B> code, your
               understanding of a <B>renderer</B> contract will level up your
               artistry with ABF.
             </P>
@@ -140,7 +140,7 @@ export const Specification: React.FC = () => {
           <DetailRowsContainer id="configuring-input-bytes-seed">
             <H2>CONFIGURING INPUT BYTES + SEED</H2>
             <P>
-              In <B>Brainfuck's</B> 8 opcodes, the <Code>,</Code> opcode stands
+              In <B>Brainfuck!'s</B> 9 opcodes, the <Code>,</Code> opcode stands
               to be one of the most powerful when utilized correctly.
             </P>
             <P>
@@ -150,11 +150,11 @@ export const Specification: React.FC = () => {
             </P>
             <P>
               In layman terms, the <Code>,</Code> opcode allows a{' '}
-              <B>Brainfuck</B> code to receive parameters.
+              <B>Brainfuck!</B> code to receive parameters.
             </P>
             <P>
               <B>ABF</B> provides 64 bytes (you can use <Code>,</Code> 64 times
-              to read inputs) to your <Code>Brainfuck</Code> code.
+              to read inputs) to your <Code>Brainfuck!</Code> code.
             </P>
             <P>The 64 bytes provided are shaped as the following</P>
             <BlockCode>
@@ -193,7 +193,7 @@ export const Specification: React.FC = () => {
             </P>
             <P>
               With the use of input bytes, you can easily access numbers,
-              colors, and a source of random in your <B>Brainfuck</B> code.
+              colors, and a source of random in your <B>Brainfuck!</B> code.
             </P>
           </DetailRowsContainer>
 
@@ -221,7 +221,7 @@ export const Specification: React.FC = () => {
             <P>
               <B>NOTE:</B> Renderer contracts have no understanding of "how" the
               inputted bytes are produced, as in they don't know about the{' '}
-              <B>Brainfuck</B> code. They are only concerned with rendering the
+              <B>Brainfuck!</B> code. They are only concerned with rendering the
               bytes into something.
             </P>
             <P>
@@ -316,8 +316,8 @@ interface IRenderer is IERC165 {
               on Etherscan and use the Write functions.
             </P>
             <P>
-              Additionally, the Brainfuck NFT supports an optional royalty
-              system for Renderer creators so Brainfuck artists who use a
+              Additionally, the Brainfuck! NFT supports an optional royalty
+              system for Renderer creators so Brainfuck! artists who use a
               "third-party" Renderer contract can award funds automatically.
             </P>
             <P>
@@ -408,7 +408,7 @@ const additionalMetadata = {
             </P>
             <P>
               At NFT creation you can configure the following (beyond the
-              obvious need of the <B>Brainfuck</B> code and related
+              obvious need of the <B>Brainfuck!</B> code and related
               data/settings):
             </P>
             <UL>
@@ -489,16 +489,16 @@ const additionalMetadata = {
             <H2>BRAINFUCK VM</H2>
             <P>
               The library <Code>BrainFuckVM</Code> is the canonical{' '}
-              <B>Brainfuck</B> interpreter utilized by the ABF protocol.
+              <B>Brainfuck!</B> interpreter utilized by the ABF protocol.
             </P>
             <P>
-              There is one function, <Code>runBrainFuckCode</Code> that takes
-              your code and input and runs it, returning the output.
+              There is one function, <Code>run</Code> that takes your code and
+              input and runs it, returning the output.
             </P>
             <P>
               Consult the{' '}
               <Link passHref href={ROUTES.DOCS.BRAINFUCK}>
-                <A>Brainfuck language</A>
+                <A>Brainfuck! language</A>
               </Link>{' '}
               docs for more implementation details.
             </P>
@@ -527,7 +527,7 @@ const additionalMetadata = {
             <P>
               While the ABF dapp is a complete experience to deploy an{' '}
               <B>ABF</B> NFT, we do not provide the best experience with working
-              with <Code>Brainfuck</Code>. Here's some tooling created that can
+              with <Code>Brainfuck!</Code>. Here's some tooling created that can
               help:
             </P>
             <P>
@@ -554,7 +554,7 @@ const additionalMetadata = {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Generating numbers in Brainfuck
+                Generating numbers in Brainfuck!
               </A>
             </P>
           </DetailRowsContainer>
@@ -621,7 +621,7 @@ const TableOfContents = () => {
       <LinkGroup>
         <Label>OTHER RESOURCES</Label>
         <TableOfContentsAnchor href={'#bf-resources'}>
-          BF RESOURCES
+          BF! RESOURCES
         </TableOfContentsAnchor>
         <TableOfContentsAnchor href={'#bf-links'}>LINKS</TableOfContentsAnchor>
       </LinkGroup>

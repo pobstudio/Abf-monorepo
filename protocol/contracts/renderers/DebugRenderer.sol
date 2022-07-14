@@ -19,10 +19,6 @@ contract DebugRenderer is IRenderer, Ownable, ERC165 {
       super.supportsInterface(interfaceId);
   }
 
-  function debug() external pure returns (bytes4) {
-    return type(IRenderer).interfaceId;
-  }
-
   function propsSize() external override pure returns (uint256) {
     return 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
   }

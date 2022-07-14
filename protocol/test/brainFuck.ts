@@ -137,7 +137,7 @@ describe('BrainFuck', function () {
         'On-chain generative art written in the esoteric programming language BrainFuck.',
       );
       expect(contractMetadata.external_link).to.eq(
-        `https://abf.dev/project/${brainFuck.address.toLowerCase()}`,
+        `https://abf.dev/nft/${brainFuck.address.toLowerCase()}`,
       );
     });
   });

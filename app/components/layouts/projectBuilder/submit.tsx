@@ -36,7 +36,7 @@ export const ContractSubmit: FC = () => {
       projectMetadata.code === undefined ||
       projectMetadata.code.length === 0
     ) {
-      messages.push('WRITE BRAINFUCK: BRAINFUCK CODE REQUIRED');
+      messages.push('WRITE BRAINFUCK!: BRAINFUCK! CODE REQUIRED');
     }
     if (!projectMetadata.name) {
       messages.push('CONFIGURE TOKEN PARAMETERS: NAME REQUIRED');

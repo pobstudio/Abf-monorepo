@@ -29,7 +29,7 @@ export const DropdownLinkTree: React.FC = () => {
           <DocAnchor>PROTOCOL DESIGN</DocAnchor>
         </Link>
         <Link passHref href={ROUTES.DOCS.BRAINFUCK}>
-          <DocAnchor>BRAINFUCK</DocAnchor>
+          <DocAnchor>BRAINFUCK!</DocAnchor>
         </Link>
       </DocsAnchorGroup>
       <DocsAnchorGroup>

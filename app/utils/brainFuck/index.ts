@@ -1,10 +1,7 @@
 import { BigNumber, BytesLike, utils } from 'ethers';
 
-const TAPE_SIZE = 30000;
-const LOOPING_STACK_SIZE = 2056;
-
-const SEED_CONSTANTS_TYPE_MASK =
-  '0x0000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF';
+const TAPE_SIZE = 3_000_000;
+const LOOPING_STACK_SIZE = 8192;
 
 export const INPUT_CONSTANT_BYTES_SIZE = 32;
 
@@ -74,6 +71,10 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
       // .
       if (opcode === '0x2E') {
         out += tape[ptr].toString(16).padStart(2, '0');
+      }
+      // !
+      if (opcode === '0x21') {
+        ptr = 0;
       }
       // >
       if (opcode === '0x3E') {

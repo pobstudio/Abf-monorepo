@@ -38,7 +38,7 @@ export const BrainFuckEditor: FC = () => {
     <>
       <DetailRowsContainer>
         <DetailTitleAnchorRow>
-          {['WRITE BRAINFUCK', `DOCS`]}
+          {['WRITE BRAINFUCK!', `DOCS`]}
         </DetailTitleAnchorRow>
         <InputWell>
           <TextArea
@@ -49,10 +49,10 @@ export const BrainFuckEditor: FC = () => {
           />
         </InputWell>
         <Flex style={{ paddingTop: 82 }}>
-          <Text style={{ marginRight: 6 }}>INPUT TO BF CODE</Text>
+          <Text style={{ marginRight: 6 }}>INPUT TO BF! CODE</Text>
           <Tooltip direction={'left'}>
             <P>
-              Input in Brainfuck is read via the <Code>,</Code> operator.
+              Input in Brainfuck! is read via the <Code>,</Code> operator.
               Provide up to 32 bytes; another 32 pseudo-random bytes will be
               appended for a total of 64 bytes.
             </P>
@@ -91,7 +91,7 @@ const AdvancedControls: FC = () => {
               <Tooltip direction={'left'}>
                 <P>
                   Seed provides a determinstic source of random for generating
-                  the last 32 bytes provide to Brainfuck code.
+                  the last 32 bytes provide to Brainfuck! code.
                 </P>
               </Tooltip>
             </Flex>
