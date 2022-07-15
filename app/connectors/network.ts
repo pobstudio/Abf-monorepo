@@ -7,7 +7,7 @@ export const [network, hooks] = initializeConnector<Network>(
     new Network(actions, {
       [CHAIN_ID]: `https://eth-${
         CHAIN_ID === 1 ? 'mainnet' : 'rinkeby'
-      }.alchemyapi.io/v2/${ALCHEMY_KEY}`,
+      }.alchemyapi.io/v2/${'ALCHEMY_KEY'}`,
     }),
   [CHAIN_ID],
 );

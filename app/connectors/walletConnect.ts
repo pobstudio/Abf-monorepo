@@ -8,7 +8,7 @@ export const [walletConnect, hooks] = initializeConnector<WalletConnect>(
       rpc: {
         [CHAIN_ID]: `https://eth-${
           CHAIN_ID === 1 ? 'mainnet' : 'rinkeby'
-        }.alchemyapi.io/v2/${ALCHEMY_KEY}`,
+        }.alchemyapi.io/v2/${'ALCHEMY_KEY'}`,
       },
     }),
   [CHAIN_ID],
