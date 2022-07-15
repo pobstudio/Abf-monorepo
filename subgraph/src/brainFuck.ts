@@ -2,8 +2,8 @@ import { CreatedBrainFuckNFT } from '../generated/BrainFuckFactory/BrainFuckFact
 import { Collection } from '../generated/schema';
 import { BrainFuck as BrainFuckTemplate } from '../generated/templates';
 import {
-  OwnershipTransferred,
   BrainFuck as BrainFuckContract,
+  OwnershipTransferred,
 } from '../generated/templates/BrainFuck/BrainFuck';
 
 export function handleCreatedCollection(event: CreatedBrainFuckNFT): void {

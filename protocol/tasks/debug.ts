@@ -40,7 +40,7 @@ task('debug', 'Debug task', async (args, hre) => {
   console.log(await brainFuck.name());
   console.log(await brainFuck.symbol());
   console.log(await brainFuck.renderer());
-  console.log(await brainFuck.estimateGas.tokenURI(0))
+  console.log(await brainFuck.estimateGas.tokenURI(0));
   // await brainFuck.setIsActive(true);
   // await brainFuck.mint(await owner.getAddress(), 1, { value: await brainFuck.price() })
 });

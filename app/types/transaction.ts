@@ -7,7 +7,18 @@ export interface CreateCollectionTransactionMetadata {
   hashedProjectMetadata: string;
 }
 
-export type TransactionMetadata = CreateCollectionTransactionMetadata;
+export interface MintTokenTransactionMetadata {
+  type: 'mint-token';
+}
+
+export interface CollectionActivationTransactionMetadata {
+  type: 'toggle-activation';
+}
+
+export type TransactionMetadata =
+  | CreateCollectionTransactionMetadata
+  | MintTokenTransactionMetadata
+  | CollectionActivationTransactionMetadata;
 
 export interface TransactionObject {
   hash: string;

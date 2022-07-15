@@ -69,6 +69,11 @@ export const A = styled.a`
   line-height: 16px;
 `;
 
+export const CleanA = styled.a`
+  display: block;
+  text-decoration: none;
+`;
+
 export const Code = styled.code`
   background-color: rgba(0, 0, 0, 0.05);
   padding: 0 4px;
