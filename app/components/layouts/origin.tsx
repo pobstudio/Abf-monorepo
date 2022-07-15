@@ -91,15 +91,15 @@ export const Origins: React.FC = () => {
             develop.
           </P>
           <P>
-            <B>002:</B> The ABF Corp.
+            <B>002:</B> The ABF Corps.
           </P>
           <P>
             <B>001:</B> What?
           </P>
           <P>
-            <B>002:</B> Thats the name of the community, Corp like the Marine
-            Corp, not corporation. A community about the comradre of collective
-            brain-fucking.
+            <B>002:</B> Thats the name of the community, Corps like the Marine
+            Corps, not corporation. A community about the comradery of
+            collective brain-fucking.
           </P>
           <P>
             <B>001:</B> I like that. The ABFC. <B>"VIRES IN STRUCTURA"</B>.

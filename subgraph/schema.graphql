@@ -7,18 +7,17 @@ type Renderer @entity {
   registeredAt: BigInt!
 }
 
-# type NFT @entity {
-#   id: ID! 
-#   owner: Bytes!
-#   name: String!
-#   symbol: String! 
-#   seed: Bytes! 
-#   constants: Bytes! 
-#   code: Bytes! 
-#   renderer: Bytes! 
-#   mintingSupply: BigInt!
-#   mintedSupply: BigInt!
-#   price: BigInt! 
-#   rendererRoyaltyFraction: BigInt! 
-#   whitelistToken: Bytes
-# }
+type Collection @entity {
+  id: ID! 
+  owner: Bytes! # Transfer ownership
+  name: String!
+  symbol: String! 
+  seed: Bytes! 
+  constants: Bytes! 
+  code: Bytes! 
+  renderer: Bytes! 
+  mintingSupply: BigInt!
+  price: BigInt! 
+  rendererRoyaltyFraction: BigInt! 
+  whitelistToken: Bytes!
+}

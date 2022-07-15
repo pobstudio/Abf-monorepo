@@ -96,7 +96,7 @@ export const Specification: React.FC = () => {
             </P>
             <P>
               Like the ERC20 token spec, <B>ABF</B> utilizes a{' '}
-              <Code>IRenderer</Code> spec created by the ABF Corp. Any contract
+              <Code>IRenderer</Code> spec created by the ABF Corps. Any contract
               written by anybody that follows this spec correctly can be
               utilized within the ABF protocol.
             </P>
@@ -107,8 +107,8 @@ export const Specification: React.FC = () => {
               a full HTML page.
             </P>
             <P>
-              The <B>ABF</B> Corp has provided a "default" set of renderers that
-              cover most bases; but dependent towards the demands of your
+              The <B>ABF</B> Corps has provided a "default" set of renderers
+              that cover most bases; but dependent towards the demands of your
               vision, a more bespoke renderer can be created and utilized.
             </P>
             <P>
@@ -120,8 +120,8 @@ export const Specification: React.FC = () => {
               >
                 registry
               </A>
-              , maintained by the Corp, provides a up to date list of all known
-              renderers, both written by the Corp and external users.
+              , maintained by the Corps, provides a up to date list of all known
+              renderers, both written by the Corps and external users.
             </P>
             <P>
               We recommend learning in depth how a renderer works before you use
@@ -207,7 +207,7 @@ export const Specification: React.FC = () => {
           <H2 style={{ opacity: 0.2 }}>CONTRACTS</H2>
           <P>
             ABF is a conglomeration of a few contracts, some user written and
-            some canonically deployed by the ABF Corp's <B>Board</B>.{' '}
+            some canonically deployed by the ABF Corps' <B>Board</B>.{' '}
             <Link href={ROUTES.DOCS.PROTOCOL} passHref>
               <A>Registry of canonical contracts.</A>
             </Link>

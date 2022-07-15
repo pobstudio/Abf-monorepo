@@ -110,7 +110,7 @@ export const RendererParametersSelector: FC = () => {
             <Label style={{ marginRight: 6 }}>DEFAULT RENDERERS</Label>
             <Tooltip direction={'left'}>
               <P>
-                Default Renderers are written by the ABF Corp and vetted by the
+                Default Renderers are written by the ABF Corps and vetted by the
                 BOARD.
               </P>
             </Tooltip>
