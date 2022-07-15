@@ -1,7 +1,15 @@
+import { BigNumber, utils } from 'ethers';
+import { NextSeo } from 'next-seo';
 import React from 'react';
 import styled from 'styled-components';
+import {
+  GLOBAL_OG_BANNER,
+  PROD_LINK,
+  TWITTER_HANDLE,
+} from '../../../constants';
+import { ROUTES } from '../../../constants/routes';
 import { useCollectionContext } from '../../../contexts/collection';
-import { convertHexStrToAscii } from '../../../utils/brainFuck';
+import { useMintBrainfuckNFT } from '../../../hooks/useMint';
 import { shortenHexString } from '../../../utils/hex';
 import { getEtherscanAddressUrl } from '../../../utils/urls';
 import {
@@ -13,7 +21,7 @@ import {
   TwoColumnContainer,
   TwoColumnContentContainer,
 } from '../../divs/twoColumn';
-import { PrimaryButton } from '../../inputs/button';
+import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { Render } from '../../renders';
 import { H1, Label, LabelAnchor } from '../../texts';
 
@@ -23,9 +31,50 @@ export const Collection: React.FC = () => {
     currentSampleTokenRenderState: output,
     rendererMetadata,
     rendererLabel,
+    collectionAddress,
+    brainfuckCode,
+    isActive,
+    activateCollection,
+    isOwner,
   } = useCollectionContext();
+  const { mint } = useMintBrainfuckNFT(collectionAddress);
   return (
     <>
+      <NextSeo
+        title={`${collection?.name} - Absolute Brain F**K NFT Collection - ${collectionAddress}`}
+        description={brainfuckCode}
+        openGraph={{
+          type: 'website',
+          locale: 'en_US',
+          url: `${PROD_LINK}/${ROUTES.COLLECTION}/${collectionAddress}`,
+          title: `${collection?.name} - Absolute Brain F**K NFT Collection - ${collectionAddress}`,
+          description: brainfuckCode,
+          site_name: 'ABF',
+          images: [
+            {
+              // url: getArtworkPreviewUrl(hash),
+              url: GLOBAL_OG_BANNER,
+              alt: 'ABF',
+            },
+          ],
+        }}
+        twitter={{
+          handle: TWITTER_HANDLE,
+          site: TWITTER_HANDLE,
+          cardType: 'summary_large_image',
+        }}
+        additionalMetaTags={[
+          {
+            name: 'twitter:image',
+            // content: getArtworkPreviewUrl(hash),
+            content: GLOBAL_OG_BANNER,
+          },
+          {
+            name: 'twitter:url',
+            content: `${PROD_LINK}/${ROUTES.COLLECTION}/${collectionAddress}`,
+          },
+        ]}
+      />
       <TwoColumnContainer>
         <div>
           <TwoColumnContentContainer style={{ padding: 0 }}>
@@ -35,9 +84,7 @@ export const Collection: React.FC = () => {
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
-            <BrainfuckCodeContainer>
-              {convertHexStrToAscii(collection?.code ?? '')}
-            </BrainfuckCodeContainer>
+            <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
           </TwoColumnContentContainer>
 
           <TwoColumnContentContainer
@@ -93,7 +140,15 @@ export const Collection: React.FC = () => {
             <TitleContainer>
               <Label>TITLE</Label>
               <H1>{collection?.name}</H1>
-              <PrimaryButton>MINT</PrimaryButton>
+              <PrimaryButton onClick={() => mint()}>MINT</PrimaryButton>
+              {isOwner && !isActive && (
+                <TertiaryButton
+                  style={{ marginTop: 20 }}
+                  onClick={() => activateCollection()}
+                >
+                  ACTIVATE
+                </TertiaryButton>
+              )}
             </TitleContainer>
           </TwoColumnContentContainer>
 
@@ -104,7 +159,14 @@ export const Collection: React.FC = () => {
               <DetailRow>
                 {['SUPPLY', collection?.mintingSupply ?? '-']}
               </DetailRow>
-              <DetailRow>{['PRICE', collection?.price ?? '-']}</DetailRow>
+              <DetailRow>
+                {[
+                  'PRICE',
+                  `${utils.formatEther(
+                    BigNumber.from(collection?.price ?? '0'),
+                  )} ETH` ?? '-',
+                ]}
+              </DetailRow>
             </DetailRowsContainer>
           </TwoColumnContentContainer>
         </div>

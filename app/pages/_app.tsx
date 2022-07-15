@@ -9,6 +9,7 @@ import {
   DEFAULT_TITLE,
   GLOBAL_OG_BANNER,
   PROD_LINK,
+  TWITTER_HANDLE,
 } from '../constants';
 import { AppProvider } from '../contexts/app';
 import { BlockchainEffect } from '../effects/BlockchainEffect';
@@ -38,14 +39,13 @@ export default class PobApp extends App {
             images: [
               {
                 url: GLOBAL_OG_BANNER,
-                // width: 800,
-                // height: 418,
+                alt: 'ABF',
               },
             ],
           }}
           twitter={{
-            handle: '@prrfbeauty',
-            site: '@prrfbeauty',
+            handle: TWITTER_HANDLE,
+            site: TWITTER_HANDLE,
             cardType: 'summary_large_image',
           }}
           additionalMetaTags={[
