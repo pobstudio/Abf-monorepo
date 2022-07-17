@@ -1,3 +1,4 @@
+import { animated } from 'react-spring';
 import styled from 'styled-components';
 import { BREAKPTS } from '../../constants/styles';
 import { Flex } from '../flexs';
@@ -32,3 +33,37 @@ export const NavAnchorRow = styled(Flex)`
     margin-left: 32px;
   }
 `;
+
+export const DropdownAnchor = styled(HeaderAnchor)`
+  display: block;
+  cursor: pointer;
+`;
+
+export const DropdownExterior = styled.div`
+  position: relative;
+`;
+
+export const DropdownContainerContent = styled.div`
+  padding: 12px 24px 24px 24px;
+`;
+
+export const DropdownAnchorGroup = styled.div`
+  padding: 12px 0 0 0;
+  > * + * {
+    margin-top: 12px;
+  }
+`;
+
+export const DropdownContainer = animated(styled.div<{}>`
+  position: absolute;
+  margin-top: 10px;
+  z-index: 1100;
+  background: white;
+  min-width: 256px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  hr {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+`);

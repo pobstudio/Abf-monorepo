@@ -1,31 +1,32 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { ROUTES } from '../../constants/routes';
-import { INVITE_LINKS } from '../../data/discord';
-import { useDefaultSeed } from '../../hooks/useDefaults';
-import { useHydrateSave } from '../../hooks/useHydrateSave';
-import { RenderCodeOutputState } from '../../types';
-import { runBrainFuckCode } from '../../utils/brainFuck';
-import { GroupedBytesWithHoverState } from '../bytes/groupedBytes';
-import { DetailRowsContainer } from '../details/rows';
+import { TUTORIALS_MAP } from '.';
+import { ROUTES } from '../../../constants/routes';
+import { INVITE_LINKS } from '../../../data/discord';
+import { useDefaultSeed } from '../../../hooks/useDefaults';
+import { useHydrateSave } from '../../../hooks/useHydrateSave';
+import { RenderCodeOutputState } from '../../../types';
+import { runBrainFuckCode } from '../../../utils/brainFuck';
+import { GroupedBytesWithHoverState } from '../../bytes/groupedBytes';
+import { DetailRowsContainer } from '../../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
-} from '../divs/oneColumn';
-import { FlexEnds } from '../flexs';
-import { PrimaryButton } from '../inputs/button';
-import { InputWell, TextArea } from '../inputs/input';
-import { B, Label, LabelAnchor, P } from '../texts';
+} from '../../divs/oneColumn';
+import { FlexEnds } from '../../flexs';
+import { PrimaryButton } from '../../inputs/button';
+import { InputWell, TextArea } from '../../inputs/input';
+import { B, Label, LabelAnchor, P } from '../../texts';
 
-export const Recruitment: React.FC = () => {
+export const Tutorial1: React.FC = () => {
   return (
     <OneColumnContainer>
       <OneColumnContentContainer>
         <DetailRowsContainer>
           <div>
             <P>
-              <B>FROM: 001 (BOARD MEMBER)</B>
+              <B>ASSIGNMENT: {TUTORIALS_MAP[ROUTES.TRAIN[1]]}</B>
             </P>
             <P>
               <B>SUBJECT: ABF CORPS RECRUITMENT OF NEW MEMBERS</B>
@@ -33,27 +34,10 @@ export const Recruitment: React.FC = () => {
           </div>
           <div>
             <P>
-              In its current infancy, ABF is not revealed to the mass public,
-              but the protocol is <B>alive and humming.</B> We are in need of
-              new Corps members.
-            </P>
-          </div>
-          <div>
-            <P>
-              The ABF Corps is the steward of the <B>ABF protocol</B>, but do
-              not be confused. The Corps is NOT a DAO. We are not the owners of
-              the protocol (fuck fee extractors), simply its primary users,
-              artists, and researchers.
-            </P>
-          </div>
-          <div>
-            <P>Our goal is to make ABF flourish.</P>
-          </div>
-          <div>
-            <P>
-              <B>Joining the Corps grants:</B> the ABF Discord, the latest
-              developments around ABF, and the opportunity to shape ABF's
-              future.
+              Alright f**k faces, today we're going to learn how to control a
+              RENDERER via Brainfuck code. Every RENDERER is different and
+              should have instructions on which bytes manipulate which part.
+              Additionally, every RENDERER defines it's own input size.
             </P>
           </div>
           <div

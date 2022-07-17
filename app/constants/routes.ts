@@ -14,7 +14,12 @@ export const ROUTES = {
     INDEX: '/explore',
   },
   COLLECTION: '/collection',
-  RECRUIT: '/recruit',
+  RECRUIT: '/train/0',
+  TRAIN: {
+    INDEX: '/train',
+    0: '/train/0',
+    1: '/train/1',
+  },
   404: '/404',
   RENDERER: '/renderer',
   API: {
