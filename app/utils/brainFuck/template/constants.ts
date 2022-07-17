@@ -9,6 +9,6 @@ export const TEMPLATE_MATCH_REGEX = new RegExp(
 );
 
 export const createTemplateInsert = (identifier: string, params: any[] = []) =>
-  `${TEMPLATE_INSERT_OPCODE_START}${identifier}${TEMPLATE_INSERT_SEPERATOR}${params.join(
-    TEMPLATE_INSERT_SEPERATOR,
-  )}${TEMPLATE_INSERT_OPCODE_END}`;
+  `${TEMPLATE_INSERT_OPCODE_START}${identifier}${
+    params.length === 0 ? '' : TEMPLATE_INSERT_SEPERATOR
+  }${params.join(TEMPLATE_INSERT_SEPERATOR)}${TEMPLATE_INSERT_OPCODE_END}`;
