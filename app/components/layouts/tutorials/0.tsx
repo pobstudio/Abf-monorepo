@@ -1,10 +1,13 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import { TUTORIALS_MAP } from '.';
 import { ROUTES } from '../../../constants/routes';
+import { TutorialMetadata } from '../../../contexts/tutorial';
 import { INVITE_LINKS } from '../../../data/discord';
-import { useDefaultSeed } from '../../../hooks/useDefaults';
+import {
+  useDefaultSeed,
+  useSavedOrDefaultTutorialMetadata,
+} from '../../../hooks/useDefaults';
 import { useHydrateSave } from '../../../hooks/useHydrateSave';
 import { RenderCodeOutputState } from '../../../types';
 import { runBrainFuckCode } from '../../../utils/brainFuck';
@@ -70,14 +73,10 @@ export const Recruitment: React.FC = () => {
   );
 };
 
-interface ChallengeMetadata {
-  parameters: number[];
-  code: string;
-  seed: string;
-}
-
 const Challenge: FC = () => {
-  const { parameters } = useSavedOrDefaultChallenge();
+  const { parameters } = useSavedOrDefaultTutorialMetadata(
+    useDefaultTutorialMetadata,
+  );
   const [code, setCode] = useState<string | undefined>(undefined);
   const output = useMemo((): RenderCodeOutputState | undefined => {
     if (!code) {
@@ -98,7 +97,7 @@ const Challenge: FC = () => {
     }
   }, [code]);
 
-  const challengeMetadata = useMemo((): Partial<ChallengeMetadata> => {
+  const challengeMetadata = useMemo((): Partial<TutorialMetadata> => {
     return {
       parameters,
       code,
@@ -147,7 +146,7 @@ const Challenge: FC = () => {
       </div>
       <Label>CHALLENGE</Label>
       <P>
-        Write a Brainfuck algorithmn that outputs every integer between{' '}
+        Write a Brainfuck algorithm that outputs every integer between{' '}
         {parameters?.[0]} and {parameters?.[1] + ' '}
         (inclusive).
       </P>
@@ -195,9 +194,9 @@ const Challenge: FC = () => {
   );
 };
 
-const useDefaultChallengeMetadata = (
+const useDefaultTutorialMetadata = (
   refresh?: any,
-): Partial<ChallengeMetadata> => {
+): Partial<TutorialMetadata> => {
   const [start, end] = useMemo(() => {
     const delta = Math.round((0.5 + Math.random() * 0.5) * 25);
     const start = Math.round(Math.random() * 25);
@@ -211,40 +210,4 @@ const useDefaultChallengeMetadata = (
       seed,
     };
   }, [seed, start, end]);
-};
-
-const useSavedOrDefaultChallenge = (): Partial<ChallengeMetadata> => {
-  const defaultChallengeMetadata = useDefaultChallengeMetadata();
-
-  const router = useRouter();
-
-  const [hasHydrated, setHasHydrated] = useState(false);
-
-  const [savedChallengeMetadata, setSavedChallengeMetadata] = useState<
-    Partial<ChallengeMetadata>
-  >({});
-  useEffect(() => {
-    if (hasHydrated) {
-      return;
-    }
-    if (typeof router.query.save !== 'string') {
-      return;
-    }
-    try {
-      const save = router.query.save;
-      const obj = JSON.parse(atob(save));
-      if (Object.keys(obj).length !== 0) {
-        setHasHydrated(true);
-        setSavedChallengeMetadata({
-          ...defaultChallengeMetadata,
-          ...(obj as Partial<ChallengeMetadata>),
-        });
-        return;
-      }
-    } catch (e) {}
-    setHasHydrated(true);
-    setSavedChallengeMetadata(defaultChallengeMetadata);
-  }, [router]);
-
-  return useMemo(() => savedChallengeMetadata, [savedChallengeMetadata]);
 };

@@ -1,19 +1,22 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import { TUTORIALS_MAP } from '.';
 import { ROUTES } from '../../../constants/routes';
+import { TutorialMetadata } from '../../../contexts/tutorial';
 import { INVITE_LINKS } from '../../../data/discord';
-import { useDefaultSeed } from '../../../hooks/useDefaults';
+import {
+  useDefaultSeed,
+  useSavedOrDefaultTutorialMetadata,
+} from '../../../hooks/useDefaults';
 import { useHydrateSave } from '../../../hooks/useHydrateSave';
 import { RenderCodeOutputState } from '../../../types';
 import { runBrainFuckCode } from '../../../utils/brainFuck';
 import { GroupedBytesWithHoverState } from '../../bytes/groupedBytes';
 import { DetailRowsContainer } from '../../details/rows';
 import {
-  OneColumnContainer,
-  OneColumnContentContainer,
-} from '../../divs/oneColumn';
+  TwoColumnContainer,
+  TwoColumnContentContainer,
+} from '../../divs/twoColumn';
 import { FlexEnds } from '../../flexs';
 import { PrimaryButton } from '../../inputs/button';
 import { InputWell, TextArea } from '../../inputs/input';
@@ -21,46 +24,53 @@ import { B, Label, LabelAnchor, P } from '../../texts';
 
 export const Tutorial1: React.FC = () => {
   return (
-    <OneColumnContainer>
-      <OneColumnContentContainer>
-        <DetailRowsContainer>
-          <div>
-            <P>
-              <B>ASSIGNMENT: {TUTORIALS_MAP[ROUTES.TRAIN[1]]}</B>
-            </P>
-            <P>
-              <B>SUBJECT: ABF CORPS RECRUITMENT OF NEW MEMBERS</B>
-            </P>
-          </div>
-          <div>
-            <P>
-              Alright f**k faces, today we're going to learn how to control a
-              RENDERER via Brainfuck code. Every RENDERER is different and
-              should have instructions on which bytes manipulate which part.
-              Additionally, every RENDERER defines it's own input size.
-            </P>
-          </div>
-          <div
-            style={{
-              margin: '50px 0',
-              borderTop: '1px solid rgba(0, 0, 0, 0.1)',
-            }}
-          ></div>
-          <Challenge />
-        </DetailRowsContainer>
-      </OneColumnContentContainer>
-    </OneColumnContainer>
+    <>
+      <TwoColumnContainer>
+        <div>
+          <TwoColumnContentContainer>
+            <Jumbotron />
+            {/* <BrainFuckEditor /> */}
+            <Challenge />
+          </TwoColumnContentContainer>
+        </div>
+        <div>
+          <TwoColumnContentContainer
+            style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}
+          >
+            {/* <TokenPreview /> */}
+            wiggle
+          </TwoColumnContentContainer>
+        </div>
+      </TwoColumnContainer>
+    </>
   );
 };
 
-interface ChallengeMetadata {
-  parameters: number[];
-  code: string;
-  seed: string;
-}
+const Jumbotron: FC = () => {
+  return (
+    <DetailRowsContainer>
+      <P>
+        <B>ASSIGNMENT: {TUTORIALS_MAP[ROUTES.TRAIN[1]]}</B>
+      </P>
+      <P>
+        <B>SUBJECT: NEW MEMBER ONBOARDING - TRAINING MATERIAL 001</B>
+      </P>
+      <P>
+        Alright f**k faces, today we're going to learn how to control a RENDERER
+        via Brainfuck code.
+      </P>
+      <P>
+        The task is simple: change the dots in all 4 corners to have a radius of
+        10. All other dots should have a radius of 1.
+      </P>
+    </DetailRowsContainer>
+  );
+};
 
 const Challenge: FC = () => {
-  const { parameters } = useSavedOrDefaultChallenge();
+  const { parameters } = useSavedOrDefaultTutorialMetadata(
+    useDefaultTutorialMetadata,
+  );
   const [code, setCode] = useState<string | undefined>(undefined);
   const output = useMemo((): RenderCodeOutputState | undefined => {
     if (!code) {
@@ -81,7 +91,7 @@ const Challenge: FC = () => {
     }
   }, [code]);
 
-  const challengeMetadata = useMemo((): Partial<ChallengeMetadata> => {
+  const challengeMetadata = useMemo((): Partial<TutorialMetadata> => {
     return {
       parameters,
       code,
@@ -130,7 +140,7 @@ const Challenge: FC = () => {
       </div>
       <Label>CHALLENGE</Label>
       <P>
-        Write a Brainfuck algorithmn that outputs every integer between{' '}
+        Write a Brainfuck algorithm that outputs every integer between{' '}
         {parameters?.[0]} and {parameters?.[1] + ' '}
         (inclusive).
       </P>
@@ -178,9 +188,9 @@ const Challenge: FC = () => {
   );
 };
 
-const useDefaultChallengeMetadata = (
+const useDefaultTutorialMetadata = (
   refresh?: any,
-): Partial<ChallengeMetadata> => {
+): Partial<TutorialMetadata> => {
   const [start, end] = useMemo(() => {
     const delta = Math.round((0.5 + Math.random() * 0.5) * 25);
     const start = Math.round(Math.random() * 25);
@@ -194,40 +204,4 @@ const useDefaultChallengeMetadata = (
       seed,
     };
   }, [seed, start, end]);
-};
-
-const useSavedOrDefaultChallenge = (): Partial<ChallengeMetadata> => {
-  const defaultChallengeMetadata = useDefaultChallengeMetadata();
-
-  const router = useRouter();
-
-  const [hasHydrated, setHasHydrated] = useState(false);
-
-  const [savedChallengeMetadata, setSavedChallengeMetadata] = useState<
-    Partial<ChallengeMetadata>
-  >({});
-  useEffect(() => {
-    if (hasHydrated) {
-      return;
-    }
-    if (typeof router.query.save !== 'string') {
-      return;
-    }
-    try {
-      const save = router.query.save;
-      const obj = JSON.parse(atob(save));
-      if (Object.keys(obj).length !== 0) {
-        setHasHydrated(true);
-        setSavedChallengeMetadata({
-          ...defaultChallengeMetadata,
-          ...(obj as Partial<ChallengeMetadata>),
-        });
-        return;
-      }
-    } catch (e) {}
-    setHasHydrated(true);
-    setSavedChallengeMetadata(defaultChallengeMetadata);
-  }, [router]);
-
-  return useMemo(() => savedChallengeMetadata, [savedChallengeMetadata]);
 };

@@ -3,6 +3,7 @@ import { utils } from 'ethers';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
+import { TutorialMetadata } from '../contexts/tutorial';
 import { ProjectMetadata } from '../types';
 import { INPUT_CONSTANT_BYTES_SIZE } from '../utils/brainFuck';
 
@@ -94,4 +95,42 @@ export const useSavedOrDefaultProject = (): Partial<ProjectMetadata> => {
   }, [router]);
 
   return useMemo(() => savedProjectMetadata, [savedProjectMetadata]);
+};
+
+export const useSavedOrDefaultTutorialMetadata = (
+  getDefaultTutorialMetadata: () => Partial<TutorialMetadata>,
+): Partial<TutorialMetadata> => {
+  const defaultChallengeMetadata = getDefaultTutorialMetadata();
+
+  const router = useRouter();
+
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  const [savedChallengeMetadata, setSavedChallengeMetadata] = useState<
+    Partial<TutorialMetadata>
+  >({});
+  useEffect(() => {
+    if (hasHydrated) {
+      return;
+    }
+    if (typeof router.query.save !== 'string') {
+      return;
+    }
+    try {
+      const save = router.query.save;
+      const obj = JSON.parse(atob(save));
+      if (Object.keys(obj).length !== 0) {
+        setHasHydrated(true);
+        setSavedChallengeMetadata({
+          ...defaultChallengeMetadata,
+          ...(obj as Partial<TutorialMetadata>),
+        });
+        return;
+      }
+    } catch (e) {}
+    setHasHydrated(true);
+    setSavedChallengeMetadata(defaultChallengeMetadata);
+  }, [router]);
+
+  return useMemo(() => savedChallengeMetadata, [savedChallengeMetadata]);
 };

@@ -75,7 +75,7 @@ const AdvancedControls: FC = () => {
               <Text style={{ marginRight: 6 }}>SEED</Text>
               <Tooltip direction={'left'}>
                 <P>
-                  Seed provides a determinstic source of random for generating
+                  Seed provides a deterministic source of random for generating
                   the last 32 bytes provide to Brainfuck code.
                 </P>
               </Tooltip>
