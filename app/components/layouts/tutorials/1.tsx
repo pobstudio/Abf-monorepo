@@ -91,13 +91,13 @@ const Challenge: FC = () => {
     }
   }, [code]);
 
-  const challengeMetadata = useMemo((): Partial<TutorialMetadata> => {
+  const tutorialMetadata = useMemo((): Partial<TutorialMetadata> => {
     return {
       parameters,
       code,
     };
   }, [parameters, code]);
-  useHydrateSave(challengeMetadata);
+  useHydrateSave(tutorialMetadata);
 
   const expectedOutputHexStr = useMemo(() => {
     if (!parameters) {

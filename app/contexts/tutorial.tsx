@@ -1,4 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useSavedOrDefaultTutorialMetadata } from '../hooks/useDefaults';
+import { useHydrateSave } from '../hooks/useHydrateSave';
+import { RenderCodeOutputState } from '../types';
+import { runBrainFuckCode } from '../utils/brainFuck';
 
 export interface TutorialMetadata {
   parameters: number[];
@@ -7,32 +11,109 @@ export interface TutorialMetadata {
 }
 
 export interface TutorialProviderContext {
-  setCurrentSampleTokenId: React.Dispatch<React.SetStateAction<number>>;
-  activateCollection: () => void;
-  isActive: boolean;
+  tutorialMetadata: Partial<TutorialMetadata> | undefined;
+  code: string | undefined;
+  setCode: React.Dispatch<React.SetStateAction<string | undefined>>;
+  output: RenderCodeOutputState | undefined;
+  expectedOutputHexStr: string | undefined;
+  isButtonDisabled: boolean;
+  onSubmit: () => void;
 }
 
 export type TutorialProviderState = TutorialProviderContext;
 
 const initialState: TutorialProviderState = {
-  setCurrentSampleTokenId: () => new Error('func is not set'),
-  activateCollection: () => new Error('func is not set'),
-  isActive: false,
+  setCode: () => new Error('func is not set'),
+  onSubmit: () => new Error('func is not set'),
+  tutorialMetadata: undefined,
+  code: undefined,
+  output: undefined,
+  expectedOutputHexStr: undefined,
+  isButtonDisabled: true,
 };
 
 const TutorialContext =
   React.createContext<TutorialProviderState>(initialState);
 
 export const TutorialsProvider: React.FC<{
+  getDefaultTutorialMetadata: () => Partial<TutorialMetadata>;
   children: React.ReactNode;
-}> = ({ children }) => {
+}> = ({ getDefaultTutorialMetadata, children }) => {
+  const { parameters } = useSavedOrDefaultTutorialMetadata(
+    getDefaultTutorialMetadata,
+  );
+  const [code, setCode] = useState<string | undefined>(undefined);
+  const output = useMemo((): RenderCodeOutputState | undefined => {
+    if (!code) {
+      return undefined;
+    }
+    try {
+      const output = runBrainFuckCode(code, []);
+      return {
+        output,
+        status: 'success',
+        warnings: [],
+      };
+    } catch (e: any) {
+      return {
+        message: e.message,
+        status: 'error',
+      };
+    }
+  }, [code]);
+  const tutorialMetadata = useMemo((): Partial<TutorialMetadata> => {
+    return {
+      parameters,
+      code,
+    };
+  }, [parameters, code]);
+  useHydrateSave(tutorialMetadata);
+  const expectedOutputHexStr = useMemo(() => {
+    if (!parameters) {
+      return undefined;
+    }
+    let hexStr = '0x';
+    for (let i = parameters[0]; i <= parameters[1]; ++i) {
+      hexStr += i.toString(16).padStart(2, '0');
+    }
+    return hexStr;
+  }, [parameters]);
+  const isButtonDisabled = useMemo(() => {
+    if (output?.status !== 'success') {
+      return true;
+    }
+    if (!expectedOutputHexStr) {
+      return true;
+    }
+    return expectedOutputHexStr !== output.output;
+  }, [expectedOutputHexStr, output]);
+  const onSubmit = useCallback(() => {
+    if (isButtonDisabled) {
+      confirm('Answer is not correct.');
+      return;
+    }
+    confirm(`wiggleworks.com`);
+  }, [isButtonDisabled]);
+
   const stateObject = useMemo(() => {
     return {
-      setCurrentSampleTokenId: () => 1,
-      activateCollection: () => undefined,
-      isActive: false,
+      tutorialMetadata,
+      code,
+      setCode,
+      output,
+      expectedOutputHexStr,
+      isButtonDisabled,
+      onSubmit,
     };
-  }, []);
+  }, [
+    tutorialMetadata,
+    code,
+    setCode,
+    output,
+    expectedOutputHexStr,
+    isButtonDisabled,
+    onSubmit,
+  ]);
 
   return (
     <TutorialContext.Provider value={stateObject}>
