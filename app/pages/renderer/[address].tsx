@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import { PageDiv } from '../../components/divs';
 import { RendererDetails } from '../../components/layouts/rendererDetails';
+import { RendererDetailsBackButton } from '../../components/layouts/renderers';
 import { Footer } from '../../components/navs/footer';
 import { Header } from '../../components/navs/header';
 
