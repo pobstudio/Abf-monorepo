@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { FC } from 'react';
+import { ROUTES } from '../../../constants/routes';
 import { DetailRowsContainer } from '../../details/rows';
 import { A, B, P } from '../../texts';
 
@@ -15,7 +17,11 @@ export const Jumbotron: FC = () => {
         forever.
       </P>
       <P>
-        The catch? You need to write your generative art with <A>Brainfuck</A>.
+        The catch? You need to write your generative art with{' '}
+        <Link href={ROUTES.DOCS.BRAINFUCK}>
+          <A>Brainfuck!</A>
+        </Link>
+        .
       </P>
     </DetailRowsContainer>
   );

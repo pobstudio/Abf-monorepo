@@ -1,43 +1,73 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import styled from 'styled-components';
 import {
   useModifyProjectMetadata,
   useProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import {
-  DetailRow,
-  DetailRowsContainer,
-  DetailTitleAnchorRow,
-} from '../../details/rows';
+import { DetailRow, DetailRowsContainer } from '../../details/rows';
 import { ExpandoContentContainer, ExpandoGroup } from '../../expando';
-import { Flex } from '../../flexs';
+import { Flex, FlexEnds } from '../../flexs';
+import { BaseButton } from '../../inputs/button';
 import { InputWell, TextArea, TextInput } from '../../inputs/input';
-import { Code, P, Text } from '../../texts';
+import { B, Code, Label, P, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
+
+type BrainFuckEditorViewState = 'raw' | 'postProcessed';
 
 export const BrainFuckEditor: FC = () => {
   const { onCodeChange, onInputConstantsChange } = useModifyProjectMetadata();
-  const { code, inputConstants: validInputConstants } = useProjectMetadata();
+  const {
+    code,
+    inputConstants: validInputConstants,
+    postProcessedCode,
+  } = useProjectMetadata();
   const { inputConstants } = useRawProjectMetadata();
+
+  const [brainFuckEditorViewState, setBrainFuckEditorViewState] =
+    useState<BrainFuckEditorViewState>('raw');
+
   return (
     <>
       <DetailRowsContainer>
-        <DetailTitleAnchorRow>
-          {['WRITE BRAINFUCK', `DOCS`]}
-        </DetailTitleAnchorRow>
+        <FlexEnds>
+          <Text>
+            <B>WRITE BRAINFUCK!</B>
+          </Text>
+          <Flex>
+            <ToggleButton
+              onClick={() => setBrainFuckEditorViewState('raw')}
+              isActive={brainFuckEditorViewState === 'raw'}
+            >
+              WRITTEN
+            </ToggleButton>
+            <Label style={{ margin: '0 4px' }}>/</Label>
+            <ToggleButton
+              onClick={() => setBrainFuckEditorViewState('postProcessed')}
+              isActive={brainFuckEditorViewState === 'postProcessed'}
+            >
+              TRANSPILED
+            </ToggleButton>
+          </Flex>
+        </FlexEnds>
         <InputWell>
           <TextArea
-            value={code ?? ''}
+            disabled={brainFuckEditorViewState === 'postProcessed'}
+            value={
+              brainFuckEditorViewState === 'postProcessed'
+                ? postProcessedCode ?? ''
+                : code ?? ''
+            }
             onChange={(e) => onCodeChange(e.target.value)}
             style={{ minHeight: 240 }}
             placeholder="-[--->+<]>-.[---->+++++<]>-.+.++++++++++.+[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.[-->+++++++<]>.++.-------------.[--->+<]>---..+++++.-[---->+<]>++.+[->+++<]>.++++++++++++..---.[-->+<]>--------."
           />
         </InputWell>
         <Flex style={{ paddingTop: 82 }}>
-          <Text style={{ marginRight: 6 }}>INPUT TO BF CODE</Text>
+          <Text style={{ marginRight: 6 }}>INPUT TO BF! CODE</Text>
           <Tooltip direction={'left'}>
             <P>
-              Input in Brainfuck is read via the <Code>,</Code> operator.
+              Input in Brainfuck! is read via the <Code>,</Code> operator.
               Provide up to 32 bytes; another 32 pseudo-random bytes will be
               appended for a total of 64 bytes.
             </P>
@@ -76,7 +106,7 @@ const AdvancedControls: FC = () => {
               <Tooltip direction={'left'}>
                 <P>
                   Seed provides a deterministic source of random for generating
-                  the last 32 bytes provide to Brainfuck code.
+                  the last 32 bytes provide to Brainfuck! code.
                 </P>
               </Tooltip>
             </Flex>
@@ -95,3 +125,10 @@ const AdvancedControls: FC = () => {
     </ExpandoGroup>
   );
 };
+
+const ToggleButton = styled(BaseButton)<{ isActive?: boolean }>`
+  opacity: ${(p) => (p.isActive ? 1 : 0.4)};
+  :hover {
+    opacity: ${(p) => (p.isActive ? 1 : 0.6)};
+  }
+`;

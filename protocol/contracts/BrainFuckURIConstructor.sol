@@ -37,7 +37,7 @@ library BrainFuckURIConstructor {
 
     function tokenURI(uint256 tokenId, string memory name, bytes memory seed, bytes32 constants, bytes memory code, IRenderer renderer) public view returns (string memory) {
       string memory tokenName = string(abi.encodePacked(name, " #", tokenId.toString()));
-      bytes memory props = BrainFuckVM.runBrainFuckCode(code, tokenSeed(seed, tokenId, constants));
+      bytes memory props = BrainFuckVM.run(code, tokenSeed(seed, tokenId, constants));
 
       string memory image = renderer.render(props);
       

@@ -55,7 +55,7 @@ export const ProtocolContracts: FC = () => {
             <ProtocolContractsTable
               address={contracts.libraries.vm}
               title={`BrainfuckVM`}
-              description={`On-chain BrainFuck language interpreter`}
+              description={`On-chain Brainfuck! language interpreter`}
               label={'library'}
             />
             <ProtocolContractsTable

@@ -32,6 +32,7 @@ import {
   INPUT_CONSTANT_BYTES_SIZE,
   runBrainFuckCode,
 } from '../utils/brainFuck';
+import { transpileTemplatedBf } from '../utils/brainFuck/template';
 import { getHexStringNumBytes } from '../utils/hex';
 
 export interface ProjectBuilderProviderContext {
@@ -138,9 +139,21 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
   const rendererMetadata = useRendererMetadata(renderer);
   const rendererMetadataStub = useRendererMetadataStubByProvider(renderer);
 
+  const postProcessedCode = useMemo(() => {
+    if (!rawProjectMetadata.code) {
+      return undefined;
+    }
+    try {
+      return transpileTemplatedBf(rawProjectMetadata.code);
+    } catch (e) {
+      return undefined;
+    }
+  }, [rawProjectMetadata.code]);
+
   const projectMetadata: Partial<ProjectMetadata> = useMemo(() => {
     return {
       ...rawProjectMetadata,
+      postProcessedCode,
       inputConstants,
       renderer,
       whitelistToken,
@@ -148,6 +161,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       rendererMetadataStub: rendererMetadataStub ?? rendererMetadata,
     };
   }, [
+    postProcessedCode,
     whitelistToken,
     renderer,
     seed,
@@ -176,7 +190,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       if (!tokenSeed) {
         return undefined;
       }
-      if (!projectMetadata?.code) {
+      if (!postProcessedCode) {
         return undefined;
       }
       const input: number[] = [];
@@ -184,7 +198,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
         input.push(parseInt(tokenSeed.slice(i, i + 2), 16));
       }
       try {
-        const output = runBrainFuckCode(projectMetadata.code, input);
+        const output = runBrainFuckCode(postProcessedCode, input);
 
         const extraWarnings: string[] = [];
 
@@ -220,7 +234,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
       tokenSeed,
       codeOutput,
     };
-  }, [projectMetadata, currentSampleTokenId]);
+  }, [projectMetadata, postProcessedCode, currentSampleTokenId]);
 
   const hashedProjectMetadata = useHash(projectMetadata);
 

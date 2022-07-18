@@ -3,13 +3,13 @@
 pragma solidity ^0.8.4;
 
 library BrainFuckVM {
-  uint constant public TAPE_SIZE = 30000; 
-  uint constant public LOOPING_STACK_SIZE = 4096;
+  uint constant public TAPE_SIZE = 3_000_000; 
+  uint constant public LOOPING_STACK_SIZE = 8192;
 
-  function runBrainFuckCode(bytes calldata code, bytes calldata input) public pure returns (bytes memory out) {
+  function run(bytes calldata code, bytes calldata input) public pure returns (bytes memory out) {
     out = "";
     bytes memory tape = new bytes(TAPE_SIZE);
-
+    
     uint readIndex = 0;
     uint ptr = 0;
     bool isLooping = false;
@@ -47,6 +47,10 @@ library BrainFuckVM {
         // .
         if (opcode == 0x2E) {
           out = abi.encodePacked(out, tape[ptr]);
+        }
+        // !
+        if (opcode == 0x21) {
+          ptr = 0;
         }
         // >
         if (opcode == 0x3E) {

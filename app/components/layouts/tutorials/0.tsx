@@ -118,14 +118,14 @@ const Tutorial: FC = () => {
       <div>
         <P>
           <B>
-            If this interests you, please complete the following Brainfuck
+            If this interests you, please complete the following Brainfuck!
             challenge for entry.
           </B>
         </P>
       </div>
       <Label>CHALLENGE</Label>
       <P>
-        Write a Brainfuck algorithm that outputs every integer between{' '}
+        Write a Brainfuck! algorithm that outputs every integer between{' '}
         {tutorialMetadata?.parameters?.[0]} and{' '}
         {tutorialMetadata?.parameters?.[1] + ' '}
         (inclusive).
@@ -134,7 +134,7 @@ const Tutorial: FC = () => {
         <Label>ANSWER</Label>
         <Link href={ROUTES.DOCS.BRAINFUCK} passHref>
           <LabelAnchor target="_blank" rel="noopener noreferrer">
-            BRAINFUCK DOCS
+            BRAINFUCK! DOCS
           </LabelAnchor>
         </Link>
       </FlexEnds>
