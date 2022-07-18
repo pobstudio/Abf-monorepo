@@ -1,9 +1,5 @@
 import { FC } from 'react';
-import {
-  useProjectBuilderContext,
-  useProjectMetadata,
-} from '../../../contexts/projectBuilder';
-import { RenderCodeOutputState, RendererMetadataStub } from '../../../types';
+import { useTutorialContext } from '../../../contexts/tutorial';
 import { prettifyCountableNumber } from '../../../utils/hex';
 import { getEtherscanAddressUrl, getIPFSUrl } from '../../../utils/urls';
 import { GroupedBytes } from '../../bytes/groupedBytes';
@@ -13,10 +9,8 @@ import { Render } from '../../renders';
 import { Label, LabelAnchor, P, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
 
-export const BasicRender: FC<{
-  output: RenderCodeOutputState | undefined;
-  rendererMetadataStub: RendererMetadataStub | undefined;
-}> = ({ output, rendererMetadataStub }) => {
+export const BasicRender: FC = () => {
+  const { output, rendererMetadata } = useTutorialContext();
   return (
     <DetailRowsContainer>
       <FlexEnds>
@@ -39,19 +33,19 @@ export const BasicRender: FC<{
         <LabelAnchor
           target={'_blank'}
           href={
-            rendererMetadataStub?.address
-              ? getEtherscanAddressUrl(rendererMetadataStub?.address)
+            rendererMetadata?.address
+              ? getEtherscanAddressUrl(rendererMetadata?.address)
               : '#'
           }
         >
-          {rendererMetadataStub?.label}
+          {rendererMetadata?.label}
         </LabelAnchor>
       </FlexEnds>
-      <Render output={output} rendererMetadata={rendererMetadataStub} />
-      {!!rendererMetadataStub?.additionalMetadata && (
+      <Render output={output} rendererMetadata={rendererMetadata} />
+      {!!rendererMetadata?.additionalMetadata && (
         <>
           <Label>RENDERER DESCRIPTION</Label>
-          <P>{rendererMetadataStub.additionalMetadata.description}</P>
+          <P>{rendererMetadata.additionalMetadata.description}</P>
         </>
       )}
       <FlexEnds>
@@ -66,13 +60,13 @@ export const BasicRender: FC<{
           </Tooltip>
         </Flex>
         <Text>{`${(() => {
-          if (!rendererMetadataStub?.propsSize) return '-';
-          return prettifyCountableNumber(rendererMetadataStub.propsSize);
+          if (!rendererMetadata?.propsSize) return '-';
+          return prettifyCountableNumber(rendererMetadata.propsSize);
         })()} BYTES`}</Text>
       </FlexEnds>
-      {!!rendererMetadataStub?.additionalMetadataURI && (
+      {!!rendererMetadata?.additionalMetadataURI && (
         <DetailAnchorRow
-          href={getIPFSUrl(rendererMetadataStub.additionalMetadataURI)}
+          href={getIPFSUrl(rendererMetadata.additionalMetadataURI)}
         >
           {['RENDERER DOCUMENTATION', 'IPFS']}
         </DetailAnchorRow>
@@ -82,29 +76,27 @@ export const BasicRender: FC<{
 };
 
 const RawOutput: FC = () => {
-  const { currentSampleTokenRenderState } = useProjectBuilderContext();
-  const { rendererMetadataStub } = useProjectMetadata();
-  const { currentSampleTokenDebugState, setCurrentSampleTokenDebugState } =
-    useProjectBuilderContext();
+  const {
+    output,
+    currentSampleTokenDebugState,
+    setCurrentSampleTokenDebugState,
+    rendererMetadata,
+  } = useTutorialContext();
 
-  if (!currentSampleTokenRenderState.codeOutput) {
+  if (!output) {
     return <P>{'-'}</P>;
   }
 
-  if (currentSampleTokenRenderState.codeOutput.status === 'error') {
-    return (
-      <P style={{ color: '#FF5D5D' }}>
-        {currentSampleTokenRenderState.codeOutput?.message}
-      </P>
-    );
+  if (output.status === 'error') {
+    return <P style={{ color: '#FF5D5D' }}>{output.message}</P>;
   }
 
   return (
     <>
       <GroupedBytes
-        output={currentSampleTokenRenderState.codeOutput.output}
+        output={output.output}
         byteGroups={
-          rendererMetadataStub?.additionalMetadata?.previewOptions?.byteGroups
+          rendererMetadata?.additionalMetadata?.previewOptions?.byteGroups
         }
         focusedByteGroupingIndex={
           currentSampleTokenDebugState?.focusedByteGroupingIndex
@@ -116,7 +108,7 @@ const RawOutput: FC = () => {
           }))
         }
       />
-      {currentSampleTokenRenderState.codeOutput?.warnings?.map((w, i) => {
+      {output?.warnings?.map((w, i) => {
         return (
           <P style={{ color: '#FFC54D' }} key={`warning-row-${i}`}>
             {w}

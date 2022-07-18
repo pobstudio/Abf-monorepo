@@ -1,5 +1,4 @@
 import { deployments } from '@abf-monorepo/protocol';
-import Link from 'next/link';
 import React, { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import { TUTORIALS_MAP } from '.';
@@ -11,18 +10,15 @@ import {
   useTutorialContext,
 } from '../../../contexts/tutorial';
 import { INVITE_LINKS } from '../../../data/discord';
-import { useRendererMetadataStubByProvider } from '../../../hooks/useRenderer';
-import { GroupedBytesWithHoverState } from '../../bytes/groupedBytes';
 import { DetailRowsContainer } from '../../details/rows';
 import {
   TwoColumnContainer,
   TwoColumnContentContainer,
 } from '../../divs/twoColumn';
-import { FlexEnds } from '../../flexs';
 import { PrimaryButton } from '../../inputs/button';
-import { InputWell, TextArea } from '../../inputs/input';
-import { B, Label, LabelAnchor, P } from '../../texts';
-import { BasicRender } from './renderTutorial';
+import { B, Label, P } from '../../texts';
+import { BasicEditor } from './editor';
+import { BasicRender } from './render';
 
 const TUTORIAL_1_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
   const expectedOutputHexStr = useMemo(() => {
@@ -42,35 +38,30 @@ const TUTORIAL_1_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
 };
 
 export const Tutorial1: React.FC = () => {
-  const { output } = useTutorialContext();
-  const rendererMetadata = useRendererMetadataStubByProvider(
-    deployments[CHAIN_ID].renderers.dotMatrix,
-  );
   return (
     <>
-      <TwoColumnContainer>
-        <div>
-          <TwoColumnTutorialContainer>
-            <Jumbotron />
-            <TutorialsProvider
-              getDefaultTutorialMetadata={TUTORIAL_1_METADATA}
-              reward={`Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the Corps!`}
+      <TutorialsProvider
+        renderer={deployments[CHAIN_ID].renderers.dotMatrix}
+        getDefaultTutorialMetadata={TUTORIAL_1_METADATA}
+        reward={`Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the Corps!`}
+      >
+        <TwoColumnContainer>
+          <div>
+            <TwoColumnTutorialContainer>
+              <Jumbotron />
+
+              <Editor />
+            </TwoColumnTutorialContainer>
+          </div>
+          <div>
+            <TwoColumnContentContainer
+              style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}
             >
-              <Tutorial />
-            </TutorialsProvider>
-          </TwoColumnTutorialContainer>
-        </div>
-        <div>
-          <TwoColumnContentContainer
-            style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}
-          >
-            <BasicRender
-              output={output}
-              rendererMetadataStub={rendererMetadata}
-            />
-          </TwoColumnContentContainer>
-        </div>
-      </TwoColumnContainer>
+              <BasicRender />
+            </TwoColumnContentContainer>
+          </div>
+        </TwoColumnContainer>
+      </TutorialsProvider>
     </>
   );
 };
@@ -112,57 +103,11 @@ const Jumbotron: FC = () => {
   );
 };
 
-const Tutorial: FC = () => {
-  const {
-    tutorialMetadata,
-    code,
-    setCode,
-    output,
-    expectedOutputHexStr,
-    onSubmit,
-    isButtonDisabled,
-  } = useTutorialContext();
+const Editor: FC = () => {
+  const { onSubmit, isButtonDisabled } = useTutorialContext();
   return (
     <>
-      <FlexEnds>
-        <Label>EDITOR</Label>
-        <Link href={ROUTES.DOCS.BRAINFUCK} passHref>
-          <LabelAnchor target="_blank" rel="noopener noreferrer">
-            BRAINFUCK DOCS
-          </LabelAnchor>
-        </Link>
-      </FlexEnds>
-      <InputWell>
-        <TextArea
-          value={code ?? ''}
-          onChange={(e) => setCode(e.target.value)}
-          style={{ minHeight: 240 }}
-          placeholder="-[--->+<]>-.[---->+++++<]>-.+.++++++++++.+[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.[-->+++++++<]>.++.-------------.[--->+<]>---..+++++.-[---->+<]>++.+[->+++<]>.++++++++++++..---.[-->+<]>--------."
-        />
-      </InputWell>
-      <Label>OUTPUT</Label>
-      {(() => {
-        if (output?.status === 'error') {
-          return <P style={{ color: '#FF5D5D' }}>{output.message}</P>;
-        }
-        return (
-          <GroupedBytesWithHoverState
-            output={output?.output}
-            byteGroups={[
-              { numGroups: 'infinity', groupBytesIn: 1, label: 'Integer' },
-            ]}
-            showBytesLength
-          />
-        );
-      })()}
-      <Label>EXPECTED OUTPUT</Label>
-      <GroupedBytesWithHoverState
-        output={expectedOutputHexStr}
-        byteGroups={[
-          { numGroups: 'infinity', groupBytesIn: 1, label: 'Integer' },
-        ]}
-        showBytesLength
-      />
+      <BasicEditor />
       <PrimaryButton onClick={onSubmit} disabled={isButtonDisabled}>
         SUBMIT ANSWER
       </PrimaryButton>
