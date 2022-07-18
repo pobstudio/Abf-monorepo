@@ -30,7 +30,7 @@ export const BasicEditor: FC = () => {
           placeholder="-[--->+<]>-.[---->+++++<]>-.+.++++++++++.+[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.[-->+++++++<]>.++.-------------.[--->+<]>---..+++++.-[---->+<]>++.+[->+++<]>.++++++++++++..---.[-->+<]>--------."
         />
       </InputWell>
-      <Flex style={{ paddingTop: 82 }}>
+      <Flex style={{ paddingTop: 25 }}>
         <Text style={{ marginRight: 6 }}>INPUT TO BF CODE</Text>
         <Tooltip direction={'left'}>
           <P>
