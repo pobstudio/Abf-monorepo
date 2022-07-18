@@ -83,6 +83,8 @@ const RawOutput: FC = () => {
     rendererMetadata,
   } = useTutorialContext();
 
+  console.log(output, 'raw output');
+
   if (!output) {
     return <P>{'-'}</P>;
   }
