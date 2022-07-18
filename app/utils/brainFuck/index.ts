@@ -1,11 +1,11 @@
 import { BigNumber, BytesLike, utils } from 'ethers';
-import { SampleTokenRenderDebugState, SampleTokenRenderState } from '../types';
+import {
+  SampleTokenRenderDebugState,
+  SampleTokenRenderState,
+} from '../../types';
 
-const TAPE_SIZE = 30000;
-const LOOPING_STACK_SIZE = 2056;
-
-const SEED_CONSTANTS_TYPE_MASK =
-  '0x0000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF';
+const TAPE_SIZE = 3_000_000;
+const LOOPING_STACK_SIZE = 8192;
 
 export const INPUT_CONSTANT_BYTES_SIZE = 32;
 
@@ -66,6 +66,7 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
   for (let i = 0; i < code.length; ++i) {
     const opcode = '0x' + code[i].charCodeAt(0).toString(16).toUpperCase();
     if (isLoopingCounter > MAX_IS_LOOPING_COUNTER) {
+      console.log(tape.slice(0, 12));
       throw new Error('MAX LOOPS EXCEEDED (10,000)');
     }
     if (isLooping) {
@@ -104,6 +105,10 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
       // .
       if (opcode === '0x2E') {
         out += tape[ptr].toString(16).padStart(2, '0');
+      }
+      // !
+      if (opcode === '0x21') {
+        ptr = 0;
       }
       // >
       if (opcode === '0x3E') {

@@ -23,7 +23,7 @@ export const deployments: Deployments = {
   },
   4: {
     core: {
-      factory: '0x4a597DbD7a6C1DE06A9f3CDEA2946f8d1929c31A',
+      factory: '0x6025ec2ec7113D1F1Fc97493f9C223077F3f31a5',
     },
     renderers: {
       debug: '0xb883CD6348aEA68f9b050F0bA0CFd09E702304a0',
@@ -39,9 +39,9 @@ export const deployments: Deployments = {
       renderer: '0xE4B49D2b77dBbBeB65e0C5f49Af734D7E8803494',
     },
     libraries: {
-      vm: '0xE18a32192ED95b0FE9D70D19e5025f103475d7BA',
-      uriConstructor: '0xaeb18fB50e9fb01c79e40fB4D3f3633c7339d2E0',
-      svgUtils: '0x68FbfBEf1c3A69EC7F0B503D00F6Bf962F8B3aa4',
+      vm: '0x6A2FfbcdB205885d633464A6a2C3f6ae14313EC2',
+      uriConstructor: '0x8c8F8fCcC22d1A95B3278013bd6aFBab1Abb4cD6',
+      svgUtils: '0xE7b6808C1f0f70b7Ab7A0F564D88343F517D5c56',
     },
     interfaceID: {
       renderer: '0x32ce7999',

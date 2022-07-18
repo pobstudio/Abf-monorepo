@@ -49,4 +49,8 @@ const LINE_BYTES =
     '',
   );
 
-console.log(LINE_BYTES);
+for (let i = 128; i < 255; ++i) {
+  console.log(
+    "'" + i + "': () => `${createTemplateInsert('" + (i + 1) + "')}-`,",
+  );
+}

@@ -139,21 +139,21 @@ const Challenge: FC = () => {
       <div>
         <P>
           <B>
-            If this interests you, please complete the following Brainfuck
+            If this interests you, please complete the following Brainfuck!
             challenge for entry.
           </B>
         </P>
       </div>
       <Label>CHALLENGE</Label>
       <P>
-        Write a Brainfuck algorithmn that outputs every integer between{' '}
+        Write a Brainfuck! algorithmn that outputs every integer between{' '}
         {parameters?.[0]} and {parameters?.[1] + ' '}
         (inclusive).
       </P>
       <FlexEnds>
         <Label>ANSWER</Label>
         <Link href={ROUTES.DOCS.BRAINFUCK} passHref>
-          <LabelAnchor>BRAINFUCK DOCS</LabelAnchor>
+          <LabelAnchor>BRAINFUCK! DOCS</LabelAnchor>
         </Link>
       </FlexEnds>
       <InputWell>

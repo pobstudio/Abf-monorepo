@@ -66,44 +66,57 @@ describe('BrainFuckVM', function () {
     await brainFuckVM.deployed();
   });
 
-  describe('runBrainFuckCode', () => {
+  describe('run', () => {
     it('Hello, World!', async function () {
       const code = convertToHexStr(
         '>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.',
       );
       const input = '0xF3';
 
-      const out = await brainFuckVM.runBrainFuckCode(code, input);
+      const out = await brainFuckVM.run(code, input);
 
       expect(convertHexStrToAscii(out)).to.eq('Hello, World!');
+    });
+    it('no code', async function () {
+      const code = convertToHexStr('');
+      const input = '0x0123456789ABCDEF';
+
+      const out = await brainFuckVM.run(code, input);
+      const estimation = await brainFuckVM.estimateGas.run(code, input);
+      console.log('Gas used for call:', estimation.toNumber());
+      console.log(out);
+      expect(pruneHexStr(out)).to.eq('0x');
     });
     it('reverse string', async function () {
       const code = convertToHexStr('+[>,]<-[+.<-]');
       const input = '0x0123456789ABCDEF';
 
-      const out = await brainFuckVM.runBrainFuckCode(code, input);
+      const out = await brainFuckVM.run(code, input);
 
       expect(pruneHexStr(out)).to.eq('0xefcdab89674523');
+    });
+    it('!', async function () {
+      const code = convertToHexStr('++++>>>!.');
+      const input = '0x0123456789ABCDEF';
+      const out = await brainFuckVM.run(code, input);
+      const estimation = await brainFuckVM.estimateGas.run(code, input);
+      console.log('Gas used for call:', estimation.toNumber());
+      console.log(out);
+      expect(out).to.eq('0x04');
     });
     it('666', async function () {
       const code = convertToHexStr('>+++++++++[<++++++>-]<...>++++++++++.');
       const input = '0x0123456789ABCDEF';
-      const out = await brainFuckVM.runBrainFuckCode(code, input);
-      const estimation = await brainFuckVM.estimateGas.runBrainFuckCode(
-        code,
-        input,
-      );
+      const out = await brainFuckVM.run(code, input);
+      const estimation = await brainFuckVM.estimateGas.run(code, input);
       console.log('Gas used for call:', estimation.toNumber());
       expect(convertHexStrToAscii(out)).to.eq('666\n');
     });
     it('overflow', async function () {
       const code = convertToHexStr(',+.');
       const input = '0xFF';
-      const out = await brainFuckVM.runBrainFuckCode(code, input);
-      const estimation = await brainFuckVM.estimateGas.runBrainFuckCode(
-        code,
-        input,
-      );
+      const out = await brainFuckVM.run(code, input);
+      const estimation = await brainFuckVM.estimateGas.run(code, input);
       console.log('Gas used for call:', estimation.toNumber());
       console.log(out);
       expect(out).to.eq('0x00');
@@ -111,11 +124,8 @@ describe('BrainFuckVM', function () {
     it('underflow', async function () {
       const code = convertToHexStr(',-.');
       const input = '0x00';
-      const out = await brainFuckVM.runBrainFuckCode(code, input);
-      const estimation = await brainFuckVM.estimateGas.runBrainFuckCode(
-        code,
-        input,
-      );
+      const out = await brainFuckVM.run(code, input);
+      const estimation = await brainFuckVM.estimateGas.run(code, input);
       console.log('Gas used for call:', estimation.toNumber());
       console.log(out);
       expect(out).to.eq('0xff');
