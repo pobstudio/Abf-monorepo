@@ -119,14 +119,14 @@ export const Collection: React.FC = () => {
           >
             <LinksContainer>
               <LabelAnchor
-                href={getOpenSeaUrl(collectionAddress, '0')}
+                href={getOpenSeaUrl(collectionAddress ?? '', '0')}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 VIEW ON OPENSEA
               </LabelAnchor>
               <LabelAnchor
-                href={getEtherscanAddressUrl(collectionAddress)}
+                href={getEtherscanAddressUrl(collectionAddress ?? '')}
                 target="_blank"
                 rel="noopener noreferrer"
               >
