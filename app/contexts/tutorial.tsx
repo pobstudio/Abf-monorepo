@@ -37,8 +37,9 @@ const TutorialContext =
 
 export const TutorialsProvider: React.FC<{
   getDefaultTutorialMetadata: () => Partial<TutorialMetadata>;
+  reward: string;
   children: React.ReactNode;
-}> = ({ getDefaultTutorialMetadata, children }) => {
+}> = ({ getDefaultTutorialMetadata, reward, children }) => {
   const { parameters } = useSavedOrDefaultTutorialMetadata(
     getDefaultTutorialMetadata,
   );
@@ -92,8 +93,8 @@ export const TutorialsProvider: React.FC<{
       confirm('Answer is not correct.');
       return;
     }
-    confirm(`wiggleworks.com`);
-  }, [isButtonDisabled]);
+    confirm(reward);
+  }, [isButtonDisabled, reward]);
 
   const stateObject = useMemo(() => {
     return {

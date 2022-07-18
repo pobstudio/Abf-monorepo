@@ -114,6 +114,13 @@ export const TutorialsDropdown: React.FC = () => {
   );
 };
 
+export const DropdownAnchorGroupContainer = styled.div`
+  > * + * {
+    margin-top: 14px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+`;
+
 const JoinTheCorpsButton = styled(SecondaryAnchorButton)`
   margin-top: 14px;
   padding: 18px;

@@ -1,16 +1,14 @@
 import Link from 'next/link';
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import { TUTORIALS_MAP } from '.';
 import { ROUTES } from '../../../constants/routes';
-import { TutorialMetadata } from '../../../contexts/tutorial';
-import { INVITE_LINKS } from '../../../data/discord';
 import {
-  useDefaultSeed,
-  useSavedOrDefaultTutorialMetadata,
-} from '../../../hooks/useDefaults';
-import { useHydrateSave } from '../../../hooks/useHydrateSave';
-import { RenderCodeOutputState } from '../../../types';
-import { runBrainFuckCode } from '../../../utils/brainFuck';
+  TutorialMetadata,
+  TutorialsProvider,
+  useTutorialContext,
+} from '../../../contexts/tutorial';
+import { INVITE_LINKS } from '../../../data/discord';
+import { useDefaultSeed } from '../../../hooks/useDefaults';
 import { GroupedBytesWithHoverState } from '../../bytes/groupedBytes';
 import { DetailRowsContainer } from '../../details/rows';
 import {
@@ -66,74 +64,28 @@ export const Recruitment: React.FC = () => {
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
             }}
           ></div>
-          <Challenge />
+          <TutorialsProvider
+            getDefaultTutorialMetadata={defaultTutorialMetadata}
+            reward={`Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the Corps!`}
+          >
+            <Tutorial />
+          </TutorialsProvider>
         </DetailRowsContainer>
       </OneColumnContentContainer>
     </OneColumnContainer>
   );
 };
 
-const Challenge: FC = () => {
-  const { parameters } = useSavedOrDefaultTutorialMetadata(
-    useDefaultTutorialMetadata,
-  );
-  const [code, setCode] = useState<string | undefined>(undefined);
-  const output = useMemo((): RenderCodeOutputState | undefined => {
-    if (!code) {
-      return undefined;
-    }
-    try {
-      const output = runBrainFuckCode(code, []);
-      return {
-        output,
-        status: 'success',
-        warnings: [],
-      };
-    } catch (e: any) {
-      return {
-        message: e.message,
-        status: 'error',
-      };
-    }
-  }, [code]);
-
-  const challengeMetadata = useMemo((): Partial<TutorialMetadata> => {
-    return {
-      parameters,
-      code,
-    };
-  }, [parameters, code]);
-  useHydrateSave(challengeMetadata);
-
-  const expectedOutputHexStr = useMemo(() => {
-    if (!parameters) {
-      return undefined;
-    }
-    let hexStr = '0x';
-    for (let i = parameters[0]; i <= parameters[1]; ++i) {
-      hexStr += i.toString(16).padStart(2, '0');
-    }
-    return hexStr;
-  }, [parameters]);
-  const isButtonDisabled = useMemo(() => {
-    if (output?.status !== 'success') {
-      return true;
-    }
-    if (!expectedOutputHexStr) {
-      return true;
-    }
-    return expectedOutputHexStr !== output.output;
-  }, [expectedOutputHexStr, output]);
-
-  const onSubmit = useCallback(() => {
-    if (isButtonDisabled) {
-      confirm('Answer is not correct.');
-      return;
-    }
-    confirm(
-      `Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the Corps!`,
-    );
-  }, [isButtonDisabled]);
+const Tutorial: FC = () => {
+  const {
+    tutorialMetadata,
+    code,
+    setCode,
+    output,
+    expectedOutputHexStr,
+    onSubmit,
+    isButtonDisabled,
+  } = useTutorialContext();
   return (
     <>
       <div>
@@ -147,7 +99,8 @@ const Challenge: FC = () => {
       <Label>CHALLENGE</Label>
       <P>
         Write a Brainfuck algorithm that outputs every integer between{' '}
-        {parameters?.[0]} and {parameters?.[1] + ' '}
+        {tutorialMetadata?.parameters?.[0]} and{' '}
+        {tutorialMetadata?.parameters?.[1] + ' '}
         (inclusive).
       </P>
       <FlexEnds>
@@ -194,9 +147,7 @@ const Challenge: FC = () => {
   );
 };
 
-const useDefaultTutorialMetadata = (
-  refresh?: any,
-): Partial<TutorialMetadata> => {
+const defaultTutorialMetadata = (refresh?: any): Partial<TutorialMetadata> => {
   const [start, end] = useMemo(() => {
     const delta = Math.round((0.5 + Math.random() * 0.5) * 25);
     const start = Math.round(Math.random() * 25);

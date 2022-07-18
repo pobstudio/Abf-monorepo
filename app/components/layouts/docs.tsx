@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import React from 'react';
-import styled from 'styled-components';
 import { ROUTES } from '../../constants/routes';
 import { DetailRowsContainer } from '../details/rows';
 import {
@@ -10,11 +9,12 @@ import {
 import { ArrowIcon } from '../icons/arrow';
 import { SecondaryAnchorButton, TertiaryAnchorButton } from '../inputs/button';
 import { DropdownAnchor, DropdownAnchorGroup } from '../navs/common';
+import { DropdownAnchorGroupContainer } from '../navs/dropdown';
 import { B, BackButtonAnchor, H1, Label, P } from '../texts';
 
 export const DocsDropdownLinkTree: React.FC = () => {
   return (
-    <DocsAnchorGroupContainer>
+    <DropdownAnchorGroupContainer>
       <DropdownAnchorGroup>
         <Label>ORIENTATION</Label>
         <Link passHref href={ROUTES.DOCS.EXEC}>
@@ -42,11 +42,11 @@ export const DocsDropdownLinkTree: React.FC = () => {
           <DropdownAnchor>PROTOCOL CONTRACTS</DropdownAnchor>
         </Link>
       </DropdownAnchorGroup>
-    </DocsAnchorGroupContainer>
+    </DropdownAnchorGroupContainer>
   );
 };
 
-export const Documentation: React.FC = () => {
+export const DocumentationRoot: React.FC = () => {
   return (
     <OneColumnContainer>
       <OneColumnContentContainer>
@@ -116,10 +116,3 @@ export const DocsBackButton: React.FC = () => (
     </BackButtonAnchor>
   </Link>
 );
-
-const DocsAnchorGroupContainer = styled.div`
-  > * + * {
-    margin-top: 14px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-`;
