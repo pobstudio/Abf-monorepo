@@ -66,4 +66,11 @@ export const MEMORY_LIBRARY = {
     }
     return `${(safeDelta > 0 ? '>' : '<').repeat(Math.abs(safeDelta))}`;
   },
+  portal: (index: any) => {
+    const safeIndex = parseInt(index);
+    if (isNaN(safeIndex) || safeIndex <= 0) {
+      return undefined;
+    }
+    return `!${createTemplateInsert('jump', [safeIndex])}`;
+  },
 };

@@ -10,6 +10,6 @@ export const CONTROL_LIBRARY = {
     )}[>`;
   },
   ifEnd: () => {
-    return `<${createTemplateInsert('0')}]<`;
+    return `<${createTemplateInsert('false')}]<`;
   },
 };
