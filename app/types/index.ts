@@ -60,6 +60,32 @@ export interface ProjectMetadata {
   isActive: boolean;
 }
 
+export interface CollectionMetadata {
+  address: string | undefined;
+  code: string;
+  constants: string;
+  mintingSupply: string;
+  name: string;
+  owner: string;
+  price: string;
+  renderer: string;
+  rendererRoyaltyFraction: string;
+  seed: string;
+  symbol: string;
+  whitelistToken: string;
+}
+
+export interface CollectionMetadataStub {
+  address: string | undefined;
+  code: string;
+  mintingSupply: string;
+  name: string;
+  owner: string;
+  price: string;
+  renderer: string;
+  symbol: string;
+}
+
 export interface RendererMetadataStub {
   label: string | undefined;
   address: string;

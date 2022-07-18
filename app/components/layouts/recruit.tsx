@@ -28,22 +28,22 @@ export const Recruitment: React.FC = () => {
               <B>FROM: 001 (BOARD MEMBER)</B>
             </P>
             <P>
-              <B>SUBJECT: ABF CORP RECRUITMENT OF NEW MEMBERS</B>
+              <B>SUBJECT: ABF CORPS RECRUITMENT OF NEW MEMBERS</B>
             </P>
           </div>
           <div>
             <P>
               In its current infancy, ABF is not revealed to the mass public,
               but the protocol is <B>alive and humming.</B> We are in need of
-              new Corp members.
+              new Corps members.
             </P>
           </div>
           <div>
             <P>
-              The ABF Corp is the steward of the <B>ABF protocol</B>, but do not
-              be confused. The corp is NOT a DAO. We are not the owners of the
-              protocol (fuck fee extractors), simply its primary users, artists,
-              and researchers.
+              The ABF Corps is the steward of the <B>ABF protocol</B>, but do
+              not be confused. The Corps is NOT a DAO. We are not the owners of
+              the protocol (fuck fee extractors), simply its primary users,
+              artists, and researchers.
             </P>
           </div>
           <div>
@@ -51,7 +51,7 @@ export const Recruitment: React.FC = () => {
           </div>
           <div>
             <P>
-              <B>Joining the Corp grants:</B> the Corp's Discord, the latest
+              <B>Joining the Corps grants:</B> the ABF Discord, the latest
               developments around ABF, and the opportunity to shape ABF's
               future.
             </P>
@@ -131,7 +131,7 @@ const Challenge: FC = () => {
       return;
     }
     confirm(
-      `Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the corp!`,
+      `Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the Corps!`,
     );
   }, [isButtonDisabled]);
   return (

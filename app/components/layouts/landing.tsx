@@ -43,7 +43,7 @@ export const Landing: React.FC = () => {
           <br />
           <Link passHref href={ROUTES.RECRUIT}>
             <a>
-              <PrimaryButton>JOIN THE CORP</PrimaryButton>
+              <PrimaryButton>JOIN THE CORPS</PrimaryButton>
             </a>
           </Link>
           <br />

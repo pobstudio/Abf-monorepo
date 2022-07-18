@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
             <Link passHref href={ROUTES.BUILDER}>
               <HeaderAnchor>BUILD</HeaderAnchor>
             </Link>
-            <Link passHref href={ROUTES.COLLECT.INDEX}>
+            <Link passHref href={ROUTES.EXPLORE.INDEX}>
               <HeaderAnchor>EXPLORE</HeaderAnchor>
             </Link>
           </>
@@ -86,7 +86,7 @@ const MobileMenu: React.FC = () => {
             <Link passHref href={ROUTES.BUILDER}>
               <DropdownAnchor>BUILD</DropdownAnchor>
             </Link>
-            <Link passHref href={ROUTES.COLLECT.INDEX}>
+            <Link passHref href={ROUTES.EXPLORE.INDEX}>
               <DropdownAnchor>EXPLORE</DropdownAnchor>
             </Link>
           </DropdownAnchorGroup>
@@ -166,16 +166,16 @@ const Docs: React.FC = () => {
               borderTop: '1px solid rgba(0, 0, 0, 0.1)',
             }}
           ></div>
-          <JoinTheCorpButton as="a" href={ROUTES.RECRUIT}>
-            JOIN THE CORP
-          </JoinTheCorpButton>
+          <JoinTheCorpsButton as="a" href={ROUTES.RECRUIT}>
+            JOIN THE CORPS
+          </JoinTheCorpsButton>
         </DropdownContainerContent>
       </DropdownContainer>
     </DropdownExterior>
   );
 };
 
-const JoinTheCorpButton = styled(SecondaryAnchorButton)`
+const JoinTheCorpsButton = styled(SecondaryAnchorButton)`
   margin-top: 14px;
   padding: 18px;
 `;

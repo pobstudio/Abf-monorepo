@@ -69,7 +69,7 @@ export const Documentation: React.FC = () => {
           <br />
           <br />
           <P>
-            <B>Ready to join the ABF Corp?</B>
+            <B>Ready to join the ABF Corps?</B>
           </P>
           <Link href={ROUTES.RECRUIT}>
             <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>
@@ -95,7 +95,7 @@ export const DocumentationFooter: React.FC = () => {
         }}
       ></div>
       <P>
-        <B>Ready to join the ABF Corp?</B>
+        <B>Ready to join the ABF Corps?</B>
       </P>
       <Link href={ROUTES.RECRUIT}>
         <SecondaryAnchorButton as="a">JOIN NOW</SecondaryAnchorButton>

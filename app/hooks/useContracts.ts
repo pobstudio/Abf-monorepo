@@ -1,5 +1,6 @@
 import {
   BrainFuckFactory__factory,
+  BrainFuck__factory,
   deployments,
   IRenderer__factory,
 } from '@abf-monorepo/protocol';
@@ -12,7 +13,7 @@ import { useProvider } from './useProvider';
 
 export const useRendererContract = (
   address: string | undefined,
-  shouldUseFallback: boolean = false,
+  shouldUseFallback: boolean = true,
 ) => {
   const account = usePriorityAccount();
   const provider = useProvider(shouldUseFallback);
@@ -33,7 +34,7 @@ export const useRendererContract = (
 };
 
 export const useBrainFuckFactoryContract = (
-  shouldUseFallback: boolean = false,
+  shouldUseFallback: boolean = true,
 ) => {
   const account = usePriorityAccount();
   const provider = useProvider(shouldUseFallback);
@@ -48,4 +49,23 @@ export const useBrainFuckFactoryContract = (
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );
   }, [account, provider]);
+};
+
+export const useBrainFuckContract = (
+  address: string | undefined,
+  shouldUseFallback: boolean = true,
+) => {
+  const account = usePriorityAccount();
+  const provider = useProvider(shouldUseFallback);
+
+  return useMemo(() => {
+    if (!account || !provider || !address) {
+      return;
+    }
+
+    return BrainFuck__factory.connect(
+      address,
+      getProviderOrSigner(provider as JsonRpcProvider, account as string),
+    );
+  }, [address, account, provider]);
 };
