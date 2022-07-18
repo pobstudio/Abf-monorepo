@@ -1,5 +1,8 @@
 import { BigNumber, BytesLike, utils } from 'ethers';
-import { SampleTokenRenderDebugState, SampleTokenRenderState } from '../../types';
+import {
+  SampleTokenRenderDebugState,
+  SampleTokenRenderState,
+} from '../../types';
 
 const TAPE_SIZE = 3_000_000;
 const LOOPING_STACK_SIZE = 8192;
@@ -17,7 +20,6 @@ export const DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE: SampleTokenRenderDebugSta
   {
     focusedByteGroupingIndex: undefined,
   };
-
 
 export const convertHexStrToAscii = (hexStr: string) => {
   let asciiStr = '';
