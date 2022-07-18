@@ -21,13 +21,8 @@ import { BasicEditor } from './editor';
 import { BasicRender } from './render';
 
 const TUTORIAL_1_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
-  const expectedOutputHexStr = useMemo(() => {
-    let hexStr = '0x';
-    for (let i = 0; i <= 20; ++i) {
-      hexStr += i.toString(16).padStart(2, '0');
-    }
-    return hexStr;
-  }, []);
+  const expectedOutputHexStr =
+    '0x000000000000000000000e0e0e0e0e0e0e1919191919191919191919191919272727272727273232323232323232323232323232404040404040404b4b4b4b4b4b4b4b4b4b4b4b4b4b595959595959596464646464646464646464646464727272727272727d7d7d7d7d7d7d7d7d7d7d7d7d7d8b8b8b8b8b8b8b9696969696969696969696969696a4a4a4a4a4a4a4afafafafafafafafafafafafafafbdbdbdbdbdbdbdc8c8c8c8c8c8c8c8c8c8c8c8c8c8d6d6d6d6d6d6d6e1e1e1e1e1e1e1e1e1e1e1e1e1e1efefefefefefeffafafafafafafafafafafafafafa080808080808081313131313131313131313131313212121212121212c2c2c2c2c2c2c2c';
   return useMemo(
     () => ({
       code: '',

@@ -61,7 +61,7 @@ const TutorialContext =
   React.createContext<TutorialProviderState>(initialState);
 
 export const TutorialsProvider: React.FC<{
-  renderer: string;
+  renderer?: string;
   getDefaultTutorialMetadata: () => Partial<TutorialMetadata>;
   reward: string;
   children: React.ReactNode;
