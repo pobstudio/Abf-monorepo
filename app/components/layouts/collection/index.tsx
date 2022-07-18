@@ -11,7 +11,7 @@ import { ROUTES } from '../../../constants/routes';
 import { useCollectionContext } from '../../../contexts/collection';
 import { useMintBrainfuckNFT } from '../../../hooks/useMint';
 import { shortenHexString } from '../../../utils/hex';
-import { getEtherscanAddressUrl } from '../../../utils/urls';
+import { getEtherscanAddressUrl, getOpenSeaUrl } from '../../../utils/urls';
 import {
   DetailAnchorRow,
   DetailRow,
@@ -119,14 +119,14 @@ export const Collection: React.FC = () => {
           >
             <LinksContainer>
               <LabelAnchor
-                href={`ROUTES.DOCS.RENDERERS`}
+                href={getOpenSeaUrl(collectionAddress, '0')}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 VIEW ON OPENSEA
               </LabelAnchor>
               <LabelAnchor
-                href={`ROUTES.DOCS.RENDERERS`}
+                href={getEtherscanAddressUrl(collectionAddress)}
                 target="_blank"
                 rel="noopener noreferrer"
               >

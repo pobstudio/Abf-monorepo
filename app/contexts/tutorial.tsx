@@ -5,9 +5,10 @@ import { RenderCodeOutputState } from '../types';
 import { runBrainFuckCode } from '../utils/brainFuck';
 
 export interface TutorialMetadata {
-  parameters: number[];
-  code: string;
-  seed: string;
+  parameters?: number[]; // specific to Tutorial 0
+  seed?: string; // trivial
+  code: string; // required
+  expectedOutputHexStr: string; // required
 }
 
 export interface TutorialProviderContext {
@@ -40,10 +41,11 @@ export const TutorialsProvider: React.FC<{
   reward: string;
   children: React.ReactNode;
 }> = ({ getDefaultTutorialMetadata, reward, children }) => {
-  const { parameters } = useSavedOrDefaultTutorialMetadata(
+  const tutorialMetadata = useSavedOrDefaultTutorialMetadata(
     getDefaultTutorialMetadata,
   );
-  const [code, setCode] = useState<string | undefined>(undefined);
+  const { expectedOutputHexStr, code: savedCode } = tutorialMetadata;
+  const [code, setCode] = useState<string | undefined>(savedCode);
   const output = useMemo((): RenderCodeOutputState | undefined => {
     if (!code) {
       return undefined;
@@ -62,23 +64,14 @@ export const TutorialsProvider: React.FC<{
       };
     }
   }, [code]);
-  const tutorialMetadata = useMemo((): Partial<TutorialMetadata> => {
+  const newTutorialMetadata = useMemo((): Partial<TutorialMetadata> => {
     return {
-      parameters,
+      ...tutorialMetadata,
       code,
     };
-  }, [parameters, code]);
-  useHydrateSave(tutorialMetadata);
-  const expectedOutputHexStr = useMemo(() => {
-    if (!parameters) {
-      return undefined;
-    }
-    let hexStr = '0x';
-    for (let i = parameters[0]; i <= parameters[1]; ++i) {
-      hexStr += i.toString(16).padStart(2, '0');
-    }
-    return hexStr;
-  }, [parameters]);
+  }, [tutorialMetadata, expectedOutputHexStr, code]);
+  useHydrateSave(newTutorialMetadata);
+
   const isButtonDisabled = useMemo(() => {
     if (output?.status !== 'success') {
       return true;

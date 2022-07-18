@@ -1,5 +1,6 @@
 import { deployments } from '@abf-monorepo/protocol';
 import { utils } from 'ethers';
+import { atob } from 'isomorphic-base64';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
@@ -106,7 +107,7 @@ export const useSavedOrDefaultTutorialMetadata = (
 
   const [hasHydrated, setHasHydrated] = useState(false);
 
-  const [savedChallengeMetadata, setSavedChallengeMetadata] = useState<
+  const [savedTutorialMetadata, setSavedTutorialMetadata] = useState<
     Partial<TutorialMetadata>
   >({});
   useEffect(() => {
@@ -121,7 +122,7 @@ export const useSavedOrDefaultTutorialMetadata = (
       const obj = JSON.parse(atob(save));
       if (Object.keys(obj).length !== 0) {
         setHasHydrated(true);
-        setSavedChallengeMetadata({
+        setSavedTutorialMetadata({
           ...defaultChallengeMetadata,
           ...(obj as Partial<TutorialMetadata>),
         });
@@ -129,8 +130,8 @@ export const useSavedOrDefaultTutorialMetadata = (
       }
     } catch (e) {}
     setHasHydrated(true);
-    setSavedChallengeMetadata(defaultChallengeMetadata);
+    setSavedTutorialMetadata(defaultChallengeMetadata);
   }, [router]);
 
-  return useMemo(() => savedChallengeMetadata, [savedChallengeMetadata]);
+  return useMemo(() => savedTutorialMetadata, [savedTutorialMetadata]);
 };

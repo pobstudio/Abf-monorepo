@@ -20,6 +20,33 @@ import { PrimaryButton } from '../../inputs/button';
 import { InputWell, TextArea } from '../../inputs/input';
 import { B, Label, LabelAnchor, P } from '../../texts';
 
+const TUTORIAL_0_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
+  const [start, end] = useMemo(() => {
+    const delta = Math.round((0.5 + Math.random() * 0.5) * 25);
+    const start = Math.round(Math.random() * 25);
+    return [start, start + delta];
+  }, []);
+  const seed = useDefaultSeed();
+  const expectedOutputHexStr = useMemo(() => {
+    if (!start || !end) {
+      return undefined;
+    }
+    let hexStr = '0x';
+    for (let i = start; i <= end; ++i) {
+      hexStr += i.toString(16).padStart(2, '0');
+    }
+    return hexStr;
+  }, [start, end]);
+  return useMemo(() => {
+    return {
+      parameters: [start, end],
+      code: '',
+      seed,
+      expectedOutputHexStr,
+    };
+  }, [seed, start, end]);
+};
+
 export const Recruitment: React.FC = () => {
   return (
     <OneColumnContainer>
@@ -65,7 +92,7 @@ export const Recruitment: React.FC = () => {
             }}
           ></div>
           <TutorialsProvider
-            getDefaultTutorialMetadata={defaultTutorialMetadata}
+            getDefaultTutorialMetadata={TUTORIAL_0_METADATA}
             reward={`Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the Corps!`}
           >
             <Tutorial />
@@ -106,7 +133,9 @@ const Tutorial: FC = () => {
       <FlexEnds>
         <Label>ANSWER</Label>
         <Link href={ROUTES.DOCS.BRAINFUCK} passHref>
-          <LabelAnchor>BRAINFUCK DOCS</LabelAnchor>
+          <LabelAnchor target="_blank" rel="noopener noreferrer">
+            BRAINFUCK DOCS
+          </LabelAnchor>
         </Link>
       </FlexEnds>
       <InputWell>
@@ -145,20 +174,4 @@ const Tutorial: FC = () => {
       </PrimaryButton>
     </>
   );
-};
-
-const defaultTutorialMetadata = (refresh?: any): Partial<TutorialMetadata> => {
-  const [start, end] = useMemo(() => {
-    const delta = Math.round((0.5 + Math.random() * 0.5) * 25);
-    const start = Math.round(Math.random() * 25);
-    return [start, start + delta];
-  }, []);
-  const seed = useDefaultSeed();
-  return useMemo(() => {
-    return {
-      parameters: [start, end],
-      code: '',
-      seed,
-    };
-  }, [seed, start, end]);
 };
