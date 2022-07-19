@@ -21,6 +21,6 @@
   "devDependencies": {
     "@types/puppeteer": "^5.4.6",
     "@types/puppeteer-core": "^5.4.0",
-    "@vercel/node": "^2.4.0"
+    "@vercel/node": "^2.4.4"
   }
 }

@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { useBeforeUnload } from 'react-use';
 import styled from 'styled-components';
 import {
   useModifyProjectMetadata,
@@ -26,6 +27,8 @@ export const BrainFuckEditor: FC = () => {
 
   const [brainFuckEditorViewState, setBrainFuckEditorViewState] =
     useState<BrainFuckEditorViewState>('raw');
+
+  useBeforeUnload(true, 'Are you sure you want to close?');
 
   return (
     <>
