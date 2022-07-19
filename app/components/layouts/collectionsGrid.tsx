@@ -8,7 +8,7 @@ import {
 import { CollectionMetadataStub } from '../../types';
 import { DetailRow, DetailRowsContainer } from '../details/rows';
 import { GridContainer, GridContentContainer } from '../divs/grid';
-import { PrimaryButton, TertiaryButton } from '../inputs/button';
+import { TertiaryButton } from '../inputs/button';
 import { Render } from '../renders';
 import { CleanA } from '../texts';
 

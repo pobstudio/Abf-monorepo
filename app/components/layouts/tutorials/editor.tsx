@@ -35,8 +35,7 @@ export const BasicEditor: FC = () => {
         <Tooltip direction={'left'}>
           <P>
             Input in Brainfuck is read via the <Code>,</Code> operator. Provide
-            up to 32 bytes; another 32 pseudo-random bytes will be appended for
-            a total of 64 bytes.
+            up to 32 bytes.
           </P>
         </Tooltip>
       </Flex>

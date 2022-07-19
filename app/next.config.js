@@ -20,6 +20,6 @@ module.exports = withTM({
         destination: '/train/0',
         permanent: true,
       },
-    ]
+    ];
   },
 });

@@ -99,21 +99,24 @@ const Jumbotron: FC = () => {
         <B>SUBJECT: ABFC NEW PERSONNEL TRAINING - MATERIAL 001</B>
       </P>
       <P>
-        Alright f**k faces, today we're going to learn how to control a RENDERER
+        Alright f**k faces, today we're going to learn how to control a Renderer
         via Brainfuck code.
       </P>
-
       <P>
-        <B>
-          If this interests you, please complete the following Brainfuck
-          challenge for entry.
-        </B>
+        The purpose of this exercise is to understand the relationship between
+        values you output via Brainfuck and the Renderer.
+      </P>
+      <P>
+        Additionally, usage of INPUT CONSTANTS allow you to output large values
+        without actually needing to create these manually with Brainfuck.
       </P>
 
       <Label>CHALLENGE</Label>
       <P>
-        Change the dots in all 4 corners to be MAX_SIZE [0xFF]. All other dots
-        should be at MIN_SIZE [0x00].
+        <B>
+          Change the dots in all 4 corners to be MAX_SIZE [0xFF]. All other dots
+          should be at MIN_SIZE [0x00].
+        </B>
       </P>
     </DetailRowsContainer>
   );
