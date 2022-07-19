@@ -19,6 +19,7 @@ export const ROUTES = {
     INDEX: '/train',
     0: '/train/0',
     1: '/train/1',
+    2: '/train/2',
   },
   404: '/404',
   RENDERER: '/renderer',

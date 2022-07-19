@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import React from 'react';
+import styled from 'styled-components';
 import { ROUTES } from '../../../constants/routes';
 import { DetailRowsContainer } from '../../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../../divs/oneColumn';
+import { TwoColumnContentContainer } from '../../divs/twoColumn';
 import { SecondaryAnchorButton } from '../../inputs/button';
 import { DropdownAnchor, DropdownAnchorGroup } from '../../navs/common';
 import { DropdownAnchorGroupContainer } from '../../navs/dropdown';
@@ -14,6 +16,7 @@ import { B, H1, Label, P } from '../../texts';
 export const TUTORIALS_MAP = {
   [ROUTES.TRAIN[0]]: 'DOT-T000-000',
   [ROUTES.TRAIN[1]]: 'DOT-T000-001',
+  [ROUTES.TRAIN[2]]: 'DOT-T000-002',
 };
 
 export const TutorialsDropdownLinkTree: React.FC = () => {
@@ -67,3 +70,10 @@ export const TutorialsRoot: React.FC = () => {
     </OneColumnContainer>
   );
 };
+
+export const TwoColumnTutorialContainer = styled(TwoColumnContentContainer)`
+  > * + * {
+    margin-top: 25px !important;
+    width: 100%;
+  }
+`;
