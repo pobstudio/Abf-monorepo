@@ -14,6 +14,7 @@ export const ROUTES = {
     INDEX: '/explore',
   },
   COLLECTION: '/collection',
+  COLLECTIONS: '/collections',
   RECRUIT: '/train/0',
   TRAIN: {
     INDEX: '/train',
