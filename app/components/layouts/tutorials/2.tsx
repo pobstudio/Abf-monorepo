@@ -19,7 +19,7 @@ import { B, Label, P } from '../../texts';
 import { BasicEditor } from './editor';
 import { BasicRender } from './render';
 
-const TUTORIAL_2_REWARD = `(pin.abf.dev) /ipfs/QmPVxfE6wcQYabpLgUWsenCQvvDQBivrLWKRxWGPh8JPrR`;
+const TUTORIAL_2_REWARD = `(pin.abf.dev) /ipfs/QmWofFdyhjKhzkYEU7LA26AnGv8Ww1qqqgRHMpEptqHQ63`;
 
 const TUTORIAL_2_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
   const expectedOutputHexStr = `0x
