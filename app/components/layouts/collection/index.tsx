@@ -140,7 +140,12 @@ export const Collection: React.FC = () => {
             <TitleContainer>
               <Label>TITLE</Label>
               <H1>{collection?.name}</H1>
-              <PrimaryButton onClick={() => mint()}>MINT</PrimaryButton>
+              <PrimaryButton
+                disabled={!isActive}
+                onClick={() => (isActive ? mint() : console.log('fuck off'))}
+              >
+                MINT
+              </PrimaryButton>
               {isOwner && !isActive && (
                 <TertiaryButton
                   style={{ marginTop: 20 }}
@@ -166,6 +171,9 @@ export const Collection: React.FC = () => {
                     BigNumber.from(collection?.price ?? '0'),
                   )} ETH` ?? '-',
                 ]}
+              </DetailRow>
+              <DetailRow>
+                {['IS ACTIVE', isActive?.toString()?.toUpperCase() ?? '-']}
               </DetailRow>
             </DetailRowsContainer>
           </TwoColumnContentContainer>

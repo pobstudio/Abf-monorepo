@@ -19,19 +19,21 @@ export const useCollections = (): CollectionMetadataStub[] | undefined => {
     if (!data.collections) {
       return undefined;
     }
-    return data.collections.map(
-      (r: any) =>
-        ({
-          address: r.id,
-          code: r.code,
-          mintingSupply: r.mintingSupply,
-          name: r.name,
-          owner: r.owner,
-          price: r.price,
-          renderer: r.renderer,
-          symbol: r.symbol,
-        } as any),
-    );
+    return data.collections
+      .map(
+        (r: any) =>
+          ({
+            address: r.id,
+            code: r.code,
+            mintingSupply: r.mintingSupply,
+            name: r.name,
+            owner: r.owner,
+            price: r.price,
+            renderer: r.renderer,
+            symbol: r.symbol,
+          } as any),
+      )
+      .reverse();
   }, [data, data?.collections]);
 };
 
