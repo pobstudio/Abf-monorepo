@@ -13,4 +13,13 @@ module.exports = withTM({
     //   exclude: ['error'],
     // },
   },
+  async redirects() {
+    return [
+      {
+        source: '/recruit',
+        destination: '/train/0',
+        permanent: true,
+      },
+    ]
+  },
 });
