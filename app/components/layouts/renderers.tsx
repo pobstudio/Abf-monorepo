@@ -21,7 +21,8 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { Flex, FlexEnds } from '../flexs';
-import { A, Label, LabelAnchor, P, Text } from '../texts';
+import { ArrowIcon } from '../icons/arrow';
+import { A, BackButtonAnchor, Label, LabelAnchor, P, Text } from '../texts';
 import { DocumentationFooter } from './docs';
 
 const Jumbotron: FC = () => {
@@ -146,3 +147,12 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
     </DetailRowsContainer>
   );
 };
+
+export const RendererDetailsBackButton: React.FC = () => (
+  <Link passHref href={ROUTES.DOCS.RENDERERS}>
+    <BackButtonAnchor>
+      <ArrowIcon />
+      &nbsp;&nbsp;VIEW ALL RENDERERS
+    </BackButtonAnchor>
+  </Link>
+);

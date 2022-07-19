@@ -1,20 +1,17 @@
 import { NextPage } from 'next';
 import React from 'react';
 import { PageDiv } from '../../components/divs';
-import { DocsBackButton } from '../../components/layouts/docs';
-import { Specification } from '../../components/layouts/spec';
+import { Tutorial1 } from '../../components/layouts/tutorials/1';
 import { Footer } from '../../components/navs/footer';
 import { Header } from '../../components/navs/header';
 
-const SpecificationPage: NextPage = () => {
+const Tutorial2Page: NextPage = () => {
   return (
     <PageDiv>
       <Header />
-      <DocsBackButton />
-      <Specification />
+      <Tutorial1 />
       <Footer />
     </PageDiv>
   );
 };
-
-export default React.memo(SpecificationPage);
+export default React.memo(Tutorial2Page);

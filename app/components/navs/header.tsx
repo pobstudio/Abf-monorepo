@@ -1,16 +1,24 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { useSpring } from 'react-spring';
 import { useClickAway, useWindowSize } from 'react-use';
-import styled from 'styled-components';
 import { DISCORD_LINK, GITHUB_LINK, TWITTER_LINK } from '../../constants';
 import { ROUTES } from '../../constants/routes';
 import { BREAKPTS, DropdownAnimation } from '../../constants/styles';
 import { Flex, FlexCenter } from '../flexs';
 import { MenuIcon } from '../icons/menu';
-import { SecondaryAnchorButton } from '../inputs/button';
-import { DropdownLinkTree } from '../layouts/docs';
-import { HeaderAnchor, HeaderLogoAnchor, NavAnchorRow, NavRow } from './common';
+import {
+  DropdownAnchor,
+  DropdownAnchorGroup,
+  DropdownContainer,
+  DropdownContainerContent,
+  DropdownExterior,
+  HeaderAnchor,
+  HeaderLogoAnchor,
+  NavAnchorRow,
+  NavRow,
+} from './common';
+import { DocsDropdown, TutorialsDropdown } from './dropdown';
 import { Web3Status } from './web3Status';
 
 export const Header: React.FC = () => {
@@ -20,7 +28,8 @@ export const Header: React.FC = () => {
       <NavAnchorRow>
         {width > BREAKPTS.LG && (
           <>
-            <Docs />
+            <DocsDropdown />
+            <TutorialsDropdown />
             <Link passHref href={ROUTES.BUILDER}>
               <HeaderAnchor>BUILD</HeaderAnchor>
             </Link>
@@ -80,7 +89,10 @@ const MobileMenu: React.FC = () => {
       >
         <DropdownContainerContent>
           <DropdownAnchorGroup>
-            <Docs />
+            <DocsDropdown />
+          </DropdownAnchorGroup>
+          <DropdownAnchorGroup>
+            <TutorialsDropdown />
           </DropdownAnchorGroup>
           <DropdownAnchorGroup>
             <Link passHref href={ROUTES.BUILDER}>
@@ -124,92 +136,3 @@ const MobileMenu: React.FC = () => {
     </DropdownExterior>
   );
 };
-
-const Docs: React.FC = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const clickAwayRef = useRef<HTMLDivElement | null>(null);
-  useClickAway(clickAwayRef, () => {
-    setIsDropdownOpen(false);
-  });
-
-  const [{ y, opacity, pointerEvents, userSelect }, set] = useSpring(
-    () => DropdownAnimation.hidden,
-  );
-
-  useEffect(() => {
-    if (isDropdownOpen) {
-      set(DropdownAnimation.visible);
-    } else {
-      set(DropdownAnimation.hidden);
-    }
-  }, [isDropdownOpen]);
-
-  return (
-    <DropdownExterior ref={clickAwayRef}>
-      <DropdownAnchor onClick={() => setIsDropdownOpen(true)}>
-        DOCUMENTATION
-      </DropdownAnchor>
-      <DropdownContainer
-        style={{
-          transform: y.to((v: unknown) => `translateY(${v}%`),
-          opacity,
-          pointerEvents,
-          userSelect,
-        }}
-      >
-        <DropdownContainerContent>
-          <DropdownLinkTree />
-          <div
-            style={{
-              marginTop: 14,
-              borderTop: '1px solid rgba(0, 0, 0, 0.1)',
-            }}
-          ></div>
-          <JoinTheCorpsButton as="a" href={ROUTES.RECRUIT}>
-            JOIN THE CORPS
-          </JoinTheCorpsButton>
-        </DropdownContainerContent>
-      </DropdownContainer>
-    </DropdownExterior>
-  );
-};
-
-const JoinTheCorpsButton = styled(SecondaryAnchorButton)`
-  margin-top: 14px;
-  padding: 18px;
-`;
-
-const DropdownAnchor = styled(HeaderAnchor)`
-  display: block;
-  cursor: pointer;
-`;
-
-const DropdownExterior = styled.div`
-  position: relative;
-`;
-
-const DropdownContainerContent = styled.div`
-  padding: 10px 24px 24px 24px;
-`;
-
-const DropdownAnchorGroup = styled.div`
-  padding: 13px 0 0 0;
-  > * + * {
-    margin-top: 12px;
-  }
-`;
-
-const DropdownContainer = animated(styled.div<{}>`
-  position: absolute;
-  margin-top: 10px;
-  z-index: 1100;
-  background: white;
-  min-width: 256px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  hr {
-    border: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-`);

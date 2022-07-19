@@ -1,51 +1,52 @@
 import Link from 'next/link';
 import React from 'react';
-import styled from 'styled-components';
 import { ROUTES } from '../../constants/routes';
 import { DetailRowsContainer } from '../details/rows';
 import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
+import { ArrowIcon } from '../icons/arrow';
 import { SecondaryAnchorButton, TertiaryAnchorButton } from '../inputs/button';
-import { HeaderAnchor } from '../navs/common';
-import { B, H1, Label, P } from '../texts';
+import { DropdownAnchor, DropdownAnchorGroup } from '../navs/common';
+import { DropdownAnchorGroupContainer } from '../navs/dropdown';
+import { B, BackButtonAnchor, H1, Label, P } from '../texts';
 
-export const DropdownLinkTree: React.FC = () => {
+export const DocsDropdownLinkTree: React.FC = () => {
   return (
-    <DocsAnchorGroupContainer>
-      <DocsAnchorGroup>
+    <DropdownAnchorGroupContainer>
+      <DropdownAnchorGroup>
         <Label>ORIENTATION</Label>
         <Link passHref href={ROUTES.DOCS.EXEC}>
-          <DocAnchor>EXEC SUMMARY</DocAnchor>
+          <DropdownAnchor>EXEC SUMMARY</DropdownAnchor>
         </Link>
         <Link passHref href={ROUTES.DOCS.ORIGIN}>
-          <DocAnchor>ORIGINS</DocAnchor>
+          <DropdownAnchor>ORIGINS</DropdownAnchor>
         </Link>
-      </DocsAnchorGroup>
-      <DocsAnchorGroup>
+      </DropdownAnchorGroup>
+      <DropdownAnchorGroup>
         <Label>SCHEMATICS</Label>
         <Link passHref href={ROUTES.DOCS.SPEC}>
-          <DocAnchor>PROTOCOL DESIGN</DocAnchor>
+          <DropdownAnchor>PROTOCOL DESIGN</DropdownAnchor>
         </Link>
         <Link passHref href={ROUTES.DOCS.BRAINFUCK}>
-          <DocAnchor>BRAINFUCK!</DocAnchor>
+          <DropdownAnchor>BRAINFUCK!</DropdownAnchor>
         </Link>
-      </DocsAnchorGroup>
-      <DocsAnchorGroup>
+      </DropdownAnchorGroup>
+      <DropdownAnchorGroup>
         <Label>REGISTRIES</Label>
         <Link passHref href={ROUTES.DOCS.RENDERERS}>
-          <DocAnchor>RENDERER CONTRACTS</DocAnchor>
+          <DropdownAnchor>RENDERER CONTRACTS</DropdownAnchor>
         </Link>
         <Link passHref href={ROUTES.DOCS.PROTOCOL}>
-          <DocAnchor>PROTOCOL CONTRACTS</DocAnchor>
+          <DropdownAnchor>PROTOCOL CONTRACTS</DropdownAnchor>
         </Link>
-      </DocsAnchorGroup>
-    </DocsAnchorGroupContainer>
+      </DropdownAnchorGroup>
+    </DropdownAnchorGroupContainer>
   );
 };
 
-export const Documentation: React.FC = () => {
+export const DocumentationRoot: React.FC = () => {
   return (
     <OneColumnContainer>
       <OneColumnContentContainer>
@@ -64,7 +65,7 @@ export const Documentation: React.FC = () => {
               borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
             }}
           >
-            <DropdownLinkTree />
+            <DocsDropdownLinkTree />
           </div>
           <br />
           <br />
@@ -107,21 +108,11 @@ export const DocumentationFooter: React.FC = () => {
   );
 };
 
-const DocAnchor = styled(HeaderAnchor)`
-  display: block;
-  cursor: pointer;
-`;
-
-const DocsAnchorGroupContainer = styled.div`
-  > * + * {
-    margin-top: 14px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const DocsAnchorGroup = styled.div`
-  padding: 12px 0 0 0;
-  > * + * {
-    margin-top: 12px;
-  }
-`;
+export const DocsBackButton: React.FC = () => (
+  <Link passHref href={ROUTES.DOCS.INDEX}>
+    <BackButtonAnchor>
+      <ArrowIcon />
+      &nbsp;&nbsp;VIEW ALL DOCS
+    </BackButtonAnchor>
+  </Link>
+);

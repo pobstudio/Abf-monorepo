@@ -96,7 +96,15 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
           </GroupedBytesContainer>
           <span style={{ opacity: 0.2 }}>
             {showBytesLength ? `${(output.length - 2) / 2} BYTES` : ''}
-            <strong>
+            <strong
+              style={{
+                opacity:
+                  focusedByteGroupingIndex !== null &&
+                  focusedByteGroupingIndex !== undefined
+                    ? 1
+                    : 0,
+              }}
+            >
               {focusedByteGroupingIndex !== null &&
               focusedByteGroupingIndex !== undefined
                 ? ` • ${focusedByteGroupingIndex + 1} ${
@@ -104,7 +112,7 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
                       ? `(${groupedOutputBytesAndLabels[focusedByteGroupingIndex][1]})`
                       : ''
                   }`
-                : undefined}
+                : ` • hover`}
             </strong>
           </span>
         </>

@@ -1,15 +1,12 @@
 import { ADDRESS_REGEX } from '@abf-monorepo/types';
 import { NextPage } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import { PageDiv } from '../../components/divs';
-import { ArrowIcon } from '../../components/icons/arrow';
 import { RendererDetails } from '../../components/layouts/rendererDetails';
+import { RendererDetailsBackButton } from '../../components/layouts/renderers';
 import { Footer } from '../../components/navs/footer';
 import { Header } from '../../components/navs/header';
-import { BackButtonAnchor } from '../../components/texts';
-import { ROUTES } from '../../constants/routes';
 
 const RendererPage: NextPage = () => {
   const router = useRouter();
@@ -29,12 +26,7 @@ const RendererPage: NextPage = () => {
   return (
     <PageDiv>
       <Header />
-      <Link passHref href={ROUTES.DOCS.RENDERERS}>
-        <BackButtonAnchor>
-          <ArrowIcon />
-          &nbsp;&nbsp;VIEW ALL RENDERERS
-        </BackButtonAnchor>
-      </Link>
+      <RendererDetailsBackButton />
       <RendererDetails address={rendererAddress} />
       <Footer />
     </PageDiv>
