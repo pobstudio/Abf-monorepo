@@ -4,6 +4,7 @@ import { MAX_UINT } from '../constants';
 import { useSavedOrDefaultTutorialMetadata } from '../hooks/useDefaults';
 import { useHydrateSave } from '../hooks/useHydrateSave';
 import { useRendererMetadataStubByProvider } from '../hooks/useRenderer';
+import { useModalStore } from '../stores/modal';
 import {
   RenderCodeOutputState,
   RendererMetadataStub,
@@ -141,13 +142,15 @@ export const TutorialsProvider: React.FC<{
     }
     return expectedOutputHexStr !== output.output;
   }, [expectedOutputHexStr, output]);
+  const setIsOpen = useModalStore((s) => s.setIsGenericModalOpen);
   const onSubmit = useCallback(() => {
     if (isButtonDisabled) {
       confirm('Answer is not correct.');
       return;
     }
-    confirm(reward);
-  }, [isButtonDisabled, reward]);
+    // confirm(reward);
+    setIsOpen(true);
+  }, [isButtonDisabled, reward, setIsOpen]);
 
   const stateObject = useMemo(() => {
     return {
