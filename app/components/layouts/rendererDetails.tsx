@@ -38,7 +38,7 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
       <OneColumnContentContainer>
         <DetailRowsContainer>
           <H1>
-            {`R-${
+            {`SR-${
               rendererMetadataStub?.id?.toString().padStart(3, '0') ?? '???'
             } "${
               rendererMetadataStub?.additionalMetadata?.name ??
