@@ -96,7 +96,7 @@ const Jumbotron: FC = () => {
         <B>ASSIGNMENT: {TUTORIALS_MAP[ROUTES.TRAIN[1]]}</B>
       </P>
       <P>
-        <B>SUBJECT: NEW MEMBER ONBOARDING - TRAINING MATERIAL 001</B>
+        <B>SUBJECT: ABFC NEW PERSONNEL TRAINING - MATERIAL 001</B>
       </P>
       <P>
         Alright f**k faces, today we're going to learn how to control a RENDERER
