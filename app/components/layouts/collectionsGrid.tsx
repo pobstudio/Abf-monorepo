@@ -49,11 +49,11 @@ const CollectionGridItem: FC<CollectionMetadataStub> = ({
         <DetailRow>{['PRICE', price]}</DetailRow>
       </DetailRowsContainer>
       <DetailRowsContainer>
-        <Link href={`${ROUTES.COLLECTION}/${address}`} passHref>
+        {/* <Link href={`${ROUTES.COLLECTION}/${address}`} passHref>
           <CleanA>
             <PrimaryButton>MINT</PrimaryButton>
           </CleanA>
-        </Link>
+        </Link> */}
         <Link href={`${ROUTES.COLLECTION}/${address}`} passHref>
           <CleanA>
             <TertiaryButton>DETAILS</TertiaryButton>
