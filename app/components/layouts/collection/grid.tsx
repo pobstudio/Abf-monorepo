@@ -7,6 +7,7 @@ import {
   CollectionProvider,
   useCollectionContext,
 } from '../../../contexts/collection';
+import { useENSorHex } from '../../../hooks/useENS';
 import { CollectionMetadataStub } from '../../../types';
 import { DetailRow, DetailRowsContainer } from '../../details/rows';
 import { GridContainer, GridContentContainer } from '../../divs/grid';
@@ -40,9 +41,13 @@ const CollectionGridItem: FC<CollectionMetadataStub> = ({
   price,
   mintingSupply,
 }) => {
-  const { currentSampleTokenRenderState: output, rendererMetadata } =
-    useCollectionContext();
+  const {
+    currentSampleTokenRenderState: output,
+    rendererMetadata,
+    collectionMetadata,
+  } = useCollectionContext();
   const router = useRouter();
+  const ownerLabel = useENSorHex(collectionMetadata?.owner);
   return (
     <GridContentContainer
       style={{ cursor: 'pointer' }}
@@ -55,6 +60,7 @@ const CollectionGridItem: FC<CollectionMetadataStub> = ({
         <DetailRow>
           {['PRICE', `${utils.formatEther(BigNumber.from(price ?? '0'))} ETH`]}
         </DetailRow>
+        <DetailRow>{['CREATOR', `${ownerLabel}`]}</DetailRow>
       </DetailRowsContainer>
       <DetailRowsContainer>
         <Link href={`${ROUTES.COLLECTION}/${address}`} passHref>
