@@ -21,6 +21,7 @@ export const ROUTES = {
     0: '/train/0',
     1: '/train/1',
     2: '/train/2',
+    3: '/train/3',
   },
   404: '/404',
   RENDERER: '/renderer',

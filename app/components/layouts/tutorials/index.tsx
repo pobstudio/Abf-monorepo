@@ -9,14 +9,16 @@ import {
 } from '../../divs/oneColumn';
 import { TwoColumnContentContainer } from '../../divs/twoColumn';
 import { SecondaryAnchorButton } from '../../inputs/button';
+import { BasicModal } from '../../modal';
 import { DropdownAnchor, DropdownAnchorGroup } from '../../navs/common';
 import { DropdownAnchorGroupContainer } from '../../navs/dropdown';
-import { B, H1, Label, P } from '../../texts';
+import { B, H1, Label, LabelAnchor, P } from '../../texts';
 
 export const TUTORIALS_MAP = {
   [ROUTES.TRAIN[0]]: 'DOT-T000-000',
   [ROUTES.TRAIN[1]]: 'DOT-T000-001',
   [ROUTES.TRAIN[2]]: 'DOT-T000-002',
+  [ROUTES.TRAIN[3]]: 'DOT-T000-003',
 };
 
 export const TutorialsDropdownLinkTree: React.FC = () => {
@@ -68,6 +70,35 @@ export const TutorialsRoot: React.FC = () => {
         </DetailRowsContainer>
       </OneColumnContentContainer>
     </OneColumnContainer>
+  );
+};
+
+export const RewardModal: React.FC<{ reward: string }> = ({ reward }) => {
+  return (
+    <>
+      <BasicModal>
+        <Label>
+          {`--[----->+<]>---.++++++++++++.-.-------.+++++++++++.+++[->+++<]>++.SUCCESS--[--->+<]>-.+.---------.-----------.--[--->+<]>-.-----------.++++++.-.+++++.`}
+        </Label>
+        {reward.includes('http') ? (
+          <LabelAnchor
+            href={reward}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'block',
+              marginTop: 25,
+              opacity: 1,
+              wordBreak: 'break-all',
+            }}
+          >
+            {reward}
+          </LabelAnchor>
+        ) : (
+          <P style={{ marginTop: 25, wordBreak: 'break-all' }}>{reward}</P>
+        )}
+      </BasicModal>
+    </>
   );
 };
 

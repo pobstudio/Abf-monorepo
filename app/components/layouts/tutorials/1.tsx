@@ -1,6 +1,6 @@
 import { deployments } from '@abf-monorepo/protocol';
 import React, { FC, useMemo } from 'react';
-import { TUTORIALS_MAP, TwoColumnTutorialContainer } from '.';
+import { RewardModal, TUTORIALS_MAP, TwoColumnTutorialContainer } from '.';
 import { CHAIN_ID } from '../../../constants';
 import { ROUTES } from '../../../constants/routes';
 import {
@@ -14,29 +14,14 @@ import {
   TwoColumnContentContainer,
 } from '../../divs/twoColumn';
 import { PrimaryButton } from '../../inputs/button';
-import { BasicModal } from '../../modal';
 import { B, Label, P } from '../../texts';
 import { BasicEditor } from './editor';
 import { BasicRender } from './render';
 
-const TUTORIAL_1_REWARD = `(pin.abf.dev) /ipfs/QmPVxfE6wcQYabpLgUWsenCQvvDQBivrLWKRxWGPh8JPrR`;
+const TUTORIAL_REWARD = `https://pin.abf.dev/ipfs/QmPVxfE6wcQYabpLgUWsenCQvvDQBivrLWKRxWGPh8JPrR`;
 
-const TUTORIAL_1_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
-  const expectedOutputHexStr = `0xff0000000000000000000000000000ff
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    00000000000000000000000000000000000
-    0000000000000000000000000000ff00000
-    00000000000000000000000ff`;
+const TUTORIAL_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
+  const expectedOutputHexStr = `0xff0000000000000000000000000000ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ff0000000000000000000000000000ff`;
   return useMemo(
     () => ({
       code: '',
@@ -49,16 +34,11 @@ const TUTORIAL_1_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
 export const Tutorial1: React.FC = () => {
   return (
     <>
-      <BasicModal>
-        <Label>
-          {`--[----->+<]>---.++++++++++++.-.-------.+++++++++++.+++[->+++<]>++.SUCCESS--[--->+<]>-.+.---------.-----------.--[--->+<]>-.-----------.++++++.-.+++++.`}
-        </Label>
-        <P style={{ marginTop: 25 }}>{TUTORIAL_1_REWARD}</P>
-      </BasicModal>
+      <RewardModal reward={TUTORIAL_REWARD} />
       <TutorialsProvider
         renderer={deployments[CHAIN_ID].renderers.dotMatrix}
-        getDefaultTutorialMetadata={TUTORIAL_1_METADATA}
-        reward={TUTORIAL_1_REWARD}
+        getDefaultTutorialMetadata={TUTORIAL_METADATA}
+        reward={TUTORIAL_REWARD}
       >
         <TwoColumnContainer>
           <div>
