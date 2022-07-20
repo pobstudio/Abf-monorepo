@@ -8,7 +8,6 @@ import {
   TutorialsProvider,
   useTutorialContext,
 } from '../../../contexts/tutorial';
-import { INVITE_LINKS } from '../../../data/discord';
 import { useDefaultSeed } from '../../../hooks/useDefaults';
 import { GroupedBytesWithHoverState } from '../../bytes/groupedBytes';
 import { DetailRowsContainer } from '../../details/rows';
@@ -21,7 +20,9 @@ import { PrimaryButton } from '../../inputs/button';
 import { InputWell, TextArea } from '../../inputs/input';
 import { B, Label, LabelAnchor, P } from '../../texts';
 
-const TUTORIAL_0_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
+const TUTORIAL_REWARD = `Welcome. Here is the discord: ${DISCORD_LINK}. Copy the FULL URL of this page to share how you did amongst the Corps!`;
+
+const TUTORIAL_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
   const [start, end] = useMemo(() => {
     const delta = Math.round((0.5 + Math.random() * 0.5) * 25);
     const start = Math.round(Math.random() * 25);
@@ -52,57 +53,58 @@ export const Recruitment: React.FC = () => {
   return (
     <>
       <RewardModal reward={DISCORD_LINK} />
-      <OneColumnContainer>
-        <OneColumnContentContainer>
-          <DetailRowsContainer>
-            <div>
-              <P>
-                <B>ASSIGNMENT: {TUTORIALS_MAP[ROUTES.TRAIN[0]]}</B>
-              </P>
-              <P>
-                <B>SUBJECT: ABF CORPS RECRUITMENT OF NEW MEMBERS</B>
-              </P>
-            </div>
-            <div>
-              <P>
-                In its current infancy, ABF is not revealed to the mass public,
-                but the protocol is <B>alive and humming.</B> We are in need of
-                new Corps members.
-              </P>
-            </div>
-            <div>
-              <P>
-                The ABF Corps is the steward of the <B>ABF protocol</B>, but do
-                not be confused. The Corps is NOT a DAO. We are not the owners
-                of the protocol (fuck fee extractors), simply its primary users,
-                artists, and researchers.
-              </P>
-            </div>
-            <div>
-              <P>Our goal is to make ABF flourish.</P>
-            </div>
-            <div>
-              <P>
-                <B>Joining the Corps grants:</B> the ABF Discord, the latest
-                developments around ABF, and the opportunity to shape ABF's
-                future.
-              </P>
-            </div>
-            <div
-              style={{
-                margin: '50px 0',
-                borderTop: '1px solid rgba(0, 0, 0, 0.1)',
-              }}
-            ></div>
-            <TutorialsProvider
-              getDefaultTutorialMetadata={TUTORIAL_0_METADATA}
-              reward={`Welcome. Here is the discord: ${INVITE_LINKS[0]}. Copy the FULL URL of this page to share how you did amongst the Corps!`}
-            >
+      <TutorialsProvider
+        getDefaultTutorialMetadata={TUTORIAL_METADATA}
+        reward={TUTORIAL_REWARD}
+      >
+        <OneColumnContainer>
+          <OneColumnContentContainer>
+            <DetailRowsContainer>
+              <div>
+                <P>
+                  <B>ASSIGNMENT: {TUTORIALS_MAP[ROUTES.TRAIN[0]]}</B>
+                </P>
+                <P>
+                  <B>SUBJECT: ABF CORPS RECRUITMENT OF NEW MEMBERS</B>
+                </P>
+              </div>
+              <div>
+                <P>
+                  In its current infancy, ABF is not revealed to the mass
+                  public, but the protocol is <B>alive and humming.</B> We are
+                  in need of new Corps members.
+                </P>
+              </div>
+              <div>
+                <P>
+                  The ABF Corps is the steward of the <B>ABF protocol</B>, but
+                  do not be confused. The Corps is NOT a DAO. We are not the
+                  owners of the protocol (fuck fee extractors), simply its
+                  primary users, artists, and researchers.
+                </P>
+              </div>
+              <div>
+                <P>Our goal is to make ABF flourish.</P>
+              </div>
+              <div>
+                <P>
+                  <B>Joining the Corps grants:</B> the ABF Discord, the latest
+                  developments around ABF, and the opportunity to shape ABF's
+                  future.
+                </P>
+              </div>
+              <div
+                style={{
+                  margin: '50px 0',
+                  borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+                }}
+              ></div>
+
               <Tutorial />
-            </TutorialsProvider>
-          </DetailRowsContainer>
-        </OneColumnContentContainer>
-      </OneColumnContainer>
+            </DetailRowsContainer>
+          </OneColumnContentContainer>
+        </OneColumnContainer>
+      </TutorialsProvider>
     </>
   );
 };
