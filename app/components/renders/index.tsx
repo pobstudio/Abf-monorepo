@@ -55,6 +55,28 @@ const RenderContainer = styled.div`
   width: 100%;
   padding-top: 100%;
   background: rgba(0, 0, 0, 0.05);
+  img,
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const RenderHtmlContainer = styled.div`
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  shape-rendering: crispEdges;
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
 `;
 
 export const Render: FC<{
@@ -73,6 +95,9 @@ export const Render: FC<{
   const [renderedBy, setRenderedBy] = useState<
     'local' | 'on-chain' | undefined
   >();
+  const [renderAttributeKey, setRenderAttributeKey] = useState<
+    string | undefined
+  >(undefined);
   useEffect(() => {
     if (output?.status !== 'success') {
       return;
@@ -91,6 +116,7 @@ export const Render: FC<{
           );
           setRawSvgSrc(renderRaw);
           setRenderedBy('local');
+          setRenderAttributeKey('image');
         } else if (!chainId) {
           throw new Error(NO_CONNECTED_WALLET);
         } else if (chainId !== CHAIN_ID) {
@@ -106,9 +132,11 @@ export const Render: FC<{
           console.log('node render', renderer.address);
           setIsRenderLoading(true);
           const renderRaw = await renderer.renderRaw(output.output);
+          const renderAttribute = await renderer.renderAttributeKey();
           setRawSvgSrc(renderRaw);
           setIsRenderLoading(false);
           setRenderedBy('on-chain');
+          setRenderAttributeKey(renderAttribute);
         } else {
           throw new Error(RENDERER_NOT_FOUND);
         }
@@ -141,29 +169,42 @@ export const Render: FC<{
   }, [isRenderLoading, errorMessage]);
 
   const imgSrc = useMemo(() => {
-    if (!rawSvgSrc)
+    if (!rawSvgSrc) {
       return `data:image/svg+xml;utf8,${encodeURIComponent(
         '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" style="background:#F1F1F1"></svg>',
       )}`;
+    }
     return `data:image/svg+xml;utf8,${encodeURIComponent(rawSvgSrc)}`;
-  }, [rawSvgSrc]);
+  }, [rawSvgSrc, renderAttributeKey]);
+
+  if (renderAttributeKey === 'image') {
+    return (
+      <>
+        <RenderContainer>
+          <RenderImage src={imgSrc} />
+          {isCoverOpened && (
+            <RenderImageCover
+              style={{
+                background: !!rawSvgSrc
+                  ? 'rgba(255, 255, 255, 0.75)'
+                  : 'rgba(0, 0, 0, 0)',
+              }}
+            >
+              {isRenderLoading && <MultiLineText>Loading...</MultiLineText>}
+              {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
+            </RenderImageCover>
+          )}
+        </RenderContainer>
+      </>
+    );
+  }
 
   return (
     <>
       <RenderContainer>
-        <RenderImage width={'100%'} height={'100%'} src={imgSrc} />
-        {isCoverOpened && (
-          <RenderImageCover
-            style={{
-              background: !!rawSvgSrc
-                ? 'rgba(255, 255, 255, 0.75)'
-                : 'rgba(0, 0, 0, 0)',
-            }}
-          >
-            {isRenderLoading && <MultiLineText>Loading...</MultiLineText>}
-            {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
-          </RenderImageCover>
-        )}
+        <RenderHtmlContainer>
+          <iframe src={imgSrc || 'data:text/html;utf-8,'} />
+        </RenderHtmlContainer>
       </RenderContainer>
     </>
   );
