@@ -140,7 +140,8 @@ export const TutorialsProvider: React.FC<{
     if (!expectedOutputHexStr) {
       return true;
     }
-    return expectedOutputHexStr !== output.output;
+    console.log(output, expectedOutputHexStr, 'isButtonDisabled');
+    return expectedOutputHexStr.toLowerCase() !== output.output.toLowerCase();
   }, [expectedOutputHexStr, output]);
   const setIsOpen = useModalStore((s) => s.setIsGenericModalOpen);
   const onSubmit = useCallback(() => {
