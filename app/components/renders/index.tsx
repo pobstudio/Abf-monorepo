@@ -210,7 +210,7 @@ export const Render: FC<{
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             sandbox="allow-scripts"
             frameBorder={0}
-            src={imgSrc || 'data:text/html;utf-8,'}
+            srcDoc={imgSrc || 'data:text/html;utf-8,'}
           />
         </RenderHtmlContainer>
       </RenderContainer>
