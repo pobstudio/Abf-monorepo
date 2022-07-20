@@ -202,6 +202,23 @@ export const Render: FC<{
     );
   }
 
+  if (renderAttributeKey === 'animation_url') {
+    return (
+      <>
+        <RenderContainer>
+          <RenderHtmlContainer>
+            <iframe
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              sandbox="allow-scripts"
+              frameBorder={0}
+              srcDoc={imgSrc || 'data:text/html;utf-8,'}
+            />
+          </RenderHtmlContainer>
+        </RenderContainer>
+      </>
+    );
+  }
+
   return (
     <>
       <RenderContainer>
@@ -210,7 +227,7 @@ export const Render: FC<{
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             sandbox="allow-scripts"
             frameBorder={0}
-            srcDoc={imgSrc || 'data:text/html;utf-8,'}
+            src={imgSrc || ''}
           />
         </RenderHtmlContainer>
       </RenderContainer>
