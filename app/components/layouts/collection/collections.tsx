@@ -2,7 +2,7 @@ import React from 'react';
 import { useCollectionsByOwner } from '../../../hooks/useCollections';
 import { DetailRowsContainer } from '../../details/rows';
 import { H1, P } from '../../texts';
-import { CollectionsGrid } from '../grid';
+import { CollectionsGrid } from './grid';
 
 export const Collections: React.FC<{ address: string | undefined }> = ({
   address,

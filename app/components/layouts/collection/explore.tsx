@@ -2,7 +2,7 @@ import React from 'react';
 import { useCollections } from '../../../hooks/useCollections';
 import { DetailRowsContainer } from '../../details/rows';
 import { H1, P } from '../../texts';
-import { CollectionsGrid } from '../grid';
+import { CollectionsGrid } from './grid';
 
 export const Explore: React.FC = () => {
   const collections = useCollections();

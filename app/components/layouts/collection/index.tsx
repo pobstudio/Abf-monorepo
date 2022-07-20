@@ -169,7 +169,7 @@ export const Collection: React.FC = () => {
                   'PRICE',
                   `${utils.formatEther(
                     BigNumber.from(collection?.price ?? '0'),
-                  )} ETH` ?? '-',
+                  )} ETH`,
                 ]}
               </DetailRow>
               <DetailRow>
