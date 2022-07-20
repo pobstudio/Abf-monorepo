@@ -18,7 +18,7 @@ import { B, Label, P } from '../../texts';
 import { BasicEditor } from './editor';
 import { BasicRender } from './render';
 
-const TUTORIAL_REWARD = `https://pin.abf.dev/ipfs/QmNxChXGXhF8HxerQvc9mHaMM7hRMyWiEWCtmERnFDCN2r`;
+const TUTORIAL_REWARD = `https://pin.abf.dev/ipfs/QmQ52sBMjhcNLAv4nQPXKiAYi7ncgznojpomcYSUNGdAgf`;
 
 const TUTORIAL_METADATA = (refresh?: any): Partial<TutorialMetadata> => {
   const expectedOutputHexStr = `0xff0000ff0000ff0000ff0000ff0000ff0000ff0000ff0000ff00000000ff0000ff0000ff0000ff0000ff0000ffff0000ff00000000ff0000ff0000ff0000ff0000ff0000ffff0000ff00000000ff0000ff00ff0000ff000000ff0000ffff0000ff00000000ff0000ff00ff0000ff000000ff0000ffff0000ff00000000ff0000ff0000ff0000ff0000ff0000ffff0000ff00000000ff0000ff0000ff0000ff0000ff0000ffff0000ff0000ff0000ff0000ff0000ff0000ff0000ff0000ff0000`;
