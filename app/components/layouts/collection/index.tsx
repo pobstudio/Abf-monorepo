@@ -191,7 +191,7 @@ export const ThreePartMintButton: React.FC = () => {
       <TertiaryButton onClick={() => decrementAmountToMint()}>-</TertiaryButton>
       <PrimaryButton
         disabled={!isActive}
-        onClick={() => (isActive ? mint() : confirm('fuck off'))}
+        onClick={() => (isActive ? mint(amountToMint) : confirm('fuck off'))}
       >
         MINT: {`{{ ${amountToMint} }}`}
       </PrimaryButton>
