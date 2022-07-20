@@ -77,7 +77,7 @@ export const useCollection = (
 
 export const useCollectionsByOwner = (
   address: string | undefined,
-): CollectionMetadata | undefined => {
+): CollectionMetadataStub[] | undefined => {
   const results = useQuery(GET_COLLECTIONS_BY_OWNER, {
     variables: { address: address?.toLowerCase() },
   });
