@@ -174,7 +174,10 @@ export const Render: FC<{
         '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" style="background:#F1F1F1"></svg>',
       )}`;
     }
-    return `data:image/svg+xml;utf8,${encodeURIComponent(rawSvgSrc)}`;
+    if (renderAttributeKey === 'image') {
+      return `data:image/svg+xml;utf8,${encodeURIComponent(rawSvgSrc)}`;
+    }
+    return rawSvgSrc;
   }, [rawSvgSrc, renderAttributeKey]);
 
   if (renderAttributeKey === 'image') {
@@ -203,7 +206,12 @@ export const Render: FC<{
     <>
       <RenderContainer>
         <RenderHtmlContainer>
-          <iframe src={imgSrc || 'data:text/html;utf-8,'} />
+          <iframe
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            sandbox="allow-scripts"
+            frameBorder={0}
+            src={imgSrc || 'data:text/html;utf-8,'}
+          />
         </RenderHtmlContainer>
       </RenderContainer>
     </>
