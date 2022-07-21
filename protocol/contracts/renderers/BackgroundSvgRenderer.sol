@@ -2,11 +2,14 @@
 
 pragma solidity ^0.8.4;
 import "../interfaces/IRenderer.sol";
+import "../libraries/SvgUtils.sol";
+import "../libraries/BytesUtils.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/Base64.sol";
 import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract DebugRenderer is IRenderer, Ownable, ERC165 {
+contract BackgroundSvgRenderer is IRenderer, Ownable, ERC165 {
   using Strings for uint256;
 
   function owner() public override(Ownable, IRenderer) view returns (address) {
@@ -20,34 +23,43 @@ contract DebugRenderer is IRenderer, Ownable, ERC165 {
   }
 
   function propsSize() external override pure returns (uint256) {
-    return 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
-  }
-  function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreiaowcb6vqtrrpvgldihr6cbb4vlexrhhxocnyh2fel7q4fku7aruu";
+    return 7;
   }
   
+  function additionalMetadataURI() external override pure returns (string memory) {
+    return "ipfs://bafkreiagbea4rsh5ytw5z2bm7s3nf23zsngt4iyhh4wh3b2hotdgm7xvym";
+  }
+
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
 
   function renderRaw(bytes calldata props) public override pure returns (string memory) {
-    string memory output = "";
-    uint i = 0;
-    while(i < props.length) {
-      output = string(abi.encodePacked(output, props[i]));      
-      i++;
-    }
-    return output;
+    uint16 width = BytesUtils.toUint16(props, 0);
+    uint16 height = BytesUtils.toUint16(props, 2);
+    return string(abi.encodePacked(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="', uint256(width).toString(),'" height="', uint256(height).toString(), '" style="background:', SvgUtils.toColorHexStringByBytes(props[3], props[4], props[5]),'"></svg>'
+      )
+    );
   }
 
   function render(bytes calldata props) external override pure returns (string memory) {
-    return renderRaw(props);
+    return string(
+      abi.encodePacked(
+        'data:image/svg+xml;base64,',
+        Base64.encode(bytes(renderRaw(props))) 
+      )
+    );
   }
 
   function attributes(bytes calldata props) external override pure returns (string memory) {
-    return string(
+    uint i = 0;
+    while(props[i] != 0x00) {
+      i++;
+    }
+      return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', props.length.toString(), '}'
+              '{"trait_type": "Data Length", "value":', i.toString(), '}'
             )
           );
   }

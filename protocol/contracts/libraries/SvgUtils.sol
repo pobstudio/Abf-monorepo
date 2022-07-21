@@ -69,5 +69,9 @@ library SvgUtils {
     buffer[5] = _HEX_SYMBOLS[uint8(b) & 0xf];
     return string(buffer);
   }
+  
+  function toColorHexStringByBytes3(bytes3 rgb) public pure returns (string memory) {
+    return toColorHexStringByBytes(rgb[0], rgb[1], rgb[2]);
+  }
 
 }

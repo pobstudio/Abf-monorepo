@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
-import { PixelGrid8Renderer, SvgUtils } from '../typechain-types';
+import { GifImageRenderer, SvgUtils } from '../typechain-types';
 import { getSvgHotLoadingServer } from '../utils/svg';
 
 task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
@@ -9,6 +9,10 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
   const SvgUtils = await hre.ethers.getContractFactory('SvgUtils');
   const svgUtils = (await SvgUtils.deploy()) as SvgUtils;
   await svgUtils.deployed();
+
+  // const BytesUtils = await hre.ethers.getContractFactory('BytesUtils');
+  // const bytesUtils = (await BytesUtils.deploy()) as BytesUtils;
+  // await bytesUtils.deployed();
 
   const GRADIENT_BYTES =
     '0x' +
@@ -23,8 +27,6 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
       (a, c, i) => a + BigNumber.from(i).toHexString().slice(2),
       '',
     );
-
-  console.log(MONO_GRAYSCALE_BYTES, (MONO_GRAYSCALE_BYTES.length - 2) / 2);
 
   const GRAYSCALE_BYTES =
     '0x' +
@@ -72,26 +74,45 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     //   },
     // );
 
-    const PixelGrid8Renderer = await hre.ethers.getContractFactory(
-      'PixelGrid8Renderer',
+    const BackgroundSvgRenderer = await hre.ethers.getContractFactory(
+      'BackgroundSvgRenderer',
       {
         libraries: {
+          // BytesUtils: bytesUtils.address,
+          SvgUtils: svgUtils.address,
+        },
+      },
+    );
+
+    const GifImageRenderer = await hre.ethers.getContractFactory(
+      'GifImageRenderer',
+      {
+        libraries: {
+          // BytesUtils: bytesUtils.address,
           // SvgUtils: svgUtils.address,
         },
       },
     );
 
-    // const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {
-    //   // libraries: {
-    //   //   SvgUtils: svgUtils.address,
-    //   // },
-    // });
-    const renderer = (await PixelGrid8Renderer.deploy()) as PixelGrid8Renderer;
-    await renderer.deployed();
-    console.log(await renderer.renderRaw(GRAYSCALE_BYTES));
+    const BYTES =
+      '0x0405042C3333395B64A5C9CAE7F6F2' +
+      '00'.repeat(4) +
+      '01'.repeat(4) +
+      '02'.repeat(4) +
+      '03'.repeat(4) +
+      '04'.repeat(4);
 
-    const res = await renderer.render(GRAYSCALE_BYTES);
-    const estimation = await renderer.estimateGas.renderRaw(GRAYSCALE_BYTES);
+    const renderer = (await GifImageRenderer.deploy()) as GifImageRenderer;
+    await renderer.deployed();
+
+    console.log(BYTES);
+    try {
+      // console.log(await renderer.renderRaw(BYTES));
+    } catch (e) {
+      console.log(e);
+    }
+    const res = await renderer.render(BYTES);
+    const estimation = await renderer.estimateGas.renderRaw(BYTES);
     console.log('Gas used for call:', estimation.toNumber());
     return `<img width="500" height="500" src="${res}"></img>`;
   });

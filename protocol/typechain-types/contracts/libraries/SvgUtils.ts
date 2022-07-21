@@ -30,6 +30,7 @@ export interface SvgUtilsInterface extends utils.Interface {
     'padZeros(string,uint256)': FunctionFragment;
     'toColorHexString(uint256)': FunctionFragment;
     'toColorHexStringByBytes(bytes1,bytes1,bytes1)': FunctionFragment;
+    'toColorHexStringByBytes3(bytes3)': FunctionFragment;
     'toDecimalString(uint256)': FunctionFragment;
     'wholeNumber(uint256)': FunctionFragment;
   };
@@ -43,6 +44,7 @@ export interface SvgUtilsInterface extends utils.Interface {
       | 'padZeros'
       | 'toColorHexString'
       | 'toColorHexStringByBytes'
+      | 'toColorHexStringByBytes3'
       | 'toDecimalString'
       | 'wholeNumber',
   ): FunctionFragment;
@@ -78,6 +80,10 @@ export interface SvgUtilsInterface extends utils.Interface {
     ],
   ): string;
   encodeFunctionData(
+    functionFragment: 'toColorHexStringByBytes3',
+    values: [PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'toDecimalString',
     values: [PromiseOrValue<BigNumberish>],
   ): string;
@@ -100,6 +106,10 @@ export interface SvgUtilsInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: 'toColorHexStringByBytes',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'toColorHexStringByBytes3',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -175,6 +185,11 @@ export interface SvgUtils extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
+    toColorHexStringByBytes3(
+      rgb: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
     toDecimalString(
       n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
@@ -220,6 +235,11 @@ export interface SvgUtils extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
+  toColorHexStringByBytes3(
+    rgb: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
   toDecimalString(
     n: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
@@ -262,6 +282,11 @@ export interface SvgUtils extends BaseContract {
       r: PromiseOrValue<BytesLike>,
       g: PromiseOrValue<BytesLike>,
       b: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    toColorHexStringByBytes3(
+      rgb: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
@@ -313,6 +338,11 @@ export interface SvgUtils extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    toColorHexStringByBytes3(
+      rgb: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     toDecimalString(
       n: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
@@ -356,6 +386,11 @@ export interface SvgUtils extends BaseContract {
       r: PromiseOrValue<BytesLike>,
       g: PromiseOrValue<BytesLike>,
       b: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    toColorHexStringByBytes3(
+      rgb: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

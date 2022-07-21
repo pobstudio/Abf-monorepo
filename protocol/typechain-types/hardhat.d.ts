@@ -77,6 +77,18 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IRenderer__factory>;
     getContractFactory(
+      name: 'Bytecode',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.Bytecode__factory>;
+    getContractFactory(
+      name: 'Create3',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.Create3__factory>;
+    getContractFactory(
+      name: 'SSTORE2Map',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.SSTORE2Map__factory>;
+    getContractFactory(
       name: 'SvgUtils',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.SvgUtils__factory>;
@@ -85,6 +97,14 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.RendererRegistry__factory>;
     getContractFactory(
+      name: 'BackgroundSvgRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.BackgroundSvgRenderer__factory>;
+    getContractFactory(
+      name: 'ConfiguredGifImageRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ConfiguredGifImageRenderer__factory>;
+    getContractFactory(
       name: 'DebugRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DebugRenderer__factory>;
@@ -92,6 +112,10 @@ declare module 'hardhat/types/runtime' {
       name: 'DotMatrixRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DotMatrixRenderer__factory>;
+    getContractFactory(
+      name: 'GifImageRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.GifImageRenderer__factory>;
     getContractFactory(
       name: 'MonoPixelGrid16Renderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -206,6 +230,21 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.IRenderer>;
     getContractAt(
+      name: 'Bytecode',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.Bytecode>;
+    getContractAt(
+      name: 'Create3',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.Create3>;
+    getContractAt(
+      name: 'SSTORE2Map',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.SSTORE2Map>;
+    getContractAt(
       name: 'SvgUtils',
       address: string,
       signer?: ethers.Signer,
@@ -216,6 +255,16 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.RendererRegistry>;
     getContractAt(
+      name: 'BackgroundSvgRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.BackgroundSvgRenderer>;
+    getContractAt(
+      name: 'ConfiguredGifImageRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ConfiguredGifImageRenderer>;
+    getContractAt(
       name: 'DebugRenderer',
       address: string,
       signer?: ethers.Signer,
@@ -225,6 +274,11 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.DotMatrixRenderer>;
+    getContractAt(
+      name: 'GifImageRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.GifImageRenderer>;
     getContractAt(
       name: 'MonoPixelGrid16Renderer',
       address: string,

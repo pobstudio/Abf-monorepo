@@ -50,7 +50,7 @@ library BrainFuckURIConstructor {
                         tokenName,
                         '","description":"', code,'", "', renderer.renderAttributeKey(), '": "',
                         image,
-                        '", "aspect_ratio":1, "attributes": [', renderer.attributes(props), '{"trait_type":"Renderer","value":"',
+                        '", "aspect_ratio":1, "attributes": [', renderer.attributes(props), ',{"trait_type":"Renderer","value":"',
                           uint256(uint160(address(renderer))).toHexString(),
                         '"}]}'
                     )
