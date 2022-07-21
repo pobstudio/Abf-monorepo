@@ -14,11 +14,11 @@ import {
   RendererMetadataStub,
 } from '../types';
 import {
-  convertHexStrToAscii,
   getTokenSeed,
   runBrainFuckCode,
   tokenSeedToInputTape,
 } from '../utils/brainFuck';
+import { convertHexStrToUtf8 } from '../utils/hex';
 
 export interface CollectionProviderContext {
   collectionMetadata: CollectionMetadata | undefined;
@@ -80,7 +80,7 @@ export const CollectionProvider: React.FC<{
   const seed = collectionMetadata?.seed ?? '0x00';
   const rendererLabel = useRendererLabel(rendererAddress);
   const rendererMetadata = useRendererMetadataStubByProvider(rendererAddress);
-  const brainfuckCode = convertHexStrToAscii(brainfuckCodeInHex);
+  const brainfuckCode = convertHexStrToUtf8(brainfuckCodeInHex);
   const tokenSeed = useMemo(
     () =>
       constants && seed
