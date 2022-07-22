@@ -184,7 +184,7 @@ export const Render: FC<{
 
   useEffect(() => {
     console.log('renderedBy', renderedBy);
-    console.log('renderAttributeKey', renderAttributeKey)
+    console.log('renderAttributeKey', renderAttributeKey);
   }, [renderedBy, renderAttributeKey]);
 
   if (renderAttributeKey === 'image') {
@@ -229,13 +229,13 @@ export const Render: FC<{
   return (
     <>
       <RenderContainer>
-      <RenderImageCover
-              style={{
-                background: 'rgba(255, 255, 255, 0.75)'
-              }}
-            >
-              <MultiLineText>{`"${renderAttributeKey}" is not recognized.`}</MultiLineText>
-            </RenderImageCover>
+        <RenderImageCover
+          style={{
+            background: 'rgba(255, 255, 255, 0.75)',
+          }}
+        >
+          <MultiLineText>{`"${renderAttributeKey}" is not recognized.`}</MultiLineText>
+        </RenderImageCover>
       </RenderContainer>
     </>
   );
