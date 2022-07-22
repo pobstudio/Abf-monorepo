@@ -38,7 +38,7 @@ export const BasicRender: FC = () => {
               : '#'
           }
         >
-          {rendererMetadata?.label}
+          {rendererMetadata?.name}
         </LabelAnchor>
       </FlexEnds>
       <Render output={output} rendererMetadata={rendererMetadata} />
