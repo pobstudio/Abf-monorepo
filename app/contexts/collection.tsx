@@ -3,9 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePriorityAccount } from '../connectors/priority';
 import { useCollection } from '../hooks/useCollections';
 import { useBrainFuckContract } from '../hooks/useContracts';
-import {
-  useRendererMetadataStubByProvider,
-} from '../hooks/useRenderer';
+import { useRendererMetadataStubByProvider } from '../hooks/useRenderer';
 import { useTransactionsStore } from '../stores/transaction';
 import {
   CollectionMetadata,
