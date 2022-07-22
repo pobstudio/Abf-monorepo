@@ -291,32 +291,35 @@ contract DotMatrixRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreihfszq76yxcmkux4xbvpx3pbdnrvo3aaporhfwft4xkvsno3ogzzq";
+    return "ipfs://bafkreicmtcd322kc6bfranu4nqipmpj7n2k3sc3btmuhgs6os3nar2xx6m";
+  }
+
+  function name() public override pure returns (string memory) {
+    return 'Dot Matrix';
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
   
-  function renderRaw(bytes calldata props) public override view returns (string memory) {
+  function renderRaw(bytes calldata props) public override view returns (bytes memory) {
     string memory content = '';
     for (uint i = 0; i < 256; ++i) {
       content = string(abi.encodePacked(content, circlePrefix, circles[i], ' r="', SvgUtils.toDecimalString(SvgUtils.lerpWithDecimals(RADIUS_MIN, RADIUS_MAX, props[i])), circleSuffix));
     }
 
-    return string(abi.encodePacked(
+    return abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" width="570" height="570" style="background:#F1F1F1">',
         content,
       '</svg>'
-      )
-    );
+      );
   }
 
   function render(bytes calldata props) external override view returns (string memory) {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(props))) 
+        Base64.encode(renderRaw(props)) 
       )
     );
   }
@@ -328,7 +331,7 @@ contract DotMatrixRenderer is IRenderer, Ownable, ERC165 {
     }
       return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', i.toString(), '},'
+              '{"trait_type": "Data Length", "value":', i.toString(), '}'
             )
           );
   }

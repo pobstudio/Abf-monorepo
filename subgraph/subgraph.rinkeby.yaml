@@ -6,9 +6,9 @@ dataSources:
     name: RendererRegistry 
     network: rinkeby 
     source:
-      address: "0xE4B49D2b77dBbBeB65e0C5f49Af734D7E8803494"
+      address: "0x3Dbc4D243Cd20ff99D640DEA8D5b361106F50bB5"
       abi: RendererRegistry
-      startBlock: 11012471 
+      startBlock: 11069280 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -25,34 +25,12 @@ dataSources:
           handler: handleRegisteredRenderer
       file: ./src/rendererRegistry.ts
   - kind: ethereum/contract
-    name: BrainFuckFactory1
+    name: BrainFuckFactory
     network: rinkeby 
     source:
-      address: "0x4a597DbD7a6C1DE06A9f3CDEA2946f8d1929c31A"
+      address: "0xD056E4F9c2624f82A470427Ee754F355acf0feae"
       abi: BrainFuckFactory
-      startBlock: 11012449 
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - Collection
-      abis:
-        - name: BrainFuck
-          file: ./abis/BrainFuck.json
-        - name: BrainFuckFactory
-          file: ./abis/BrainFuckFactory.json
-      eventHandlers:
-        - event: CreatedBrainFuckNFT(address,address)
-          handler: handleCreatedCollection
-      file: ./src/brainFuck.ts
-  - kind: ethereum/contract
-    name: BrainFuckFactory2 
-    network: rinkeby 
-    source:
-      address: "0x6025ec2ec7113D1F1Fc97493f9C223077F3f31a5"
-      abi: BrainFuckFactory
-      startBlock: 11020395 
+      startBlock: 11064750 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5

@@ -1,6 +1,7 @@
 type Renderer @entity {
   id: ID!
   owner: Bytes!
+  name: String!
   address: Bytes!
   propsSize: BigInt!
   additionalMetadataURI: String!

@@ -47,10 +47,26 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
     const groupedBytesAndLabels: [string, string | undefined][] = [];
     if (!!byteGroups && byteGroups.length !== 0) {
       for (const { numGroups, groupBytesIn, label } of byteGroups) {
+        const numericalNumGroups = (() => {
+          if (numGroups === 'infinity') {
+            return Infinity;
+          }
+          if (typeof numGroups === 'string') {
+            if (numGroups.startsWith('variable')) {
+              const params = numGroups.split('.');
+              const index = parseInt(params[1] ?? '');
+              if (!!index || isNaN(index)) {
+                return 0;
+              }
+              return parseInt(output[index], 16);
+            }
+            return 0;
+          }
+          return numGroups;
+        })();
         for (
           let x = 0, i = 2;
-          i < output.length &&
-          x < (numGroups === 'infinity' ? Infinity : numGroups);
+          i < output.length && x < numericalNumGroups;
           ++x
         ) {
           groupedBytesAndLabels.push([

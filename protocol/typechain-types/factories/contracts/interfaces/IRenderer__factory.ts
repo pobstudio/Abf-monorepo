@@ -2,141 +2,154 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Provider } from '@ethersproject/providers';
-import { Contract, Signer, utils } from 'ethers';
+import { Contract, Signer, utils } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type {
   IRenderer,
   IRendererInterface,
-} from '../../../contracts/interfaces/IRenderer';
+} from "../../../contracts/interfaces/IRenderer";
 
 const _abi = [
   {
     inputs: [],
-    name: 'additionalMetadataURI',
+    name: "additionalMetadataURI",
     outputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
       {
-        internalType: 'bytes',
-        name: 'props',
-        type: 'bytes',
+        internalType: "bytes",
+        name: "props",
+        type: "bytes",
       },
     ],
-    name: 'attributes',
+    name: "attributes",
     outputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
-    name: 'owner',
+    name: "name",
     outputs: [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
-    name: 'propsSize',
+    name: "owner",
     outputs: [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
-    stateMutability: 'pure',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes',
-        name: 'props',
-        type: 'bytes',
-      },
-    ],
-    name: 'render',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
-    name: 'renderAttributeKey',
+    name: "propsSize",
     outputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
-    stateMutability: 'pure',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
       {
-        internalType: 'bytes',
-        name: 'props',
-        type: 'bytes',
+        internalType: "bytes",
+        name: "props",
+        type: "bytes",
       },
     ],
-    name: 'renderRaw',
+    name: "render",
     outputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renderAttributeKey",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
       {
-        internalType: 'bytes4',
-        name: 'interfaceId',
-        type: 'bytes4',
+        internalType: "bytes",
+        name: "props",
+        type: "bytes",
       },
     ],
-    name: 'supportsInterface',
+    name: "renderRaw",
     outputs: [
       {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes4",
+        name: "interfaceId",
+        type: "bytes4",
+      },
+    ],
+    name: "supportsInterface",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
 ];
 
@@ -147,7 +160,7 @@ export class IRenderer__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider,
+    signerOrProvider: Signer | Provider
   ): IRenderer {
     return new Contract(address, _abi, signerOrProvider) as IRenderer;
   }

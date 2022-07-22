@@ -65,7 +65,7 @@ export const TokenPreview: FC = () => {
               : '#'
           }
         >
-          {rendererMetadataStub?.label}
+          {rendererMetadataStub?.name}
         </LabelAnchor>
       </FlexEnds>
       <Render

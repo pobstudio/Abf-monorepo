@@ -3,7 +3,7 @@
 pragma solidity ^0.8.4;
 
 library BrainFuckVM {
-  uint constant public TAPE_SIZE = 3_000_000; 
+  uint constant public TAPE_SIZE = 300_000; 
   uint constant public LOOPING_STACK_SIZE = 8192;
 
   function run(bytes calldata code, bytes calldata input) public pure returns (bytes memory out) {
@@ -14,7 +14,6 @@ library BrainFuckVM {
     uint ptr = 0;
     bool isLooping = false;
     uint innerLoops = 0;
-    // technically a max of 4096 nested loops
     uint[] memory loopingStack = new uint[](LOOPING_STACK_SIZE);
     uint loopingStackIndex = 0;
 

@@ -1,6 +1,9 @@
-import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
-import { PixelGrid8Renderer, SvgUtils } from '../typechain-types';
+import {
+  ConfiguredGifImageRenderer,
+  GifImageRenderer,
+  SvgUtils,
+} from '../typechain-types';
 import { getSvgHotLoadingServer } from '../utils/svg';
 
 task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
@@ -10,88 +13,73 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
   const svgUtils = (await SvgUtils.deploy()) as SvgUtils;
   await svgUtils.deployed();
 
-  const GRADIENT_BYTES =
-    '0x' +
-    [...Array(256)].reduce(
-      (a, c, i) => a + BigNumber.from(i).toHexString().slice(2),
-      '',
-    );
-
-  const MONO_GRAYSCALE_BYTES =
-    '0x' +
-    [...Array(256)].reduce(
-      (a, c, i) => a + BigNumber.from(i).toHexString().slice(2),
-      '',
-    );
-
-  console.log(MONO_GRAYSCALE_BYTES, (MONO_GRAYSCALE_BYTES.length - 2) / 2);
-
-  const GRAYSCALE_BYTES =
-    '0x' +
-    [...Array(64)].reduce(
-      (a, c, i) =>
-        a +
-        BigNumber.from(i).toHexString().slice(2) +
-        BigNumber.from(i).toHexString().slice(2) +
-        BigNumber.from(i).toHexString().slice(2),
-      '',
-    );
-
   const LINE_BYTES =
-    '0x4D0000' +
-    [...Array(16)].reduce(
-      (a, c, i) =>
+    '0x' +
+    [...Array(16)].reduce((a, c, i) => {
+      console.log(255 - i * 16, (255 - i * 16).toString(16).padStart(2, '2'));
+      return (
         a +
-        'L'.charCodeAt(0).toString(16) +
-        BigNumber.from(i * 16)
-          .toHexString()
-          .slice(2) +
-        (i % 2 === 1 ? '00' : 'ff'),
-      '',
-    );
+        '4d' +
+        (i * 16).toString(16).padStart(2, '0') +
+        '00' +
+        '4c' +
+        (i * 16).toString(16).padStart(2, '0') +
+        (255 - i * 16).toString(16).padStart(2, '0') +
+        '4c' +
+        'ff' +
+        (255 - i * 16).toString(16).padStart(2, '0')
+      );
+    }, '');
 
   const server = await getSvgHotLoadingServer(async () => {
     await hre.run('compile');
 
-    // const DotMatrixRenderer = await hre.ethers.getContractFactory(
-    //   'DotMatrixRenderer',
-    //   {
-    //     libraries: {
-    //       SvgUtils: svgUtils.address,
-    //     },
-    //   },
-    // );
-    // const Renderer = (await DotMatrixRenderer.deploy()) as DotMatrixRenderer;
-
-    // const MonoPixelGrid8Renderer = await hre.ethers.getContractFactory(
-    //   'MonoPixelGrid8Renderer',
-    //   {
-    //     libraries: {
-    //       SvgUtils: svgUtils.address,
-    //     },
-    //   },
-    // );
-
-    const PixelGrid8Renderer = await hre.ethers.getContractFactory(
-      'PixelGrid8Renderer',
+    const GifImageRenderer = await hre.ethers.getContractFactory(
+      'GifImageRenderer',
       {
         libraries: {
+          // BytesUtils: bytesUtils.address,
           // SvgUtils: svgUtils.address,
         },
       },
     );
 
-    // const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {
-    //   // libraries: {
-    //   //   SvgUtils: svgUtils.address,
-    //   // },
-    // });
-    const renderer = (await PixelGrid8Renderer.deploy()) as PixelGrid8Renderer;
-    await renderer.deployed();
-    console.log(await renderer.renderRaw(GRAYSCALE_BYTES));
+    const gifRenderer = (await GifImageRenderer.deploy()) as GifImageRenderer;
+    await gifRenderer.deployed();
 
-    const res = await renderer.render(GRAYSCALE_BYTES);
-    const estimation = await renderer.estimateGas.renderRaw(GRAYSCALE_BYTES);
+    const ConfiguredGifImageRenderer = await hre.ethers.getContractFactory(
+      'ConfiguredGifImageRenderer',
+      {
+        libraries: {
+          // BytesUtils: bytesUtils.address,
+          // SvgUtils: svgUtils.address,
+        },
+      },
+    );
+
+    const BACKGROUND_SVG_BYTES = '0x00FF00FF2C3333';
+
+    const BYTES =
+      '0x00000001' +
+      '01'.repeat(4) +
+      '02'.repeat(4) +
+      '03'.repeat(4) +
+      '04'.repeat(4);
+
+    const renderer = (await ConfiguredGifImageRenderer.deploy(
+      gifRenderer.address,
+    )) as ConfiguredGifImageRenderer;
+    await renderer.deployed();
+    await renderer.addConfiguration({
+      width: 4,
+      height: 4,
+      colors: '0x2C3333395B64A5C9CAE7F6F2',
+    });
+    console.log(BYTES);
+    console.log(await renderer.getConfiguration(1));
+    console.log('raw', await renderer.renderRaw(BYTES));
+    const res = await renderer.render(BYTES);
+    const estimation = await renderer.estimateGas.renderRaw(BYTES);
     console.log('Gas used for call:', estimation.toNumber());
     return `<img width="500" height="500" src="${res}"></img>`;
   });

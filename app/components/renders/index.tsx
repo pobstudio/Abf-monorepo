@@ -35,6 +35,7 @@ const RenderImage = styled.img`
   left: 0;
   right: 0;
   shape-rendering: crispEdges;
+  image-rendering: pixelated;
 `;
 
 const RenderImageCover = styled.div`
@@ -87,7 +88,9 @@ export const Render: FC<{
   const chainId = usePriorityChainId();
   const renderer = useRendererContract(rendererMetadata?.address);
 
-  const [rawSvgSrc, setRawSvgSrc] = useState<string | undefined>(undefined);
+  const [renderOutput, setRenderOutput] = useState<string | undefined>(
+    undefined,
+  );
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
   );
@@ -107,14 +110,16 @@ export const Render: FC<{
       setRenderedBy(undefined);
       try {
         if (
-          !!rendererMetadata?.label &&
-          !!OFFLINE_RENDERERS[rendererMetadata.label]
+          !!rendererMetadata?.name &&
+          !!OFFLINE_RENDERERS[rendererMetadata.name]
         ) {
           setIsRenderLoading(false);
-          const renderRaw = OFFLINE_RENDERERS[rendererMetadata.label].renderRaw(
+          const renderRaw = OFFLINE_RENDERERS[rendererMetadata.name].renderRaw(
             output.output,
           );
-          setRawSvgSrc(renderRaw);
+          setRenderOutput(
+            `data:image/svg+xml;utf8,${encodeURIComponent(renderRaw)}`,
+          );
           setRenderedBy('local');
           setRenderAttributeKey('image');
         } else if (!chainId) {
@@ -131,9 +136,9 @@ export const Render: FC<{
         } else if (!!renderer) {
           console.log('node render', renderer.address);
           setIsRenderLoading(true);
-          const renderRaw = await renderer.renderRaw(output.output);
+          const render = await renderer.render(output.output);
           const renderAttribute = await renderer.renderAttributeKey();
-          setRawSvgSrc(renderRaw);
+          setRenderOutput(render);
           setIsRenderLoading(false);
           setRenderedBy('on-chain');
           setRenderAttributeKey(renderAttribute);
@@ -146,13 +151,13 @@ export const Render: FC<{
           setErrorMessage('OUTPUT BYTES NOT AT REQUIRED SIZE.');
         } else if (e.message.indexOf(INCORRECT_CHAIN_ID) !== -1) {
           setErrorMessage('INCORRECT CHAIN CONNECTED.');
-          setRawSvgSrc(undefined);
+          setRenderOutput(undefined);
         } else if (e.message.indexOf(NO_CONNECTED_WALLET) !== -1) {
           setErrorMessage('NO WALLET CONNECTED. CONNECT TO SEE PREVIEW.');
-          setRawSvgSrc(undefined);
+          setRenderOutput(undefined);
         } else if (e.message.indexOf(RENDERER_NOT_FOUND) !== -1) {
           setErrorMessage('RENDERER NOT FOUND ON-CHAIN.');
-          setRawSvgSrc(undefined);
+          setRenderOutput(undefined);
         } else {
           setErrorMessage(
             'RENDERER ERROR. CHECK CONSOLE LOGS FOR MORE DETAILS.',
@@ -169,16 +174,18 @@ export const Render: FC<{
   }, [isRenderLoading, errorMessage]);
 
   const imgSrc = useMemo(() => {
-    if (!rawSvgSrc) {
+    if (!renderOutput) {
       return `data:image/svg+xml;utf8,${encodeURIComponent(
         '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" style="background:#F1F1F1"></svg>',
       )}`;
     }
-    if (renderAttributeKey === 'image') {
-      return `data:image/svg+xml;utf8,${encodeURIComponent(rawSvgSrc)}`;
-    }
-    return rawSvgSrc;
-  }, [rawSvgSrc, renderAttributeKey]);
+    return renderOutput;
+  }, [renderOutput, renderAttributeKey]);
+
+  useEffect(() => {
+    console.log('renderedBy', renderedBy);
+    console.log('renderAttributeKey', renderAttributeKey);
+  }, [renderedBy, renderAttributeKey]);
 
   if (renderAttributeKey === 'image') {
     return (
@@ -188,7 +195,7 @@ export const Render: FC<{
           {isCoverOpened && (
             <RenderImageCover
               style={{
-                background: !!rawSvgSrc
+                background: !!renderOutput
                   ? 'rgba(255, 255, 255, 0.75)'
                   : 'rgba(0, 0, 0, 0)',
               }}
@@ -222,14 +229,13 @@ export const Render: FC<{
   return (
     <>
       <RenderContainer>
-        <RenderHtmlContainer>
-          <iframe
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            sandbox="allow-scripts"
-            frameBorder={0}
-            src={imgSrc || ''}
-          />
-        </RenderHtmlContainer>
+        <RenderImageCover
+          style={{
+            background: 'rgba(255, 255, 255, 0.75)',
+          }}
+        >
+          <MultiLineText>{`"${renderAttributeKey}" is not recognized.`}</MultiLineText>
+        </RenderImageCover>
       </RenderContainer>
     </>
   );

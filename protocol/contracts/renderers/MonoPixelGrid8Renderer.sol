@@ -85,6 +85,10 @@ contract MonoPixelGrid8Renderer is IRenderer, Ownable, ERC165 {
     return super.owner();
   }
 
+  function name() public override pure returns (string memory) {
+    return 'Mono Pixel Grid 8';
+  }
+
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
     return
       interfaceId == type(IRenderer).interfaceId ||
@@ -96,24 +100,23 @@ contract MonoPixelGrid8Renderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreiagbea4rsh5ytw5z2bm7s3nf23zsngt4iyhh4wh3b2hotdgm7xvym";
+    return "ipfs://bafkreigb52erl2ljzlwgtyh4w5ia6v7iqeyexum2chfq5cmruanbmkzvoe";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
 
-  function renderRaw(bytes calldata props) public override view returns (string memory) {
+  function renderRaw(bytes calldata props) public override view returns (bytes memory) {
     string memory content = '';
     for (uint i = 0; i < 64; ++i) {
       content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(props[i], props[i], props[i]), rectSuffix));
     }
 
-    return string(abi.encodePacked(
+    return abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" style="background:#F1F1F1">',
         content,
       '</svg>'
-      )
     );
   }
 
@@ -121,7 +124,7 @@ contract MonoPixelGrid8Renderer is IRenderer, Ownable, ERC165 {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(props))) 
+        Base64.encode(renderRaw(props)) 
       )
     );
   }
@@ -133,7 +136,7 @@ contract MonoPixelGrid8Renderer is IRenderer, Ownable, ERC165 {
     }
       return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', i.toString(), '},'
+              '{"trait_type": "Data Length", "value":', i.toString(), '}'
             )
           );
   }

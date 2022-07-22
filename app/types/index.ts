@@ -87,7 +87,7 @@ export interface CollectionMetadataStub {
 }
 
 export interface RendererMetadataStub {
-  label: string | undefined;
+  name: string | undefined;
   address: string;
   additionalMetadataURI: string;
   propsSize: BigNumber;
@@ -96,7 +96,6 @@ export interface RendererMetadataStub {
 }
 
 export interface RendererAdditionalMetadata {
-  name: string;
   description: string;
   sampleOptions?: {
     input?: string;
@@ -107,7 +106,7 @@ export interface RendererAdditionalMetadata {
 }
 
 export interface RendererAdditionalMetadataByteGroup {
-  numGroups: number | 'infinity';
+  numGroups: number | 'infinity' | string;
   groupBytesIn: number;
   label?: string;
 }

@@ -6,7 +6,7 @@ import {
   BrainFuck,
   BrainFuckURIConstructor,
   BrainFuckVM,
-  DebugRenderer,
+  IdentityRenderer,
 } from '../typechain-types';
 
 const TOKEN_ID_ZERO = BigNumber.from(0);
@@ -51,7 +51,7 @@ describe('BrainFuck', function () {
   let brainFuck: BrainFuck;
   let brainFuckURIConstructor: BrainFuckURIConstructor;
 
-  let debugRenderer: DebugRenderer;
+  let identityRenderer: IdentityRenderer;
   let owner: Signer;
   let artist: Signer;
   let rando: Signer;
@@ -68,9 +68,11 @@ describe('BrainFuck', function () {
   });
 
   beforeEach(async function () {
-    const DebugRenderer = await ethers.getContractFactory('DebugRenderer');
-    debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
-    await debugRenderer.deployed();
+    const IdentityRenderer = await ethers.getContractFactory(
+      'IdentityRenderer',
+    );
+    identityRenderer = (await IdentityRenderer.deploy()) as IdentityRenderer;
+    await identityRenderer.deployed();
 
     const BrainFuckVM = await ethers.getContractFactory('BrainFuckVM');
     brainFuckVM = (await BrainFuckVM.deploy()) as BrainFuckVM;
@@ -100,7 +102,7 @@ describe('BrainFuck', function () {
       SEED,
       CONSTANTS,
       CODE,
-      debugRenderer.address,
+      identityRenderer.address,
       MINTING_SUPPLY,
       PRICE,
       RENDERER_ROYALTY_FRACTION,
@@ -116,7 +118,7 @@ describe('BrainFuck', function () {
       expect(await brainFuck.isActive()).to.eq(false);
       expect(await brainFuck.seed()).to.eq(SEED);
       expect(await brainFuck.code()).to.eq(CODE);
-      expect(await brainFuck.renderer()).to.eq(debugRenderer.address);
+      expect(await brainFuck.renderer()).to.eq(identityRenderer.address);
       expect(await brainFuck.mintingSupply()).to.eq(MINTING_SUPPLY);
       expect(await brainFuck.price()).to.eq(PRICE);
       expect(await brainFuck.whitelistToken()).to.eq(NULL_ADDRESS);
@@ -134,7 +136,7 @@ describe('BrainFuck', function () {
       console.log(contractMetadata);
       expect(contractMetadata.name).to.eq('Absolute Brain Fuck');
       expect(contractMetadata.description).to.eq(
-        'On-chain generative art written in the esoteric programming language BrainFuck.',
+        'On-chain generative art written in the esoteric programming language BrainFuck!.',
       );
       expect(contractMetadata.external_link).to.eq(
         `https://abf.dev/nft/${brainFuck.address.toLowerCase()}`,
@@ -187,6 +189,19 @@ describe('BrainFuck', function () {
     });
   });
 
+  describe('setCustomContractURI', () => {
+    it('owner can set contractURI', async () => {
+      await brainFuck.connect(owner).setCustomContractURI('0x414243');
+      expect(await brainFuck.contractURI()).to.eq('ABC');
+      await brainFuck.connect(owner).setCustomContractURI('0x');
+    });
+    it('rando can not set isActive', async () => {
+      await expect(
+        brainFuck.connect(rando).setCustomContractURI('0x414243'),
+      ).to.revertedWith('Ownable: caller is not the owner');
+    });
+  });
+
   describe('mint', () => {
     beforeEach(async () => {});
     it('correctly mints quantity for each address', async () => {
@@ -197,6 +212,7 @@ describe('BrainFuck', function () {
       expect(await brainFuck.ownerOf(4)).to.eq(await owner.getAddress());
       expect(await brainFuck.ownerOf(5)).to.eq(await rando.getAddress());
       expect(await brainFuck.ownerOf(9)).to.eq(await rando.getAddress());
+      expect(await brainFuck.currentIndex()).to.eq(10);
     });
     it('rando can not call airdropMint', async () => {
       await expect(
@@ -233,7 +249,7 @@ describe('BrainFuck', function () {
         SEED,
         CONSTANTS,
         CODE,
-        debugRenderer.address,
+        identityRenderer.address,
         MINTING_SUPPLY,
         PRICE,
         TIPPING_RENDERER_ROYALTY_FRACTION,
@@ -248,7 +264,7 @@ describe('BrainFuck', function () {
         SEED,
         CONSTANTS,
         CODE,
-        debugRenderer.address,
+        identityRenderer.address,
         MINTING_SUPPLY,
         PRICE,
         TIPPING_RENDERER_ROYALTY_FRACTION,
@@ -378,7 +394,7 @@ describe('BrainFuck', function () {
         (a: any) => a.trait_type === 'Renderer',
       );
       expect(rendererAttribute?.value).to.eq(
-        debugRenderer.address.toLowerCase(),
+        identityRenderer.address.toLowerCase(),
       );
       const dataLengthAttribute = metadata.attributes.find(
         (a: any) => a.trait_type === 'Data Length',
@@ -401,7 +417,7 @@ describe('BrainFuck', function () {
         '0x',
         CONSTANTS,
         CODE,
-        debugRenderer.address,
+        identityRenderer.address,
         MINTING_SUPPLY,
         PRICE,
         RENDERER_ROYALTY_FRACTION,
@@ -452,7 +468,7 @@ describe('BrainFuck', function () {
         SEED,
         '0x68656c6c6f21212168656c6c6f21212168656c6c6f21212168656c6c6f212121',
         convertToHexStr('++++++++[>,.<-]'),
-        debugRenderer.address,
+        identityRenderer.address,
         MINTING_SUPPLY,
         PRICE,
         RENDERER_ROYALTY_FRACTION,

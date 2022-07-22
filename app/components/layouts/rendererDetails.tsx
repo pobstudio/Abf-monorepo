@@ -33,6 +33,7 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
     [rendererMetadataFromGraph, rendererMetadataStubFromProvider],
   );
   const name = useENSorHex(rendererMetadataStub?.owner);
+  const rendererName = useENSorHex(address);
   return (
     <OneColumnContainer>
       <OneColumnContentContainer>
@@ -40,10 +41,7 @@ export const RendererDetails: FC<{ address?: string }> = ({ address }) => {
           <H1>
             {`SR-${
               rendererMetadataStub?.id?.toString().padStart(3, '0') ?? '???'
-            } "${
-              rendererMetadataStub?.additionalMetadata?.name ??
-              rendererMetadataStub?.label
-            }"`}
+            } "${rendererMetadataStub?.name ?? ''}"`}
           </H1>
 
           <DetailAnchorRow

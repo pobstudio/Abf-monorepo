@@ -19,6 +19,7 @@ export function handleRegisteredRenderer(event: RegisteredRenderer): void {
   renderer.additionalMetadataURI = event.params.additionalMetadataURI;
   renderer.registeredAt = event.block.timestamp;
   renderer.owner = rendererContract.owner();
+  renderer.name = rendererContract.name();
   renderer.save();
   let context = new DataSourceContext();
   context.setString('id', event.params.id.toHexString());

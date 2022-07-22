@@ -3,10 +3,8 @@ import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import { ROUTES } from '../../constants/routes';
-import {
-  useAllRendererMetadata,
-  useRendererLabel,
-} from '../../hooks/useRenderer';
+import { useENSorHex } from '../../hooks/useENS';
+import { useAllRendererMetadata } from '../../hooks/useRenderer';
 import { RendererMetadata } from '../../types';
 import { prettifyCountableNumber, shortenHexString } from '../../utils/hex';
 import { getEtherscanAddressUrl } from '../../utils/urls';
@@ -81,10 +79,11 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
   id,
   address,
   propsSize,
+  name,
   additionalMetadataURI,
   registeredAt,
 }) => {
-  const rendererLabel = useRendererLabel(address);
+  const ens = useENSorHex();
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>(false);
   useEffect(() => {
@@ -103,9 +102,9 @@ const RendererMetadataTable: FC<RendererMetadata> = ({
     <DetailRowsContainer>
       <Flex>
         <Text style={{ textTransform: 'uppercase', marginRight: 12 }}>
-          <strong>{`SR-${id
-            .toString()
-            .padStart(3, '0')} "${rendererLabel}"`}</strong>
+          <strong>{`SR-${id.toString().padStart(3, '0')} "${
+            name ?? ens
+          }"`}</strong>
         </Text>
       </Flex>
       <DetailAnchorRow href={`/renderer/${address}`}>

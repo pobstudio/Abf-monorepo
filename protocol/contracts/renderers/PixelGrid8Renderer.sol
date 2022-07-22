@@ -81,6 +81,10 @@ contract PixelGrid8Renderer is IRenderer, Ownable, ERC165 {
     'y="7" x="7"'
   ];
 
+  function name() public override pure returns (string memory) {
+    return 'Pixel Grid 8';
+  }
+
   function owner() public override(Ownable, IRenderer) view returns (address) {
     return super.owner();
   }
@@ -96,25 +100,24 @@ contract PixelGrid8Renderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreiefwasohc2tghe5aug34hev6lqsubahng3vovaicrt3ljaykydcyu";
+    return "ipfs://bafkreibinsghumae5miye7twzsjzx53h46lriggluhmdvqtvzr5hqpzmlu";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
 
-  function renderRaw(bytes calldata props) public override view returns (string memory) {
+  function renderRaw(bytes calldata props) public override view returns (bytes memory) {
     string memory content = '';
 
     for (uint i = 0; i < 64; ++i) {
       content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(props[i * 3], props[i * 3 + 1], props[i * 3 + 2]), rectSuffix));
     }
 
-    return string(abi.encodePacked(
+    return abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" style="background:#F1F1F1">',
         content,
       '</svg>'
-      )
     );
   }
 
@@ -122,7 +125,7 @@ contract PixelGrid8Renderer is IRenderer, Ownable, ERC165 {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(props))) 
+        Base64.encode(renderRaw(props)) 
       )
     );
   }
@@ -134,7 +137,7 @@ contract PixelGrid8Renderer is IRenderer, Ownable, ERC165 {
     }
       return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', i.toString(), '},'
+              '{"trait_type": "Data Length", "value":', i.toString(), '}'
             )
           );
   }
