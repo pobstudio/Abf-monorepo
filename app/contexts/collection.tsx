@@ -104,7 +104,6 @@ export const CollectionProvider: React.FC<{
       }
       try {
         const isActiveRes = await brainFuckContract.isActive();
-
         if (!!isActiveRes) {
           setIsActive(isActiveRes);
           setError(undefined);
@@ -138,12 +137,15 @@ export const CollectionProvider: React.FC<{
           type: 'toggle-activation',
         });
         setError(undefined);
+        setTimeout(() => {
+          setIsActive(true);
+        }, 10000 * 15);
       }
     } catch (e) {
       console.error(e);
       setError(e);
     }
-  }, []);
+  }, [account, address, brainFuckContract]);
 
   const currentSampleTokenRenderState = useMemo(():
     | RenderCodeOutputState

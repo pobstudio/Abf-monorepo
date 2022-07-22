@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
 import { usePriorityAccount } from '../connectors/priority';
 import { useTransactionsStore } from '../stores/transaction';
@@ -7,19 +8,23 @@ import { useBrainFuckContract } from './useContracts';
 export const useMintBrainfuckNFT = (address: string | undefined) => {
   const addTransaction = useTransactionsStore((s) => s.addTransaction);
   const transactionMap = useTransactionsStore((s) => s.transactionMap);
-  const factory = useBrainFuckContract(address);
+  const brainFuckContract = useBrainFuckContract(address);
   const account = usePriorityAccount();
   const [error, setError] = useState<any | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   const mint = useCallback(
     async (mintAmount: number = 1) => {
-      if (!account || !address || !factory) {
+      if (!account || !address || !brainFuckContract) {
         return;
       }
       try {
         setIsLoading(true);
-        const res = await factory.mint(account, mintAmount);
+        console.log(brainFuckContract);
+        const res = await brainFuckContract.mint(
+          account,
+          BigNumber.from(mintAmount),
+        );
 
         if (!!res) {
           addTransaction(res.hash, {
@@ -33,7 +38,7 @@ export const useMintBrainfuckNFT = (address: string | undefined) => {
       }
       setIsLoading(false);
     },
-    [factory, setIsLoading, address, account],
+    [brainFuckContract, setIsLoading, address, account],
   );
 
   const tx = useMemo(() => {

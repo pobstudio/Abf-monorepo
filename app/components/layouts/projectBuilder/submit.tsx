@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import {
@@ -5,6 +6,7 @@ import {
   usePriorityChainId,
 } from '../../../connectors/priority';
 import { CHAIN_ID } from '../../../constants';
+import { ROUTES } from '../../../constants/routes';
 import {
   useProjectBuilderContext,
   useProjectMetadata,
@@ -14,6 +16,7 @@ import { useENSorHex } from '../../../hooks/useENS';
 import { getOpenSeaUrl } from '../../../utils/urls';
 import { DetailRowsContainer } from '../../details/rows';
 import { FlexEnds } from '../../flexs';
+import { ArrowIcon } from '../../icons/arrow';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { A, P, Text } from '../../texts';
 
@@ -104,16 +107,27 @@ export const ContractSubmit: FC = () => {
   }, [isLoading, txStatus, account, chainId, errorMessages]);
 
   const name = useENSorHex(contractAddress);
+  const router = useRouter();
   if (!!contractAddress) {
     return (
       <DetailRowsContainer>
         <FlexEnds>
-          <P>NFT Collection Created.</P>
+          <P>ABF NFT SUCCESSFULLY CREATED!</P>
           <A href={getOpenSeaUrl(contractAddress, '0')} target={'_blank'}>
             {name}
           </A>
         </FlexEnds>
-        <TertiaryButton disabled>VIEW COLLECTION (COMING SOON)</TertiaryButton>
+        <TertiaryButton
+          onClick={() => router.push(`${ROUTES.COLLECTION}/${contractAddress}`)}
+        >
+          VIEW COLLECTION{' '}
+          <ArrowIcon
+            style={{
+              marginLeft: 4,
+              transform: 'rotate(180deg) translateY(-1px)',
+            }}
+          />
+        </TertiaryButton>
       </DetailRowsContainer>
     );
   }
@@ -122,7 +136,7 @@ export const ContractSubmit: FC = () => {
     <DetailRowsContainer>
       <ErrorTable>
         {errorMessages.map((m, i) => (
-          <ErrorText key={`error-text-messag-${i}`}>{m}</ErrorText>
+          <ErrorText key={`error-text-message-${i}`}>{m}</ErrorText>
         ))}
       </ErrorTable>
       <PrimaryButton onClick={create} disabled={disabled}>
