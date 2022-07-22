@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useBeforeUnload } from 'react-use';
 import styled from 'styled-components';
 import {
@@ -6,6 +6,7 @@ import {
   useProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
+import { unicodeToChar } from '../../../utils/hex';
 import { DetailRow, DetailRowsContainer } from '../../details/rows';
 import { ExpandoContentContainer, ExpandoGroup } from '../../expando';
 import { Flex, FlexEnds } from '../../flexs';
@@ -30,6 +31,8 @@ export const BrainFuckEditor: FC = () => {
 
   useBeforeUnload(true, 'Are you sure you want to close?');
 
+  const utf8Code = useMemo(() => !!code ? unicodeToChar(code) : undefined, [code]);
+  const utf8PostProcessedCode = useMemo(() => !!postProcessedCode ? unicodeToChar(postProcessedCode) : undefined, [postProcessedCode]);
   return (
     <>
       <DetailRowsContainer>
@@ -58,8 +61,8 @@ export const BrainFuckEditor: FC = () => {
             disabled={brainFuckEditorViewState === 'postProcessed'}
             value={
               brainFuckEditorViewState === 'postProcessed'
-                ? postProcessedCode ?? ''
-                : code ?? ''
+                ? utf8PostProcessedCode ?? ''
+                : utf8Code ?? ''
             }
             onChange={(e) => onCodeChange(e.target.value)}
             style={{ minHeight: 240 }}

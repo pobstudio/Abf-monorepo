@@ -20,7 +20,6 @@ export const TokenPreview: FC = () => {
   const { currentSampleTokenRenderState } = useProjectBuilderContext();
   const { rendererMetadataStub, inputConstants: validInputConstants } =
     useProjectMetadata();
-  console.log(currentSampleTokenRenderState?.codeOutput, 'output');
   return (
     <DetailRowsContainer>
       <FlexEnds>

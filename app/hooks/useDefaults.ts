@@ -7,6 +7,7 @@ import { CHAIN_ID } from '../constants';
 import { TutorialMetadata } from '../contexts/tutorial';
 import { ProjectMetadata } from '../types';
 import { INPUT_CONSTANT_BYTES_SIZE } from '../utils/brainFuck';
+import { escapeUnicode } from '../utils/hex';
 
 export const useDefaultSeed = (refresh?: any) => {
   return useMemo(() => {
@@ -56,6 +57,10 @@ export const useMinimizedProjectMetadata = (
           continue;
         }
         if (key === 'postProcessedCode') {
+          continue;
+        }
+        if (key === 'code') {
+          minimizedObject[key] = escapeUnicode((metadata as any)[key]);
           continue;
         }
         minimizedObject[key] = (metadata as any)[key];

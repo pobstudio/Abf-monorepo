@@ -39,7 +39,7 @@ export interface ProjectBuilderProviderContext {
   rawProjectMetadata: Partial<ProjectMetadata>;
   projectMetadata: Partial<ProjectMetadata>;
   hashedProjectMetadata: string;
-  encodedProjectMetadata: string;
+  encodedProjectMetadata: string | undefined;
   setRawProjectMetadata: React.Dispatch<
     React.SetStateAction<Partial<ProjectMetadata>>
   >;
