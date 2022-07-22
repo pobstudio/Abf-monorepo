@@ -1,11 +1,14 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
 import {
-  DebugRenderer,
+  ConfiguredGifImageRenderer,
   DotMatrixRenderer,
+  GifImageRenderer,
+  IdentityRenderer,
   MonoPixelGrid16Renderer,
   MonoPixelGrid24Renderer,
   MonoPixelGrid8Renderer,
+  PathRenderer,
   PixelGrid16Renderer,
   PixelGrid24Renderer,
   PixelGrid8Renderer,
@@ -33,15 +36,22 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     rendererRegistry.address,
   );
 
-  const DebugRenderer = await hre.ethers.getContractFactory('DebugRenderer', {
-    // libraries: {
-    //   SvgUtils: svgUtils.address,
-    // },
-  });
-  const debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
-  await debugRenderer.deployed();
+  const IdentityRenderer = await hre.ethers.getContractFactory(
+    'IdentityRenderer',
+    {
+      // libraries: {
+      //   SvgUtils: svgUtils.address,
+      // },
+    },
+  );
+  const identityRenderer =
+    (await IdentityRenderer.deploy()) as IdentityRenderer;
+  await identityRenderer.deployed();
 
-  console.log('DebugRenderer address deployed to:', debugRenderer.address);
+  console.log(
+    'IdentityRenderer address deployed to:',
+    identityRenderer.address,
+  );
 
   const DotMatrixRenderer = await hre.ethers.getContractFactory(
     'DotMatrixRenderer',
@@ -62,11 +72,11 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     dotMatrixRenderer.address,
   );
 
-  // const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {});
-  // const pathRenderer = (await PathRenderer.deploy()) as PathRenderer;
-  // await pathRenderer.deployed();
+  const PathRenderer = await hre.ethers.getContractFactory('PathRenderer', {});
+  const pathRenderer = (await PathRenderer.deploy()) as PathRenderer;
+  await pathRenderer.deployed();
 
-  // console.log('PathRenderer address deployed to:', pathRenderer.address);
+  console.log('PathRenderer address deployed to:', pathRenderer.address);
 
   const PixelGrid8Renderer = await hre.ethers.getContractFactory(
     'PixelGrid8Renderer',
@@ -182,12 +192,49 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     monoPixelGrid24Renderer.address,
   );
 
+  const GifImageRenderer = await hre.ethers.getContractFactory(
+    'GifImageRenderer',
+    {
+      libraries: {},
+    },
+  );
+  const gifImageRenderer =
+    (await GifImageRenderer.deploy()) as GifImageRenderer;
+  await gifImageRenderer.deployed();
+
+  console.log(
+    'GifImageRenderer address deployed to:',
+    gifImageRenderer.address,
+  );
+
+  const ConfiguredGifImageRenderer = await hre.ethers.getContractFactory(
+    'ConfiguredGifImageRenderer',
+    {
+      libraries: {},
+    },
+  );
+  const configuredGifImageRenderer = (await ConfiguredGifImageRenderer.deploy(
+    gifImageRenderer.address,
+  )) as ConfiguredGifImageRenderer;
+  await configuredGifImageRenderer.deployed();
+  await configuredGifImageRenderer.addConfiguration({
+    width: 4,
+    height: 4,
+    colors: '0x2C3333395B64A5C9CAE7F6F2',
+  });
+  console.log(
+    'ConfiguredGifImageRenderer address deployed to:',
+    configuredGifImageRenderer.address,
+  );
+
   console.log('Registering renderers');
-  await (await rendererRegistry.registerRenderer(debugRenderer.address)).wait();
+  await (
+    await rendererRegistry.registerRenderer(identityRenderer.address)
+  ).wait();
   await (
     await rendererRegistry.registerRenderer(dotMatrixRenderer.address)
   ).wait();
-  // await (await rendererRegistry.registerRenderer(pathRenderer.address)).wait();
+  await (await rendererRegistry.registerRenderer(pathRenderer.address)).wait();
   await (
     await rendererRegistry.registerRenderer(monoPixelGrid8Renderer.address)
   ).wait();
@@ -205,5 +252,11 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
   ).wait();
   await (
     await rendererRegistry.registerRenderer(pixelGrid24Renderer.address)
+  ).wait();
+  await (
+    await rendererRegistry.registerRenderer(gifImageRenderer.address)
+  ).wait();
+  await (
+    await rendererRegistry.registerRenderer(configuredGifImageRenderer.address)
   ).wait();
 });

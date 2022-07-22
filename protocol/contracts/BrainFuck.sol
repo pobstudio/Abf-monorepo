@@ -7,12 +7,11 @@ import "./BrainFuckURIConstructor.sol";
 import "./interfaces/IRenderer.sol";
 import "./tokens/ERC721A.sol";
 
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import '@openzeppelin/contracts/access/Ownable.sol';
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 import '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 
-contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
+contract BrainFuck is ERC721A, ERC2981, Ownable {
 
     uint public constant MAX_MINTING_PER_TX = 6;
 
@@ -29,6 +28,8 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
     bytes public code;
     bool public isActive; 
 
+    bytes public customContractURI;
+    
     event ChangedIsActive(
       bool isActive
     );
@@ -79,7 +80,14 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
     }
 
     function contractURI() public view returns (string memory) {
+      if (customContractURI.length != 0) {
+        return string(customContractURI);
+      }
       return BrainFuckURIConstructor.contractURI(name(), address(this)); 
+    }
+
+    function setCustomContractURI(bytes calldata _customContractURI) public onlyOwner {
+      customContractURI = _customContractURI;
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
@@ -103,19 +111,19 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       _;
     }
 
-    function mint(address to, uint256 numMints) onlyIsActive onlyUnderMaxSupply(numMints) onlyPublicMintOrWhitelist() public payable nonReentrant {
+    function mint(address to, uint256 numMints) onlyIsActive onlyUnderMaxSupply(numMints) onlyPublicMintOrWhitelist() public payable {
       require(numMints <= MAX_MINTING_PER_TX, "exceeded number of mint in single call");
       _mint(to, numMints, '', false);
       uint256 totalPrice = price * numMints;
       require(totalPrice <= msg.value, "insufficient funds to pay for mint");
       if (rendererRoyaltyFraction == 0) {
         owner().call{value: totalPrice }("");
-        msg.sender.call{value: msg.value - totalPrice }("");
+        payable(msg.sender).transfer(msg.value - totalPrice);
       } else {
         uint rendererRoyalty = totalPrice * rendererRoyaltyFraction / 10000; // in bps 
         owner().call{value: totalPrice - rendererRoyalty }("");
         renderer.owner().call{value: rendererRoyalty }(""); 
-        msg.sender.call{value: msg.value - totalPrice }("");
+        payable(msg.sender).transfer(msg.value - totalPrice);
       }
     }
 
@@ -123,5 +131,9 @@ contract BrainFuck is ERC721A, ERC2981, Ownable, ReentrancyGuard {
       for (uint i = 0; i < to.length; ++i) {
         _mint(to[i], numMintsEach, '', false);
       }
+    }
+
+    function currentIndex() public view returns (uint256) {
+      return _currentIndex;
     }
 }

@@ -15,7 +15,7 @@ export const deployments: Deployments = {
       svgUtils: '0x445E3b9a05F81F8fFBa8c84c9D71AF840Ebd7c8C',
     },
     interfaceID: {
-      renderer: '0x32ce7999',
+      renderer: '0x3433a79a',
     },
     pob: {
       multisig: '0x28558Ba4343FeB2709ed7A9531B72402a7794D8D',
@@ -23,28 +23,31 @@ export const deployments: Deployments = {
   },
   4: {
     core: {
-      factory: '0x6025ec2ec7113D1F1Fc97493f9C223077F3f31a5',
+      factory: '0xD056E4F9c2624f82A470427Ee754F355acf0feae',
     },
     renderers: {
-      debug: '0xb883CD6348aEA68f9b050F0bA0CFd09E702304a0',
-      dotMatrix: '0xb4DD948B5277f244a5e0FaF358DA191EDA7cA12b',
-      pixelGrid8: '0x2E9fD819EB1CC6bB8812aB5ceec71461Dea05662',
-      pixelGrid16: '0x3bFf11B683B94E8bD8f7e7F2775CbFEfc00807De',
-      pixelGrid24: '0xc2Cad9f7cd0F19a0608fA8Db9AdBE1EDe9233e8d',
-      monoPixelGrid8: '0x163F0b21EFE1400E089C662a181CE9eC716b4228',
-      monoPixelGrid16: '0xedA4D0a68751Dfb95f06419bB7482D694124B013',
-      monoPixelGrid24: '0x0525E64C8465afeb131BDD3aD092F23d8599cf35',
+      identity: '0x8C4F73B85B4B8fA3AAccE05a1Bf7f2820E3E7bdd',
+      dotMatrix: '0x75A810958A04D82cDAFFcFa8e70026D1086Ea8C2',
+      path: '0x3E62fFD8499a810f8CAE426640369F54eed55c16',
+      pixelGrid8: '0x76cbD284668E16A9e5801DdB0237FfB8b215C7CB',
+      pixelGrid16: '0xE04d7b5D9E6634A0EF7894C80303E3740CEE5cb3',
+      pixelGrid24: '0xA6BAaeE7efAA91F9Bae3Af5F0d13623D7f130F3B',
+      monoPixelGrid8: '0x17f52368fCae0550c0cA7F64C06B13b8e0fEc459',
+      monoPixelGrid16: '0x2e95494A484a83E615E3540EC7C66364DD4A9867',
+      monoPixelGrid24: '0xa360B6393bb3720889c6c7F8d795019Ac23e8BFF',
+      gifImage: '0x182D57A858FcB93Be44B6d69dbB46ACD04d0E291',
+      configuredGifImage: '0x6f6cAf3012896bA475838eC0a8A273776828ff3A',
     },
     registries: {
-      renderer: '0xE4B49D2b77dBbBeB65e0C5f49Af734D7E8803494',
+      renderer: '0x3Dbc4D243Cd20ff99D640DEA8D5b361106F50bB5',
     },
     libraries: {
-      vm: '0x6A2FfbcdB205885d633464A6a2C3f6ae14313EC2',
-      uriConstructor: '0x8c8F8fCcC22d1A95B3278013bd6aFBab1Abb4cD6',
-      svgUtils: '0xE7b6808C1f0f70b7Ab7A0F564D88343F517D5c56',
+      vm: '0x89Ceac7c868779719E269638f36020CE17829D79',
+      uriConstructor: '0xA1aFC0031396E53C73D78cd18CaE849088AB20ec',
+      svgUtils: '0x7D43B6eC231b3310100643f80C7f060a4Cfbb01a',
     },
     interfaceID: {
-      renderer: '0x32ce7999',
+      renderer: '0x3433a79a',
     },
     pob: {
       multisig: '0x00',
@@ -74,24 +77,10 @@ export const deployments: Deployments = {
       svgUtils: '0x59a3148D164469FB872983fB7efe22D784a30651',
     },
     interfaceID: {
-      renderer: '0x32ce7999',
+      renderer: '0x3433a79a',
     },
     pob: {
       multisig: '0x00',
     },
   },
-};
-
-export const RENDERER_LOCAL_IPFS_CID: { [renderer: string]: string } = {
-  debug: 'bafkreiaowcb6vqtrrpvgldihr6cbb4vlexrhhxocnyh2fel7q4fku7aruu',
-  dotMatrix: 'bafkreihfszq76yxcmkux4xbvpx3pbdnrvo3aaporhfwft4xkvsno3ogzzq',
-  // path: 'bafkreihiv6ghb32wnx65czsq6ufhiojreai5m35m5ouy445bzuepudinqa',
-  pixelGrid8: 'bafkreiefwasohc2tghe5aug34hev6lqsubahng3vovaicrt3ljaykydcyu',
-  pixelGrid16: 'bafkreifbr5qnfohid4qp3ar4drxes5yrx3c2z5ckfnx6am7erqe3pbvg6i',
-  pixelGrid24: 'bafkreibcvbszypkoql6wrl7pzn6segwpkz5klw4nmap52q4lfyayaqybbi',
-  monoPixelGrid8: 'bafkreiagbea4rsh5ytw5z2bm7s3nf23zsngt4iyhh4wh3b2hotdgm7xvym',
-  monoPixelGrid16:
-    'bafkreih3jlcbcofw4bq5x22luehji46bhvs7flqtkgs5nsdnfxwd2elxc4',
-  monoPixelGrid24:
-    'bafkreibu73vdkmxtgf3uqrhhuwt7l4nq7npcbga3x3ms32zwdxeurlibpq',
 };

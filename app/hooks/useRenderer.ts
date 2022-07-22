@@ -1,7 +1,6 @@
-import { deployments, RENDERER_LOCAL_IPFS_CID } from '@abf-monorepo/protocol';
+import { deployments } from '@abf-monorepo/protocol';
 import { gql, useQuery } from '@apollo/client';
 import { BigNumber, utils } from 'ethers';
-import findKey from 'lodash/findKey';
 import { useEffect, useMemo, useState } from 'react';
 import { CHAIN_ID } from '../constants';
 import {
@@ -9,9 +8,7 @@ import {
   RendererMetadata,
   RendererMetadataStub,
 } from '../types';
-import { useAddress } from './useAddress';
 import { useRendererContract } from './useContracts';
-import { useENSorHex } from './useENS';
 import { useIPFSJson } from './useIPFS';
 import { useLastTruthyValue } from './useLastTruthyValue';
 
@@ -21,6 +18,7 @@ const GET_RENDERER_METADATAS = gql`
   query GetAllRendererMetadatas($skip: Int!) {
     renderers(first: ${RENDERER_PAGE_SIZE}, skip: $skip) {
       id
+      name
       address
       propsSize
       additionalMetadataURI
@@ -34,6 +32,7 @@ const GET_RENDERER_METADATA_BY_ADDRESS = gql`
   query GetAllRendererMetadatas($address: String!) {
     renderers(where: { address: $address }) {
       id
+      name
       address
       propsSize
       additionalMetadataURI
@@ -47,11 +46,7 @@ export const useAdditionalMetadata = (
   renderer: string | undefined,
   additionalMetadataURI: string | undefined,
 ) => {
-  const label = useRendererLabel(renderer);
   const cid = useMemo(() => {
-    if (!!RENDERER_LOCAL_IPFS_CID[label]) {
-      return RENDERER_LOCAL_IPFS_CID[label];
-    }
     if (additionalMetadataURI?.startsWith('ipfs://')) {
       return additionalMetadataURI.slice('ipfs://'.length);
     }
@@ -62,7 +57,7 @@ export const useAdditionalMetadata = (
       return additionalMetadataURI;
     }
     return undefined;
-  }, [additionalMetadataURI, label]);
+  }, [additionalMetadataURI]);
   const obj = useIPFSJson(cid);
   return useMemo(() => {
     if (!obj?.description) {
@@ -70,21 +65,6 @@ export const useAdditionalMetadata = (
     }
     return obj as RendererAdditionalMetadata;
   }, [obj]);
-};
-
-export const useRendererLabel = (address: string | undefined) => {
-  const normalizedRendererAddress = useAddress(address);
-  const rendererKey = useMemo(() => {
-    if (!address) {
-      return undefined;
-    }
-    return findKey(
-      deployments[CHAIN_ID].renderers,
-      (r) => r === normalizedRendererAddress,
-    );
-  }, [address]);
-  const ensOrHex = useENSorHex(address);
-  return useMemo(() => rendererKey ?? ensOrHex, [ensOrHex, rendererKey]);
 };
 
 // TODO: make it page query based.
@@ -111,6 +91,7 @@ export const useAllRendererMetadata = (): RendererMetadata[] => {
           additionalMetadataURI: r.additionalMetadataURI,
           registeredAt: parseInt(r.registeredAt),
           owner: r.owner,
+          name: !!r.name ? r.name : undefined,
         } as RendererMetadata),
     );
   }, [data]);
@@ -122,7 +103,6 @@ export const useRendererMetadata = (address: string | undefined) => {
   });
 
   const data = useLastTruthyValue(results.data);
-  const label = useRendererLabel(address);
 
   const additionalMetadata = useAdditionalMetadata(
     address,
@@ -146,10 +126,10 @@ export const useRendererMetadata = (address: string | undefined) => {
       additionalMetadataURI: r.additionalMetadataURI,
       registeredAt: parseInt(r.registeredAt),
       additionalMetadata,
-      label: additionalMetadata?.name || label,
+      name: !!data.name ? data.name : undefined,
       owner: r.owner,
     } as RendererMetadata;
-  }, [data, label, additionalMetadata, additionalMetadata?.name]);
+  }, [data, additionalMetadata]);
 };
 
 export const useRendererMetadataStubByProvider = (
@@ -160,8 +140,6 @@ export const useRendererMetadataStubByProvider = (
   const [rendererMetadataStub, setRendererMetadataStub] = useState<
     Partial<RendererMetadataStub> | undefined
   >(undefined);
-
-  const label = useRendererLabel(address);
 
   useEffect(() => {
     if (!address) {
@@ -189,11 +167,12 @@ export const useRendererMetadataStubByProvider = (
         const additionalMetadataURI = await renderer.additionalMetadataURI();
         const propsSize = await renderer.propsSize();
         const owner = await renderer.owner();
+        const name = await renderer.name();
         setRendererMetadataStub({
           address,
           additionalMetadataURI,
           propsSize,
-          label,
+          name: !!name ? name : undefined,
           owner,
         });
       } catch (e) {
@@ -202,7 +181,7 @@ export const useRendererMetadataStubByProvider = (
     };
 
     getRendererMetadataStub();
-  }, [address, label, renderer]);
+  }, [address, renderer]);
 
   const additionalMetadata = useAdditionalMetadata(
     address,

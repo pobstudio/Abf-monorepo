@@ -72,8 +72,8 @@ export const BrainFuck: React.FC = () => {
           </P>
           <OL>
             <li>
-              The <I>data pointer</I> has a range of 0-2,999,999. This means you
-              can utilize up to 3,000,000 byte slots to store data in your
+              The <I>data pointer</I> has a range of 0-299,999. This means you
+              can utilize up to 300,000 byte slots to store data in your
               Brainfuck! runtime.
             </li>
             <li>

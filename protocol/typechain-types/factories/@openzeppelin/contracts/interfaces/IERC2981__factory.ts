@@ -2,61 +2,61 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Provider } from '@ethersproject/providers';
-import { Contract, Signer, utils } from 'ethers';
+import { Contract, Signer, utils } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type {
   IERC2981,
   IERC2981Interface,
-} from '../../../../@openzeppelin/contracts/interfaces/IERC2981';
+} from "../../../../@openzeppelin/contracts/interfaces/IERC2981";
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
       },
       {
-        internalType: 'uint256',
-        name: 'salePrice',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "salePrice",
+        type: "uint256",
       },
     ],
-    name: 'royaltyInfo',
+    name: "royaltyInfo",
     outputs: [
       {
-        internalType: 'address',
-        name: 'receiver',
-        type: 'address',
+        internalType: "address",
+        name: "receiver",
+        type: "address",
       },
       {
-        internalType: 'uint256',
-        name: 'royaltyAmount',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "royaltyAmount",
+        type: "uint256",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
       {
-        internalType: 'bytes4',
-        name: 'interfaceId',
-        type: 'bytes4',
+        internalType: "bytes4",
+        name: "interfaceId",
+        type: "bytes4",
       },
     ],
-    name: 'supportsInterface',
+    name: "supportsInterface",
     outputs: [
       {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
 ];
 
@@ -67,7 +67,7 @@ export class IERC2981__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider,
+    signerOrProvider: Signer | Provider
   ): IERC2981 {
     return new Contract(address, _abi, signerOrProvider) as IERC2981;
   }

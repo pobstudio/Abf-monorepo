@@ -30,7 +30,6 @@ export const Collection: React.FC = () => {
     collectionMetadata: collection,
     currentSampleTokenRenderState: output,
     rendererMetadata,
-    rendererLabel,
     collectionAddress,
     brainfuckCode,
     isActive,
@@ -98,7 +97,7 @@ export const Collection: React.FC = () => {
               <DetailAnchorRow
                 href={getEtherscanAddressUrl(collection?.renderer ?? '')}
               >
-                {['RENDERER', rendererLabel ?? '-']}
+                {['RENDERER', rendererMetadata?.name ?? '-']}
               </DetailAnchorRow>
               <DetailRow>
                 {[

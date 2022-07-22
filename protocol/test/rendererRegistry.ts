@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import { Signer } from 'ethers';
 import { ethers } from 'hardhat';
-import { DebugRenderer, RendererRegistry } from '../typechain-types';
+import { IdentityRenderer, RendererRegistry } from '../typechain-types';
 
 describe('RendererRegistry', function () {
   // constant values used in transfer tests
   let rendererRegistry: RendererRegistry;
-  let debugRenderer1: DebugRenderer;
-  let debugRenderer2: DebugRenderer;
+  let debugRenderer1: IdentityRenderer;
+  let debugRenderer2: IdentityRenderer;
   let owner: Signer;
   let rando: Signer;
 
@@ -18,10 +18,12 @@ describe('RendererRegistry', function () {
   });
 
   beforeEach(async function () {
-    const DebugRenderer = await ethers.getContractFactory('DebugRenderer');
-    debugRenderer1 = (await DebugRenderer.deploy()) as DebugRenderer;
+    const IdentityRenderer = await ethers.getContractFactory(
+      'IdentityRenderer',
+    );
+    debugRenderer1 = (await IdentityRenderer.deploy()) as IdentityRenderer;
     await debugRenderer1.deployed();
-    debugRenderer2 = (await DebugRenderer.deploy()) as DebugRenderer;
+    debugRenderer2 = (await IdentityRenderer.deploy()) as IdentityRenderer;
     await debugRenderer2.deployed();
     const RendererRegistry = await ethers.getContractFactory(
       'RendererRegistry',

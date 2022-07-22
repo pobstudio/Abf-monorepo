@@ -6,7 +6,7 @@ import {
   BrainFuckFactory,
   BrainFuckURIConstructor,
   BrainFuckVM,
-  DebugRenderer,
+  IdentityRenderer,
 } from '../typechain-types';
 
 const TOKEN_ID_ZERO = BigNumber.from(0);
@@ -46,7 +46,7 @@ describe('BrainFuckFactory', function () {
   let brainFuckURIConstructor: BrainFuckURIConstructor;
   let brainFuckFactory: BrainFuckFactory;
 
-  let debugRenderer: DebugRenderer;
+  let debugRenderer: IdentityRenderer;
   let owner: Signer;
   let artist: Signer;
   let rando: Signer;
@@ -63,8 +63,10 @@ describe('BrainFuckFactory', function () {
   });
 
   beforeEach(async function () {
-    const DebugRenderer = await ethers.getContractFactory('DebugRenderer');
-    debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
+    const IdentityRenderer = await ethers.getContractFactory(
+      'IdentityRenderer',
+    );
+    debugRenderer = (await IdentityRenderer.deploy()) as IdentityRenderer;
     await debugRenderer.deployed();
 
     const BrainFuckVM = await ethers.getContractFactory('BrainFuckVM');
@@ -112,14 +114,11 @@ describe('BrainFuckFactory', function () {
         price: ethers.utils.parseEther('0.1'),
         whitelistToken: await rando.getAddress(),
       };
-      await brainFuckFactory.createNFT(config);
-      expect(await brainFuckFactory.projectIdIndex()).to.eq(BigNumber.from(1));
-      const brainFuckAddress = await brainFuckFactory.projectIdToAddress(
-        BigNumber.from(1),
+      const brainFuckAddress = await brainFuckFactory.callStatic.createNFT(
+        config,
       );
-      expect(await brainFuckFactory.addressToProjectId(brainFuckAddress)).to.eq(
-        BigNumber.from(1),
-      );
+
+      const res = await brainFuckFactory.createNFT(config);
 
       const BrainFuck = await ethers.getContractFactory('BrainFuck', {
         libraries: {

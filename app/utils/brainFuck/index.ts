@@ -4,7 +4,7 @@ import {
   SampleTokenRenderState,
 } from '../../types';
 
-const TAPE_SIZE = 3_000_000;
+const TAPE_SIZE = 300_000;
 const LOOPING_STACK_SIZE = 8192;
 
 export const INPUT_CONSTANT_BYTES_SIZE = 32;

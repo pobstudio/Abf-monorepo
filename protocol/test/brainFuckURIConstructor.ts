@@ -4,7 +4,7 @@ import { ethers } from 'hardhat';
 import {
   BrainFuckURIConstructor,
   BrainFuckVM,
-  DebugRenderer,
+  IdentityRenderer,
 } from '../typechain-types';
 
 const TOKEN_ID_ZERO = BigNumber.from(0);
@@ -47,7 +47,7 @@ describe('BrainFuck', function () {
   let brainFuckVM: BrainFuckVM;
   let brainFuckURIConstructor: BrainFuckURIConstructor;
 
-  let debugRenderer: DebugRenderer;
+  let debugRenderer: IdentityRenderer;
   let owner: Signer;
   let artist: Signer;
   let rando: Signer;
@@ -64,8 +64,10 @@ describe('BrainFuck', function () {
   });
 
   beforeEach(async function () {
-    const DebugRenderer = await ethers.getContractFactory('DebugRenderer');
-    debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
+    const IdentityRenderer = await ethers.getContractFactory(
+      'IdentityRenderer',
+    );
+    debugRenderer = (await IdentityRenderer.deploy()) as IdentityRenderer;
     await debugRenderer.deployed();
 
     const BrainFuckVM = await ethers.getContractFactory('BrainFuckVM');

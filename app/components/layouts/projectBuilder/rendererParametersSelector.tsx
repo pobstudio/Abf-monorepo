@@ -14,7 +14,6 @@ import {
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
 import { useENSorHex } from '../../../hooks/useENS';
-import { useRendererLabel } from '../../../hooks/useRenderer';
 import { DetailAnchorRow, DetailRowsContainer } from '../../details/rows';
 import { Flex, FlexEnds } from '../../flexs';
 import { InputWell, TextInput } from '../../inputs/input';
@@ -39,6 +38,8 @@ export const RendererParametersSelector: FC = () => {
     setIsDropdownOpen(false);
   });
 
+  const ens = useENSorHex(renderer);
+
   const [{ y, opacity, pointerEvents, userSelect }, set] = useSpring(
     () => DropdownAnimation.hidden,
   );
@@ -50,8 +51,6 @@ export const RendererParametersSelector: FC = () => {
       set(DropdownAnimation.hidden);
     }
   }, [isDropdownOpen]);
-
-  const rendererLabel = useRendererLabel(renderer);
 
   const isRendererCustom = useMemo(() => {
     return (
@@ -91,7 +90,9 @@ export const RendererParametersSelector: FC = () => {
         <Text>RENDERER</Text>
         <Flex>
           <HeaderAnchor>
-            <B>{renderer ? rendererLabel : 'NONE SELECTED'}</B>
+            <B>
+              {renderer ? rendererMetadataStub?.name ?? ens : 'NONE SELECTED'}
+            </B>
           </HeaderAnchor>
           <Text style={{ marginLeft: 12 }}>{isDropdownOpen ? '▲' : '▼'}</Text>
         </Flex>
@@ -118,7 +119,7 @@ export const RendererParametersSelector: FC = () => {
           <RendererRowGroup>
             {Object.entries(deployments[CHAIN_ID].renderers).map(
               ([label, address]) => {
-                if (label === 'debug') return null;
+                if (label === 'identity') return null;
                 return (
                   <RendererOption
                     onClick={() => onRendererChange(address)}
