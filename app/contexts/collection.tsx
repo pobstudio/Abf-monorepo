@@ -4,7 +4,6 @@ import { usePriorityAccount } from '../connectors/priority';
 import { useCollection } from '../hooks/useCollections';
 import { useBrainFuckContract } from '../hooks/useContracts';
 import {
-  useRendererLabel,
   useRendererMetadataStubByProvider,
 } from '../hooks/useRenderer';
 import { useTransactionsStore } from '../stores/transaction';
@@ -25,7 +24,6 @@ export interface CollectionProviderContext {
   rendererMetadata: RendererMetadataStub | undefined;
   currentSampleTokenRenderState: RenderCodeOutputState | undefined;
   collectionAddress: string | undefined;
-  rendererLabel: string;
   brainfuckCode: string;
   currentTokenId: number;
   currentSampleTokenId: number;
@@ -48,7 +46,6 @@ const initialState: CollectionProviderState = {
   },
   collectionMetadata: undefined,
   rendererMetadata: undefined,
-  rendererLabel: '',
   brainfuckCode: '',
   collectionAddress: '',
   currentTokenId: 0,
@@ -78,7 +75,6 @@ export const CollectionProvider: React.FC<{
   const brainfuckCodeInHex = collectionMetadata?.code ?? '';
   const constants = collectionMetadata?.constants ?? '';
   const seed = collectionMetadata?.seed ?? '0x00';
-  const rendererLabel = useRendererLabel(rendererAddress);
   const rendererMetadata = useRendererMetadataStubByProvider(rendererAddress);
   const brainfuckCode = convertHexStrToUtf8(brainfuckCodeInHex);
   const tokenSeed = useMemo(
@@ -183,7 +179,6 @@ export const CollectionProvider: React.FC<{
     return {
       collectionMetadata,
       rendererMetadata,
-      rendererLabel,
       brainfuckCode,
       currentSampleTokenRenderState,
       currentTokenId,
@@ -205,7 +200,6 @@ export const CollectionProvider: React.FC<{
     setCurrentSampleTokenId,
     collectionMetadata,
     rendererMetadata,
-    rendererLabel,
     brainfuckCode,
     address,
     activateCollection,
