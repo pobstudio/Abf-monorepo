@@ -3,9 +3,9 @@
 /* eslint-disable */
 export { BackgroundSvgRenderer__factory } from './BackgroundSvgRenderer__factory';
 export { ConfiguredGifImageRenderer__factory } from './ConfiguredGifImageRenderer__factory';
-export { DebugRenderer__factory } from './DebugRenderer__factory';
 export { DotMatrixRenderer__factory } from './DotMatrixRenderer__factory';
 export { GifImageRenderer__factory } from './GifImageRenderer__factory';
+export { IdentityRenderer__factory } from './IdentityRenderer__factory';
 export { MonoPixelGrid16Renderer__factory } from './MonoPixelGrid16Renderer__factory';
 export { MonoPixelGrid24Renderer__factory } from './MonoPixelGrid24Renderer__factory';
 export { MonoPixelGrid8Renderer__factory } from './MonoPixelGrid8Renderer__factory';

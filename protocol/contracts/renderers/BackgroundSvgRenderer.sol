@@ -27,19 +27,22 @@ contract BackgroundSvgRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreiagbea4rsh5ytw5z2bm7s3nf23zsngt4iyhh4wh3b2hotdgm7xvym";
+    return "ipfs://bafkreihd75rookps7excbzcztryjpx4brtvrsz3kvfehz5lsx5xq364u6a";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
 
-  function renderRaw(bytes calldata props) public override pure returns (string memory) {
+  function name() public override pure returns (string memory) {
+    return 'Background Svg';
+  }
+
+  function renderRaw(bytes calldata props) public override pure returns (bytes memory) {
     uint16 width = BytesUtils.toUint16(props, 0);
     uint16 height = BytesUtils.toUint16(props, 2);
-    return string(abi.encodePacked(
-      '<svg xmlns="http://www.w3.org/2000/svg" width="', uint256(width).toString(),'" height="', uint256(height).toString(), '" style="background:', SvgUtils.toColorHexStringByBytes(props[3], props[4], props[5]),'"></svg>'
-      )
+    return abi.encodePacked(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="', uint256(width).toString(),'" height="', uint256(height).toString(), '" style="background:', SvgUtils.toColorHexStringByBytes(props[4], props[5], props[6]),'"></svg>'
     );
   }
 
@@ -47,7 +50,7 @@ contract BackgroundSvgRenderer is IRenderer, Ownable, ERC165 {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(props))) 
+        Base64.encode(renderRaw(props)) 
       )
     );
   }

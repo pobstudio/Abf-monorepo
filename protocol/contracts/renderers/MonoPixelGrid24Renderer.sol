@@ -593,6 +593,10 @@ contract MonoPixelGrid24Renderer is IRenderer, Ownable, ERC165 {
     'y="23" x="23"'
   ];
 
+  function name() public override pure returns (string memory) {
+    return 'Mono Pixel Grid 24';
+  }
+
   function owner() public override(Ownable, IRenderer) view returns (address) {
     return super.owner();
   }
@@ -608,24 +612,23 @@ contract MonoPixelGrid24Renderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreibu73vdkmxtgf3uqrhhuwt7l4nq7npcbga3x3ms32zwdxeurlibpq";
+    return "ipfs://bafkreichfqfx7lciygqidi5vosxobet533gwwxslxphxt7bjwnsfxhvlb4";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
 
-  function renderRaw(bytes calldata props) public override view returns (string memory) {
+  function renderRaw(bytes calldata props) public override view returns (bytes memory) {
     string memory content = '';
     for (uint i = 0; i < 576; ++i) {
       content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(props[i], props[i], props[i]), rectSuffix));
     }
 
-    return string(abi.encodePacked(
+    return abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="background:#F1F1F1">',
         content,
       '</svg>'
-      )
     );
   }
 
@@ -633,7 +636,7 @@ contract MonoPixelGrid24Renderer is IRenderer, Ownable, ERC165 {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(props))) 
+        Base64.encode(renderRaw(props)) 
       )
     );
   }
@@ -645,7 +648,7 @@ contract MonoPixelGrid24Renderer is IRenderer, Ownable, ERC165 {
     }
       return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', i.toString(), '},'
+              '{"trait_type": "Data Length", "value":', i.toString(), '}'
             )
           );
   }

@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract DebugRenderer is IRenderer, Ownable, ERC165 {
+contract IdentityRenderer is IRenderer, Ownable, ERC165 {
   using Strings for uint256;
 
   function owner() public override(Ownable, IRenderer) view returns (address) {
@@ -23,25 +23,29 @@ contract DebugRenderer is IRenderer, Ownable, ERC165 {
     return 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
   }
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreiaowcb6vqtrrpvgldihr6cbb4vlexrhhxocnyh2fel7q4fku7aruu";
+    return "ipfs://bafkreicxqdlbjlnrjqvcxvlz5x2swhrp5hahxvelvs2i4qxvn7hxqdtwga";
   }
   
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
-
-  function renderRaw(bytes calldata props) public override pure returns (string memory) {
-    string memory output = "";
+  
+  function name() public override pure returns (string memory) {
+    return 'Identity';
+  }
+  
+  function renderRaw(bytes calldata props) public override pure returns (bytes memory) {
+    bytes memory output = "";
     uint i = 0;
     while(i < props.length) {
-      output = string(abi.encodePacked(output, props[i]));      
+      output = abi.encodePacked(output, props[i]);      
       i++;
     }
     return output;
   }
 
   function render(bytes calldata props) external override pure returns (string memory) {
-    return renderRaw(props);
+    return string(renderRaw(props));
   }
 
   function attributes(bytes calldata props) external override pure returns (string memory) {

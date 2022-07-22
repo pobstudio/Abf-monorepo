@@ -236,13 +236,14 @@ export const Specification: React.FC = () => {
               <P style={{ whiteSpace: 'pre-wrap' }}>
                 {`
 interface IRenderer is IERC165 {
-  function owner() returns (address);
-  function propsSize() returns (uint256);
-  function additionalMetadataURI() returns (string);
-  function renderAttributeKey() returns (string);
-  function renderRaw(bytes calldata props) returns (string);
-  function render(bytes calldata props) returns (string);
-  function attributes(bytes calldata props) returns (string);
+  function name() external view returns (string memory);
+  function owner() external view returns (address);
+  function propsSize() external view returns (uint256);
+  function additionalMetadataURI() external view returns (string memory);
+  function renderAttributeKey() external view returns (string memory);
+  function renderRaw(bytes calldata props) external view returns (bytes memory);
+  function render(bytes calldata props) external view returns (string memory);
+  function attributes(bytes calldata props) external view returns (string memory);
 }
       `}
               </P>
@@ -250,6 +251,10 @@ interface IRenderer is IERC165 {
             {/* <P>
               A more complete spec can be found <A>here</A>
             </P> */}
+            <P>
+              <Code>name</Code>: a human readable label to identify the
+              renderer.
+            </P>
             <P>
               <Code>owner</Code>: an address representing the creator of the
               renderer; useful to provide credit in a NFT to the renderer
@@ -336,9 +341,8 @@ interface IRenderer is IERC165 {
             <P>
               The <Code>additionalMetadataURI</Code> field should point to a URI
               that hosts a standardized documentation stub. Currently, we upload
-              a JSON object to IPFS and store the CID in the Renderer. The
-              thought process here is that without some minor description by the
-              contract creator, these Renderers can be highly proprietary.
+              a JSON object to IPFS and store the CID in the Renderer. With the
+              documentation, any other developers can easily utilize a renderer.
             </P>
             <P>
               In order facilitate the developer experience and hyperstructure
@@ -371,7 +375,6 @@ interface RendererAdditionalMetadataByteGroup {
 
 // Example Upload
 const additionalMetadata = {
-  name: 'monoPixelGrid24',
   description:
     'A 24 by 24 mono-chrome renderer. 
     Bytes map to grayscale colors (0x00 is black, 0xFF is black). 

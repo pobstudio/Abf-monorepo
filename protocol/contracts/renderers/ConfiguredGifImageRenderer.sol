@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.4;
 import "../libraries/SSTORE2Map.sol";
+import "../libraries/BytesUtils.sol";
 import "../interfaces/IRenderer.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
@@ -14,11 +15,17 @@ contract ConfiguredGifImageRenderer is IRenderer, Ownable, ERC165 {
 
   uint public maxConfigurationIndex = 1;
 
+  uint public constant MAX_NUM_CONFIGURATIONS = 0xFFFFFFFF;
+
   struct Configuration {
     uint8 width; 
     uint8 height;
     bytes colors;
   }
+
+    event AddedConfiguration(
+      uint index
+    );
 
   constructor(address _gifImageRenderer) {
     gifImageRenderer = IRenderer(_gifImageRenderer);
@@ -31,7 +38,18 @@ contract ConfiguredGifImageRenderer is IRenderer, Ownable, ERC165 {
   function addConfiguration(Configuration memory config) public returns (uint) {
     require (config.colors.length % 3 == 0, "colors must come in r,g,b tuples");
     SSTORE2Map.write(bytes32(maxConfigurationIndex), abi.encodePacked(config.width, config.height, uint8(config.colors.length / 3), config.colors));
+    emit AddedConfiguration(maxConfigurationIndex);
+    maxConfigurationIndex++;
+    require(maxConfigurationIndex <= MAX_NUM_CONFIGURATIONS, "Max number of configurations allowed.");
     return maxConfigurationIndex;
+  }
+
+  function getConfiguration(uint index) public view returns (bytes memory) {
+    return SSTORE2Map.read(bytes32(index));
+  }
+
+  function name() public override pure returns (string memory) {
+    return 'Configured Single Frame Gif';
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
@@ -45,19 +63,19 @@ contract ConfiguredGifImageRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreiaowcb6vqtrrpvgldihr6cbb4vlexrhhxocnyh2fel7q4fku7aruu";
+    return "ipfs://bafkreihcz67yvvlotbn4x3p35wdbpde27rldihlzoqg2klbme7u6lehxna";
   }
   
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
 
-  function renderRaw(bytes calldata props) public override view returns (string memory) {
-    return gifImageRenderer.renderRaw(abi.encode(SSTORE2Map.read(bytes32(props[0])), props[1: props.length]));
+  function renderRaw(bytes calldata props) public override view returns (bytes memory) {
+    return gifImageRenderer.renderRaw(abi.encodePacked(SSTORE2Map.read(bytes32(uint(BytesUtils.toUint32(props, 0)))), props[4: props.length]));
   }
 
   function render(bytes calldata props) external override view returns (string memory) {
-    return renderRaw(props);
+    return gifImageRenderer.render(abi.encodePacked(SSTORE2Map.read(bytes32(uint(BytesUtils.toUint32(props, 0)))), props[4: props.length]));
   }
 
   function attributes(bytes calldata props) external override pure returns (string memory) {

@@ -3,9 +3,9 @@
 /* eslint-disable */
 export type { BackgroundSvgRenderer } from './BackgroundSvgRenderer';
 export type { ConfiguredGifImageRenderer } from './ConfiguredGifImageRenderer';
-export type { DebugRenderer } from './DebugRenderer';
 export type { DotMatrixRenderer } from './DotMatrixRenderer';
 export type { GifImageRenderer } from './GifImageRenderer';
+export type { IdentityRenderer } from './IdentityRenderer';
 export type { MonoPixelGrid16Renderer } from './MonoPixelGrid16Renderer';
 export type { MonoPixelGrid24Renderer } from './MonoPixelGrid24Renderer';
 export type { MonoPixelGrid8Renderer } from './MonoPixelGrid8Renderer';

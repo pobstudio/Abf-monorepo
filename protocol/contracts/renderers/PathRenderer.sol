@@ -10,6 +10,10 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 contract PathRenderer is IRenderer, Ownable, ERC165 {
   using Strings for uint256;
 
+ function name() public override pure returns (string memory) {
+    return 'Minimal Path';
+  }
+
   function owner() public override(Ownable, IRenderer) view returns (address) {
     return super.owner();
   }
@@ -25,14 +29,14 @@ contract PathRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "";
+    return "ipfs://bafkreih2jlxxhzdf3zpwvmto25apcsuo4kengs2h7panvotm5lwoppce24";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
 
-  function renderRaw(bytes calldata props) public override pure returns (string memory) {
+  function renderRaw(bytes calldata props) public override pure returns (bytes memory) {
     string memory content = '';
     uint i = 0;
     while((i * 3 + 2) < props.length) {
@@ -41,11 +45,10 @@ contract PathRenderer is IRenderer, Ownable, ERC165 {
       }
       i++;
     }
-    return string(abi.encodePacked(
+    return abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" width="288" height="288" style="background:#F1F1F1"><path fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="',
         content,
       '" /> </svg>'
-      )
     );
   }
 
@@ -61,7 +64,7 @@ contract PathRenderer is IRenderer, Ownable, ERC165 {
   function attributes(bytes calldata props) external override pure returns (string memory) {
       return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', (props.length / 3).toString(), '},'
+              '{"trait_type": "Data Length", "value":', (props.length / 3).toString(), '}'
             )
           );
   }

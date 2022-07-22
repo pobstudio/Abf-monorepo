@@ -26,7 +26,7 @@ import type {
   TypedListener,
 } from '../../common';
 
-export interface PixelGrid16RendererInterface extends utils.Interface {
+export interface IdentityRendererInterface extends utils.Interface {
   functions: {
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
@@ -138,12 +138,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface PixelGrid16Renderer extends BaseContract {
+export interface IdentityRenderer extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PixelGrid16RendererInterface;
+  interface: IdentityRendererInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

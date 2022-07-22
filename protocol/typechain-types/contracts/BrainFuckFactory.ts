@@ -72,53 +72,21 @@ export declare namespace BrainFuckFactory {
 export interface BrainFuckFactoryInterface extends utils.Interface {
   functions: {
     'VERSION()': FunctionFragment;
-    'addressToProjectId(address)': FunctionFragment;
     'createNFT((string,string,bytes,bytes32,bytes,address,uint256,uint256,uint96,uint96,address))': FunctionFragment;
-    'projectIdIndex()': FunctionFragment;
-    'projectIdToAddress(uint256)': FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic:
-      | 'VERSION'
-      | 'addressToProjectId'
-      | 'createNFT'
-      | 'projectIdIndex'
-      | 'projectIdToAddress',
+    nameOrSignatureOrTopic: 'VERSION' | 'createNFT',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'VERSION', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'addressToProjectId',
-    values: [PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(
     functionFragment: 'createNFT',
     values: [BrainFuckFactory.CreateBrainFuckNFTConfigStruct],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'projectIdIndex',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'projectIdToAddress',
-    values: [PromiseOrValue<BigNumberish>],
-  ): string;
 
   decodeFunctionResult(functionFragment: 'VERSION', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'addressToProjectId',
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: 'createNFT', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'projectIdIndex',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'projectIdToAddress',
-    data: BytesLike,
-  ): Result;
 
   events: {
     'CreatedBrainFuckNFT(address,address)': EventFragment;
@@ -168,60 +136,24 @@ export interface BrainFuckFactory extends BaseContract {
   functions: {
     VERSION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    addressToProjectId(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-
     createNFT(
       config: BrainFuckFactory.CreateBrainFuckNFTConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    projectIdIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    projectIdToAddress(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
   };
 
   VERSION(overrides?: CallOverrides): Promise<BigNumber>;
-
-  addressToProjectId(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
 
   createNFT(
     config: BrainFuckFactory.CreateBrainFuckNFTConfigStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  projectIdIndex(overrides?: CallOverrides): Promise<BigNumber>;
-
-  projectIdToAddress(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<string>;
-
   callStatic: {
     VERSION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addressToProjectId(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     createNFT(
       config: BrainFuckFactory.CreateBrainFuckNFTConfigStruct,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    projectIdIndex(overrides?: CallOverrides): Promise<BigNumber>;
-
-    projectIdToAddress(
-      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
   };
@@ -240,42 +172,18 @@ export interface BrainFuckFactory extends BaseContract {
   estimateGas: {
     VERSION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addressToProjectId(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     createNFT(
       config: BrainFuckFactory.CreateBrainFuckNFTConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    projectIdIndex(overrides?: CallOverrides): Promise<BigNumber>;
-
-    projectIdToAddress(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     VERSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    addressToProjectId(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     createNFT(
       config: BrainFuckFactory.CreateBrainFuckNFTConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    projectIdIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    projectIdToAddress(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

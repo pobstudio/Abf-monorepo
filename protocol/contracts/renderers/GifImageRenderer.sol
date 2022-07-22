@@ -34,11 +34,15 @@ contract GifImageRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://TODO";
+    return "ipfs://bafkreifhz7qi3u6kvshmmw2qojzaj5pn7hlnijpoczlupypqftliioeqlu";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
+  }
+
+  function name() public override pure returns (string memory) {
+    return 'Single frame gif';
   }
 
   function getBestColorTableSize(uint8 numColors) internal pure returns (uint) {
@@ -102,21 +106,21 @@ contract GifImageRenderer is IRenderer, Ownable, ERC165 {
     );
   }
 
-  function renderRaw(bytes calldata props) public override view returns (string memory) {
+  function renderRaw(bytes calldata props) public override view returns (bytes memory) {
     bytes memory imageData = "";
     for (uint i = (3 + uint8(props[NUM_COLORS_INDEX]) * 3); i < props.length; i+=IMAGE_DATA_CHUNK_SIZE) {
       uint end = i + IMAGE_DATA_CHUNK_SIZE;
       bytes memory chunk = props[i:(end > props.length ? props.length : end)];
       imageData = abi.encodePacked(imageData, uint8(chunk.length + (end > props.length ? 2 : 1)), hex"80", chunk);
     }
-    return string(abi.encodePacked(gifHeader(props), colorTable(props), GRAPHIC_CONTROL_EXTENSION, imageDescriptor(props), imageData, hex"81003B")); 
+    return abi.encodePacked(gifHeader(props), colorTable(props), GRAPHIC_CONTROL_EXTENSION, imageDescriptor(props), imageData, hex"81003B"); 
   }
 
   function render(bytes calldata props) external override view returns (string memory) {
     return string(
       abi.encodePacked(
         'data:image/gif;base64,',
-        Base64.encode(bytes(renderRaw(props))) 
+        Base64.encode(renderRaw(props))
       )
     );
   }
@@ -128,7 +132,7 @@ contract GifImageRenderer is IRenderer, Ownable, ERC165 {
     }
       return string(
             abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', i.toString(), '},'
+              '{"trait_type": "Data Length", "value":', i.toString(), '}'
             )
           );
   }

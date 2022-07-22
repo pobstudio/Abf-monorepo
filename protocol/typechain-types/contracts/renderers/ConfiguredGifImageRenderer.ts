@@ -43,10 +43,13 @@ export declare namespace ConfiguredGifImageRenderer {
 
 export interface ConfiguredGifImageRendererInterface extends utils.Interface {
   functions: {
+    'MAX_NUM_CONFIGURATIONS()': FunctionFragment;
     'addConfiguration((uint8,uint8,bytes))': FunctionFragment;
     'additionalMetadataURI()': FunctionFragment;
     'attributes(bytes)': FunctionFragment;
+    'getConfiguration(uint256)': FunctionFragment;
     'maxConfigurationIndex()': FunctionFragment;
+    'name()': FunctionFragment;
     'owner()': FunctionFragment;
     'propsSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
@@ -59,10 +62,13 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'MAX_NUM_CONFIGURATIONS'
       | 'addConfiguration'
       | 'additionalMetadataURI'
       | 'attributes'
+      | 'getConfiguration'
       | 'maxConfigurationIndex'
+      | 'name'
       | 'owner'
       | 'propsSize'
       | 'render'
@@ -73,6 +79,10 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
       | 'transferOwnership',
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: 'MAX_NUM_CONFIGURATIONS',
+    values?: undefined,
+  ): string;
   encodeFunctionData(
     functionFragment: 'addConfiguration',
     values: [ConfiguredGifImageRenderer.ConfigurationStruct],
@@ -86,9 +96,14 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
+    functionFragment: 'getConfiguration',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'maxConfigurationIndex',
     values?: undefined,
   ): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'propsSize', values?: undefined): string;
   encodeFunctionData(
@@ -117,6 +132,10 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: 'MAX_NUM_CONFIGURATIONS',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'addConfiguration',
     data: BytesLike,
   ): Result;
@@ -126,9 +145,14 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: 'getConfiguration',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'maxConfigurationIndex',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
@@ -151,11 +175,24 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
   ): Result;
 
   events: {
+    'AddedConfiguration(uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'AddedConfiguration'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
+
+export interface AddedConfigurationEventObject {
+  index: BigNumber;
+}
+export type AddedConfigurationEvent = TypedEvent<
+  [BigNumber],
+  AddedConfigurationEventObject
+>;
+
+export type AddedConfigurationEventFilter =
+  TypedEventFilter<AddedConfigurationEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -196,6 +233,8 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    MAX_NUM_CONFIGURATIONS(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     addConfiguration(
       config: ConfiguredGifImageRenderer.ConfigurationStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -208,7 +247,14 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
+    getConfiguration(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
     maxConfigurationIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -241,6 +287,8 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  MAX_NUM_CONFIGURATIONS(overrides?: CallOverrides): Promise<BigNumber>;
+
   addConfiguration(
     config: ConfiguredGifImageRenderer.ConfigurationStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -253,7 +301,14 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
+  getConfiguration(
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
   maxConfigurationIndex(overrides?: CallOverrides): Promise<BigNumber>;
+
+  name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -286,6 +341,8 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    MAX_NUM_CONFIGURATIONS(overrides?: CallOverrides): Promise<BigNumber>;
+
     addConfiguration(
       config: ConfiguredGifImageRenderer.ConfigurationStruct,
       overrides?: CallOverrides,
@@ -298,7 +355,14 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<string>;
 
+    getConfiguration(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
     maxConfigurationIndex(overrides?: CallOverrides): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -330,6 +394,9 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
   };
 
   filters: {
+    'AddedConfiguration(uint256)'(index?: null): AddedConfigurationEventFilter;
+    AddedConfiguration(index?: null): AddedConfigurationEventFilter;
+
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null,
@@ -341,6 +408,8 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
   };
 
   estimateGas: {
+    MAX_NUM_CONFIGURATIONS(overrides?: CallOverrides): Promise<BigNumber>;
+
     addConfiguration(
       config: ConfiguredGifImageRenderer.ConfigurationStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -353,7 +422,14 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    getConfiguration(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     maxConfigurationIndex(overrides?: CallOverrides): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -387,6 +463,10 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
   };
 
   populateTransaction: {
+    MAX_NUM_CONFIGURATIONS(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     addConfiguration(
       config: ConfiguredGifImageRenderer.ConfigurationStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -401,9 +481,16 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    getConfiguration(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     maxConfigurationIndex(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

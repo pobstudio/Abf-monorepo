@@ -593,6 +593,10 @@ contract PixelGrid24Renderer is IRenderer, Ownable, ERC165 {
     'y="23" x="23"'
   ];
 
+  function name() public override pure returns (string memory) {
+    return 'Pixel Grid 24';
+  }
+
   function owner() public override(Ownable, IRenderer) view returns (address) {
     return super.owner();
   }
@@ -608,32 +612,32 @@ contract PixelGrid24Renderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreibcvbszypkoql6wrl7pzn6segwpkz5klw4nmap52q4lfyayaqybbi";
+    return "ipfs://bafkreigpijgje7qe432abjkp45bfvuwxlsx3mw6r7cz4x6davfbxjk7k5a";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
     return "image";
   }
 
-  function renderRaw(bytes calldata props) public override view returns (string memory) {
+  function renderRaw(bytes calldata props) public override view returns (bytes memory) {
     string memory content = '';
     for (uint i = 0; i < 576; ++i) {
       content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(props[i * 3], props[i * 3 + 1], props[i * 3 + 2]), rectSuffix));
     }
 
-    return string(abi.encodePacked(
+    return abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="background:#F1F1F1">',
         content,
       '</svg>'
       )
-    );
+    ;
   }
 
   function render(bytes calldata props) external override view returns (string memory) {
     return string(
       abi.encodePacked(
         'data:image/svg+xml;base64,',
-        Base64.encode(bytes(renderRaw(props))) 
+        Base64.encode(renderRaw(props)) 
       )
     );
   }

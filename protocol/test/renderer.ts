@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { BigNumber, Signer } from 'ethers';
 import { ethers } from 'hardhat';
-import { DebugRenderer } from '../typechain-types';
+import { IdentityRenderer } from '../typechain-types';
 
 const TOKEN_ID_ZERO = BigNumber.from(0);
 const ZERO = BigNumber.from(0);
@@ -39,7 +39,7 @@ const PRICE = ethers.utils.parseEther('0.01');
 describe('Renderer', function () {
   // constant values used in transfer tests
 
-  let debugRenderer: DebugRenderer;
+  let renderer: IdentityRenderer;
   let owner: Signer;
   let rando: Signer;
 
@@ -50,19 +50,21 @@ describe('Renderer', function () {
   });
 
   beforeEach(async function () {
-    const DebugRenderer = await ethers.getContractFactory('DebugRenderer');
-    debugRenderer = (await DebugRenderer.deploy()) as DebugRenderer;
-    await debugRenderer.deployed();
+    const IdentityRenderer = await ethers.getContractFactory(
+      'IdentityRenderer',
+    );
+    renderer = (await IdentityRenderer.deploy()) as IdentityRenderer;
+    await renderer.deployed();
   });
 
   describe('introspection', () => {
     it('ERC165 standard check', async function () {
-      expect(await debugRenderer.supportsInterface('0x32ce7999')).to.eq(true);
+      expect(await renderer.supportsInterface('0x3433a79a')).to.eq(true);
     });
   });
   describe('owner', () => {
     it('owner should be set to deployer', async function () {
-      expect(await debugRenderer.owner()).to.eq(await owner.getAddress());
+      expect(await renderer.owner()).to.eq(await owner.getAddress());
     });
   });
 });

@@ -105,10 +105,6 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ConfiguredGifImageRenderer__factory>;
     getContractFactory(
-      name: 'DebugRenderer',
-      signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.DebugRenderer__factory>;
-    getContractFactory(
       name: 'DotMatrixRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.DotMatrixRenderer__factory>;
@@ -116,6 +112,10 @@ declare module 'hardhat/types/runtime' {
       name: 'GifImageRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.GifImageRenderer__factory>;
+    getContractFactory(
+      name: 'IdentityRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IdentityRenderer__factory>;
     getContractFactory(
       name: 'MonoPixelGrid16Renderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -265,11 +265,6 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.ConfiguredGifImageRenderer>;
     getContractAt(
-      name: 'DebugRenderer',
-      address: string,
-      signer?: ethers.Signer,
-    ): Promise<Contracts.DebugRenderer>;
-    getContractAt(
       name: 'DotMatrixRenderer',
       address: string,
       signer?: ethers.Signer,
@@ -279,6 +274,11 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.GifImageRenderer>;
+    getContractAt(
+      name: 'IdentityRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IdentityRenderer>;
     getContractAt(
       name: 'MonoPixelGrid16Renderer',
       address: string,

@@ -8,11 +8,6 @@ contract BrainFuckFactory {
 
     uint constant public VERSION = 1;
 
-    mapping(uint => address) public projectIdToAddress;
-    mapping(address => uint) public addressToProjectId;
-
-    uint public projectIdIndex = 0;
-
     struct CreateBrainFuckNFTConfig {
       string name;
       string symbol;
@@ -36,7 +31,7 @@ contract BrainFuckFactory {
     ) {
     } 
 
-    function createNFT(CreateBrainFuckNFTConfig memory config) public {
+    function createNFT(CreateBrainFuckNFTConfig memory config) public returns (address) {
       BrainFuck nft = new BrainFuck(
         config.name,
         config.symbol,
@@ -51,12 +46,10 @@ contract BrainFuckFactory {
       );
       nft.setRoyalty(msg.sender, config.royaltyFraction);
       nft.transferOwnership(msg.sender);
-      projectIdIndex++;
-      projectIdToAddress[projectIdIndex] = address(nft);
-      addressToProjectId[address(nft)] = projectIdIndex;
       emit CreatedBrainFuckNFT(
        address(nft),
        msg.sender 
       );
+      return address(nft);
     }
 }

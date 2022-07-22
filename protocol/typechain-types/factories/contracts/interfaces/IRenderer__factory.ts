@@ -44,6 +44,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'name',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'owner',
     outputs: [
       {
@@ -65,7 +78,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -97,7 +110,7 @@ const _abi = [
         type: 'string',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -111,9 +124,9 @@ const _abi = [
     name: 'renderRaw',
     outputs: [
       {
-        internalType: 'string',
+        internalType: 'bytes',
         name: '',
-        type: 'string',
+        type: 'bytes',
       },
     ],
     stateMutability: 'view',

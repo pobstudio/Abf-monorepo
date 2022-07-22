@@ -37,6 +37,8 @@ export interface BrainFuckInterface extends utils.Interface {
     'code()': FunctionFragment;
     'constants()': FunctionFragment;
     'contractURI()': FunctionFragment;
+    'currentIndex()': FunctionFragment;
+    'customContractURI()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
     'isActive()': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
@@ -54,6 +56,7 @@ export interface BrainFuckInterface extends utils.Interface {
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
     'seed()': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
+    'setCustomContractURI(bytes)': FunctionFragment;
     'setIsActive(bool)': FunctionFragment;
     'setRoyalty(address,uint96)': FunctionFragment;
     'setSeed(bytes)': FunctionFragment;
@@ -75,6 +78,8 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'code'
       | 'constants'
       | 'contractURI'
+      | 'currentIndex'
+      | 'customContractURI'
       | 'getApproved'
       | 'isActive'
       | 'isApprovedForAll'
@@ -92,6 +97,7 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'safeTransferFrom(address,address,uint256,bytes)'
       | 'seed'
       | 'setApprovalForAll'
+      | 'setCustomContractURI'
       | 'setIsActive'
       | 'setRoyalty'
       | 'setSeed'
@@ -124,6 +130,14 @@ export interface BrainFuckInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'constants', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'contractURI',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'currentIndex',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'customContractURI',
     values?: undefined,
   ): string;
   encodeFunctionData(
@@ -186,6 +200,10 @@ export interface BrainFuckInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
   ): string;
   encodeFunctionData(
+    functionFragment: 'setCustomContractURI',
+    values: [PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'setIsActive',
     values: [PromiseOrValue<boolean>],
   ): string;
@@ -244,6 +262,14 @@ export interface BrainFuckInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'currentIndex',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'customContractURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'getApproved',
     data: BytesLike,
   ): Result;
@@ -285,6 +311,10 @@ export interface BrainFuckInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'seed', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'setApprovalForAll',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setCustomContractURI',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -450,6 +480,10 @@ export interface BrainFuck extends BaseContract {
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
+    currentIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    customContractURI(overrides?: CallOverrides): Promise<[string]>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
@@ -516,6 +550,11 @@ export interface BrainFuck extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    setCustomContractURI(
+      _customContractURI: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -589,6 +628,10 @@ export interface BrainFuck extends BaseContract {
 
   contractURI(overrides?: CallOverrides): Promise<string>;
 
+  currentIndex(overrides?: CallOverrides): Promise<BigNumber>;
+
+  customContractURI(overrides?: CallOverrides): Promise<string>;
+
   getApproved(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
@@ -655,6 +698,11 @@ export interface BrainFuck extends BaseContract {
   setApprovalForAll(
     operator: PromiseOrValue<string>,
     approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  setCustomContractURI(
+    _customContractURI: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -728,6 +776,10 @@ export interface BrainFuck extends BaseContract {
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
+    currentIndex(overrides?: CallOverrides): Promise<BigNumber>;
+
+    customContractURI(overrides?: CallOverrides): Promise<string>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
@@ -792,6 +844,11 @@ export interface BrainFuck extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setCustomContractURI(
+      _customContractURI: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -916,6 +973,10 @@ export interface BrainFuck extends BaseContract {
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
+    currentIndex(overrides?: CallOverrides): Promise<BigNumber>;
+
+    customContractURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
@@ -982,6 +1043,11 @@ export interface BrainFuck extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setCustomContractURI(
+      _customContractURI: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1058,6 +1124,10 @@ export interface BrainFuck extends BaseContract {
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    currentIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    customContractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
@@ -1126,6 +1196,11 @@ export interface BrainFuck extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setCustomContractURI(
+      _customContractURI: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
