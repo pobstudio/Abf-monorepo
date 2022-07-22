@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useBeforeUnload } from 'react-use';
 import styled from 'styled-components';
 import {
@@ -6,7 +6,7 @@ import {
   useProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import { unicodeToChar } from '../../../utils/hex';
+import { convertHexStrToAscii, convertStrToHexStr, unicodeToChar } from '../../../utils/hex';
 import { DetailRow, DetailRowsContainer } from '../../details/rows';
 import { ExpandoContentContainer, ExpandoGroup } from '../../expando';
 import { Flex, FlexEnds } from '../../flexs';

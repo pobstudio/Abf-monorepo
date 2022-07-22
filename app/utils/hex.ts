@@ -47,7 +47,7 @@ export const convertHexStrToUtf8 = (hexStr: string) => {
 export const convertStrToHexStr = (code: string) => {
   let hexStr = '0x';
   for (const c of escapeUnicode(code)) {
-    hexStr += c.charCodeAt(0).toString(16);
+    hexStr += c.charCodeAt(0).toString(16).padStart(2, '0');
   }
   if (hexStr.length <= 2) {
     hexStr += '00';
