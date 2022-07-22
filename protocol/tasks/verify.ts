@@ -110,5 +110,21 @@ task(
     //       .monoPixelGrid24,
     //   constructorArguments: [],
     // });
+
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers
+    //       .gifImage,
+    //   constructorArguments: [],
+    // });
+
+    await hre.run('verify:verify', {
+      address:
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers
+          .configuredGifImage,
+      constructorArguments: [
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers.gifImage,
+      ],
+    });
   },
 );

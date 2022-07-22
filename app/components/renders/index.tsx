@@ -200,7 +200,6 @@ export const Render: FC<{
                   : 'rgba(0, 0, 0, 0)',
               }}
             >
-              {isRenderLoading && <MultiLineText>Loading...</MultiLineText>}
               {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
             </RenderImageCover>
           )}
@@ -221,6 +220,17 @@ export const Render: FC<{
               srcDoc={imgSrc || 'data:text/html;utf-8,'}
             />
           </RenderHtmlContainer>
+          {isCoverOpened && (
+            <RenderImageCover
+              style={{
+                background: !!renderOutput
+                  ? 'rgba(255, 255, 255, 0.75)'
+                  : 'rgba(0, 0, 0, 0)',
+              }}
+            >
+              {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
+            </RenderImageCover>
+          )}
         </RenderContainer>
       </>
     );
@@ -234,7 +244,10 @@ export const Render: FC<{
             background: 'rgba(255, 255, 255, 0.75)',
           }}
         >
-          <MultiLineText>{`"${renderAttributeKey}" is not recognized.`}</MultiLineText>
+          {!!renderAttributeKey && (
+            <MultiLineText>{`"${renderAttributeKey}" is not recognized.`}</MultiLineText>
+          )}
+          {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
         </RenderImageCover>
       </RenderContainer>
     </>

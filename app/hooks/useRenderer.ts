@@ -126,7 +126,7 @@ export const useRendererMetadata = (address: string | undefined) => {
       additionalMetadataURI: r.additionalMetadataURI,
       registeredAt: parseInt(r.registeredAt),
       additionalMetadata,
-      name: !!data.name ? data.name : undefined,
+      name: !!r.name ? r.name : undefined,
       owner: r.owner,
     } as RendererMetadata;
   }, [data, additionalMetadata]);
