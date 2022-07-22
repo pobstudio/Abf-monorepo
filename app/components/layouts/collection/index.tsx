@@ -37,7 +37,6 @@ export const Collection: React.FC = () => {
     activateCollection,
     isOwner,
   } = useCollectionContext();
-  const { mint } = useMintBrainfuckNFT(collectionAddress);
   return (
     <>
       <NextSeo
@@ -140,12 +139,7 @@ export const Collection: React.FC = () => {
             <TitleContainer>
               <Label>TITLE</Label>
               <H1>{collection?.name}</H1>
-              <PrimaryButton
-                disabled={!isActive}
-                onClick={() => (isActive ? mint() : console.log('fuck off'))}
-              >
-                MINT
-              </PrimaryButton>
+              <ThreePartMintButton />
               {isOwner && !isActive && (
                 <TertiaryButton
                   style={{ marginTop: 20 }}
@@ -169,7 +163,7 @@ export const Collection: React.FC = () => {
                   'PRICE',
                   `${utils.formatEther(
                     BigNumber.from(collection?.price ?? '0'),
-                  )} ETH` ?? '-',
+                  )} ETH`,
                 ]}
               </DetailRow>
               <DetailRow>
@@ -182,6 +176,39 @@ export const Collection: React.FC = () => {
     </>
   );
 };
+
+export const ThreePartMintButton: React.FC = () => {
+  const {
+    collectionAddress,
+    isActive,
+    incrementAmountToMint,
+    decrementAmountToMint,
+    amountToMint,
+  } = useCollectionContext();
+  const { mint } = useMintBrainfuckNFT(collectionAddress);
+  return (
+    <ThreePartMintButtonContainer>
+      <TertiaryButton onClick={() => decrementAmountToMint()}>-</TertiaryButton>
+      <PrimaryButton
+        disabled={!isActive}
+        onClick={() => (isActive ? mint(amountToMint) : confirm('fuck off'))}
+      >
+        MINT: {`{{ ${amountToMint} }}`}
+      </PrimaryButton>
+      <TertiaryButton onClick={() => incrementAmountToMint()}>+</TertiaryButton>
+    </ThreePartMintButtonContainer>
+  );
+};
+const ThreePartMintButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 50px;
+  ${TertiaryButton} {
+    width: fit-content;
+    height: fit-content;
+  }
+`;
 
 const LinksContainer = styled(DetailRowsContainer)`
   ${LabelAnchor} {
@@ -200,9 +227,6 @@ const TitleContainer = styled.div`
   }
   ${H1} {
     font-size: 50px;
-  }
-  ${PrimaryButton} {
-    margin-top: 50px;
   }
 `;
 

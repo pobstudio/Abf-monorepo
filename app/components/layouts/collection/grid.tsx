@@ -1,16 +1,19 @@
+import { BigNumber, utils } from 'ethers';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { FC } from 'react';
-import { ROUTES } from '../../constants/routes';
+import { ROUTES } from '../../../constants/routes';
 import {
   CollectionProvider,
   useCollectionContext,
-} from '../../contexts/collection';
-import { CollectionMetadataStub } from '../../types';
-import { DetailRow, DetailRowsContainer } from '../details/rows';
-import { GridContainer, GridContentContainer } from '../divs/grid';
-import { TertiaryButton } from '../inputs/button';
-import { Render } from '../renders';
-import { CleanA } from '../texts';
+} from '../../../contexts/collection';
+import { useENSorHex } from '../../../hooks/useENS';
+import { CollectionMetadataStub } from '../../../types';
+import { DetailRow, DetailRowsContainer } from '../../details/rows';
+import { GridContainer, GridContentContainer } from '../../divs/grid';
+import { TertiaryButton } from '../../inputs/button';
+import { Render } from '../../renders';
+import { CleanA } from '../../texts';
 
 export const CollectionsGrid: FC<{
   collections: CollectionMetadataStub[] | undefined;
@@ -38,22 +41,28 @@ const CollectionGridItem: FC<CollectionMetadataStub> = ({
   price,
   mintingSupply,
 }) => {
-  const { currentSampleTokenRenderState: output, rendererMetadata } =
-    useCollectionContext();
+  const {
+    currentSampleTokenRenderState: output,
+    rendererMetadata,
+    collectionMetadata,
+  } = useCollectionContext();
+  const router = useRouter();
+  const ownerLabel = useENSorHex(collectionMetadata?.owner);
   return (
-    <GridContentContainer>
+    <GridContentContainer
+      style={{ cursor: 'pointer' }}
+      onClick={() => router.push(`${ROUTES.COLLECTION}/${address}`)}
+    >
       <Render output={output} rendererMetadata={rendererMetadata} />
       <DetailRowsContainer>
         <DetailRow>{['NAME', name]}</DetailRow>
         <DetailRow>{['SUPPLY', mintingSupply]}</DetailRow>
-        <DetailRow>{['PRICE', price]}</DetailRow>
+        <DetailRow>
+          {['PRICE', `${utils.formatEther(BigNumber.from(price ?? '0'))} ETH`]}
+        </DetailRow>
+        <DetailRow>{['CREATOR', `${ownerLabel}`]}</DetailRow>
       </DetailRowsContainer>
       <DetailRowsContainer>
-        {/* <Link href={`${ROUTES.COLLECTION}/${address}`} passHref>
-          <CleanA>
-            <PrimaryButton>MINT</PrimaryButton>
-          </CleanA>
-        </Link> */}
         <Link href={`${ROUTES.COLLECTION}/${address}`} passHref>
           <CleanA>
             <TertiaryButton>DETAILS</TertiaryButton>

@@ -141,3 +141,99 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
 
   return out;
 };
+
+export const runBrainFuckCodeDebug = (code: string, input: number[]) => {
+  let out = '0x';
+  const tape = [...Array(TAPE_SIZE)].map((_) => 0);
+
+  let readIndex = 0;
+  let ptr = 0;
+  let isLooping = false;
+  let isLoopingCounter = 0;
+  let innerLoops = 0;
+  let loopingStack = [...Array(LOOPING_STACK_SIZE)];
+  let loopingStackIndex = 0;
+  const byteToBrainfuckIndex: any = {};
+
+  for (let i = 0; i < code.length; ++i) {
+    const opcode = '0x' + code[i].charCodeAt(0).toString(16).toUpperCase();
+    if (isLoopingCounter > MAX_IS_LOOPING_COUNTER) {
+      console.log(tape.slice(0, 12));
+      throw new Error('MAX LOOPS EXCEEDED (10,000)');
+    }
+    if (isLooping) {
+      // [
+      if (opcode === '0x5B') {
+        innerLoops++;
+      }
+      // ]
+      if (opcode === '0x5D') {
+        isLoopingCounter++;
+        if (innerLoops === 0) isLooping = false;
+        else innerLoops--;
+      }
+    } else {
+      // +
+      if (opcode === '0x2B') {
+        if (tape[ptr] == 255) {
+          tape[ptr] = 0;
+        } else {
+          tape[ptr]++;
+        }
+      }
+      // -
+      if (opcode === '0x2D') {
+        if (tape[ptr] == 0) {
+          tape[ptr] = 255;
+        } else {
+          tape[ptr]--;
+        }
+      }
+      // ,
+      if (opcode === '0x2C') {
+        tape[ptr] = readIndex < input.length ? input[readIndex] : 0;
+        readIndex++;
+      }
+      // .
+      if (opcode === '0x2E') {
+        out += tape[ptr].toString(16).padStart(2, '0');
+        byteToBrainfuckIndex[out.length - 2] = i;
+      }
+      // !
+      if (opcode === '0x21') {
+        ptr = 0;
+      }
+      // >
+      if (opcode === '0x3E') {
+        ptr++;
+      }
+      // <
+      if (opcode === '0x3C') {
+        ptr--;
+      }
+      // [
+      if (opcode === '0x5B') {
+        if (tape[ptr] == 0x0) {
+          isLooping = true;
+        } else {
+          loopingStack[loopingStackIndex] = i;
+          loopingStackIndex++;
+        }
+      }
+      // ]
+      if (opcode === '0x5D') {
+        isLoopingCounter++;
+        if (tape[ptr] != 0x00) {
+          i = loopingStack[loopingStackIndex - 1];
+        } else {
+          loopingStack[loopingStackIndex--] = 0;
+        }
+      }
+    }
+  }
+
+  return {
+    output: out,
+    byteToBrainfuckIndex,
+  };
+};

@@ -13,7 +13,7 @@ import {
 import {
   DEFAULT_CURRENT_SAMPLE_TOKEN_DEBUG_STATE,
   INPUT_CONSTANT_BYTES_SIZE,
-  runBrainFuckCode,
+  runBrainFuckCodeDebug,
 } from '../utils/brainFuck';
 import { getHexStringNumBytes } from '../utils/hex';
 
@@ -108,7 +108,11 @@ export const TutorialsProvider: React.FC<{
       input.push(parseInt(inputConstants.slice(i, i + 2), 16));
     }
     try {
-      const output = runBrainFuckCode(code, input);
+      const { output, byteToBrainfuckIndex } = runBrainFuckCodeDebug(
+        code,
+        input,
+      );
+      console.log(byteToBrainfuckIndex, 'byteToBrainfuckIndex');
 
       const extraWarnings: string[] = [];
 
@@ -140,7 +144,8 @@ export const TutorialsProvider: React.FC<{
     if (!expectedOutputHexStr) {
       return true;
     }
-    return expectedOutputHexStr !== output.output;
+    console.log(output, expectedOutputHexStr, 'isButtonDisabled');
+    return expectedOutputHexStr.toLowerCase() !== output.output.toLowerCase();
   }, [expectedOutputHexStr, output]);
   const setIsOpen = useModalStore((s) => s.setIsGenericModalOpen);
   const onSubmit = useCallback(() => {

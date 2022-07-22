@@ -14,6 +14,7 @@ import {
   walletConnect,
 } from '../../connectors/walletConnect';
 import { CHAIN_ID, CHAIN_ID_TO_NETWORK_NAME } from '../../constants';
+import { ROUTES } from '../../constants/routes';
 import { DropdownAnimation } from '../../constants/styles';
 import { useENSorHex } from '../../hooks/useENS';
 import { useNumPendingTx } from '../../hooks/useNumPendingTx';
@@ -83,15 +84,26 @@ export const Web3ConnectedWalletContent: FC<{
     connector.deactivate();
   }, [router, connector]);
 
+  const account = usePriorityAccount();
+
   return (
     <>
+      <DropdownRowsContainer>
+        <ActionRowButton
+          onClick={() => {
+            router.push(`${ROUTES.COLLECTIONS}/${account}`);
+          }}
+        >
+          MY COLLECTIONS
+        </ActionRowButton>
+      </DropdownRowsContainer>
       <DropdownRowsContainer>
         <ActionRowButton
           onClick={() => {
             disconnect();
           }}
         >
-          Disconnect
+          DISCONNECT
         </ActionRowButton>
       </DropdownRowsContainer>
     </>
@@ -185,6 +197,7 @@ const ActionRowButton = styled.button`
   transition: all 100ms ease-in-out;
   background: none;
   border: none;
+  cursor: pointer;
   &:hover {
     transform: none;
     background: rgba(0, 0, 0, 0.05);

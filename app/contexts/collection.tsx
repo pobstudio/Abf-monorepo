@@ -14,11 +14,11 @@ import {
   RendererMetadataStub,
 } from '../types';
 import {
-  convertHexStrToAscii,
   getTokenSeed,
   runBrainFuckCode,
   tokenSeedToInputTape,
 } from '../utils/brainFuck';
+import { convertHexStrToUtf8 } from '../utils/hex';
 
 export interface CollectionProviderContext {
   collectionMetadata: CollectionMetadata | undefined;
@@ -33,6 +33,10 @@ export interface CollectionProviderContext {
   activateCollection: () => void;
   isActive: boolean;
   isOwner: boolean;
+  amountToMint: number;
+  setAmountToMint: React.Dispatch<React.SetStateAction<number>>;
+  incrementAmountToMint: () => void;
+  decrementAmountToMint: () => void;
 }
 
 export type CollectionProviderState = CollectionProviderContext;
@@ -53,6 +57,10 @@ const initialState: CollectionProviderState = {
   activateCollection: () => new Error('func is not set'),
   isActive: false,
   isOwner: false,
+  amountToMint: 1,
+  setAmountToMint: () => new Error('func is not set'),
+  incrementAmountToMint: () => new Error('func is not set'),
+  decrementAmountToMint: () => new Error('func is not set'),
 };
 
 const CollectionContext =
@@ -62,6 +70,7 @@ export const CollectionProvider: React.FC<{
   address: string | undefined;
   children: React.ReactNode;
 }> = ({ address, children }) => {
+  const [amountToMint, setAmountToMint] = useState(1);
   const [currentTokenId, setCurrentTokenId] = useState(0);
   const [currentSampleTokenId, setCurrentSampleTokenId] = useState(0);
   const collectionMetadata = useCollection(address);
@@ -71,7 +80,7 @@ export const CollectionProvider: React.FC<{
   const seed = collectionMetadata?.seed ?? '0x00';
   const rendererLabel = useRendererLabel(rendererAddress);
   const rendererMetadata = useRendererMetadataStubByProvider(rendererAddress);
-  const brainfuckCode = convertHexStrToAscii(brainfuckCodeInHex);
+  const brainfuckCode = convertHexStrToUtf8(brainfuckCodeInHex);
   const tokenSeed = useMemo(
     () =>
       constants && seed
@@ -160,6 +169,16 @@ export const CollectionProvider: React.FC<{
     }
   }, [brainfuckCode, tokenSeed]);
 
+  const incrementAmountToMint = useCallback(() => {
+    setAmountToMint(amountToMint + 1);
+  }, [amountToMint, setAmountToMint]);
+  const decrementAmountToMint = useCallback(() => {
+    if (amountToMint == 1) {
+      return;
+    }
+    setAmountToMint(amountToMint - 1);
+  }, [amountToMint, setAmountToMint]);
+
   const stateObject = useMemo(() => {
     return {
       collectionMetadata,
@@ -174,6 +193,10 @@ export const CollectionProvider: React.FC<{
       activateCollection,
       isActive,
       isOwner,
+      amountToMint,
+      setAmountToMint,
+      incrementAmountToMint,
+      decrementAmountToMint,
     };
   }, [
     currentSampleTokenRenderState,
@@ -188,6 +211,10 @@ export const CollectionProvider: React.FC<{
     activateCollection,
     isActive,
     isOwner,
+    amountToMint,
+    setAmountToMint,
+    incrementAmountToMint,
+    decrementAmountToMint,
   ]);
 
   return (

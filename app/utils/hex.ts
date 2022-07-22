@@ -11,9 +11,42 @@ export function padHexString(str: string, length = 64): string {
   return `0x${str.slice(2).padStart(length, '0')}`;
 }
 
+export function escapeUnicode(str: string) {
+  return [...str]
+    .map((c) =>
+      /^[\x00-\x7F]$/.test(c)
+        ? c
+        : c
+            .split('')
+            .map((a) => '\\u' + a.charCodeAt(0).toString(16).padStart(4, '0'))
+            .join(''),
+    )
+    .join('');
+}
+
+export function unicodeToChar(text: string) {
+  return text.replace(/\\u[\dA-F]{4}/gi, function (match) {
+    return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+  });
+}
+
+export const convertHexStrToAscii = (hexStr: string) => {
+  let asciiStr = '';
+  for (let i = 2; i < hexStr.length; i += 2) {
+    const byte = hexStr.slice(i, i + 2);
+    asciiStr += String.fromCharCode(BigNumber.from('0x' + byte).toNumber());
+  }
+  return asciiStr;
+};
+
+export const convertHexStrToUtf8 = (hexStr: string) => {
+  const asciiStr = convertHexStrToAscii(hexStr);
+  return unicodeToChar(asciiStr);
+};
+
 export const convertStrToHexStr = (code: string) => {
   let hexStr = '0x';
-  for (const c of code) {
+  for (const c of escapeUnicode(code)) {
     hexStr += c.charCodeAt(0).toString(16);
   }
   if (hexStr.length <= 2) {

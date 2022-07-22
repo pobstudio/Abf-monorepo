@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FC, useState } from 'react';
+import { useBeforeUnload } from 'react-use';
 import { ROUTES } from '../../../constants/routes';
 import { useTutorialContext } from '../../../contexts/tutorial';
 import { DetailRow } from '../../details/rows';
@@ -12,6 +13,7 @@ export const BasicEditor: FC = () => {
   const { code, setCode, onInputConstantsChange, inputConstants } =
     useTutorialContext();
   const [constants, setConstants] = useState('');
+  useBeforeUnload(true, 'Are you sure you want to close?');
   return (
     <>
       <FlexEnds>
