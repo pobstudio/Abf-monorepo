@@ -26,6 +26,7 @@ export const ROUTES = {
   },
   404: '/404',
   RENDERER: '/renderer',
+  RENDER: '/render',
   API: {
     DISCORD_BOT_VERIFY: '/api/discord-bot-verify',
   },

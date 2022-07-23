@@ -1,4 +1,11 @@
 import { launch, Page } from 'puppeteer-core';
+import {
+  DIMENSIONS,
+  FILE_TYPE,
+  IS_DEV,
+  RENDER_URL,
+  SCREENSHOT_QUALITY,
+} from './constants';
 import { getOptions } from './options';
 import { FileType } from './types';
 
@@ -15,17 +22,25 @@ async function getPage(isDev: boolean) {
 }
 
 export async function getScreenshot(
-  type: FileType,
-  quality: number,
-  dimensions: [number, number],
-  isDev: boolean,
+  route: string,
+  type: FileType = FILE_TYPE,
+  quality: number = SCREENSHOT_QUALITY,
+  dimensions: [number, number] = DIMENSIONS,
+  isDev: boolean = IS_DEV,
 ) {
   const page = await getPage(isDev);
   await page.setViewport({
     width: dimensions[0],
     height: dimensions[1],
   });
-  await page.goto(`FILL THIS`);
+  await page.goto(route);
+  console.log(route);
   const file = await page.screenshot({ type, quality });
   return file as Buffer;
+}
+
+export async function getArtScreenshot(output: string, renderer: string) {
+  return await getScreenshot(
+    `${RENDER_URL}/render?output=${output}&renderer=${renderer}`,
+  );
 }
