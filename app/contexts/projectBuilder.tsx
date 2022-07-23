@@ -1,5 +1,7 @@
 import { BigNumber } from 'ethers';
 import produce from 'immer';
+import isNil from 'lodash/isNil';
+import omitBy from 'lodash/omitBy';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   HEX_STRING_REGEX,
@@ -11,7 +13,7 @@ import { useAddress } from '../hooks/useAddress';
 import {
   useDefaultProjectMetadata,
   useMinimizedProjectMetadata,
-  useSavedOrDefaultProject,
+  useSavedOrDefault,
 } from '../hooks/useDefaults';
 import { useHash } from '../hooks/useHash';
 import { useHydrateSave } from '../hooks/useHydrateSave';
@@ -77,10 +79,14 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     Partial<ProjectMetadata>
   >({});
 
-  const initialProjectMetadata = useSavedOrDefaultProject();
+  const initialProjectMetadata = useSavedOrDefault(useDefaultProjectMetadata());
   useEffect(() => {
+    if (!initialProjectMetadata) {
+      return;
+    }
     setRawProjectMetadata(initialProjectMetadata);
   }, [initialProjectMetadata]);
+
   const [refreshCounter, setRefreshCounter] = useState(0);
   const refreshedProjectMetadata = useDefaultProjectMetadata(refreshCounter);
   useEffect(() => {
@@ -89,6 +95,7 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
     }
     setRawProjectMetadata(refreshedProjectMetadata);
   }, [refreshCounter, refreshedProjectMetadata]);
+
   const onRefresh = useCallback(() => {
     if (!confirm('Just double checking. You sure you want to reset?')) {
       return;
@@ -151,15 +158,18 @@ export const ProjectBuilderProvider: React.FC = ({ children }) => {
   }, [rawProjectMetadata.code]);
 
   const projectMetadata: Partial<ProjectMetadata> = useMemo(() => {
-    return {
-      ...rawProjectMetadata,
-      postProcessedCode,
-      inputConstants,
-      renderer,
-      whitelistToken,
-      seed,
-      rendererMetadataStub: rendererMetadataStub ?? rendererMetadata,
-    };
+    return omitBy(
+      {
+        ...rawProjectMetadata,
+        postProcessedCode,
+        inputConstants,
+        renderer,
+        whitelistToken,
+        seed,
+        rendererMetadataStub: rendererMetadataStub ?? rendererMetadata,
+      },
+      isNil,
+    );
   }, [
     postProcessedCode,
     whitelistToken,
@@ -308,7 +318,7 @@ export const useModifyProjectMetadata = () => {
     (code: string) => {
       setRawProjectMetadata?.(
         produce((u) => {
-          u.code = code;
+          u.code = !!code ? code : undefined;
         }),
       );
     },

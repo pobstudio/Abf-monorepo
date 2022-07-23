@@ -1,27 +1,26 @@
 import { btoa } from 'isomorphic-base64';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 
 export const useHydrateSave = <T>(obj: T) => {
+  const router = useRouter();
+
   // dehydrate
   const encodedObj = useMemo(() => {
-    if (!obj) {
-      return undefined;
-    }
-    if (JSON.stringify(obj) === '{}') {
+    if (!obj || JSON.stringify(obj) === '{}') {
       return undefined;
     }
     return btoa(JSON.stringify(obj));
   }, [obj]);
 
   useEffect(() => {
-    console.log('obj', obj, encodedObj);
-    if (!encodedObj) {
+    // console.log('saving', obj, encodedObj, router.query);
+    if (!encodedObj && !router.query.save) {
       return;
     }
     Router.push(
       {
-        query: { save: encodedObj },
+        query: !!encodedObj ? { save: encodedObj } : {},
       },
       undefined,
       {

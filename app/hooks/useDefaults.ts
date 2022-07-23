@@ -8,7 +8,6 @@ import { TutorialMetadata } from '../contexts/tutorial';
 import { ProjectMetadata } from '../types';
 import { INPUT_CONSTANT_BYTES_SIZE } from '../utils/brainFuck';
 import { escapeUnicode } from '../utils/hex';
-
 export const useDefaultSeed = (refresh?: any) => {
   return useMemo(() => {
     const input = Date.now().toString(16);
@@ -66,60 +65,31 @@ export const useMinimizedProjectMetadata = (
         minimizedObject[key] = (metadata as any)[key];
       }
     }
+    if (Object.keys(minimizedObject).length === 1 && !!minimizedObject.seed) {
+      return {};
+    }
     return minimizedObject as Partial<ProjectMetadata>;
   }, [metadata]);
 };
 
-export const useSavedOrDefaultProject = (): Partial<ProjectMetadata> => {
-  const defaultProjectMetadata = useDefaultProjectMetadata();
-
+export const useSavedOrDefault = <T>(
+  defaultProjectMetadata: T,
+): T | undefined => {
   const router = useRouter();
 
   const [hasHydrated, setHasHydrated] = useState(false);
-
   const [savedProjectMetadata, setSavedProjectMetadata] = useState<
-    Partial<ProjectMetadata>
-  >({});
+    T | undefined
+  >(undefined);
+
   useEffect(() => {
-    console.log(hasHydrated, defaultProjectMetadata, router.query);
+    console.log(hasHydrated);
     if (hasHydrated) {
       return;
     }
-    if (typeof router.query.save === 'string') {
-      try {
-        const save = router.query.save;
-        const obj = JSON.parse(atob(save));
-        if (Object.keys(obj).length !== 0) {
-          setHasHydrated(true);
-          setSavedProjectMetadata({
-            ...defaultProjectMetadata,
-            ...(obj as Partial<ProjectMetadata>),
-          });
-        }
-      } catch (e) {}
-      setHasHydrated(true);
-      return;
-    }
-    setSavedProjectMetadata(defaultProjectMetadata);
-  }, [router]);
-
-  return useMemo(() => savedProjectMetadata, [savedProjectMetadata]);
-};
-
-export const useSavedOrDefaultTutorialMetadata = (
-  getDefaultTutorialMetadata: () => Partial<TutorialMetadata>,
-): Partial<TutorialMetadata> => {
-  const defaultChallengeMetadata = getDefaultTutorialMetadata();
-
-  const router = useRouter();
-
-  const [hasHydrated, setHasHydrated] = useState(false);
-
-  const [savedTutorialMetadata, setSavedTutorialMetadata] = useState<
-    Partial<TutorialMetadata>
-  >({});
-  useEffect(() => {
-    if (hasHydrated) {
+    if (!router.query.save) {
+      console.log('here', defaultProjectMetadata);
+      setSavedProjectMetadata(defaultProjectMetadata);
       return;
     }
     if (typeof router.query.save !== 'string') {
@@ -129,17 +99,20 @@ export const useSavedOrDefaultTutorialMetadata = (
       const save = router.query.save;
       const obj = JSON.parse(atob(save));
       if (Object.keys(obj).length !== 0) {
-        setHasHydrated(true);
-        setSavedTutorialMetadata({
-          ...defaultChallengeMetadata,
-          ...(obj as Partial<TutorialMetadata>),
+        setSavedProjectMetadata({
+          ...defaultProjectMetadata,
+          ...(obj as T),
         });
-        return;
       }
-    } catch (e) {}
+    } catch (e: any) {}
     setHasHydrated(true);
-    setSavedTutorialMetadata(defaultChallengeMetadata);
-  }, [router]);
+  }, [router.query.save]);
 
-  return useMemo(() => savedTutorialMetadata, [savedTutorialMetadata]);
+  return useMemo(() => savedProjectMetadata, [savedProjectMetadata]);
+};
+
+export const useSavedOrDefaultTutorialMetadata = (
+  getDefaultTutorialMetadata: () => Partial<TutorialMetadata>,
+): Partial<TutorialMetadata> | undefined => {
+  return useSavedOrDefault(getDefaultTutorialMetadata());
 };

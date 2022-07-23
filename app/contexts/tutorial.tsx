@@ -1,9 +1,11 @@
 import { HEX_STRING_REGEX } from '@abf-monorepo/types';
-import React, { useCallback, useMemo, useState } from 'react';
+import isNil from 'lodash/isNil';
+import omitBy from 'lodash/omitBy';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MAX_UINT } from '../constants';
 import { useSavedOrDefaultTutorialMetadata } from '../hooks/useDefaults';
 import { useHydrateSave } from '../hooks/useHydrateSave';
-import { useRendererMetadataStubByProvider } from '../hooks/useRenderer';
+import { useRendererMetadata } from '../hooks/useRenderer';
 import { useModalStore } from '../stores/modal';
 import {
   RenderCodeOutputState,
@@ -67,18 +69,33 @@ export const TutorialsProvider: React.FC<{
   reward: string;
   children: React.ReactNode;
 }> = ({ getDefaultTutorialMetadata, reward, renderer, children }) => {
-  const tutorialMetadata = useSavedOrDefaultTutorialMetadata(
+  const defaultTutorialMetadata = useSavedOrDefaultTutorialMetadata(
     getDefaultTutorialMetadata,
   );
-  const { expectedOutputHexStr, code: savedCode } = tutorialMetadata;
-  const [code, setCode] = useState<string | undefined>(savedCode);
-  const newTutorialMetadata = useMemo((): Partial<TutorialMetadata> => {
-    return {
-      ...tutorialMetadata,
-      code,
-    };
-  }, [tutorialMetadata, expectedOutputHexStr, code]);
-  useHydrateSave(newTutorialMetadata);
+  const [code, setCode] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (!defaultTutorialMetadata) {
+      return;
+    }
+    setCode(defaultTutorialMetadata.code);
+  }, [defaultTutorialMetadata]);
+  const tutorialMetadata = useMemo((): Partial<TutorialMetadata> => {
+    return omitBy(
+      {
+        ...defaultTutorialMetadata,
+        code: !!code ? code : undefined,
+      },
+      isNil,
+    );
+  }, [defaultTutorialMetadata, code]);
+  const minimizedTutorialMetadata = useMemo(() => {
+    const { expectedOutputHexStr, ...rest } = tutorialMetadata;
+    if (!rest.code) {
+      return undefined;
+    }
+    return rest;
+  }, [tutorialMetadata]);
+  useHydrateSave(minimizedTutorialMetadata);
 
   const [currentSampleTokenDebugState, setCurrentSampleTokenDebugState] =
     useState<SampleTokenRenderDebugState>(
@@ -97,7 +114,7 @@ export const TutorialsProvider: React.FC<{
     [setInputConstants],
   );
 
-  const rendererMetadata = useRendererMetadataStubByProvider(renderer);
+  const rendererMetadata = useRendererMetadata(renderer);
 
   const output = useMemo((): RenderCodeOutputState | undefined => {
     if (!code) {
@@ -141,12 +158,19 @@ export const TutorialsProvider: React.FC<{
     if (output?.status !== 'success') {
       return true;
     }
-    if (!expectedOutputHexStr) {
+    if (!tutorialMetadata.expectedOutputHexStr) {
       return true;
     }
-    console.log(output, expectedOutputHexStr, 'isButtonDisabled');
-    return expectedOutputHexStr.toLowerCase() !== output.output.toLowerCase();
-  }, [expectedOutputHexStr, output]);
+    console.log(
+      output,
+      tutorialMetadata.expectedOutputHexStr,
+      'isButtonDisabled',
+    );
+    return (
+      tutorialMetadata.expectedOutputHexStr.toLowerCase() !==
+      output.output.toLowerCase()
+    );
+  }, [tutorialMetadata.expectedOutputHexStr, output]);
   const setIsOpen = useModalStore((s) => s.setIsGenericModalOpen);
   const onSubmit = useCallback(() => {
     if (isButtonDisabled) {
@@ -163,7 +187,7 @@ export const TutorialsProvider: React.FC<{
       code,
       setCode,
       output,
-      expectedOutputHexStr,
+      expectedOutputHexStr: tutorialMetadata.expectedOutputHexStr,
       isButtonDisabled,
       onSubmit,
       currentSampleTokenDebugState,
@@ -177,7 +201,7 @@ export const TutorialsProvider: React.FC<{
     code,
     setCode,
     output,
-    expectedOutputHexStr,
+    tutorialMetadata,
     isButtonDisabled,
     onSubmit,
     currentSampleTokenDebugState,

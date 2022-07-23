@@ -1,6 +1,6 @@
 import { createTemplateInsert } from '../constants';
 
-const STORAGE_NUM_REGISTERS = 8; // smaller the better for computational efficiency
+const STORAGE_NUM_REGISTERS = 32; // smaller the better for computational efficiency
 const STORAGE_SLOT_INDEX_SIZE = 2; // extra bytes are provided to allow for local computation on a slot without losing data slots
 
 export const STORAGE_LIBRARY = {

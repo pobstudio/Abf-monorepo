@@ -11,6 +11,7 @@ import { Tooltip } from '../../tooltip';
 
 export const BasicRender: FC = () => {
   const { output, rendererMetadata } = useTutorialContext();
+  console.log('rendererMetadata', rendererMetadata);
   return (
     <DetailRowsContainer>
       <FlexEnds>

@@ -48,6 +48,7 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
     }
     const groupedBytesAndLabels: [string, string | undefined][] = [];
     if (!!byteGroups && byteGroups.length !== 0) {
+      let acc = 0;
       for (const { numGroups, groupBytesIn, label } of byteGroups) {
         const numericalNumGroups = (() => {
           if (numGroups === 'infinity') {
@@ -62,12 +63,14 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
               }
               return parseInt(output[index], 16);
             }
-            return 0;
+            if (!isNaN(parseInt(numGroups))) {
+              return parseInt(numGroups);
+            }
           }
           return numGroups;
         })();
         for (
-          let x = 0, i = 2;
+          let x = 0, i = 2 + acc;
           i < output.length && x < numericalNumGroups;
           ++x
         ) {
@@ -76,6 +79,7 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
             label,
           ]);
           i += groupBytesIn * 2;
+          acc += groupBytesIn * 2;
         }
       }
     } else {
