@@ -1,5 +1,4 @@
 import { CONDITIONAL_LIBRARY } from './conditional';
-import { CONSTANTS_LIBRARY } from './constants';
 import { CONTROL_LIBRARY } from './control';
 import { DEBUG_LIBRARY } from './debug';
 import { LOOPS_LIBRARY } from './loops';
@@ -18,6 +17,5 @@ export const STANDARD_TEMPLATE_LIBRARY = {
   ...LOOPS_LIBRARY,
   ...DEBUG_LIBRARY,
   ...STORAGE_LIBRARY,
-  ...CONSTANTS_LIBRARY,
   ...SAMPLE_LIBRARY,
 };

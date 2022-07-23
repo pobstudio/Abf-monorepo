@@ -5,6 +5,7 @@ export const ROUTES = {
     EXEC: '/docs/exec',
     ORIGIN: '/docs/origin',
     BRAINFUCK: '/docs/brainfuck',
+    MIXINS: '/docs/mixins',
     RENDERERS: '/docs/renderers',
     PROTOCOL: '/docs/protocol',
     SPEC: '/docs/spec',

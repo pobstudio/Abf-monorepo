@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useBeforeUnload } from 'react-use';
 import styled from 'styled-components';
 import {
@@ -6,7 +6,7 @@ import {
   useProjectMetadata,
   useRawProjectMetadata,
 } from '../../../contexts/projectBuilder';
-import { convertHexStrToAscii, convertStrToHexStr, unicodeToChar } from '../../../utils/hex';
+import { unicodeToChar } from '../../../utils/hex';
 import { DetailRow, DetailRowsContainer } from '../../details/rows';
 import { ExpandoContentContainer, ExpandoGroup } from '../../expando';
 import { Flex, FlexEnds } from '../../flexs';
@@ -31,8 +31,14 @@ export const BrainFuckEditor: FC = () => {
 
   useBeforeUnload(true, 'Are you sure you want to close?');
 
-  const utf8Code = useMemo(() => !!code ? unicodeToChar(code) : undefined, [code]);
-  const utf8PostProcessedCode = useMemo(() => !!postProcessedCode ? unicodeToChar(postProcessedCode) : undefined, [postProcessedCode]);
+  const utf8Code = useMemo(
+    () => (!!code ? unicodeToChar(code) : undefined),
+    [code],
+  );
+  const utf8PostProcessedCode = useMemo(
+    () => (!!postProcessedCode ? unicodeToChar(postProcessedCode) : undefined),
+    [postProcessedCode],
+  );
   return (
     <>
       <DetailRowsContainer>

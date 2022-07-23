@@ -1,5 +1,8 @@
-import { createTemplateInsert, TEMPLATE_INSERT_SEPERATOR } from '../constants';
+import { createTemplateInsert } from '../constants';
 import { CONDITIONAL_LIBRARY } from './conditional';
+
+const NUM_BUFFER = 3;
+
 export const LOOPS_LIBRARY = {
   while: (conditional: any, ...params: any[]) => {
     if (!(CONDITIONAL_LIBRARY as any)[conditional]) {
@@ -8,13 +11,14 @@ export const LOOPS_LIBRARY = {
     return `>${createTemplateInsert('true')}[${createTemplateInsert(
       'false',
     )}<${createTemplateInsert(
-      `${conditional}:${params.join(TEMPLATE_INSERT_SEPERATOR)}`,
-    )}[>${createTemplateInsert('true')}>`;
+      `${conditional}`,
+      params,
+    )}[>${createTemplateInsert('true')}>${'>'.repeat(NUM_BUFFER)}`;
   },
   whileEnd: () => {
-    return `<<${createTemplateInsert('false')}]>[<${createTemplateInsert(
-      'true',
-    )}>-]<]<`;
+    return `${'<'.repeat(NUM_BUFFER)}<<${createTemplateInsert(
+      'false',
+    )}]>[<${createTemplateInsert('true')}>-]<]<`;
   },
   repeat: (val: any) => {
     let prefix: string | undefined | null = undefined;
@@ -23,9 +27,9 @@ export const LOOPS_LIBRARY = {
     } else {
       const safeVal = parseInt(val);
       if (isNaN(safeVal) || safeVal < 0 || safeVal > 255) {
-        prefix = null;
+        prefix = `${createTemplateInsert('copy')}`;
       } else {
-        prefix = `${createTemplateInsert(val)}`;
+        prefix = `>${createTemplateInsert(val)}`;
       }
     }
     if (prefix === null || prefix === undefined) {
@@ -58,8 +62,12 @@ export const LOOPS_LIBRARY = {
     if (isNaN(safeIncrement) || safeIncrement < 0 || safeIncrement > 255) {
       return undefined;
     }
-    return `<<<${(safeIncrement > 0 ? '+' : '-').repeat(
+    return `${createTemplateInsert('jump', [
+      -1 * (3 + NUM_BUFFER),
+    ])}${(safeIncrement > 0 ? '+' : '-').repeat(
       Math.abs(safeIncrement),
-    )}>>>${createTemplateInsert('whileEnd')}${createTemplateInsert('0')}<`;
+    )}${createTemplateInsert('jump', [3 + NUM_BUFFER])}${createTemplateInsert(
+      'whileEnd',
+    )}${createTemplateInsert('0')}<`;
   },
 };

@@ -2,7 +2,7 @@ import { BfTemplateInsertLibrary } from '../../../types/bf';
 import {
   TEMPLATE_INSERT_OPCODE_END,
   TEMPLATE_INSERT_OPCODE_START,
-  TEMPLATE_INSERT_SEPERATOR,
+  TEMPLATE_INSERT_SEPARATOR,
   TEMPLATE_MATCH_REGEX,
 } from './constants';
 import { STANDARD_TEMPLATE_LIBRARY } from './libraries/standard';
@@ -39,7 +39,7 @@ export const transpileTemplatedBf = (
             TEMPLATE_INSERT_OPCODE_START.length,
             -TEMPLATE_INSERT_OPCODE_END.length,
           )
-          .split(TEMPLATE_INSERT_SEPERATOR);
+          .split(TEMPLATE_INSERT_SEPARATOR);
         return [i[0], identifier, params];
       },
     );

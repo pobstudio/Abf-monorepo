@@ -81,25 +81,25 @@ export const useSavedOrDefaultProject = (): Partial<ProjectMetadata> => {
     Partial<ProjectMetadata>
   >({});
   useEffect(() => {
+    console.log(hasHydrated, defaultProjectMetadata, router.query);
     if (hasHydrated) {
       return;
     }
-    if (typeof router.query.save !== 'string') {
+    if (typeof router.query.save === 'string') {
+      try {
+        const save = router.query.save;
+        const obj = JSON.parse(atob(save));
+        if (Object.keys(obj).length !== 0) {
+          setHasHydrated(true);
+          setSavedProjectMetadata({
+            ...defaultProjectMetadata,
+            ...(obj as Partial<ProjectMetadata>),
+          });
+        }
+      } catch (e) {}
+      setHasHydrated(true);
       return;
     }
-    try {
-      const save = router.query.save;
-      const obj = JSON.parse(atob(save));
-      if (Object.keys(obj).length !== 0) {
-        setHasHydrated(true);
-        setSavedProjectMetadata({
-          ...defaultProjectMetadata,
-          ...(obj as Partial<ProjectMetadata>),
-        });
-        return;
-      }
-    } catch (e) {}
-    setHasHydrated(true);
     setSavedProjectMetadata(defaultProjectMetadata);
   }, [router]);
 

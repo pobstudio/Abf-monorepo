@@ -32,6 +32,9 @@ export const DocsDropdownLinkTree: React.FC = () => {
         <Link passHref href={ROUTES.DOCS.BRAINFUCK}>
           <DropdownAnchor>BRAINFUCK!</DropdownAnchor>
         </Link>
+        <Link passHref href={ROUTES.DOCS.MIXINS}>
+          <DropdownAnchor>BF! MIXINS</DropdownAnchor>
+        </Link>
       </DropdownAnchorGroup>
       <DropdownAnchorGroup>
         <Label>REGISTRIES</Label>

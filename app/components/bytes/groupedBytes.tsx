@@ -7,6 +7,7 @@ export interface GroupedBytesProps {
   output?: string;
   byteGroups?: RendererAdditionalMetadataByteGroup[];
   showBytesLength?: boolean;
+  showFocusedGroupingIndex?: boolean;
   focusedByteGroupingIndex?: number | null;
   setFocusedByteGroupingIndex?: (index: number | null) => void;
 }
@@ -34,6 +35,7 @@ export const GroupedBytesWithHoverState: FC<
 export const GroupedBytes: FC<GroupedBytesProps> = ({
   output,
   byteGroups,
+  showFocusedGroupingIndex = true,
   showBytesLength = true,
   focusedByteGroupingIndex,
   setFocusedByteGroupingIndex,
@@ -123,7 +125,9 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
             >
               {focusedByteGroupingIndex !== null &&
               focusedByteGroupingIndex !== undefined
-                ? ` • ${focusedByteGroupingIndex + 1} ${
+                ? ` • ${
+                    showFocusedGroupingIndex ? focusedByteGroupingIndex + 1 : ''
+                  } ${
                     groupedOutputBytesAndLabels[focusedByteGroupingIndex][1]
                       ? `(${groupedOutputBytesAndLabels[focusedByteGroupingIndex][1]})`
                       : ''

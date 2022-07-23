@@ -1,7 +1,6 @@
 import { deployments } from '@abf-monorepo/protocol';
 import Link from 'next/link';
 import React from 'react';
-import styled from 'styled-components';
 import { CHAIN_ID, GITHUB_LINK, SUBGRAPH_LINK } from '../../constants';
 import { ROUTES } from '../../constants/routes';
 import { getIPFSUrl } from '../../utils/urls';
@@ -11,6 +10,11 @@ import {
   OneColumnContentContainer,
 } from '../divs/oneColumn';
 import { A, B, BlockCode, Code, H1, H2, I, Label, OL, P, UL } from '../texts';
+import {
+  LinkGroup,
+  TableOfContentsAnchor,
+  TableOfContentsContainer,
+} from '../texts/toc';
 import { DocumentationFooter } from './docs';
 
 export const Specification: React.FC = () => {
@@ -631,19 +635,3 @@ const TableOfContents = () => {
     </TableOfContentsContainer>
   );
 };
-const TableOfContentsContainer = styled.div`
-  > * + * {
-    margin-top: 14px;
-  }
-`;
-
-const LinkGroup = styled.div`
-  > * + * {
-    margin-top: 12px;
-  }
-`;
-
-const TableOfContentsAnchor = styled(A)`
-  display: block;
-  cursor: pointer;
-`;

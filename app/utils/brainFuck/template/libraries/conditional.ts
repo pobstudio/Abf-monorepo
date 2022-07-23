@@ -88,8 +88,8 @@ export const CONDITIONAL_LIBRARY = {
     )}${createTemplateInsert('flip')}`;
   },
   '!=': (...params: any[]) => createTemplateInsert('notEq', params),
-  'notEq': (val: any) => {
-    return `${createTemplateInsert(`==:${val}`)}${createTemplateInsert(
+  'notEq': (...params: any[]) => {
+    return `${createTemplateInsert(`==`, params)}${createTemplateInsert(
       'flip',
     )}`;
   },

@@ -1,6 +1,8 @@
 import { createTemplateInsert } from '../constants';
+import { CONSTANTS_LIBRARY } from './constants';
 
 export const MEMORY_LIBRARY = {
+  ...CONSTANTS_LIBRARY,
   copy: (delta: any, temporaryDelta: any) => {
     let safeDelta = parseInt(delta);
     let safeTemporaryDelta = parseInt(temporaryDelta);
@@ -16,6 +18,9 @@ export const MEMORY_LIBRARY = {
       } else {
         safeTemporaryDelta = 1;
       }
+    }
+    if (safeDelta === safeTemporaryDelta) {
+      return undefined;
     }
     return `${createTemplateInsert('jump', [safeDelta])}${createTemplateInsert(
       '0',
