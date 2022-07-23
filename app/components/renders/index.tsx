@@ -156,7 +156,7 @@ export const Render: FC<{
           setErrorMessage('NO WALLET CONNECTED. CONNECT TO SEE PREVIEW.');
           setRenderOutput(undefined);
         } else if (e.message.indexOf(RENDERER_NOT_FOUND) !== -1) {
-          setErrorMessage('RENDERER NOT FOUND ON-CHAIN.');
+          //setErrorMessage('RENDERER NOT FOUND ON-CHAIN.');
           setRenderOutput(undefined);
         } else {
           setErrorMessage(

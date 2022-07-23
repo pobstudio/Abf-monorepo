@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
+import { usePrevious } from 'react-use';
 import styled from 'styled-components';
 import {
   usePriorityAccount,
@@ -13,12 +14,14 @@ import {
 } from '../../../contexts/projectBuilder';
 import { useCreateCollection } from '../../../hooks/useCreateCollection';
 import { useENSorHex } from '../../../hooks/useENS';
+import { useModalStore } from '../../../stores/modal';
 import { getOpenSeaUrl } from '../../../utils/urls';
 import { DetailRowsContainer } from '../../details/rows';
 import { FlexEnds } from '../../flexs';
 import { ArrowIcon } from '../../icons/arrow';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
-import { A, P, Text } from '../../texts';
+import { BasicModal } from '../../modal';
+import { A, Label, LabelAnchor, P, Text } from '../../texts';
 
 const ErrorTable = styled.div`
   > * + * {
@@ -106,34 +109,19 @@ export const ContractSubmit: FC = () => {
     );
   }, [isLoading, txStatus, account, chainId, errorMessages]);
 
-  const name = useENSorHex(contractAddress);
-  const router = useRouter();
-  if (!!contractAddress) {
-    return (
-      <DetailRowsContainer>
-        <FlexEnds>
-          <P>ABF NFT SUCCESSFULLY CREATED!</P>
-          <A href={getOpenSeaUrl(contractAddress, '0')} target={'_blank'}>
-            {name}
-          </A>
-        </FlexEnds>
-        <TertiaryButton
-          onClick={() => router.push(`${ROUTES.COLLECTION}/${contractAddress}`)}
-        >
-          VIEW COLLECTION{' '}
-          <ArrowIcon
-            style={{
-              marginLeft: 4,
-              transform: 'rotate(180deg) translateY(-1px)',
-            }}
-          />
-        </TertiaryButton>
-      </DetailRowsContainer>
-    );
-  }
+  const setIsGenericModalOpen = useModalStore(s => s.setIsGenericModalOpen);
+
+  const prevTxStatus = usePrevious(txStatus);
+  useEffect(() => {
+    if (prevTxStatus !== txStatus && txStatus === 'success') {
+      setIsGenericModalOpen(true);
+      onRefresh();
+    }
+  }, [txStatus]);
 
   return (
-    <DetailRowsContainer>
+    <div style={{width: '100%'}}>
+    <DetailRowsContainer >
       <ErrorTable>
         {errorMessages.map((m, i) => (
           <ErrorText key={`error-text-message-${i}`}>{m}</ErrorText>
@@ -144,5 +132,37 @@ export const ContractSubmit: FC = () => {
       </PrimaryButton>
       <TertiaryButton onClick={onRefresh}>RESET</TertiaryButton>
     </DetailRowsContainer>
+    <SuccessModal contractAddress={contractAddress} />
+    </div>
+  );
+};
+
+export const SuccessModal: React.FC<{ contractAddress?: string | null } > = ({ contractAddress }) => {
+  const router = useRouter();
+  return (
+    <>
+      <BasicModal>
+        <Label>
+          {`+[----->+++<]>++.++++CREATED+.++++++.-----.[--->+<]>-----.---[->++++<]SOMETHING>.------------.---.--[--->+<]>-.[->+++<]>++.[--->+<]>----.-------NEW--.--.+.++++++++++++.[---->+<]>+++.++[--->++<]>.---.--.+.++++++++++++.`}
+        </Label>
+        <FlexEnds
+                  style={{ marginTop: 24}}
+        >
+        <Label>ADDR</Label><Text>{contractAddress}</Text>
+        </FlexEnds>
+        <TertiaryButton
+          style={{ marginTop: 24}}
+          onClick={() => router.push(`${ROUTES.COLLECTION}/${contractAddress}`)}
+        >
+          VIEW COLLECTION{' '}
+          <ArrowIcon
+            style={{
+              marginLeft: 4,
+              transform: 'rotate(180deg) translateY(-1px)',
+            }}
+          />
+        </TertiaryButton>
+      </BasicModal>
+    </>
   );
 };
