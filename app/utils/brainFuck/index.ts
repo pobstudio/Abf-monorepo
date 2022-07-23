@@ -114,14 +114,18 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
       if (opcode === '0x3E') {
         ptr++;
         if (ptr >= TAPE_SIZE) {
-          throw new Error(`Data pointer exceeds index range (0-299,999): index at ${ptr}`);
+          throw new Error(
+            `Data pointer exceeds index range (0-299,999): index at ${ptr}`,
+          );
         }
       }
       // <
       if (opcode === '0x3C') {
         ptr--;
         if (ptr < 0) {
-          throw new Error(`Data pointer exceeds index range (0-299,999): index at ${ptr}`);
+          throw new Error(
+            `Data pointer exceeds index range (0-299,999): index at ${ptr}`,
+          );
         }
       }
       // [
