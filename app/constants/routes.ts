@@ -31,3 +31,7 @@ export const ROUTES = {
     DISCORD_BOT_VERIFY: '/api/discord-bot-verify',
   },
 };
+
+export const PREVIEW_ROUTES = {
+  ART: '/api/preview/art',
+};

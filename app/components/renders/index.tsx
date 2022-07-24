@@ -102,7 +102,7 @@ export const Render: FC<{
     string | undefined
   >(undefined);
   useEffect(() => {
-    if (output?.status !== 'success') {
+    if (output?.status !== 'success' || !output.output) {
       return;
     }
     const getRawSvgSrc = async () => {

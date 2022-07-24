@@ -35,6 +35,7 @@ export const Collection: React.FC = () => {
     isActive,
     activateCollection,
     isOwner,
+    currentTokenId,
   } = useCollectionContext();
   return (
     <>
@@ -106,8 +107,9 @@ export const Collection: React.FC = () => {
                 ]}
               </DetailRow>
               <DetailRow>{['SEED', collection?.seed ?? '-']}</DetailRow>
+              {/* <DetailRow>{['CONSTANTS', collection?.constants ?? '-']}</DetailRow> */}
               {/* <DetailRow>
-                {['CONSTANTS', collection?.constants ?? '-']}
+                {['OUTPUT', !!output ? (output as any)['output'] : '-']}
               </DetailRow> */}
             </DetailRowsContainer>
           </TwoColumnContentContainer>
@@ -155,7 +157,7 @@ export const Collection: React.FC = () => {
           >
             <DetailRowsContainer>
               <DetailRow>
-                {['SUPPLY', collection?.mintingSupply ?? '-']}
+                {['SUPPLY', `${currentTokenId} / ${collection?.mintingSupply}`]}
               </DetailRow>
               <DetailRow>
                 {[
@@ -168,6 +170,14 @@ export const Collection: React.FC = () => {
               <DetailRow>
                 {['IS ACTIVE', isActive?.toString()?.toUpperCase() ?? '-']}
               </DetailRow>
+            </DetailRowsContainer>
+          </TwoColumnContentContainer>
+          <TwoColumnContentContainer
+            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+          >
+            <DetailRowsContainer>
+              <Label>MINT SHEET</Label>
+
             </DetailRowsContainer>
           </TwoColumnContentContainer>
         </div>
@@ -209,7 +219,7 @@ const ThreePartMintButtonContainer = styled.div`
   }
 `;
 
-const LinksContainer = styled(DetailRowsContainer)`
+export const LinksContainer = styled(DetailRowsContainer)`
   ${LabelAnchor} {
     display: block;
   }
@@ -218,7 +228,7 @@ const LinksContainer = styled(DetailRowsContainer)`
   }
 `;
 
-const TitleContainer = styled.div`
+export const TitleContainer = styled.div`
   text-align: left;
   width: 100%;
   ${Label} {
@@ -229,7 +239,7 @@ const TitleContainer = styled.div`
   }
 `;
 
-const BrainfuckCodeContainer = styled.div`
+export const BrainfuckCodeContainer = styled.div`
   width: 100%;
   height: fit-content;
   /* padding: 100px; */
