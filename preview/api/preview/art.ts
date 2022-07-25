@@ -1,8 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { getArtScreenshot } from '../../server/screenshots';
 
-require('isomorphic-fetch');
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const { output, renderer } = req.query;

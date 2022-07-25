@@ -2,6 +2,7 @@ import { launch, Page } from 'puppeteer-core';
 import {
   DIMENSIONS,
   FILE_TYPE,
+  IS_DEV,
   RENDER_URL,
   SCREENSHOT_QUALITY,
 } from './constants';
@@ -9,7 +10,6 @@ import { getOptions } from './options';
 import { FileType } from './types';
 
 let _page: Page | null;
-const IS_DEV = !process.env.AWS_REGION;
 
 async function getPage(isDev: boolean) {
   if (_page) {

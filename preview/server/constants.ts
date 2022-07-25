@@ -9,8 +9,9 @@ export const ALCHEMY_KEY =
 
 export const ZERO = BigNumber.from(0);
 
+export const IS_DEV = !process.env.AWS_REGION;
 export const FILE_TYPE = 'jpeg';
-export const SCREENSHOT_QUALITY = 80;
+export const SCREENSHOT_QUALITY = 100;
 export const PPI = 300;
 export const NATIVE_RATIO: [number, number] = [1, 1];
 export const DIMENSIONS: [number, number] = [
