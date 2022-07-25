@@ -21,7 +21,7 @@ export const BasicModal: FC = ({ children }) => {
   });
   const clickAwayRef = useRef<HTMLDivElement | null>(null);
   useClickAway(clickAwayRef, () => {
-    console.log('hit');
+    // console.log('hit');
     setIsOpen(true);
   });
   return (

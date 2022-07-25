@@ -83,12 +83,12 @@ export const useSavedOrDefault = <T>(
   >(undefined);
 
   useEffect(() => {
-    console.log(hasHydrated);
+    // console.log(hasHydrated);
     if (hasHydrated) {
       return;
     }
     if (!router.query.save) {
-      console.log('here', defaultProjectMetadata);
+      // console.log('here', defaultProjectMetadata);
       setSavedProjectMetadata(defaultProjectMetadata);
       return;
     }

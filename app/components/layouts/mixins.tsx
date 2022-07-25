@@ -30,6 +30,7 @@ import {
   TableOfContentsContainer,
 } from '../texts/toc';
 import { DocumentationFooter } from './docs';
+
 export const BrainFuckMixins: React.FC = () => {
   return (
     <OneColumnContainer>
@@ -293,7 +294,7 @@ const MixinDocDefinition: FC<MixinDoc & { label: string }> = ({
   examples,
 }) => {
   const Description = description;
-  console.log(alias);
+  // console.log(alias);
   return (
     <>
       <H3>

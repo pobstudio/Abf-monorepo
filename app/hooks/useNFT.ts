@@ -20,7 +20,7 @@ export const useNftsForCollection = (collectionAddress: string) => {
     if (!data) {
       return undefined;
     }
-    console.log(data);
+    // console.log(data);
     return data;
   }, [data]);
 };

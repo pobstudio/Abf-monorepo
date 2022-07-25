@@ -18,7 +18,10 @@ import {
 import { ROUTES } from '../../constants/routes';
 import { CollectionProvider } from '../../contexts/collection';
 import { shortenHexString } from '../../utils/hex';
-import { getPrefetchDataForCollection } from '../../utils/prefetch';
+import {
+  CollectionPrefetchData,
+  getPrefetchDataForCollection,
+} from '../../utils/prefetch';
 import { getArtworkPreviewUrl } from '../../utils/urls';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -30,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const prefetchDataRaw = await getPrefetchDataForCollection(address);
   const prefetchData = prefetchDataRaw
-    ? JSON.parse(JSON.stringify(prefetchDataRaw))
+    ? (JSON.parse(JSON.stringify(prefetchDataRaw)) as CollectionPrefetchData)
     : undefined;
 
   if (!prefetchData) {

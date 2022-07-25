@@ -31,7 +31,18 @@ const getCollectionSampleOutput = (
   }
 };
 
-export const getPrefetchDataForCollection = async (address: string) => {
+export interface CollectionPrefetchData {
+  address: string;
+  name: string;
+  code: string;
+  renderer: string;
+  constants: string;
+  seed: string;
+  output: string;
+}
+export const getPrefetchDataForCollection = async (
+  address: string,
+): Promise<CollectionPrefetchData | undefined> => {
   const contract = BrainFuck__factory.connect(address, PROVIDER);
 
   if (!contract) {
@@ -51,6 +62,6 @@ export const getPrefetchDataForCollection = async (address: string) => {
     renderer,
     constants,
     seed,
-    output: getCollectionSampleOutput(code, constants, seed),
+    output: getCollectionSampleOutput(code, constants, seed) || '0x00',
   };
 };

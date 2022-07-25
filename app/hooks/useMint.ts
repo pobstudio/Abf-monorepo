@@ -20,7 +20,7 @@ export const useMintBrainfuckNFT = (address: string | undefined) => {
       }
       try {
         setIsLoading(true);
-        console.log(brainFuckContract);
+        // console.log(brainFuckContract);
         const res = await brainFuckContract.mint(
           account,
           BigNumber.from(mintAmount),

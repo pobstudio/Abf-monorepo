@@ -85,7 +85,7 @@ export const useCollectionsByOwner = (
   const data = useLastTruthyValue(results.data);
 
   return useMemo(() => {
-    console.log(data, 'GET_COLLECTIONS_BY_OWNER');
+    // console.log(data, 'GET_COLLECTIONS_BY_OWNER');
     if (!data) {
       return undefined;
     }

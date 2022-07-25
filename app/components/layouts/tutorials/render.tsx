@@ -11,7 +11,7 @@ import { Tooltip } from '../../tooltip';
 
 export const BasicRender: FC = () => {
   const { output, rendererMetadata } = useTutorialContext();
-  console.log('rendererMetadata', rendererMetadata);
+  // console.log('rendererMetadata', rendererMetadata);
   return (
     <DetailRowsContainer>
       <FlexEnds>
@@ -84,7 +84,7 @@ const RawOutput: FC = () => {
     rendererMetadata,
   } = useTutorialContext();
 
-  console.log(output, 'raw output');
+  // console.log(output, 'raw output');
 
   if (!output) {
     return <P>{'-'}</P>;
