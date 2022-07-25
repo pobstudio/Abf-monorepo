@@ -14,7 +14,7 @@ import { Flex, FlexEnds } from '../../flexs';
 import { Render } from '../../renders';
 import { Code, Label, LabelAnchor, P, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
-import { TokenIdSwitcher } from './tokenIdSwitcher';
+import { ProjectTokenIdSwitcher } from '../tokenIdSwitcher';
 
 export const TokenPreview: FC = () => {
   const { currentSampleTokenRenderState } = useProjectBuilderContext();
@@ -26,7 +26,7 @@ export const TokenPreview: FC = () => {
         <Text>
           <strong>OUTPUT PREVIEW</strong>
         </Text>
-        <TokenIdSwitcher />
+        <ProjectTokenIdSwitcher />
       </FlexEnds>
       <Flex>
         <Label style={{ marginRight: 6 }}>BF! CODE INPUT</Label>

@@ -14,9 +14,11 @@ import {
   TwoColumnContainer,
   TwoColumnContentContainer,
 } from '../../divs/twoColumn';
+import { FlexEnds } from '../../flexs';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { Render } from '../../renders';
 import { H1, Label, LabelAnchor } from '../../texts';
+import { CollectionTokenIdSwitcher } from '../tokenIdSwitcher';
 
 export const Collection: React.FC = () => {
   const {
@@ -96,7 +98,10 @@ export const Collection: React.FC = () => {
         <div>
           <TwoColumnContentContainer>
             <TitleContainer>
-              <Label>TITLE</Label>
+              <FlexEnds>
+                <Label>TITLE</Label>
+                <CollectionTokenIdSwitcher />
+              </FlexEnds>
               <H1>{collection?.name}</H1>
               <ThreePartMintButton />
               {isOwner && !isActive && (
@@ -114,6 +119,10 @@ export const Collection: React.FC = () => {
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <DetailRowsContainer>
+              {/* <FlexEnds>
+                <Label>PREVIEW</Label>
+                <CollectionTokenIdSwitcher />
+              </FlexEnds> */}
               <DetailRow>
                 {['SUPPLY', `${currentTokenId} / ${collection?.mintingSupply}`]}
               </DetailRow>
