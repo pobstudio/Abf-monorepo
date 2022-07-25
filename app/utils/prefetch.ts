@@ -6,6 +6,7 @@ import {
   runBrainFuckCode,
   tokenSeedToInputTape,
 } from './brainFuck';
+import { convertHexStrToUtf8 } from './hex';
 
 const getCollectionSampleOutput = (
   brainfuckCode: string,
@@ -50,7 +51,7 @@ export const getPrefetchDataForCollection = async (
   }
 
   const name = await contract.name();
-  const code = await contract.code();
+  const code = convertHexStrToUtf8(await contract.code());
   const renderer = await contract.renderer();
   const constants = await contract.constants();
   const seed = await contract.seed();
