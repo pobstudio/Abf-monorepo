@@ -1,13 +1,6 @@
 import { BigNumber, utils } from 'ethers';
-import { NextSeo } from 'next-seo';
 import React from 'react';
 import styled from 'styled-components';
-import {
-  GLOBAL_OG_BANNER,
-  PROD_LINK,
-  TWITTER_HANDLE,
-} from '../../../constants';
-import { ROUTES } from '../../../constants/routes';
 import { useCollectionContext } from '../../../contexts/collection';
 import { useMintBrainfuckNFT } from '../../../hooks/useMint';
 import { shortenHexString } from '../../../utils/hex';
@@ -39,41 +32,6 @@ export const Collection: React.FC = () => {
   } = useCollectionContext();
   return (
     <>
-      <NextSeo
-        title={`${collection?.name} - Absolute Brain F**K NFT Collection - ${collectionAddress}`}
-        description={brainfuckCode}
-        openGraph={{
-          type: 'website',
-          locale: 'en_US',
-          url: `${PROD_LINK}/${ROUTES.COLLECTION}/${collectionAddress}`,
-          title: `${collection?.name} - Absolute Brain F**K NFT Collection - ${collectionAddress}`,
-          description: brainfuckCode,
-          site_name: 'ABF',
-          images: [
-            {
-              // url: getArtworkPreviewUrl(hash),
-              url: GLOBAL_OG_BANNER,
-              alt: 'ABF',
-            },
-          ],
-        }}
-        twitter={{
-          handle: TWITTER_HANDLE,
-          site: TWITTER_HANDLE,
-          cardType: 'summary_large_image',
-        }}
-        additionalMetaTags={[
-          {
-            name: 'twitter:image',
-            // content: getArtworkPreviewUrl(hash),
-            content: GLOBAL_OG_BANNER,
-          },
-          {
-            name: 'twitter:url',
-            content: `${PROD_LINK}/${ROUTES.COLLECTION}/${collectionAddress}`,
-          },
-        ]}
-      />
       <TwoColumnContainer>
         <div>
           <TwoColumnContentContainer style={{ padding: 0 }}>
