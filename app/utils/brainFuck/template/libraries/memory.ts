@@ -3,6 +3,16 @@ import { CONSTANTS_LIBRARY } from './constants';
 
 export const MEMORY_LIBRARY = {
   ...CONSTANTS_LIBRARY,
+  skipInputs: (val: any) => {
+    const safeVal = parseInt(val);
+    if (isNaN(safeVal)) {
+      return undefined;
+    }
+    if (val < 0 || val > 255) {
+      return undefined;
+    }
+    return `${','.repeat(safeVal)}${createTemplateInsert('0')}`;
+  },
   copy: (delta: any, temporaryDelta: any) => {
     let safeDelta = parseInt(delta);
     let safeTemporaryDelta = parseInt(temporaryDelta);

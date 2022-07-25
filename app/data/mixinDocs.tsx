@@ -120,6 +120,17 @@ export const MEMORY_DOCS: { [key: string]: MixinDoc } = {
     ],
     dataPointerLocationDescription: 'data pointer + delta',
   },
+  skipInputs: {
+    description: () => <P>skips the first X amount of bytes provided.</P>,
+    params: [
+      {
+        label: 'value',
+        description: 'positive integer (0-255)',
+      },
+    ],
+    examples: [],
+    dataPointerLocationDescription: 'unchanged',
+  },
 };
 
 export const MATH_DOCS: { [key: string]: MixinDoc } = {
@@ -159,7 +170,8 @@ export const MATH_DOCS: { [key: string]: MixinDoc } = {
     description: () => (
       <P>
         subtracts the current value at <I>data pointer</I> with provided
-        constant or the value to the left of the <I>data pointer</I>.
+        constant. If no parameter is provided, gives the result of (current data
+        cell - left shift data cell)
       </P>
     ),
     params: [
@@ -179,7 +191,7 @@ export const MATH_DOCS: { [key: string]: MixinDoc } = {
       },
       {
         code: `${createTemplateInsert('3')}>${createTemplateInsert(
-          '2',
+          '4',
         )}${createTemplateInsert('sub')}`,
         label: 'Example without constant',
         tapeLogLength: 4,
@@ -188,6 +200,82 @@ export const MATH_DOCS: { [key: string]: MixinDoc } = {
         code: `${createTemplateInsert('3')}${createTemplateInsert('sub', [
           '4',
         ])}`,
+        label: 'Example with underflow',
+        tapeLogLength: 3,
+      },
+    ],
+    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+  },
+  absSub: {
+    description: () => (
+      <P>
+        gets the absolute value difference between two values. If parameter is
+        provided, finds the abs(data cell - value). If no parameter provided,
+        finds the abs(data cell - left data cell).
+      </P>
+    ),
+    params: [
+      {
+        label: 'value',
+        description: 'positive integer',
+        isOptional: true,
+      },
+    ],
+    examples: [
+      {
+        code: `${createTemplateInsert('3')}${createTemplateInsert('absSub', [
+          '2',
+        ])}`,
+        label: 'Example with constant',
+        tapeLogLength: 3,
+      },
+      {
+        code: `${createTemplateInsert('3')}>${createTemplateInsert(
+          '4',
+        )}${createTemplateInsert('sub')}`,
+        label: 'Example without constant',
+        tapeLogLength: 4,
+      },
+    ],
+    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+  },
+  flippedSub: {
+    description: () => (
+      <P>
+        behaves just like <Code>{createTemplateInsert('sub')}</Code> but flips
+        the values, i.e (instead of A - B, it is B - A). Subtracts the provided
+        constant by value at <I>data pointer</I>. If no parameter is provided,
+        gives the result of (left shift data cell - current data cell)
+      </P>
+    ),
+    params: [
+      {
+        label: 'value',
+        description: 'positive integer',
+        isOptional: true,
+      },
+    ],
+    examples: [
+      {
+        code: `${createTemplateInsert('3')}${createTemplateInsert(
+          'flippedSub',
+          ['5'],
+        )}`,
+        label: 'Example with constant',
+        tapeLogLength: 3,
+      },
+      {
+        code: `${createTemplateInsert('3')}>${createTemplateInsert(
+          '2',
+        )}${createTemplateInsert('flippedSub')}`,
+        label: 'Example without constant',
+        tapeLogLength: 4,
+      },
+      {
+        code: `${createTemplateInsert('3')}${createTemplateInsert(
+          'flippedSub',
+          ['2'],
+        )}`,
         label: 'Example with underflow',
         tapeLogLength: 3,
       },

@@ -13,15 +13,13 @@ import {
   useProjectMetadata,
 } from '../../../contexts/projectBuilder';
 import { useCreateCollection } from '../../../hooks/useCreateCollection';
-import { useENSorHex } from '../../../hooks/useENS';
 import { useModalStore } from '../../../stores/modal';
-import { getOpenSeaUrl } from '../../../utils/urls';
 import { DetailRowsContainer } from '../../details/rows';
 import { FlexEnds } from '../../flexs';
 import { ArrowIcon } from '../../icons/arrow';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { BasicModal } from '../../modal';
-import { A, Label, LabelAnchor, P, Text } from '../../texts';
+import { Label, Text } from '../../texts';
 
 const ErrorTable = styled.div`
   > * + * {
@@ -109,7 +107,7 @@ export const ContractSubmit: FC = () => {
     );
   }, [isLoading, txStatus, account, chainId, errorMessages]);
 
-  const setIsGenericModalOpen = useModalStore(s => s.setIsGenericModalOpen);
+  const setIsGenericModalOpen = useModalStore((s) => s.setIsGenericModalOpen);
 
   const prevTxStatus = usePrevious(txStatus);
   useEffect(() => {
@@ -120,24 +118,26 @@ export const ContractSubmit: FC = () => {
   }, [txStatus]);
 
   return (
-    <div style={{width: '100%'}}>
-    <DetailRowsContainer >
-      <ErrorTable>
-        {errorMessages.map((m, i) => (
-          <ErrorText key={`error-text-message-${i}`}>{m}</ErrorText>
-        ))}
-      </ErrorTable>
-      <PrimaryButton onClick={create} disabled={disabled}>
-        {buttonText}
-      </PrimaryButton>
-      <TertiaryButton onClick={onRefresh}>RESET</TertiaryButton>
-    </DetailRowsContainer>
-    <SuccessModal contractAddress={contractAddress} />
+    <div style={{ width: '100%' }}>
+      <DetailRowsContainer>
+        <ErrorTable>
+          {errorMessages.map((m, i) => (
+            <ErrorText key={`error-text-message-${i}`}>{m}</ErrorText>
+          ))}
+        </ErrorTable>
+        <PrimaryButton onClick={create} disabled={disabled}>
+          {buttonText}
+        </PrimaryButton>
+        <TertiaryButton onClick={onRefresh}>RESET</TertiaryButton>
+      </DetailRowsContainer>
+      <SuccessModal contractAddress={contractAddress} />
     </div>
   );
 };
 
-export const SuccessModal: React.FC<{ contractAddress?: string | null } > = ({ contractAddress }) => {
+export const SuccessModal: React.FC<{ contractAddress?: string | null }> = ({
+  contractAddress,
+}) => {
   const router = useRouter();
   return (
     <>
@@ -145,13 +145,12 @@ export const SuccessModal: React.FC<{ contractAddress?: string | null } > = ({ c
         <Label>
           {`+[----->+++<]>++.++++CREATED+.++++++.-----.[--->+<]>-----.---[->++++<]SOMETHING>.------------.---.--[--->+<]>-.[->+++<]>++.[--->+<]>----.-------NEW--.--.+.++++++++++++.[---->+<]>+++.++[--->++<]>.---.--.+.++++++++++++.`}
         </Label>
-        <FlexEnds
-                  style={{ marginTop: 24}}
-        >
-        <Label>ADDR</Label><Text>{contractAddress}</Text>
+        <FlexEnds style={{ marginTop: 24 }}>
+          <Label>ADDR</Label>
+          <Text>{contractAddress}</Text>
         </FlexEnds>
         <TertiaryButton
-          style={{ marginTop: 24}}
+          style={{ marginTop: 24 }}
           onClick={() => router.push(`${ROUTES.COLLECTION}/${contractAddress}`)}
         >
           VIEW COLLECTION{' '}
