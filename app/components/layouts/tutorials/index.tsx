@@ -8,11 +8,12 @@ import {
   OneColumnContentContainer,
 } from '../../divs/oneColumn';
 import { TwoColumnContentContainer } from '../../divs/twoColumn';
+import { ArrowIcon } from '../../icons/arrow';
 import { SecondaryAnchorButton } from '../../inputs/button';
 import { BasicModal } from '../../modal';
 import { DropdownAnchor, DropdownAnchorGroup } from '../../navs/common';
 import { DropdownAnchorGroupContainer } from '../../navs/dropdown';
-import { B, H1, Label, LabelAnchor, P } from '../../texts';
+import { B, BackButtonAnchor, H1, Label, LabelAnchor, P } from '../../texts';
 
 export const TUTORIALS_MAP = {
   [ROUTES.TRAIN[0]]: 'DOT-T000-000',
@@ -101,6 +102,15 @@ export const RewardModal: React.FC<{ reward: string }> = ({ reward }) => {
     </>
   );
 };
+
+export const TutorialsBackButton: React.FC = () => (
+  <Link passHref href={ROUTES.TRAIN.INDEX}>
+    <BackButtonAnchor>
+      <ArrowIcon />
+      &nbsp;&nbsp;VIEW ALL
+    </BackButtonAnchor>
+  </Link>
+);
 
 export const TwoColumnTutorialContainer = styled(TwoColumnContentContainer)`
   > * + * {
