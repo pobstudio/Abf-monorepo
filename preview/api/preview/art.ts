@@ -1,15 +1,10 @@
-import { ADDRESS_REGEX } from '@abf-monorepo/types';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { getArtScreenshot } from '../../server/screenshots';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const { output, renderer } = req.query;
-    if (
-      !renderer ||
-      typeof renderer !== 'string' ||
-      !ADDRESS_REGEX.test(renderer)
-    ) {
+    if (!renderer || typeof renderer !== 'string') {
       res
         .status(422)
         .json({ statusCode: 422, message: 'renderer is not a valid value' });
@@ -28,7 +23,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader('Content-Type', `image/jpeg`);
     res.setHeader(
       'Cache-Control',
-      `public, immutable, no-transform, s-maxage=36000, max-age=36000`,
+      `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`,
     );
     res.end(file);
   } catch (e) {
