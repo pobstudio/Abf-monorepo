@@ -177,7 +177,6 @@ export const Collection: React.FC = () => {
           >
             <DetailRowsContainer>
               <Label>MINT SHEET</Label>
-
             </DetailRowsContainer>
           </TwoColumnContentContainer>
         </div>

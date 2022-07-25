@@ -92,6 +92,7 @@ export const CollectionProvider: React.FC<{
   const account = usePriorityAccount();
   const [error, setError] = useState<any | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  // const mints = useNftsForCollection(address ?? '');
 
   useEffect(() => {
     const connect = async () => {

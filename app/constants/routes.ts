@@ -29,6 +29,7 @@ export const ROUTES = {
   RENDER: '/render',
   API: {
     DISCORD_BOT_VERIFY: '/api/discord-bot-verify',
+    NFTS: '/api/nfts',
   },
 };
 
