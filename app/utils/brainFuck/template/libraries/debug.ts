@@ -33,18 +33,21 @@ export const DEBUG_LIBRARY = {
     }
     return bfCode + createTemplateInsert('0');
   },
-  log: (startIndex: any, endIndex: any) => {
+  log: (startIndex: any, endIndex: any, skip: any) => {
     const safeStartIndex = parseInt(startIndex);
     const safeEndIndex = parseInt(endIndex);
-
+    let safeSkip = parseInt(skip);
     if (isNaN(safeStartIndex) || isNaN(safeEndIndex)) {
       return undefined;
+    }
+    if (isNaN(safeSkip)) {
+      safeSkip = 1;
     }
     if (safeEndIndex < safeStartIndex) {
       return undefined;
     }
-    return `!${createTemplateInsert('jump', [startIndex])}.${'>.'.repeat(
-      safeEndIndex - safeStartIndex,
-    )}`;
+    return `!${createTemplateInsert('jump', [startIndex])}.${`${'>'.repeat(
+      safeSkip,
+    )}.`.repeat((safeEndIndex - safeStartIndex) / safeSkip)}`;
   },
 };

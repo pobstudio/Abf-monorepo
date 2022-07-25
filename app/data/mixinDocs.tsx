@@ -1,6 +1,7 @@
 import { B, Code, I, P } from '../components/texts';
 import { MixinDoc } from '../types/docs';
 import { createTemplateInsert } from '../utils/brainFuck/template/constants';
+import { STORAGE_NUM_REGISTERS } from '../utils/brainFuck/template/libraries/storage';
 
 export const MEMORY_DOCS: { [key: string]: MixinDoc } = {
   constants: {
@@ -281,6 +282,104 @@ export const MATH_DOCS: { [key: string]: MixinDoc } = {
       },
     ],
     dataPointerLocationDescription: 'Shifts to the right by one data cell',
+  },
+};
+
+export const STORAGE_DOCS: { [key: string]: MixinDoc } = {
+  jumpToStorageSlots: {
+    description: () => (
+      <P>
+        jumps the current <I>data pointer</I> to the start of the storage data
+        cells.
+      </P>
+    ),
+    params: [],
+    examples: [
+      {
+        code: `${createTemplateInsert('jumpToStorageSlots')},
+        `,
+        label: 'Example',
+        tapeLogLength: 1,
+      },
+    ],
+    dataPointerLocationDescription: `data cell index ${
+      STORAGE_NUM_REGISTERS + 1
+    }`,
+  },
+  store: {
+    description: () => (
+      <P>stores the value at writeFromIndex into data slotIndex.</P>
+    ),
+    params: [
+      {
+        label: 'writeFromIndex',
+        description: `positive integer, index value between 0-${
+          STORAGE_NUM_REGISTERS - 1
+        }`,
+      },
+      {
+        label: 'slotIndex',
+        description: `positive integer, index value for the data slot to store the value in writeFromIndex`,
+      },
+    ],
+    examples: [
+      {
+        code: `${createTemplateInsert('3')}${createTemplateInsert(
+          'store',
+          [0, 0],
+        )}
+        `,
+        label: 'Example',
+        tapeLogLength: 34,
+      },
+    ],
+    dataPointerLocationDescription: `writeFromIndex`,
+  },
+  read: {
+    description: () => (
+      <P>reads the value at data slotIndex into readIntoIndex.</P>
+    ),
+    params: [
+      {
+        label: 'readIntoIndex',
+        description: `positive integer, index value between 0-${
+          STORAGE_NUM_REGISTERS - 1
+        }`,
+      },
+      {
+        label: 'slotIndex',
+        description: `positive integer, index value for the data slot to read`,
+      },
+    ],
+    examples: [
+      {
+        code: `${createTemplateInsert('3')}${createTemplateInsert(
+          'store',
+          [0, 0],
+        )}${createTemplateInsert('read', [2, 0])}
+        `,
+        label: 'Example',
+        tapeLogLength: 34,
+      },
+    ],
+    dataPointerLocationDescription: `readIntoIndex`,
+  },
+  logStorage: {
+    description: () => (
+      <P>outputs the stored values fromSlotIndex - toSlotIndex.</P>
+    ),
+    params: [
+      {
+        label: 'fromSlotIndex',
+        description: `positive integer, index value for the data slot to start output from`,
+      },
+      {
+        label: 'toSlotIndex',
+        description: `positive integer, index value for the data slot to end outputting (inclusive)`,
+      },
+    ],
+    examples: [],
+    dataPointerLocationDescription: `readIntoIndex`,
   },
 };
 

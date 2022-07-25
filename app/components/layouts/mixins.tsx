@@ -1,4 +1,5 @@
 import React, { FC, useMemo } from 'react';
+import styled from 'styled-components';
 import {
   CONDITIONAL_DOCS,
   CONTROL_DOCS,
@@ -6,6 +7,7 @@ import {
   LOOP_DOCS,
   MATH_DOCS,
   MEMORY_DOCS,
+  STORAGE_DOCS,
 } from '../../data/mixinDocs';
 import { MixinDoc, MixinDocExample } from '../../types/docs';
 import { runBrainFuckCodeDebug } from '../../utils/brainFuck';
@@ -16,6 +18,7 @@ import {
   TEMPLATE_INSERT_OPCODE_START,
   TEMPLATE_INSERT_SEPARATOR,
 } from '../../utils/brainFuck/template/constants';
+import { STORAGE_NUM_REGISTERS } from '../../utils/brainFuck/template/libraries/storage';
 import { LineBreak } from '../break';
 import { GroupedBytes } from '../bytes/groupedBytes';
 import { DetailRowsContainer } from '../details/rows';
@@ -237,6 +240,29 @@ export const BrainFuckMixins: React.FC = () => {
               />
             );
           })}
+          <LineBreak id="storage" />
+          <H2>Storage</H2>
+          <P>
+            The storage library provides a basic register + storage programming
+            model.
+          </P>
+          <P>
+            The first {STORAGE_NUM_REGISTERS} are used as registers; data cells
+            that are used for computation with the expectation that any data
+            stored in registers can be overwritten in later computation. Data
+            cells after {STORAGE_NUM_REGISTERS} "registers" are only accessible
+            via read or write mixins; designed for storing the results of
+            computation.
+          </P>
+          {Object.entries(STORAGE_DOCS).map(([label, doc]) => {
+            return (
+              <MixinDocDefinition
+                {...doc}
+                label={label}
+                key={`mixin-doc-${label}`}
+              />
+            );
+          })}
           <br />
           <br />
           <DocumentationFooter />
@@ -253,30 +279,79 @@ const TableOfContents = () => {
         <B>Sub libraries</B>
       </P>
       <LinkGroup>
-        <TableOfContentsAnchor href={'#numbers'}>
+        <PrimaryTableOfContentsAnchor href={'#numbers'}>
           Numbers: basic numerical constants
-        </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'#debug'}>
+        </PrimaryTableOfContentsAnchor>
+        <PrimaryTableOfContentsAnchor href={'#debug'}>
           Debug: logging
-        </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'#memory'}>
+        </PrimaryTableOfContentsAnchor>
+        {Object.keys(DEBUG_DOCS).map((d) => {
+          return (
+            <SubTableOfContentsAnchor href={`#${d}`}>
+              {d}
+            </SubTableOfContentsAnchor>
+          );
+        })}
+        <PrimaryTableOfContentsAnchor href={'#memory'}>
           Memory: basic data pointer/tape management
-        </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'#math'}>
+        </PrimaryTableOfContentsAnchor>
+        {Object.keys(MEMORY_DOCS).map((d) => {
+          return (
+            <SubTableOfContentsAnchor href={`#${d}`}>
+              {d}
+            </SubTableOfContentsAnchor>
+          );
+        })}
+        <PrimaryTableOfContentsAnchor href={'#math'}>
           Math: basic integer math
-        </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'#conditional'}>
+        </PrimaryTableOfContentsAnchor>
+        {Object.keys(MATH_DOCS).map((d) => {
+          return (
+            <SubTableOfContentsAnchor href={`#${d}`}>
+              {d}
+            </SubTableOfContentsAnchor>
+          );
+        })}
+        <PrimaryTableOfContentsAnchor href={'#conditional'}>
           Conditional: logic control flow
-        </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'#control'}>
+        </PrimaryTableOfContentsAnchor>
+        {Object.keys(CONDITIONAL_DOCS).map((d) => {
+          return (
+            <SubTableOfContentsAnchor href={`#${d}`}>
+              {d}
+            </SubTableOfContentsAnchor>
+          );
+        })}
+        <PrimaryTableOfContentsAnchor href={'#control'}>
           Control: if statements
-        </TableOfContentsAnchor>
-        <TableOfContentsAnchor href={'#loop'}>
+        </PrimaryTableOfContentsAnchor>
+        {Object.keys(CONTROL_DOCS).map((d) => {
+          return (
+            <SubTableOfContentsAnchor href={`#${d}`}>
+              {d}
+            </SubTableOfContentsAnchor>
+          );
+        })}
+        <PrimaryTableOfContentsAnchor href={'#loop'}>
           Loop: for,while loops
-        </TableOfContentsAnchor>
-        {/* <TableOfContentsAnchor href={'#storage'}>
-        Storage: register + storage paradigm
-        </TableOfContentsAnchor> */}
+        </PrimaryTableOfContentsAnchor>
+        {Object.keys(LOOP_DOCS).map((d) => {
+          return (
+            <SubTableOfContentsAnchor href={`#${d}`}>
+              {d}
+            </SubTableOfContentsAnchor>
+          );
+        })}
+        <PrimaryTableOfContentsAnchor href={'#storage'}>
+          Storage: register + storage paradigm
+        </PrimaryTableOfContentsAnchor>
+        {Object.keys(STORAGE_DOCS).map((d) => {
+          return (
+            <SubTableOfContentsAnchor href={`#${d}`}>
+              {d}
+            </SubTableOfContentsAnchor>
+          );
+        })}
         {/* <TableOfContentsAnchor href={'#sample'}>
           Sample: Sample BF Code
         </TableOfContentsAnchor> */}
@@ -284,6 +359,14 @@ const TableOfContents = () => {
     </TableOfContentsContainer>
   );
 };
+
+const PrimaryTableOfContentsAnchor = styled(TableOfContentsAnchor)`
+  font-weight: bold;
+`;
+
+const SubTableOfContentsAnchor = styled(TableOfContentsAnchor)`
+  margin-left: 20px;
+`;
 
 const MixinDocDefinition: FC<MixinDoc & { label: string }> = ({
   alias,
@@ -298,7 +381,7 @@ const MixinDocDefinition: FC<MixinDoc & { label: string }> = ({
   // console.log(examples);
   return (
     <>
-      <H3>
+      <H3 id={label}>
         <Code>
           {createTemplateInsert(
             label,
