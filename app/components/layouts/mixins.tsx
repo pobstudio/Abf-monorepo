@@ -30,6 +30,7 @@ import {
   TableOfContentsContainer,
 } from '../texts/toc';
 import { DocumentationFooter } from './docs';
+
 export const BrainFuckMixins: React.FC = () => {
   return (
     <OneColumnContainer>
@@ -293,7 +294,8 @@ const MixinDocDefinition: FC<MixinDoc & { label: string }> = ({
   examples,
 }) => {
   const Description = description;
-  console.log(alias);
+  // console.log(alias);
+  // console.log(examples);
   return (
     <>
       <H3>
@@ -343,14 +345,15 @@ const MixinDocDefinition: FC<MixinDoc & { label: string }> = ({
       <P>
         <I>data pointer</I> after execution: {dataPointerLocationDescription}
       </P>
-      {examples.map((ex) => {
-        return (
-          <MixinDocExampleDefinition
-            {...ex}
-            key={`mixin-doc-${label}-example-${ex.label}`}
-          />
-        );
-      })}
+      {examples.map(
+        (ex) =>
+          ex && (
+            <MixinDocExampleDefinition
+              {...ex}
+              key={`mixin-doc-${label}-example-${ex.label}`}
+            />
+          ),
+      )}
       <br />
     </>
   );

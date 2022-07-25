@@ -19,21 +19,19 @@ export const useCollections = (): CollectionMetadataStub[] | undefined => {
     if (!data.collections) {
       return undefined;
     }
-    return data.collections
-      .map(
-        (r: any) =>
-          ({
-            address: r.id,
-            code: r.code,
-            mintingSupply: r.mintingSupply,
-            name: r.name,
-            owner: r.owner,
-            price: r.price,
-            renderer: r.renderer,
-            symbol: r.symbol,
-          } as any),
-      )
-      .reverse();
+    return data.collections.map(
+      (r: any) =>
+        ({
+          address: r.id,
+          code: r.code,
+          mintingSupply: r.mintingSupply,
+          name: r.name,
+          owner: r.owner,
+          price: r.price,
+          renderer: r.renderer,
+          symbol: r.symbol,
+        } as any),
+    );
   }, [data, data?.collections]);
 };
 
@@ -85,28 +83,26 @@ export const useCollectionsByOwner = (
   const data = useLastTruthyValue(results.data);
 
   return useMemo(() => {
-    console.log(data, 'GET_COLLECTIONS_BY_OWNER');
+    // console.log(data, 'GET_COLLECTIONS_BY_OWNER');
     if (!data) {
       return undefined;
     }
     if (!data.collections) {
       return undefined;
     }
-    return data.collections
-      .map(
-        (r: any) =>
-          ({
-            address: r.id,
-            code: r.code,
-            mintingSupply: r.mintingSupply,
-            name: r.name,
-            owner: r.owner,
-            price: r.price,
-            renderer: r.renderer,
-            symbol: r.symbol,
-          } as any),
-      )
-      .reverse();
+    return data.collections.map(
+      (r: any) =>
+        ({
+          address: r.id,
+          code: r.code,
+          mintingSupply: r.mintingSupply,
+          name: r.name,
+          owner: r.owner,
+          price: r.price,
+          renderer: r.renderer,
+          symbol: r.symbol,
+        } as any),
+    );
   }, [data, data?.collections]);
 };
 

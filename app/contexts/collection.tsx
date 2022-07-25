@@ -15,7 +15,7 @@ import {
   runBrainFuckCode,
   tokenSeedToInputTape,
 } from '../utils/brainFuck';
-import { convertHexStrToUtf8 } from '../utils/hex';
+import { convertHexStrToUtf8, prettifyCountableNumber } from '../utils/hex';
 
 export interface CollectionProviderContext {
   collectionMetadata: CollectionMetadata | undefined;
@@ -83,13 +83,16 @@ export const CollectionProvider: React.FC<{
     [constants, seed, currentSampleTokenId],
   );
 
+  const transactionMap = useTransactionsStore((s) => s.transactionMap);
   const addTransaction = useTransactionsStore((s) => s.addTransaction);
   const [isOwner, setIsOwner] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [activateTxn, setActivateTxn] = useState('');
   const brainFuckContract = useBrainFuckContract(address);
   const account = usePriorityAccount();
   const [error, setError] = useState<any | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  // const mints = useNftsForCollection(address ?? '');
 
   useEffect(() => {
     const connect = async () => {
@@ -97,10 +100,17 @@ export const CollectionProvider: React.FC<{
         return;
       }
       try {
-        const isActiveRes = await brainFuckContract.isActive();
-        if (!!isActiveRes) {
-          setIsActive(isActiveRes);
-          setError(undefined);
+        if (!!brainFuckContract) {
+          const isActiveRes = await brainFuckContract.isActive();
+          const currentIndexRes = await brainFuckContract.currentIndex();
+          if (!!isActiveRes) {
+            setIsActive(isActiveRes);
+            setError(undefined);
+          }
+          if (!!currentIndexRes) {
+            setCurrentTokenId(Number(prettifyCountableNumber(currentIndexRes)));
+            setError(undefined);
+          }
         }
       } catch (e) {
         console.error(e);
@@ -111,6 +121,16 @@ export const CollectionProvider: React.FC<{
       console.error(error);
     });
   }, [address, account, brainFuckContract]);
+
+  useEffect(() => {
+    if (activateTxn) {
+      if (transactionMap) {
+        if (transactionMap[activateTxn].status == 'success') {
+          setIsActive(true);
+        }
+      }
+    }
+  }, [transactionMap, activateTxn]);
 
   useEffect(() => {
     if (address && account && collectionMetadata?.owner) {
@@ -131,9 +151,8 @@ export const CollectionProvider: React.FC<{
           type: 'toggle-activation',
         });
         setError(undefined);
-        setTimeout(() => {
-          setIsActive(true);
-        }, 10000 * 15);
+        setIsActive(true);
+        setActivateTxn(res.hash);
       }
     } catch (e) {
       console.error(e);

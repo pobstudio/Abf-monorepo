@@ -66,7 +66,7 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
   for (let i = 0; i < code.length; ++i) {
     const opcode = '0x' + code[i].charCodeAt(0).toString(16).toUpperCase();
     if (isLoopingCounter > MAX_IS_LOOPING_COUNTER) {
-      console.log(tape.slice(0, 12));
+      // console.log(tape.slice(0, 12));
       throw new Error('MAX LOOPS EXCEEDED (10,000)');
     }
     if (isLooping) {
@@ -168,7 +168,7 @@ export const runBrainFuckCodeDebug = (code: string, input: number[]) => {
   for (let i = 0; i < code.length; ++i) {
     const opcode = '0x' + code[i].charCodeAt(0).toString(16).toUpperCase();
     if (isLoopingCounter > MAX_IS_LOOPING_COUNTER) {
-      console.log(tape.slice(0, 12));
+      // console.log(tape.slice(0, 12));
       throw new Error('MAX LOOPS EXCEEDED (10,000)');
     }
     if (isLooping) {

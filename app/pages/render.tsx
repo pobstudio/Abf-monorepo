@@ -10,7 +10,7 @@ import { useRendererMetadataStubByProvider } from '../hooks/useRenderer';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { output, renderer } = context.query;
-  console.log(output, renderer, 'output and renderer');
+  // console.log(output, renderer, 'output and renderer');
 
   if (!output || typeof output !== 'string') {
     return {

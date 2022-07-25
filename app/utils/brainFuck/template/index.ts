@@ -60,7 +60,8 @@ export const transpileTemplatedBf = (
         }
         const replacementString = library[identifier](...params);
 
-        return a.replaceAll(rawString, replacementString ?? '');
+        /// return a.replace(new RegExp(rawString, 'g'), replacementString ?? ''); // Older Browsers
+        return a.replaceAll(rawString, replacementString ?? ''); // ES12+
       }, code),
     );
   };

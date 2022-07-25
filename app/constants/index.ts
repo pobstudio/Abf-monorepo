@@ -27,13 +27,13 @@ export const CHAIN_ID_TO_NETWORK_NAME: { [chainId: number]: string } = {
  * Environment/keys
  */
 export const ALCHEMY_KEY =
-  CHAIN_ID === 1
+  (CHAIN_ID === 1
     ? process.env.NEXT_PUBLIC_ALCHEMY_KEY
-    : process.env.NEXT_PUBLIC_TEST_ALCHEMY_KEY ?? '';
+    : process.env.NEXT_PUBLIC_TEST_ALCHEMY_KEY) || '';
 export const MAINNET_ALCHEMY_KEY = process.env.NEXT_PUBLIC_ALCHEMY_KEY || '';
 export const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || '';
-export const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY || '';
-export const NFT_STORAGE_API_KEY = process.env.NFT_STORAGE_API_KEY;
+export const NFT_STORAGE_API_KEY = process.env.NFT_STORAGE_API_KEY || '';
+export const ZORA_API_KEY = process.env.ZORA_API_KEY || '';
 
 /**
  * Links
@@ -60,7 +60,6 @@ export const DEFAULT_TITLE = `ABF - Absolute Brain F**k. ${TWITTER_HANDLE}`;
 export const DEFAULT_DESCRIPTION = `ABF is a hyperstructure to deploy, mint, and create on-chain generative art NFTs. No fees + fully self-controlled NFT contracts designed to last forever. `;
 
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
-export const OPENSEA_LINK = `https://opensea.io/collection/TODO`;
 export const PREVIEW_IMAGE_LINK = `https://abf-preview.vercel.app`;
 
 export const SUBGRAPH_LINK = `https://api.thegraph.com/subgraphs/name/proofofbeauty/abf${

@@ -129,7 +129,7 @@ export const TutorialsProvider: React.FC<{
         code,
         input,
       );
-      console.log(byteToBrainfuckIndex, 'byteToBrainfuckIndex');
+      // console.log(byteToBrainfuckIndex, 'byteToBrainfuckIndex');
 
       const extraWarnings: string[] = [];
 

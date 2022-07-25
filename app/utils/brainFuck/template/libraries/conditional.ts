@@ -49,7 +49,7 @@ export const CONDITIONAL_LIBRARY = {
     )}${createTemplateInsert('move', ['-1'])}`;
   },
   'greaterThan': (val: any) => {
-    console.log(val);
+    // console.log(val);
     let prefix: string | undefined | null = undefined;
     if (val === undefined) {
       prefix = `<${createTemplateInsert(
