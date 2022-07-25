@@ -295,6 +295,7 @@ const MixinDocDefinition: FC<MixinDoc & { label: string }> = ({
 }) => {
   const Description = description;
   // console.log(alias);
+  // console.log(examples);
   return (
     <>
       <H3>
@@ -344,14 +345,15 @@ const MixinDocDefinition: FC<MixinDoc & { label: string }> = ({
       <P>
         <I>data pointer</I> after execution: {dataPointerLocationDescription}
       </P>
-      {examples.map((ex) => {
-        return (
-          <MixinDocExampleDefinition
-            {...ex}
-            key={`mixin-doc-${label}-example-${ex.label}`}
-          />
-        );
-      })}
+      {examples.map(
+        (ex) =>
+          ex && (
+            <MixinDocExampleDefinition
+              {...ex}
+              key={`mixin-doc-${label}-example-${ex.label}`}
+            />
+          ),
+      )}
       <br />
     </>
   );
