@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers';
-
 // const abi = new utils.Interface([
 //   'function approve(address _approved, uint256 _tokenId) external payable',
 //   'function setApprovalForAll(address _operator, bool _approved) external',
@@ -36,21 +34,15 @@ const GRAYSCALE_BYTES =
     '',
   );
 
-const LINE_BYTES =
-  '0x4D0000' +
-  [...Array(16)].reduce(
-    (a, c, i) =>
-      a +
-      'L'.charCodeAt(0).toString(16) +
-      BigNumber.from(i * 16)
-        .toHexString()
-        .slice(2) +
-      (i % 2 === 1 ? '00' : 'ff'),
-    '',
-  );
+const HSL_BYTES =
+  '0x' +
+  [...Array(256)].reduce((a, c, i) => {
+    return a + (i % 256).toString(16).padStart(2, '0') + 'FF80';
+  }, '');
 
-for (let i = 128; i < 255; ++i) {
-  console.log(
-    "'" + i + "': () => `${createTemplateInsert('" + (i + 1) + "')}-`,",
-  );
-}
+console.log(HSL_BYTES);
+// for (let i = 128; i < 255; ++i) {
+//   console.log(
+//     "'" + i + "': () => `${createTemplateInsert('" + (i + 1) + "')}-`,",
+//   );
+// }

@@ -5,6 +5,9 @@ export { BackgroundSvgRenderer__factory } from './BackgroundSvgRenderer__factory
 export { ConfiguredGifImageRenderer__factory } from './ConfiguredGifImageRenderer__factory';
 export { DotMatrixRenderer__factory } from './DotMatrixRenderer__factory';
 export { GifImageRenderer__factory } from './GifImageRenderer__factory';
+export { HSLPixelGrid16Renderer__factory } from './HSLPixelGrid16Renderer__factory';
+export { HSLPixelGrid24Renderer__factory } from './HSLPixelGrid24Renderer__factory';
+export { HSLPixelGrid8Renderer__factory } from './HSLPixelGrid8Renderer__factory';
 export { IdentityRenderer__factory } from './IdentityRenderer__factory';
 export { MonoPixelGrid16Renderer__factory } from './MonoPixelGrid16Renderer__factory';
 export { MonoPixelGrid24Renderer__factory } from './MonoPixelGrid24Renderer__factory';

@@ -113,6 +113,18 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.GifImageRenderer__factory>;
     getContractFactory(
+      name: 'HSLPixelGrid16Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.HSLPixelGrid16Renderer__factory>;
+    getContractFactory(
+      name: 'HSLPixelGrid24Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.HSLPixelGrid24Renderer__factory>;
+    getContractFactory(
+      name: 'HSLPixelGrid8Renderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.HSLPixelGrid8Renderer__factory>;
+    getContractFactory(
       name: 'IdentityRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IdentityRenderer__factory>;
@@ -274,6 +286,21 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.GifImageRenderer>;
+    getContractAt(
+      name: 'HSLPixelGrid16Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.HSLPixelGrid16Renderer>;
+    getContractAt(
+      name: 'HSLPixelGrid24Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.HSLPixelGrid24Renderer>;
+    getContractAt(
+      name: 'HSLPixelGrid8Renderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.HSLPixelGrid8Renderer>;
     getContractAt(
       name: 'IdentityRenderer',
       address: string,

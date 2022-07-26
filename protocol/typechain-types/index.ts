@@ -28,6 +28,9 @@ export type { BackgroundSvgRenderer } from './contracts/renderers/BackgroundSvgR
 export type { ConfiguredGifImageRenderer } from './contracts/renderers/ConfiguredGifImageRenderer';
 export type { DotMatrixRenderer } from './contracts/renderers/DotMatrixRenderer';
 export type { GifImageRenderer } from './contracts/renderers/GifImageRenderer';
+export type { HSLPixelGrid16Renderer } from './contracts/renderers/HSLPixelGrid16Renderer';
+export type { HSLPixelGrid24Renderer } from './contracts/renderers/HSLPixelGrid24Renderer';
+export type { HSLPixelGrid8Renderer } from './contracts/renderers/HSLPixelGrid8Renderer';
 export type { IdentityRenderer } from './contracts/renderers/IdentityRenderer';
 export type { MonoPixelGrid16Renderer } from './contracts/renderers/MonoPixelGrid16Renderer';
 export type { MonoPixelGrid24Renderer } from './contracts/renderers/MonoPixelGrid24Renderer';
@@ -63,6 +66,9 @@ export { BackgroundSvgRenderer__factory } from './factories/contracts/renderers/
 export { ConfiguredGifImageRenderer__factory } from './factories/contracts/renderers/ConfiguredGifImageRenderer__factory';
 export { DotMatrixRenderer__factory } from './factories/contracts/renderers/DotMatrixRenderer__factory';
 export { GifImageRenderer__factory } from './factories/contracts/renderers/GifImageRenderer__factory';
+export { HSLPixelGrid16Renderer__factory } from './factories/contracts/renderers/HSLPixelGrid16Renderer__factory';
+export { HSLPixelGrid24Renderer__factory } from './factories/contracts/renderers/HSLPixelGrid24Renderer__factory';
+export { HSLPixelGrid8Renderer__factory } from './factories/contracts/renderers/HSLPixelGrid8Renderer__factory';
 export { IdentityRenderer__factory } from './factories/contracts/renderers/IdentityRenderer__factory';
 export { MonoPixelGrid16Renderer__factory } from './factories/contracts/renderers/MonoPixelGrid16Renderer__factory';
 export { MonoPixelGrid24Renderer__factory } from './factories/contracts/renderers/MonoPixelGrid24Renderer__factory';
