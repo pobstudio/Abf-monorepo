@@ -48,4 +48,5 @@ export const MATH_LIBRARY = {
       val,
     )}>[<->-]<`;
   },
+  mul: (val: any) => {},
 };

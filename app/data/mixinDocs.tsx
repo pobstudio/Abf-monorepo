@@ -205,7 +205,7 @@ export const MATH_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   absSub: {
     description: () => (
@@ -238,7 +238,7 @@ export const MATH_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 4,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   flippedSub: {
     description: () => (
@@ -281,7 +281,7 @@ export const MATH_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
 };
 
@@ -428,14 +428,14 @@ export const LOOP_DOCS: { [key: string]: MixinDoc } = {
       },
     ],
     dataPointerLocationDescription:
-      'shifted to the right by 2 (requires a extra data cell to monitor the conditional state)',
+      'shifted to the right by 2 (requires an extra data cell for state)',
   },
   repeatEnd: {
     description: () => <P>closes the repeat logic that is executed.</P>,
     params: [],
     examples: [],
     dataPointerLocationDescription:
-      'unchanged (data pointer is put back to where it was before if statement)',
+      'unchanged (data pointer back to where it was before repeat)',
   },
   while: {
     description: () => (
@@ -480,14 +480,14 @@ export const LOOP_DOCS: { [key: string]: MixinDoc } = {
       },
     ],
     dataPointerLocationDescription:
-      'shifted to the right by 6 (requires 5 data cells to monitor the conditional state)',
+      'shifted to the right by 6 (requires 5 data cells for state)',
   },
   whileEnd: {
     description: () => <P>closes the logic that is executed in while loop.</P>,
     params: [],
     examples: [],
     dataPointerLocationDescription:
-      'unchanged (data pointer is put back to where it was before if statement)',
+      'unchanged (data pointer back to where it was before while)',
   },
   for: {
     description: () => (
@@ -549,7 +549,7 @@ export const LOOP_DOCS: { [key: string]: MixinDoc } = {
       },
     ],
     dataPointerLocationDescription:
-      'shifted to the right by 6 (requires 5 data cells to monitor the conditional state)',
+      'shifted to the right by 6 (requires 5 data cells for state)',
   },
   forEnd: {
     description: () => (
@@ -564,7 +564,7 @@ export const LOOP_DOCS: { [key: string]: MixinDoc } = {
     ],
     examples: [],
     dataPointerLocationDescription:
-      'unchanged (data pointer is put back to where it was before if statement)',
+      'unchanged (data pointer back to where it was before for)',
   },
 };
 
@@ -661,7 +661,7 @@ export const CONTROL_DOCS: { [key: string]: MixinDoc } = {
       },
     ],
     dataPointerLocationDescription:
-      'shifted to the right by 2 (requires an extra data cell to monitor the conditional state)',
+      'shifted to the right by 2 (requires an extra data cell for state)',
   },
   ifEnd: {
     description: () => (
@@ -670,7 +670,7 @@ export const CONTROL_DOCS: { [key: string]: MixinDoc } = {
     params: [],
     examples: [],
     dataPointerLocationDescription:
-      'unchanged (data pointer is put back to where it was before if statement)',
+      'unchanged (data pointer back to where it was before if)',
   },
 };
 
@@ -727,7 +727,7 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   boolify: {
     description: () => (
@@ -776,7 +776,7 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   or: {
     description: () => (
@@ -802,7 +802,7 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   eq: {
     alias: ['=='],
@@ -836,7 +836,7 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   notEq: {
     alias: ['!='],
@@ -870,7 +870,7 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   lessThan: {
     description: () => (
@@ -903,7 +903,7 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   greaterThan: {
     description: () => (
@@ -937,7 +937,7 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   greaterThanOrEq: {
     description: () => (
@@ -971,7 +971,7 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
   lessThanOrEq: {
     description: () => (
@@ -1005,6 +1005,16 @@ export const CONDITIONAL_DOCS: { [key: string]: MixinDoc } = {
         tapeLogLength: 3,
       },
     ],
-    dataPointerLocationDescription: 'Shifts to the right by one data cell',
+    dataPointerLocationDescription: 'Shifts to the right one data cell',
   },
+};
+
+export const SML_DOCS: { [key: string]: MixinDoc } = {
+  ...MEMORY_DOCS,
+  ...MATH_DOCS,
+  ...STORAGE_DOCS,
+  ...LOOP_DOCS,
+  ...DEBUG_DOCS,
+  ...CONTROL_DOCS,
+  ...CONDITIONAL_DOCS,
 };

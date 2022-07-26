@@ -12,6 +12,7 @@ import { ExpandoContentContainer, ExpandoGroup } from '../../expando';
 import { Flex, FlexEnds } from '../../flexs';
 import { BaseButton } from '../../inputs/button';
 import { InputWell, TextArea, TextInput } from '../../inputs/input';
+import { BrainfuckTextArea } from '../../textarea';
 import { B, Code, Label, P, Text } from '../../texts';
 import { Tooltip } from '../../tooltip';
 
@@ -63,14 +64,14 @@ export const BrainFuckEditor: FC = () => {
           </Flex>
         </FlexEnds>
         <InputWell>
-          <TextArea
+          <BrainfuckTextArea
             disabled={brainFuckEditorViewState === 'postProcessed'}
             value={
               brainFuckEditorViewState === 'postProcessed'
                 ? utf8PostProcessedCode ?? ''
                 : utf8Code ?? ''
             }
-            onChange={(e) => onCodeChange(e.target.value)}
+            onChange={(e: any) => onCodeChange(e.target.value)}
             style={{ minHeight: 240 }}
             placeholder="-[--->+<]>-.[---->+++++<]>-.+.++++++++++.+[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.[-->+++++++<]>.++.-------------.[--->+<]>---..+++++.-[---->+<]>++.+[->+++<]>.++++++++++++..---.[-->+<]>--------."
           />
