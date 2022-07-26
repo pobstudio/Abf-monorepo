@@ -82,4 +82,6 @@ templates:
       eventHandlers:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleBrainFuckOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleBrainFuckTransfer
       file: ./src/brainFuck.ts  

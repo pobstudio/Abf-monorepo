@@ -11,6 +11,7 @@ type Renderer @entity {
 type Collection @entity {
   id: ID! 
   owner: Bytes! # Transfer ownership
+  tokens: [Token!]! @derivedFrom(field: "collection")
   name: String!
   symbol: String! 
   seed: Bytes! 
@@ -21,4 +22,20 @@ type Collection @entity {
   price: BigInt! 
   rendererRoyaltyFraction: BigInt! 
   whitelistToken: Bytes!
+}
+
+type Token @entity {
+  id: ID!
+  owner: Bytes!
+  collection: Collection!
+  transfers: [TokenTransfer!]! @derivedFrom(field: "token")
+}
+
+type TokenTransfer @entity {
+  id: ID! 
+  to: Bytes!
+  from: Bytes!
+  timestamp: BigInt! 
+  blocknumber: BigInt!
+  token: Token!
 }
