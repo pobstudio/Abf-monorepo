@@ -1,9 +1,10 @@
+import { BfTemplateInsertLibrary } from '../../../../types/bf';
 import { createTemplateInsert } from '../constants';
 import { CONDITIONAL_LIBRARY } from './conditional';
 
 const NUM_BUFFER = 3;
 
-export const LOOPS_LIBRARY = {
+export const LOOPS_LIBRARY: BfTemplateInsertLibrary = {
   while: (conditional: any, ...params: any[]) => {
     if (!(CONDITIONAL_LIBRARY as any)[conditional]) {
       return undefined;

@@ -1,5 +1,6 @@
+import { BfTemplateInsertLibrary } from '../../../../types/bf';
 import { createTemplateInsert } from '../constants';
-export const CONSTANTS_LIBRARY = {
+export const CONSTANTS_LIBRARY: BfTemplateInsertLibrary = {
   constants: (hexString: any) => {
     if (typeof hexString !== 'string') {
       return undefined;

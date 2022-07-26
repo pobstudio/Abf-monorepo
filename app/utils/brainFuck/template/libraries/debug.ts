@@ -1,7 +1,8 @@
 import { transpileTemplatedBf } from '..';
+import { BfTemplateInsertLibrary } from '../../../../types/bf';
 import { createTemplateInsert } from '../constants';
 import { NUMBERS_LIBRARY } from './numbers';
-export const DEBUG_LIBRARY = {
+export const DEBUG_LIBRARY: BfTemplateInsertLibrary = {
   logValue: (hexString: any) => {
     if (typeof hexString !== 'string') {
       return undefined;

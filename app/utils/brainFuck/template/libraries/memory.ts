@@ -1,7 +1,8 @@
+import { BfTemplateInsertLibrary } from '../../../../types/bf';
 import { createTemplateInsert } from '../constants';
 import { CONSTANTS_LIBRARY } from './constants';
 
-export const MEMORY_LIBRARY = {
+export const MEMORY_LIBRARY: BfTemplateInsertLibrary = {
   ...CONSTANTS_LIBRARY,
   skipInputs: (val: any) => {
     const safeVal = parseInt(val);

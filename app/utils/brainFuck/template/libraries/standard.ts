@@ -1,3 +1,4 @@
+import { BfTemplateInsertLibrary } from '../../../../types/bf';
 import { CONDITIONAL_LIBRARY } from './conditional';
 import { CONTROL_LIBRARY } from './control';
 import { DEBUG_LIBRARY } from './debug';
@@ -8,7 +9,7 @@ import { NUMBERS_LIBRARY } from './numbers';
 import { SAMPLE_LIBRARY } from './sample';
 import { STORAGE_LIBRARY } from './storage';
 
-export const STANDARD_TEMPLATE_LIBRARY = {
+export const STANDARD_TEMPLATE_LIBRARY: BfTemplateInsertLibrary = {
   ...NUMBERS_LIBRARY,
   ...MEMORY_LIBRARY,
   ...MATH_LIBRARY,

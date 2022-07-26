@@ -1,6 +1,7 @@
+import { BfTemplateInsertLibrary } from '../../../../types/bf';
 import { createTemplateInsert } from '../constants';
 
-export const CONDITIONAL_LIBRARY = {
+export const CONDITIONAL_LIBRARY: BfTemplateInsertLibrary = {
   'true': () => createTemplateInsert('1'),
   'false': () => createTemplateInsert('0'),
   '==': (...params: any[]) => createTemplateInsert('eq', params),

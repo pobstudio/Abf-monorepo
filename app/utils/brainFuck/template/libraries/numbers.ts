@@ -1,6 +1,7 @@
+import { BfTemplateInsertLibrary } from '../../../../types/bf';
 import { createTemplateInsert } from '../constants';
 
-export const NUMBERS_LIBRARY = {
+export const NUMBERS_LIBRARY: BfTemplateInsertLibrary = {
   '0': () => `[-]`,
   '1': () => `${createTemplateInsert('0')}+`,
   '2': () => `${createTemplateInsert('1')}+`,

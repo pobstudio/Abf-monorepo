@@ -1,7 +1,8 @@
+import { BfTemplateInsertLibrary } from '../../../../types/bf';
 import { createTemplateInsert } from '../constants';
 
 // TODO
-export const MATH_LIBRARY = {
+export const MATH_LIBRARY: BfTemplateInsertLibrary = {
   add: (val: any) => {
     if (val === undefined) {
       return `<${createTemplateInsert('copy', [2, 3])}<${createTemplateInsert(
@@ -48,5 +49,4 @@ export const MATH_LIBRARY = {
       val,
     )}>[<->-]<`;
   },
-  mul: (val: any) => {},
 };
