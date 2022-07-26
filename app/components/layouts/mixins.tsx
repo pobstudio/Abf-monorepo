@@ -62,7 +62,7 @@ export const BrainFuckMixins: React.FC = () => {
           </BlockCode>
           <P>
             <Code>{TEMPLATE_INSERT_OPCODE_START}</Code> and{' '}
-            <Code>{TEMPLATE_INSERT_OPCODE_END}</Code> denote the stand and end
+            <Code>{TEMPLATE_INSERT_OPCODE_END}</Code> denote the start and end
             of a mixin. The first string in the mixin is used to identify the
             mixin used. <Code>{TEMPLATE_INSERT_SEPARATOR}</Code> is used to
             provide optional parameters to the mixin.
