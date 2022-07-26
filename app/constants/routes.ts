@@ -16,6 +16,7 @@ export const ROUTES = {
   },
   COLLECTION: '/collection',
   COLLECTIONS: '/collections',
+  NFT: '/nft',
   RECRUIT: '/train/0',
   TRAIN: {
     INDEX: '/train',

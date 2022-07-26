@@ -1,6 +1,8 @@
 import { BigNumber, utils } from 'ethers';
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
+import { ROUTES } from '../../../constants/routes';
 import { useCollectionContext } from '../../../contexts/collection';
 import { useMintBrainfuckNFT } from '../../../hooks/useMint';
 import { shortenHexString } from '../../../utils/hex';
@@ -17,7 +19,7 @@ import {
 import { FlexEnds } from '../../flexs';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { Render } from '../../renders';
-import { H1, Label, LabelAnchor } from '../../texts';
+import { A, H1, Label, LabelAnchor } from '../../texts';
 import { CollectionTokenIdSwitcher } from '../tokenIdSwitcher';
 
 export const Collection: React.FC = () => {
@@ -144,6 +146,24 @@ export const Collection: React.FC = () => {
           >
             <DetailRowsContainer>
               <Label>MINT SHEET</Label>
+              {Array(currentTokenId)
+                .fill(0)
+                .map((_e, index: number) => (
+                  <>
+                    <DetailRowsContainer>
+                      <FlexEnds>
+                        <Label>TOKEN ID</Label>
+                        <Link
+                          passHref
+                          href={`${ROUTES.NFT}/${collectionAddress}/${index}`}
+                          key={`${ROUTES.NFT}/${collectionAddress}/${index}`}
+                        >
+                          <A>00{index}</A>
+                        </Link>
+                      </FlexEnds>
+                    </DetailRowsContainer>
+                  </>
+                ))}
             </DetailRowsContainer>
           </TwoColumnContentContainer>
         </div>
