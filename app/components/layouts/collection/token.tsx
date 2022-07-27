@@ -55,8 +55,11 @@ export const Token: FC<{ id: number }> = ({ id }) => {
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
-            <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
-            <BrainfuckCodeLabel>{`< TRANSPILED BRAINFUCK! CODE >`}</BrainfuckCodeLabel>
+            <DetailRowsContainer style={{ position: 'relative' }}>
+              <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
+              <br />
+              <BrainfuckCodeLabel>{`< TRANSPILED BRAINFUCK! CODE >`}</BrainfuckCodeLabel>
+            </DetailRowsContainer>
           </TwoColumnContentContainer>
 
           <TwoColumnContentContainer
@@ -112,7 +115,9 @@ export const Token: FC<{ id: number }> = ({ id }) => {
           <TwoColumnContentContainer>
             <TitleContainer>
               <Label>TITLE</Label>
-              <H1>{collection?.name}</H1>
+              <H1>
+                {collection?.name} #{id}
+              </H1>
             </TitleContainer>
           </TwoColumnContentContainer>
 

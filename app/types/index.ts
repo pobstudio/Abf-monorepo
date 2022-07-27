@@ -86,6 +86,16 @@ export interface CollectionMetadataStub {
   symbol: string;
 }
 
+export interface TokenTransferStub {
+  collection: string;
+  id: string;
+  event: string;
+  blocknumber: string;
+  timestamp: string;
+  from: string;
+  to: string;
+}
+
 export interface RendererMetadataStub {
   name: string | undefined;
   address: string;

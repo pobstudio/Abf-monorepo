@@ -58,7 +58,7 @@ export const useCreateCollection = () => {
         whitelistToken: projectMetadata.whitelistToken ?? NULL_ADDRESS,
       };
 
-      console.log(config);
+      // console.log(config);
       const res = await factory.createNFT(config);
 
       if (!!res) {
