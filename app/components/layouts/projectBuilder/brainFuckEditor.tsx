@@ -40,6 +40,7 @@ export const BrainFuckEditor: FC = () => {
     () => (!!postProcessedCode ? unicodeToChar(postProcessedCode) : undefined),
     [postProcessedCode],
   );
+
   return (
     <>
       <DetailRowsContainer>
@@ -71,7 +72,9 @@ export const BrainFuckEditor: FC = () => {
                 ? utf8PostProcessedCode ?? ''
                 : utf8Code ?? ''
             }
-            onChange={(e: any) => onCodeChange(e.target.value)}
+            onChange={(e: any) =>
+              brainFuckEditorViewState === 'raw' && onCodeChange(e.target.value)
+            }
             style={{ minHeight: 240 }}
             placeholder="-[--->+<]>-.[---->+++++<]>-.+.++++++++++.+[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.[-->+++++++<]>.++.-------------.[--->+<]>---..+++++.-[---->+<]>++.+[->+++<]>.++++++++++++..---.[-->+<]>--------."
           />
