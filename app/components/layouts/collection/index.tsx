@@ -41,7 +41,15 @@ export const Collection: React.FC = () => {
           <TwoColumnContentContainer style={{ padding: 0 }}>
             <Render output={output} rendererMetadata={rendererMetadata} />
           </TwoColumnContentContainer>
-
+          <TwoColumnContentContainer
+            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+          >
+            <DetailRowsContainer style={{ position: 'relative' }}>
+              <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
+              <br />
+              <BrainfuckCodeLabel>{`< TRANSPILED BRAINFUCK! CODE >`}</BrainfuckCodeLabel>
+            </DetailRowsContainer>
+          </TwoColumnContentContainer>
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
@@ -67,31 +75,6 @@ export const Collection: React.FC = () => {
               {/* <DetailRow>
                 {['OUTPUT', !!output ? (output as any)['output'] : '-']}
               </DetailRow> */}
-            </DetailRowsContainer>
-          </TwoColumnContentContainer>
-          <TwoColumnContentContainer
-            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
-          >
-            <DetailRowsContainer>
-              <Label>MINT SHEET</Label>
-              {Array(currentTokenId)
-                .fill(0)
-                .map((_e, index: number) => (
-                  <>
-                    <DetailRowsContainer>
-                      <FlexEnds>
-                        <Label>TOKEN ID</Label>
-                        <Link
-                          passHref
-                          href={`${ROUTES.NFT}/${collectionAddress}/${index}`}
-                          key={`${ROUTES.NFT}/${collectionAddress}/${index}`}
-                        >
-                          <A>00{index}</A>
-                        </Link>
-                      </FlexEnds>
-                    </DetailRowsContainer>
-                  </>
-                ))}
             </DetailRowsContainer>
           </TwoColumnContentContainer>
           <TwoColumnContentContainer
@@ -163,10 +146,25 @@ export const Collection: React.FC = () => {
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <DetailRowsContainer>
-              <FlexEnds>
-                <Label>BRAINFUCK! CODE</Label>
-              </FlexEnds>
-              <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
+              <Label>MINT SHEET</Label>
+              {Array(currentTokenId)
+                .fill(0)
+                .map((_e, index: number) => (
+                  <>
+                    <DetailRowsContainer>
+                      <FlexEnds>
+                        <Label>ID</Label>
+                        <Link
+                          passHref
+                          href={`${ROUTES.NFT}/${collectionAddress}/${index}`}
+                          key={`${ROUTES.NFT}/${collectionAddress}/${index}`}
+                        >
+                          <A>00{index}</A>
+                        </Link>
+                      </FlexEnds>
+                    </DetailRowsContainer>
+                  </>
+                ))}
             </DetailRowsContainer>
           </TwoColumnContentContainer>
         </div>
@@ -206,6 +204,14 @@ const ThreePartMintButtonContainer = styled.div`
     width: fit-content;
     height: fit-content;
   }
+`;
+
+export const BrainfuckCodeLabel = styled(Label)`
+  position: absolute;
+  text-align: center;
+  bottom: -75px;
+  left: 0;
+  right: 0;
 `;
 
 export const LinksContainer = styled(DetailRowsContainer)`

@@ -1,7 +1,12 @@
 import { BigNumber, utils } from 'ethers';
 import Link from 'next/link';
 import { FC, useEffect } from 'react';
-import { BrainfuckCodeContainer, LinksContainer, TitleContainer } from '.';
+import {
+  BrainfuckCodeContainer,
+  BrainfuckCodeLabel,
+  LinksContainer,
+  TitleContainer,
+} from '.';
 import { ROUTES } from '../../../constants/routes';
 import { useCollectionContext } from '../../../contexts/collection';
 import { shortenHexString } from '../../../utils/hex';
@@ -51,6 +56,7 @@ export const Token: FC<{ id: number }> = ({ id }) => {
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
+            <BrainfuckCodeLabel>{`< TRANSPILED BRAINFUCK! CODE >`}</BrainfuckCodeLabel>
           </TwoColumnContentContainer>
 
           <TwoColumnContentContainer
