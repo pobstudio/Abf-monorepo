@@ -9,7 +9,10 @@ import {
 } from '../../divs/oneColumn';
 import { TwoColumnContentContainer } from '../../divs/twoColumn';
 import { ArrowIcon } from '../../icons/arrow';
-import { SecondaryAnchorButton } from '../../inputs/button';
+import {
+  SecondaryAnchorButton,
+  TertiaryAnchorButton,
+} from '../../inputs/button';
 import { BasicModal } from '../../modal';
 import { DropdownAnchor, DropdownAnchorGroup } from '../../navs/common';
 import { DropdownAnchorGroupContainer } from '../../navs/dropdown';
@@ -118,3 +121,22 @@ export const TwoColumnTutorialContainer = styled(TwoColumnContentContainer)`
     width: 100%;
   }
 `;
+
+export const TutorialFooter: React.FC = () => {
+  return (
+    <>
+      <div
+        style={{
+          borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+          margin: '50px 0 25px 0',
+        }}
+      ></div>
+      <P>
+        <B>Too f**king easy? Continue your training program.</B>
+      </P>
+      <Link href={ROUTES.TRAIN.INDEX}>
+        <TertiaryAnchorButton as="a">TUTORIALS</TertiaryAnchorButton>
+      </Link>
+    </>
+  );
+};

@@ -1,6 +1,11 @@
 import { deployments } from '@abf-monorepo/protocol';
 import React, { FC, useMemo } from 'react';
-import { RewardModal, TUTORIALS_MAP, TwoColumnTutorialContainer } from '.';
+import {
+  RewardModal,
+  TutorialFooter,
+  TUTORIALS_MAP,
+  TwoColumnTutorialContainer,
+} from '.';
 import { CHAIN_ID } from '../../../constants';
 import { ROUTES } from '../../../constants/routes';
 import {
@@ -44,8 +49,8 @@ export const Tutorial3: React.FC = () => {
           <div>
             <TwoColumnTutorialContainer>
               <Jumbotron />
-
               <Editor />
+              <TutorialFooter />
             </TwoColumnTutorialContainer>
           </div>
           <div>

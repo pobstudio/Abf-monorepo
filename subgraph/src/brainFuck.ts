@@ -3,8 +3,8 @@ import { Collection, Token, TokenTransfer } from '../generated/schema';
 import { BrainFuck as BrainFuckTemplate } from '../generated/templates';
 import {
   BrainFuck as BrainFuckContract,
-  Transfer,
   OwnershipTransferred,
+  Transfer,
 } from '../generated/templates/BrainFuck/BrainFuck';
 
 export function handleCreatedCollection(event: CreatedBrainFuckNFT): void {
@@ -53,12 +53,18 @@ export function handleBrainFuckTransfer(event: Transfer): void {
   token.owner = to;
   token.save();
 
-  let transferId = tokenId + '/' + event.block.number.toString();
+  let transferId =
+    event.address.toHexString() +
+    '/' +
+    tokenId +
+    '/' +
+    event.block.number.toString();
   let transfer = TokenTransfer.load(transferId);
   if (transfer == null) {
     transfer = new TokenTransfer(transferId);
     transfer.token = tokenId;
-  } 
+    transfer.collection = event.address.toHexString();
+  }
   transfer.to = to;
   transfer.from = from;
   transfer.timestamp = event.block.timestamp;

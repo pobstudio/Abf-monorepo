@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { FC, useMemo } from 'react';
-import { RewardModal, TUTORIALS_MAP } from '.';
+import { RewardModal, TutorialFooter, TUTORIALS_MAP } from '.';
 import { DISCORD_LINK } from '../../../constants';
 import { ROUTES } from '../../../constants/routes';
 import {
@@ -178,6 +178,7 @@ const Tutorial: FC = () => {
       <PrimaryButton onClick={onSubmit} disabled={isButtonDisabled}>
         SUBMIT ANSWER
       </PrimaryButton>
+      <TutorialFooter />
     </>
   );
 };

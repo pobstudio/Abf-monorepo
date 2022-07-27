@@ -8,7 +8,7 @@ import {
   OneColumnContainer,
   OneColumnContentContainer,
 } from '../divs/oneColumn';
-import { PrimaryButton, TertiaryButton } from '../inputs/button';
+import { PrimaryButton, SecondaryButton } from '../inputs/button';
 import { A, B, H1, P } from '../texts';
 
 export const Landing: React.FC = () => {
@@ -41,18 +41,20 @@ export const Landing: React.FC = () => {
           </P>
           <br />
           <br />
+          <Link passHref href={ROUTES.EXPLORE.INDEX}>
+            <a>
+              <PrimaryButton>EXPLORE ABF COLLECTIONS</PrimaryButton>
+            </a>
+          </Link>
+          <br />
+          <br />
           <Link passHref href={ROUTES.RECRUIT}>
             <a>
-              <PrimaryButton>JOIN THE CORPS</PrimaryButton>
+              <SecondaryButton>LEARN TO MAKE ABF NFTS</SecondaryButton>
             </a>
           </Link>
           <br />
           <br />
-          <Link passHref href={ROUTES.DOCS.INDEX}>
-            <a>
-              <TertiaryButton>READ THE DOCS</TertiaryButton>
-            </a>
-          </Link>
           <P style={{ opacity: 0.2 }}>
             {
               '-[------->+<]>--.[->+++++<]>++.+++++++++.[----->++<]>+.+++[->++<]>+.--[--->+<]>---.++.[---->+<]>+++.-[--->++<]>-.++++++++++.+[---->+<]>+++.+[->+++<]>+.+.----.+++.[->+++<]>++.++[--->++<]>.++++++[->++<]>.+[--->+<]>.-.-------.-[--->+<]>--.++[--->++<]>.---.[->++++++<]>.+[->+++<]>.--[--->+<]>-.++[->+++<]>+.--.+++++++++.[----->++<]>+.+++[->++<]>+.--[--->+<]>---.++.[++>---<]>.'

@@ -45,12 +45,6 @@ export const Collection: React.FC = () => {
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
-            <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
-          </TwoColumnContentContainer>
-
-          <TwoColumnContentContainer
-            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
-          >
             <DetailRowsContainer>
               <DetailAnchorRow
                 href={getEtherscanAddressUrl(collection?.owner ?? '')}
@@ -75,7 +69,31 @@ export const Collection: React.FC = () => {
               </DetailRow> */}
             </DetailRowsContainer>
           </TwoColumnContentContainer>
-
+          <TwoColumnContentContainer
+            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+          >
+            <DetailRowsContainer>
+              <Label>MINT SHEET</Label>
+              {Array(currentTokenId)
+                .fill(0)
+                .map((_e, index: number) => (
+                  <>
+                    <DetailRowsContainer>
+                      <FlexEnds>
+                        <Label>TOKEN ID</Label>
+                        <Link
+                          passHref
+                          href={`${ROUTES.NFT}/${collectionAddress}/${index}`}
+                          key={`${ROUTES.NFT}/${collectionAddress}/${index}`}
+                        >
+                          <A>00{index}</A>
+                        </Link>
+                      </FlexEnds>
+                    </DetailRowsContainer>
+                  </>
+                ))}
+            </DetailRowsContainer>
+          </TwoColumnContentContainer>
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
@@ -145,25 +163,10 @@ export const Collection: React.FC = () => {
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <DetailRowsContainer>
-              <Label>MINT SHEET</Label>
-              {Array(currentTokenId)
-                .fill(0)
-                .map((_e, index: number) => (
-                  <>
-                    <DetailRowsContainer>
-                      <FlexEnds>
-                        <Label>TOKEN ID</Label>
-                        <Link
-                          passHref
-                          href={`${ROUTES.NFT}/${collectionAddress}/${index}`}
-                          key={`${ROUTES.NFT}/${collectionAddress}/${index}`}
-                        >
-                          <A>00{index}</A>
-                        </Link>
-                      </FlexEnds>
-                    </DetailRowsContainer>
-                  </>
-                ))}
+              <FlexEnds>
+                <Label>BRAINFUCK! CODE</Label>
+              </FlexEnds>
+              <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
             </DetailRowsContainer>
           </TwoColumnContentContainer>
         </div>

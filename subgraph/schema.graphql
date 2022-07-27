@@ -12,6 +12,7 @@ type Collection @entity {
   id: ID! 
   owner: Bytes! # Transfer ownership
   tokens: [Token!]! @derivedFrom(field: "collection")
+  transfers: [TokenTransfer!]! @derivedFrom(field: "collection")
   name: String!
   symbol: String! 
   seed: Bytes! 
@@ -32,10 +33,11 @@ type Token @entity {
 }
 
 type TokenTransfer @entity {
-  id: ID! 
+  id: ID!
   to: Bytes!
   from: Bytes!
   timestamp: BigInt! 
   blocknumber: BigInt!
   token: Token!
+  collection: Collection!
 }
