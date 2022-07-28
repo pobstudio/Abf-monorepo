@@ -26,6 +26,8 @@ export function handleCreatedCollection(event: CreatedBrainFuckNFT): void {
   nft.price = nftContract.price();
   nft.rendererRoyaltyFraction = nftContract.rendererRoyaltyFraction();
   nft.whitelistToken = nftContract.whitelistToken();
+  nft.createdAt = event.block.timestamp;
+  nft.createdAtBlocknumber = event.block.number;
   nft.save();
 
   BrainFuckTemplate.create(event.params.nft);
