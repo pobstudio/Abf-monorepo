@@ -4,10 +4,10 @@ import { usePriorityAccount } from '../connectors/priority';
 import { useTransactionsStore } from '../stores/transaction';
 import { TransactionStatus } from '../types/transaction';
 import { useBrainFuckContract } from './useContracts';
+import { useTxn } from './useTxn';
 
 export const useMintBrainfuckNFT = (address: string | undefined) => {
   const addTransaction = useTransactionsStore((s) => s.addTransaction);
-  const transactionMap = useTransactionsStore((s) => s.transactionMap);
   const brainFuckContract = useBrainFuckContract(address);
   const account = usePriorityAccount();
   const [error, setError] = useState<any | undefined>(undefined);
@@ -20,15 +20,21 @@ export const useMintBrainfuckNFT = (address: string | undefined) => {
       }
       try {
         setIsLoading(true);
-        // console.log(brainFuckContract);
+        // TODO: if this data is anywhere locally, better to use that over making a ETH call
+        const price = await brainFuckContract.price();
+
         const res = await brainFuckContract.mint(
           account,
           BigNumber.from(mintAmount),
+          {
+            value: price.mul(mintAmount),
+          },
         );
 
         if (!!res) {
           addTransaction(res.hash, {
             type: 'mint-token',
+            collection: address,
           });
           setError(undefined);
         }
@@ -41,26 +47,21 @@ export const useMintBrainfuckNFT = (address: string | undefined) => {
     [brainFuckContract, setIsLoading, address, account],
   );
 
-  const tx = useMemo(() => {
-    const justAddedTxs = Object.values(transactionMap).filter(
-      (tx) => !tx.lastBlockNumChecked && tx.metadata.type === 'mint-token',
-    );
-    const updatedTxs = Object.values(transactionMap)
-      .filter(
-        (tx) => !!tx.lastBlockNumChecked && tx.metadata.type === 'mint-token',
-      )
-      .sort(
-        (a, b) =>
-          (b.lastBlockNumChecked as number) - (a.lastBlockNumChecked as number),
-      );
-    const possibleTxs = [...justAddedTxs, ...updatedTxs];
-    return possibleTxs[0];
-  }, [transactionMap]);
+  const tx = useTxn(
+    useMemo(
+      () => ({
+        type: 'mint-token',
+        collection: address ?? '',
+      }),
+      [address],
+    ),
+  );
 
   const txStatus: TransactionStatus | undefined = useMemo(
     () => tx?.status,
     [tx],
   );
+
   return useMemo(() => {
     return {
       error,

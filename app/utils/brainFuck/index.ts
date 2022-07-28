@@ -49,7 +49,7 @@ export const tokenSeedToInputTape = (tokenSeed: string) => {
   return input;
 };
 
-const MAX_IS_LOOPING_COUNTER = 10000;
+const MAX_IS_LOOPING_COUNTER = 500000;
 
 export const runBrainFuckCode = (code: string, input: number[]) => {
   let out = '0x';
@@ -67,7 +67,7 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
     const opcode = '0x' + code[i].charCodeAt(0).toString(16).toUpperCase();
     if (isLoopingCounter > MAX_IS_LOOPING_COUNTER) {
       // console.log(tape.slice(0, 12));
-      throw new Error('MAX LOOPS EXCEEDED (10,000)');
+      throw new Error('MAX LOOPS EXCEEDED (500,000)');
     }
     if (isLooping) {
       // [
@@ -149,6 +149,7 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
     }
   }
 
+  console.log(isLoopingCounter);
   return out;
 };
 

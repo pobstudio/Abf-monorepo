@@ -23,6 +23,8 @@ type Collection @entity {
   price: BigInt! 
   rendererRoyaltyFraction: BigInt! 
   whitelistToken: Bytes!
+  createdAt: BigInt!
+  createdAtBlocknumber: BigInt!
 }
 
 type Token @entity {
