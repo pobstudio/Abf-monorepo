@@ -150,13 +150,19 @@ export const Collection: React.FC = () => {
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <DetailRowsContainer>
-              <Label>MINT SHEET</Label>
-              {mints?.map((mint: TokenTransferStub, _index: number) => (
-                <MintCell
-                  key={`${ROUTES.NFT}/${collectionAddress}/${mint.id}`}
-                  mint={mint}
-                />
-              ))}
+              {mints?.length > 0 ? (
+                <>
+                  <Label>MINT SHEET</Label>
+                  {mints?.map((mint: TokenTransferStub, _index: number) => (
+                    <MintCell
+                      key={`${ROUTES.NFT}/${collectionAddress}/${mint.id}`}
+                      mint={mint}
+                    />
+                  ))}
+                </>
+              ) : (
+                <Label style={{ textAlign: 'center' }}>NO MINTS</Label>
+              )}
             </DetailRowsContainer>
           </TwoColumnContentContainer>
         </div>
