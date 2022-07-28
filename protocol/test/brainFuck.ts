@@ -270,13 +270,11 @@ describe('BrainFuck', function () {
           renderer: identityRenderer.address,
         });
 
-      await brainFuckFactory
-        .connect(rando)
-        .createNFT({
-          ...DEFAULT_CONFIG,
-          whitelistToken: brainFuck.address,
-          renderer: identityRenderer.address,
-        });
+      await brainFuckFactory.connect(rando).createNFT({
+        ...DEFAULT_CONFIG,
+        whitelistToken: brainFuck.address,
+        renderer: identityRenderer.address,
+      });
 
       whitelistedBrainFuck = (await BrainFuck.attach(
         whitelistedBrainFuckAddress,
@@ -290,13 +288,11 @@ describe('BrainFuck', function () {
           renderer: identityRenderer.address,
         });
 
-      await brainFuckFactory
-        .connect(rando)
-        .createNFT({
-          ...DEFAULT_CONFIG,
-          rendererRoyaltyFraction: TIPPING_RENDERER_ROYALTY_FRACTION,
-          renderer: identityRenderer.address,
-        });
+      await brainFuckFactory.connect(rando).createNFT({
+        ...DEFAULT_CONFIG,
+        rendererRoyaltyFraction: TIPPING_RENDERER_ROYALTY_FRACTION,
+        renderer: identityRenderer.address,
+      });
 
       tippingBrainFuck = (await BrainFuck.attach(
         tippingBrainFuckAddress,
