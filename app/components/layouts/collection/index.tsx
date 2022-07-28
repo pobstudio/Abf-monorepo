@@ -150,7 +150,7 @@ export const Collection: React.FC = () => {
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <DetailRowsContainer>
-              {mints?.length > 0 ? (
+              {mints && mints?.length > 0 ? (
                 <>
                   <Label>MINT SHEET</Label>
                   {mints?.map((mint: TokenTransferStub, _index: number) => (
