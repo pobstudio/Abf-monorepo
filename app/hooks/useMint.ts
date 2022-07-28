@@ -25,15 +25,16 @@ export const useMintBrainfuckNFT = (address: string | undefined) => {
 
         const res = await brainFuckContract.mint(
           account,
-          BigNumber.from(mintAmount), {
+          BigNumber.from(mintAmount),
+          {
             value: price.mul(mintAmount),
-          }
+          },
         );
 
         if (!!res) {
           addTransaction(res.hash, {
             type: 'mint-token',
-            collection: address, 
+            collection: address,
           });
           setError(undefined);
         }

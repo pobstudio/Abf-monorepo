@@ -149,7 +149,7 @@ export const runBrainFuckCode = (code: string, input: number[]) => {
     }
   }
 
-  console.log(isLoopingCounter)
+  console.log(isLoopingCounter);
   return out;
 };
 
