@@ -9,6 +9,7 @@ export interface CreateCollectionTransactionMetadata {
 
 export interface MintTokenTransactionMetadata {
   type: 'mint-token';
+  collection: string;
 }
 
 export interface CollectionActivationTransactionMetadata {
