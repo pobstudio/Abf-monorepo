@@ -28,8 +28,51 @@ import type {
   TypedListener,
 } from '../common';
 
+export declare namespace BrainFuck {
+  export type CreateBrainFuckNFTConfigStruct = {
+    name: PromiseOrValue<string>;
+    symbol: PromiseOrValue<string>;
+    seed: PromiseOrValue<BytesLike>;
+    constants: PromiseOrValue<BytesLike>;
+    code: PromiseOrValue<BytesLike>;
+    renderer: PromiseOrValue<string>;
+    mintingSupply: PromiseOrValue<BigNumberish>;
+    price: PromiseOrValue<BigNumberish>;
+    royaltyFraction: PromiseOrValue<BigNumberish>;
+    rendererRoyaltyFraction: PromiseOrValue<BigNumberish>;
+    whitelistToken: PromiseOrValue<string>;
+  };
+
+  export type CreateBrainFuckNFTConfigStructOutput = [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    string,
+  ] & {
+    name: string;
+    symbol: string;
+    seed: string;
+    constants: string;
+    code: string;
+    renderer: string;
+    mintingSupply: BigNumber;
+    price: BigNumber;
+    royaltyFraction: BigNumber;
+    rendererRoyaltyFraction: BigNumber;
+    whitelistToken: string;
+  };
+}
+
 export interface BrainFuckInterface extends utils.Interface {
   functions: {
+    'CODE_STORAGE_KEY()': FunctionFragment;
     'MAX_MINTING_PER_TX()': FunctionFragment;
     'airdropMint(address[],uint256)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
@@ -40,6 +83,7 @@ export interface BrainFuckInterface extends utils.Interface {
     'currentIndex()': FunctionFragment;
     'customContractURI()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'init(address,(string,string,bytes,bytes32,bytes,address,uint256,uint256,uint96,uint96,address))': FunctionFragment;
     'isActive()': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'mint(address,uint256)': FunctionFragment;
@@ -71,6 +115,7 @@ export interface BrainFuckInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'CODE_STORAGE_KEY'
       | 'MAX_MINTING_PER_TX'
       | 'airdropMint'
       | 'approve'
@@ -81,6 +126,7 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'currentIndex'
       | 'customContractURI'
       | 'getApproved'
+      | 'init'
       | 'isActive'
       | 'isApprovedForAll'
       | 'mint'
@@ -110,6 +156,10 @@ export interface BrainFuckInterface extends utils.Interface {
       | 'whitelistToken',
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: 'CODE_STORAGE_KEY',
+    values?: undefined,
+  ): string;
   encodeFunctionData(
     functionFragment: 'MAX_MINTING_PER_TX',
     values?: undefined,
@@ -143,6 +193,10 @@ export interface BrainFuckInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'getApproved',
     values: [PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'init',
+    values: [PromiseOrValue<string>, BrainFuck.CreateBrainFuckNFTConfigStruct],
   ): string;
   encodeFunctionData(functionFragment: 'isActive', values?: undefined): string;
   encodeFunctionData(
@@ -246,6 +300,10 @@ export interface BrainFuckInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: 'CODE_STORAGE_KEY',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'MAX_MINTING_PER_TX',
     data: BytesLike,
   ): Result;
@@ -273,6 +331,7 @@ export interface BrainFuckInterface extends utils.Interface {
     functionFragment: 'getApproved',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'init', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isActive', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'isApprovedForAll',
@@ -455,6 +514,8 @@ export interface BrainFuck extends BaseContract {
   'removeListener': OnEvent<this>;
 
   'functions': {
+    CODE_STORAGE_KEY(overrides?: CallOverrides): Promise<[string]>;
+
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     airdropMint(
@@ -488,6 +549,12 @@ export interface BrainFuck extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    init(
+      owner: PromiseOrValue<string>,
+      config: BrainFuck.CreateBrainFuckNFTConfigStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     isActive(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -603,6 +670,8 @@ export interface BrainFuck extends BaseContract {
     whitelistToken(overrides?: CallOverrides): Promise<[string]>;
   };
 
+  CODE_STORAGE_KEY(overrides?: CallOverrides): Promise<string>;
+
   MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
   airdropMint(
@@ -636,6 +705,12 @@ export interface BrainFuck extends BaseContract {
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  init(
+    owner: PromiseOrValue<string>,
+    config: BrainFuck.CreateBrainFuckNFTConfigStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   isActive(overrides?: CallOverrides): Promise<boolean>;
 
@@ -751,6 +826,8 @@ export interface BrainFuck extends BaseContract {
   whitelistToken(overrides?: CallOverrides): Promise<string>;
 
   'callStatic': {
+    CODE_STORAGE_KEY(overrides?: CallOverrides): Promise<string>;
+
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
     airdropMint(
@@ -784,6 +861,12 @@ export interface BrainFuck extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    init(
+      owner: PromiseOrValue<string>,
+      config: BrainFuck.CreateBrainFuckNFTConfigStruct,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     isActive(overrides?: CallOverrides): Promise<boolean>;
 
@@ -948,6 +1031,8 @@ export interface BrainFuck extends BaseContract {
   };
 
   'estimateGas': {
+    CODE_STORAGE_KEY(overrides?: CallOverrides): Promise<BigNumber>;
+
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
     airdropMint(
@@ -980,6 +1065,12 @@ export interface BrainFuck extends BaseContract {
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    init(
+      owner: PromiseOrValue<string>,
+      config: BrainFuck.CreateBrainFuckNFTConfigStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isActive(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1097,6 +1188,8 @@ export interface BrainFuck extends BaseContract {
   };
 
   'populateTransaction': {
+    CODE_STORAGE_KEY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     MAX_MINTING_PER_TX(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
@@ -1131,6 +1224,12 @@ export interface BrainFuck extends BaseContract {
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    init(
+      owner: PromiseOrValue<string>,
+      config: BrainFuck.CreateBrainFuckNFTConfigStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;

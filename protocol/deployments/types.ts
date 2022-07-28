@@ -1,5 +1,6 @@
 export interface Deployment {
   core: {
+    brainFuckImplementation: string;
     factory: string;
   };
   registries: {

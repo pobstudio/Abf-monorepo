@@ -3,47 +3,26 @@
 pragma solidity ^0.8.4;
 
 import "./BrainFuck.sol";
+import "@openzeppelin/contracts/proxy/Clones.sol";
 
 contract BrainFuckFactory {
 
-    uint constant public VERSION = 1;
-
-    struct CreateBrainFuckNFTConfig {
-      string name;
-      string symbol;
-      bytes seed;
-      bytes32 constants;
-      bytes code; 
-      address renderer;
-      uint256 mintingSupply;
-      uint256 price;
-      uint96 royaltyFraction;
-      uint96 rendererRoyaltyFraction;
-      address whitelistToken;
-    }
-
+    address public immutable implementation;
+    
     event CreatedBrainFuckNFT(
       address nft,
       address creator
     );
 
     constructor (
+      address _implementation
     ) {
+      implementation = _implementation;
     } 
 
-    function createNFT(CreateBrainFuckNFTConfig memory config) public returns (address) {
-      BrainFuck nft = new BrainFuck(
-        config.name,
-        config.symbol,
-        config.seed,
-        config.constants,
-        config.code,
-        config.renderer,
-        config.mintingSupply,
-        config.price,
-        config.rendererRoyaltyFraction,
-        config.whitelistToken
-      );
+    function createNFT(BrainFuck.CreateBrainFuckNFTConfig memory config) public returns (address) {
+      BrainFuck nft = BrainFuck(Clones.clone(implementation));
+      nft.init(address(this), config);
       nft.setRoyalty(msg.sender, config.royaltyFraction);
       nft.transferOwnership(msg.sender);
       emit CreatedBrainFuckNFT(

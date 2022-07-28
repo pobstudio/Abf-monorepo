@@ -6,6 +6,7 @@ import "./BrainFuckVM.sol";
 import "./BrainFuckURIConstructor.sol";
 import "./interfaces/IRenderer.sol";
 import "./tokens/ERC721A.sol";
+import "./libraries/SSTORE2Map.sol";
 
 import '@openzeppelin/contracts/access/Ownable.sol';
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
@@ -13,19 +14,20 @@ import '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 
 contract BrainFuck is ERC721A, ERC2981, Ownable {
 
+    bytes32 public constant CODE_STORAGE_KEY = "CODE";
+
     uint public constant MAX_MINTING_PER_TX = 6;
 
-    IRenderer public immutable renderer;
+    IRenderer public renderer;
 
-    uint256 public immutable mintingSupply;
-    uint256 public immutable price;
+    uint256 public mintingSupply;
+    uint256 public price;
 
-    uint256 public immutable rendererRoyaltyFraction;
-    address public immutable whitelistToken;
-    bytes32 public immutable constants;
+    uint256 public rendererRoyaltyFraction;
+    address public whitelistToken;
+    bytes32 public constants;
 
     bytes public seed;
-    bytes public code;
     bool public isActive; 
 
     bytes public customContractURI;
@@ -38,27 +40,37 @@ contract BrainFuck is ERC721A, ERC2981, Ownable {
       bytes seed
     );
 
+    struct CreateBrainFuckNFTConfig {
+      string name;
+      string symbol;
+      bytes seed;
+      bytes32 constants;
+      bytes code; 
+      address renderer;
+      uint256 mintingSupply;
+      uint256 price;
+      uint96 royaltyFraction;
+      uint96 rendererRoyaltyFraction;
+      address whitelistToken;
+    }
+
     constructor (
-      string memory _name,
-      string memory _symbol,
-      bytes memory _seed,
-      bytes32 _constants,
-      bytes memory _code,
-      address _renderer,
-      uint256 _mintingSupply,
-      uint256 _price,
-      uint96 _rendererRoyaltyFraction,
-      address _whitelistToken
-    ) ERC721A(_name, _symbol) {
-      constants = _constants;
-      seed = _seed;
-      code = _code;
-      renderer = IRenderer(_renderer);
-      mintingSupply = _mintingSupply;
-      price = _price;
-      rendererRoyaltyFraction = _rendererRoyaltyFraction;
-      whitelistToken = _whitelistToken;
+    ) ERC721A() {
     } 
+
+    function init(address owner, CreateBrainFuckNFTConfig memory config) public {
+      _transferOwnership(owner);
+      _name = config.name;
+      _symbol = config.symbol;
+      constants = config.constants;
+      seed = config.seed;
+      SSTORE2Map.write(CODE_STORAGE_KEY, config.code);
+      renderer = IRenderer(config.renderer);
+      mintingSupply = config.mintingSupply;
+      price = config.price;
+      rendererRoyaltyFraction = config.rendererRoyaltyFraction;
+      whitelistToken = config.whitelistToken;
+    }
 
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721A, ERC2981) returns (bool) {
         return super.supportsInterface(interfaceId);
@@ -79,6 +91,10 @@ contract BrainFuck is ERC721A, ERC2981, Ownable {
       emit SetSeed(seed);
     }
 
+    function code() public view returns (bytes memory) {
+      return SSTORE2Map.read(CODE_STORAGE_KEY); 
+    }
+
     function contractURI() public view returns (string memory) {
       if (customContractURI.length != 0) {
         return string(customContractURI);
@@ -93,7 +109,7 @@ contract BrainFuck is ERC721A, ERC2981, Ownable {
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
       require(_exists(tokenId), "BrainFuck: URI query for nonexistent token");
       require(seed.length != 0, "BrainFuck: Seed is not set yet");
-      return BrainFuckURIConstructor.tokenURI(tokenId, name(), seed, constants, code, renderer);
+      return BrainFuckURIConstructor.tokenURI(tokenId, name(), seed, constants, SSTORE2Map.read(CODE_STORAGE_KEY), renderer);
     }
     
     modifier onlyUnderMaxSupply(uint256 numToMint) {

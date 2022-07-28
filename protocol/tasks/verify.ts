@@ -24,36 +24,46 @@ task(
     //   ],
     // });
 
-    await hre.run('verify:verify', {
-      address:
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].registries
-          .renderer,
-      constructorArguments: [],
-    });
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].registries
+    //       .renderer,
+    //   constructorArguments: [],
+    // });
+
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries.vm,
+    //   constructorArguments: [],
+    // });
+
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
+    //       .uriConstructor,
+    //   constructorArguments: [],
+    // });
+
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries.svgUtils,
+    //   constructorArguments: [],
+    // });
 
     await hre.run('verify:verify', {
       address:
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries.vm,
-      constructorArguments: [],
-    });
-
-    await hre.run('verify:verify', {
-      address:
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
-          .uriConstructor,
-      constructorArguments: [],
-    });
-
-    await hre.run('verify:verify', {
-      address:
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries.svgUtils,
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core
+          .brainFuckImplementation,
       constructorArguments: [],
     });
 
     await hre.run('verify:verify', {
       address:
         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core.factory,
-      constructorArguments: [],
+      constructorArguments: [
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core
+          .brainFuckImplementation,
+      ],
     });
 
     // await hre.run('verify:verify', {

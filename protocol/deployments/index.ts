@@ -3,6 +3,7 @@ import { Deployments } from './types';
 export const deployments: Deployments = {
   1: {
     core: {
+      brainFuckImplementation: '',
       factory: '0x6db3EAF299e7062BBCe62E199260a6e1C44F146D',
     },
     renderers: {},
@@ -23,7 +24,8 @@ export const deployments: Deployments = {
   },
   4: {
     core: {
-      factory: '0xD056E4F9c2624f82A470427Ee754F355acf0feae',
+      brainFuckImplementation: '0x9FB2167ACcaf576F16990D49AA665885218c5F51',
+      factory: '0x2Ac614a8abDB88825dC6A261eA43C5A230AE11F0',
     },
     renderers: {
       identity: '0x8C4F73B85B4B8fA3AAccE05a1Bf7f2820E3E7bdd',
@@ -58,6 +60,7 @@ export const deployments: Deployments = {
   },
   5: {
     core: {
+      brainFuckImplementation: '',
       factory: '0x63939e6F3043294753fACA9923BFcF1d404D5603',
     },
     renderers: {

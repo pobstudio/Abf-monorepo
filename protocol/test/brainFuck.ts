@@ -4,6 +4,7 @@ import { ethers } from 'hardhat';
 import { NULL_ADDRESS } from '../../app/constants';
 import {
   BrainFuck,
+  BrainFuckFactory,
   BrainFuckURIConstructor,
   BrainFuckVM,
   IdentityRenderer,
@@ -33,21 +34,16 @@ const convertHexStrToAscii = (hexStr: string) => {
   return asciiStr;
 };
 
-const NAME = 'Absolute Brain Fuck';
-const SYMBOL = 'ABF';
-const CONSTANTS =
-  '0xaabbccddeeff0000aabbccddeeff0000aabbccddeeff0000aabbccddeeff0000';
 const PLAINTEXT_CODE =
   '>++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.';
-const CODE = convertToHexStr(PLAINTEXT_CODE);
-const SEED = '0xab';
-const MINTING_SUPPLY = BigNumber.from(10);
 const PRICE = ethers.utils.parseEther('0.01');
-const RENDERER_ROYALTY_FRACTION = 0;
 
 describe('BrainFuck', function () {
   // constant values used in transfer tests
   let brainFuckVM: BrainFuckVM;
+  let sourceBrainFuck: BrainFuck;
+  let brainFuckFactory: BrainFuckFactory;
+
   let brainFuck: BrainFuck;
   let brainFuckURIConstructor: BrainFuckURIConstructor;
 
@@ -57,6 +53,20 @@ describe('BrainFuck', function () {
   let rando: Signer;
   let receiver1: Signer;
   let receiver2: Signer;
+
+  const DEFAULT_CONFIG = {
+    name: 'Absolute Brain Fuck',
+    symbol: 'ABF',
+    seed: '0xab',
+    constants:
+      '0xaabbccddeeff0000aabbccddeeff0000aabbccddeeff0000aabbccddeeff0000',
+    code: convertToHexStr(PLAINTEXT_CODE),
+    mintingSupply: BigNumber.from(10),
+    royaltyFraction: 0,
+    rendererRoyaltyFraction: 0,
+    price: PRICE,
+    whitelistToken: NULL_ADDRESS,
+  };
 
   before(async function () {
     const accounts = await ethers.getSigners();
@@ -96,30 +106,41 @@ describe('BrainFuck', function () {
       },
     });
 
-    brainFuck = (await BrainFuck.deploy(
-      NAME,
-      SYMBOL,
-      SEED,
-      CONSTANTS,
-      CODE,
-      identityRenderer.address,
-      MINTING_SUPPLY,
-      PRICE,
-      RENDERER_ROYALTY_FRACTION,
-      NULL_ADDRESS,
-    )) as BrainFuck;
+    sourceBrainFuck = (await BrainFuck.deploy()) as BrainFuck;
+
+    const BrainFuckFactory = await ethers.getContractFactory(
+      'BrainFuckFactory',
+    );
+    brainFuckFactory = (await BrainFuckFactory.deploy(
+      sourceBrainFuck.address,
+    )) as BrainFuckFactory;
+    await brainFuckFactory.deployed();
+
+    const brainFuckAddress = await brainFuckFactory.callStatic.createNFT({
+      ...DEFAULT_CONFIG,
+      renderer: identityRenderer.address,
+    });
+
+    await brainFuckFactory.createNFT({
+      ...DEFAULT_CONFIG,
+      renderer: identityRenderer.address,
+    });
+
+    brainFuck = (await BrainFuck.attach(brainFuckAddress)) as BrainFuck;
     await brainFuck.deployed();
   });
 
   describe('parameters', () => {
     it('check parameters are valid', async function () {
-      expect(await brainFuck.name()).to.eq(NAME);
-      expect(await brainFuck.symbol()).to.eq(SYMBOL);
+      expect(await brainFuck.name()).to.eq(DEFAULT_CONFIG.name);
+      expect(await brainFuck.symbol()).to.eq(DEFAULT_CONFIG.symbol);
       expect(await brainFuck.isActive()).to.eq(false);
-      expect(await brainFuck.seed()).to.eq(SEED);
-      expect(await brainFuck.code()).to.eq(CODE);
+      expect(await brainFuck.seed()).to.eq(DEFAULT_CONFIG.seed);
+      expect(await brainFuck.code()).to.eq(DEFAULT_CONFIG.code);
       expect(await brainFuck.renderer()).to.eq(identityRenderer.address);
-      expect(await brainFuck.mintingSupply()).to.eq(MINTING_SUPPLY);
+      expect(await brainFuck.mintingSupply()).to.eq(
+        DEFAULT_CONFIG.mintingSupply,
+      );
       expect(await brainFuck.price()).to.eq(PRICE);
       expect(await brainFuck.whitelistToken()).to.eq(NULL_ADDRESS);
     });
@@ -230,7 +251,7 @@ describe('BrainFuck', function () {
     });
   });
 
-  describe('mint', () => {
+  describe('advanced mint', () => {
     let tippingBrainFuck: BrainFuck;
     let whitelistedBrainFuck: BrainFuck;
 
@@ -243,32 +264,42 @@ describe('BrainFuck', function () {
         },
       });
 
-      whitelistedBrainFuck = (await BrainFuck.connect(rando).deploy(
-        NAME,
-        SYMBOL,
-        SEED,
-        CONSTANTS,
-        CODE,
-        identityRenderer.address,
-        MINTING_SUPPLY,
-        PRICE,
-        TIPPING_RENDERER_ROYALTY_FRACTION,
-        brainFuck.address,
+      const whitelistedBrainFuckAddress =
+        await brainFuckFactory.callStatic.createNFT({
+          ...DEFAULT_CONFIG,
+          renderer: identityRenderer.address,
+        });
+
+      await brainFuckFactory
+        .connect(rando)
+        .createNFT({
+          ...DEFAULT_CONFIG,
+          whitelistToken: brainFuck.address,
+          renderer: identityRenderer.address,
+        });
+
+      whitelistedBrainFuck = (await BrainFuck.attach(
+        whitelistedBrainFuckAddress,
       )) as BrainFuck;
       await whitelistedBrainFuck.deployed();
       await whitelistedBrainFuck.connect(rando).setIsActive(true);
 
-      tippingBrainFuck = (await BrainFuck.connect(rando).deploy(
-        NAME,
-        SYMBOL,
-        SEED,
-        CONSTANTS,
-        CODE,
-        identityRenderer.address,
-        MINTING_SUPPLY,
-        PRICE,
-        TIPPING_RENDERER_ROYALTY_FRACTION,
-        NULL_ADDRESS,
+      const tippingBrainFuckAddress =
+        await brainFuckFactory.callStatic.createNFT({
+          ...DEFAULT_CONFIG,
+          renderer: identityRenderer.address,
+        });
+
+      await brainFuckFactory
+        .connect(rando)
+        .createNFT({
+          ...DEFAULT_CONFIG,
+          rendererRoyaltyFraction: TIPPING_RENDERER_ROYALTY_FRACTION,
+          renderer: identityRenderer.address,
+        });
+
+      tippingBrainFuck = (await BrainFuck.attach(
+        tippingBrainFuckAddress,
       )) as BrainFuck;
       await tippingBrainFuck.deployed();
       await tippingBrainFuck.connect(rando).setIsActive(true);
@@ -337,8 +368,9 @@ describe('BrainFuck', function () {
       expect(await whitelistedBrainFuck.ownerOf(1)).to.eq(
         await owner.getAddress(),
       );
+
       await expect(
-        whitelistedBrainFuck.mint(await rando.getAddress(), 1, {
+        whitelistedBrainFuck.connect(rando).mint(await rando.getAddress(), 1, {
           value: PRICE.mul(1),
         }),
       ).to.revertedWith('not whitelisted');
@@ -386,7 +418,7 @@ describe('BrainFuck', function () {
       const metadata = JSON.parse(metadataJsonStr);
       console.log('metadataJsonStr', metadataJsonStr);
       console.log(metadata);
-      expect(metadata.name).to.eq(`${NAME} #${tokenId}`);
+      expect(metadata.name).to.eq(`${DEFAULT_CONFIG.name} #${tokenId}`);
       expect(metadata.description).to.eq(PLAINTEXT_CODE);
       expect(metadata.image).to.eq('Hello, World!'); // running hello world brain fuck code
       expect(metadata.aspect_ratio).to.eq(1);
@@ -411,18 +443,18 @@ describe('BrainFuck', function () {
         },
       });
 
-      brainFuck = (await BrainFuck.deploy(
-        NAME,
-        SYMBOL,
-        '0x',
-        CONSTANTS,
-        CODE,
-        identityRenderer.address,
-        MINTING_SUPPLY,
-        PRICE,
-        RENDERER_ROYALTY_FRACTION,
-        NULL_ADDRESS,
-      )) as BrainFuck;
+      const brainFuckAddress = await brainFuckFactory.callStatic.createNFT({
+        ...DEFAULT_CONFIG,
+        renderer: identityRenderer.address,
+      });
+
+      await brainFuckFactory.createNFT({
+        ...DEFAULT_CONFIG,
+        seed: '0x',
+        renderer: identityRenderer.address,
+      });
+
+      brainFuck = (await BrainFuck.attach(brainFuckAddress)) as BrainFuck;
       await brainFuck.deployed();
       await brainFuck.connect(owner).setIsActive(true);
     });
@@ -433,19 +465,19 @@ describe('BrainFuck', function () {
       );
     });
     it('if seed is zero, allow seed to be set by owner later', async function () {
-      await brainFuck.setSeed(SEED);
-      expect(await brainFuck.seed()).to.eq(SEED);
+      await brainFuck.setSeed(DEFAULT_CONFIG.seed);
+      expect(await brainFuck.seed()).to.eq(DEFAULT_CONFIG.seed);
     });
     it('cant setSeed after seed was set', async () => {
-      await brainFuck.setSeed(SEED);
-      await expect(brainFuck.setSeed(SEED)).to.revertedWith(
+      await brainFuck.setSeed(DEFAULT_CONFIG.seed);
+      await expect(brainFuck.setSeed(DEFAULT_CONFIG.seed)).to.revertedWith(
         'BrainFuck: Seed is already set',
       );
     });
     it('cant setSeed if rando', async () => {
-      await expect(brainFuck.connect(rando).setSeed(SEED)).to.revertedWith(
-        'Ownable: caller is not the owner',
-      );
+      await expect(
+        brainFuck.connect(rando).setSeed(DEFAULT_CONFIG.seed),
+      ).to.revertedWith('Ownable: caller is not the owner');
     });
   });
 
@@ -462,21 +494,25 @@ describe('BrainFuck', function () {
         },
       });
 
-      const brainFuck = (await BrainFuck.deploy(
-        NAME,
-        SYMBOL,
-        SEED,
-        '0x68656c6c6f21212168656c6c6f21212168656c6c6f21212168656c6c6f212121',
-        convertToHexStr('++++++++[>,.<-]'),
-        identityRenderer.address,
-        MINTING_SUPPLY,
-        PRICE,
-        RENDERER_ROYALTY_FRACTION,
-        NULL_ADDRESS,
+      const tippingBrainFuckAddress =
+        await brainFuckFactory.callStatic.createNFT({
+          ...DEFAULT_CONFIG,
+          renderer: identityRenderer.address,
+        });
+
+      await brainFuckFactory.createNFT({
+        ...DEFAULT_CONFIG,
+        code: convertToHexStr(''),
+        seed: '0x68656c6c6f21212168656c6c6f21212168656c6c6f21212168656c6c6f212121',
+        renderer: identityRenderer.address,
+      });
+
+      const brainFuck = (await BrainFuck.attach(
+        tippingBrainFuckAddress,
       )) as BrainFuck;
       await brainFuck.deployed();
-
       await brainFuck.connect(owner).setIsActive(true);
+
       await brainFuck.mint(await owner.getAddress(), 1, { value: PRICE });
 
       const tokenId = 0;

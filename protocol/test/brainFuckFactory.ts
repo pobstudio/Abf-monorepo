@@ -42,6 +42,7 @@ const CODE = convertToHexStr(
 
 describe('BrainFuckFactory', function () {
   // constant values used in transfer tests
+  let sourceBrainFuck: BrainFuck;
   let brainFuckVM: BrainFuckVM;
   let brainFuckURIConstructor: BrainFuckURIConstructor;
   let brainFuckFactory: BrainFuckFactory;
@@ -86,15 +87,20 @@ describe('BrainFuckFactory', function () {
       (await BrainFuckURIConstructor.deploy()) as BrainFuckURIConstructor;
     await brainFuckURIConstructor.deployed();
 
+    const BrainFuck = await ethers.getContractFactory('BrainFuck', {
+      libraries: {
+        BrainFuckURIConstructor: brainFuckURIConstructor.address,
+      },
+    });
+    sourceBrainFuck = (await BrainFuck.deploy()) as BrainFuck;
+    await sourceBrainFuck.deployed();
+
     const BrainFuckFactory = await ethers.getContractFactory(
       'BrainFuckFactory',
-      {
-        libraries: {
-          BrainFuckURIConstructor: brainFuckURIConstructor.address,
-        },
-      },
     );
-    brainFuckFactory = (await BrainFuckFactory.deploy()) as BrainFuckFactory;
+    brainFuckFactory = (await BrainFuckFactory.deploy(
+      sourceBrainFuck.address,
+    )) as BrainFuckFactory;
     await brainFuckFactory.deployed();
   });
 
