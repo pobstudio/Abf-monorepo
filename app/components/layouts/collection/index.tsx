@@ -4,7 +4,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { ROUTES } from '../../../constants/routes';
 import { useCollectionContext } from '../../../contexts/collection';
+import { useMintHistoryByCollection } from '../../../hooks/useCollections';
+import { useENSorHex } from '../../../hooks/useENS';
 import { useMintBrainfuckNFT } from '../../../hooks/useMint';
+import { TokenTransferStub } from '../../../types';
 import { shortenHexString } from '../../../utils/hex';
 import { getEtherscanAddressUrl, getOpenSeaUrl } from '../../../utils/urls';
 import {
@@ -19,7 +22,7 @@ import {
 import { FlexEnds } from '../../flexs';
 import { PrimaryButton, TertiaryButton } from '../../inputs/button';
 import { Render } from '../../renders';
-import { A, H1, Label, LabelAnchor } from '../../texts';
+import { A, H1, Label, LabelAnchor, Text } from '../../texts';
 import { CollectionTokenIdSwitcher } from '../tokenIdSwitcher';
 
 export const Collection: React.FC = () => {
@@ -34,6 +37,7 @@ export const Collection: React.FC = () => {
     isOwner,
     currentTokenId,
   } = useCollectionContext();
+  const mints = useMintHistoryByCollection(collectionAddress);
   return (
     <>
       <TwoColumnContainer>
@@ -41,7 +45,15 @@ export const Collection: React.FC = () => {
           <TwoColumnContentContainer style={{ padding: 0 }}>
             <Render output={output} rendererMetadata={rendererMetadata} />
           </TwoColumnContentContainer>
-
+          <TwoColumnContentContainer
+            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+          >
+            <DetailRowsContainer style={{ position: 'relative' }}>
+              <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
+              <br />
+              <BrainfuckCodeLabel>{`< TRANSPILED BRAINFUCK! CODE >`}</BrainfuckCodeLabel>
+            </DetailRowsContainer>
+          </TwoColumnContentContainer>
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
@@ -67,31 +79,6 @@ export const Collection: React.FC = () => {
               {/* <DetailRow>
                 {['OUTPUT', !!output ? (output as any)['output'] : '-']}
               </DetailRow> */}
-            </DetailRowsContainer>
-          </TwoColumnContentContainer>
-          <TwoColumnContentContainer
-            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
-          >
-            <DetailRowsContainer>
-              <Label>MINT SHEET</Label>
-              {Array(currentTokenId)
-                .fill(0)
-                .map((_e, index: number) => (
-                  <>
-                    <DetailRowsContainer>
-                      <FlexEnds>
-                        <Label>TOKEN ID</Label>
-                        <Link
-                          passHref
-                          href={`${ROUTES.NFT}/${collectionAddress}/${index}`}
-                          key={`${ROUTES.NFT}/${collectionAddress}/${index}`}
-                        >
-                          <A>00{index}</A>
-                        </Link>
-                      </FlexEnds>
-                    </DetailRowsContainer>
-                  </>
-                ))}
             </DetailRowsContainer>
           </TwoColumnContentContainer>
           <TwoColumnContentContainer
@@ -163,15 +150,44 @@ export const Collection: React.FC = () => {
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
             <DetailRowsContainer>
-              <FlexEnds>
-                <Label>BRAINFUCK! CODE</Label>
-              </FlexEnds>
-              <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
+              {mints && mints?.length > 0 ? (
+                <>
+                  <Label>MINT SHEET</Label>
+                  {mints?.map((mint: TokenTransferStub, _index: number) => (
+                    <MintCell
+                      key={`${ROUTES.NFT}/${collectionAddress}/${mint.id}`}
+                      mint={mint}
+                    />
+                  ))}
+                </>
+              ) : (
+                <Label style={{ textAlign: 'center' }}>NO MINTS</Label>
+              )}
             </DetailRowsContainer>
           </TwoColumnContentContainer>
         </div>
       </TwoColumnContainer>
     </>
+  );
+};
+
+const MintCell: React.FC<{ mint: TokenTransferStub }> = ({ mint }) => {
+  const { to, timestamp, id, collection } = mint;
+  const minter = useENSorHex(to);
+  const paddedTokenId = String(id).padStart(3, '0');
+  const time = new Date(Number(timestamp) * 1000).toLocaleString();
+  return (
+    <DetailRowsContainer>
+      <FlexEnds style={{ alignItems: 'flex-start' }}>
+        <div>
+          <Text>{minter}</Text>
+          <Label style={{ marginTop: 2 }}>{time}</Label>
+        </div>
+        <Link passHref href={`${ROUTES.NFT}/${collection}/${id}`}>
+          <A>{paddedTokenId}</A>
+        </Link>
+      </FlexEnds>
+    </DetailRowsContainer>
   );
 };
 
@@ -206,6 +222,14 @@ const ThreePartMintButtonContainer = styled.div`
     width: fit-content;
     height: fit-content;
   }
+`;
+
+export const BrainfuckCodeLabel = styled(Label)`
+  position: absolute;
+  text-align: center;
+  bottom: -75px;
+  left: 0;
+  right: 0;
 `;
 
 export const LinksContainer = styled(DetailRowsContainer)`

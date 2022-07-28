@@ -16,7 +16,7 @@ import { Flex, FlexEnds } from '../flexs';
 
 const Loading = () => <div></div>;
 const Item = ({ entity }: any) => {
-  console.log(entity);
+  // console.log(entity);
   return (
     <div style={{ padding: 8 }}>
       <FlexEnds>
@@ -65,7 +65,7 @@ export const BrainfuckTextArea: FC<ComponentPropsWithRef<'textarea'>> = ({
     return {
       [TEMPLATE_INSERT_OPCODE_START]: {
         dataProvider: (token: any) => {
-          console.log(token);
+          // console.log(token);
           const prunedToken = token.slice(1);
           const fuzzyResults = search(prunedToken, Object.keys(SML_DOCS));
           return fuzzyResults.map((r) => ({

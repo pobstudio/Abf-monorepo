@@ -21,6 +21,19 @@ export const DetailRowsTableContainer = styled.div`
   }
 `;
 
+export const DetailRowsLabel = styled(Label)`
+  text-transform: uppercase;
+  text-align: left;
+`;
+
+export const DetailRowsText = styled(Text)`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 80%;
+  text-align: right;
+`;
+
 export const DetailTitleAnchorRow: FC<{
   children: [string, string];
   href?: string;
@@ -53,8 +66,8 @@ export const DetailTitleRow: FC<{ children: [string, string] }> = ({
 export const DetailRow: FC<{ children: [string, string] }> = ({ children }) => {
   return (
     <DetailRowContainer>
-      <Label style={{ textTransform: 'uppercase' }}>{children[0]}</Label>
-      <Text>{children[1]}</Text>
+      <DetailRowsLabel>{children[0]}</DetailRowsLabel>
+      <DetailRowsText>{children[1]}</DetailRowsText>
     </DetailRowContainer>
   );
 };
@@ -65,7 +78,7 @@ export const DetailAnchorRow: FC<{
 }> = ({ href, children }) => {
   return (
     <DetailRowContainer>
-      <Label style={{ textTransform: 'uppercase' }}>{children[0]}</Label>
+      <DetailRowsLabel>{children[0]}</DetailRowsLabel>
       <A target="_blank" href={href}>
         {children[1]}
       </A>

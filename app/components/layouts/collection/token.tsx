@@ -1,7 +1,12 @@
 import { BigNumber, utils } from 'ethers';
 import Link from 'next/link';
 import { FC, useEffect } from 'react';
-import { BrainfuckCodeContainer, LinksContainer, TitleContainer } from '.';
+import {
+  BrainfuckCodeContainer,
+  BrainfuckCodeLabel,
+  LinksContainer,
+  TitleContainer,
+} from '.';
 import { ROUTES } from '../../../constants/routes';
 import { useCollectionContext } from '../../../contexts/collection';
 import { shortenHexString } from '../../../utils/hex';
@@ -50,7 +55,11 @@ export const Token: FC<{ id: number }> = ({ id }) => {
           <TwoColumnContentContainer
             style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
           >
-            <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
+            <DetailRowsContainer style={{ position: 'relative' }}>
+              <BrainfuckCodeContainer>{brainfuckCode}</BrainfuckCodeContainer>
+              <br />
+              <BrainfuckCodeLabel>{`< TRANSPILED BRAINFUCK! CODE >`}</BrainfuckCodeLabel>
+            </DetailRowsContainer>
           </TwoColumnContentContainer>
 
           <TwoColumnContentContainer
@@ -106,7 +115,9 @@ export const Token: FC<{ id: number }> = ({ id }) => {
           <TwoColumnContentContainer>
             <TitleContainer>
               <Label>TITLE</Label>
-              <H1>{collection?.name}</H1>
+              <H1>
+                {collection?.name} #{id}
+              </H1>
             </TitleContainer>
           </TwoColumnContentContainer>
 

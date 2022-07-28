@@ -134,7 +134,7 @@ export const Render: FC<{
         ) {
           throw new Error(PROPSSIZE_MISMATCH_ERROR_MESSAGE);
         } else if (!!renderer) {
-          console.log('node render', renderer.address);
+          // console.log('node render', renderer.address);
           setIsRenderLoading(true);
           const render = await renderer.render(output.output);
           const renderAttribute = await renderer.renderAttributeKey();
@@ -183,8 +183,8 @@ export const Render: FC<{
   }, [renderOutput, renderAttributeKey]);
 
   useEffect(() => {
-    console.log('renderedBy', renderedBy);
-    console.log('renderAttributeKey', renderAttributeKey);
+    // console.log('renderedBy', renderedBy);
+    // console.log('renderAttributeKey', renderAttributeKey);
   }, [renderedBy, renderAttributeKey]);
 
   if (renderAttributeKey === 'image') {
