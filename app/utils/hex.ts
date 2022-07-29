@@ -24,9 +24,34 @@ export function escapeUnicode(str: string) {
     .join('');
 }
 
+export function escapeQuotes(str: string) {
+  return [...str]
+    .map((c) =>
+      {
+        if (c === '"') {
+          return '\\"';
+        }
+        if (c === `'`) {
+          return "\\'";
+        }
+        return c;
+      }
+    )
+    .join('');
+}
+
+
 export function unicodeToChar(text: string) {
   return text.replace(/\\u[\dA-F]{4}/gi, function (match) {
     return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+  });
+}
+
+export function escapedQuotesToChar(text: string) {
+  return text.replace(/\\"/gi, function (match) {
+    return '"';
+  }).replace(/\\'/gi, function (match) {
+    return "'";
   });
 }
 
@@ -41,14 +66,16 @@ export const convertHexStrToAscii = (hexStr: string) => {
 
 export const convertHexStrToUtf8 = (hexStr: string) => {
   const asciiStr = convertHexStrToAscii(hexStr);
-  return unicodeToChar(asciiStr);
+  return escapedQuotesToChar(unicodeToChar(asciiStr));
 };
 
 export const convertStrToHexStr = (code: string) => {
   let hexStr = '0x';
-  for (const c of escapeUnicode(code)) {
+  const prunedCode = escapeQuotes(escapeUnicode(code));
+  for (const c of prunedCode) {
     hexStr += c.charCodeAt(0).toString(16).padStart(2, '0');
   }
+  console.log(hexStr)
   if (hexStr.length <= 2) {
     hexStr += '00';
   }
