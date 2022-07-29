@@ -24,22 +24,22 @@ export function escapeUnicode(str: string) {
     .join('');
 }
 
-export function escapeQuotes(str: string) {
+export function escapeJSONCharacters(str: string) {
   return [...str]
-    .map((c) =>
-      {
-        if (c === '"') {
-          return '\\"';
-        }
-        if (c === `'`) {
-          return "\\'";
-        }
-        return c;
+    .map((c) => {
+      if (c === '"') {
+        return '\\"';
       }
-    )
+      if (c.charCodeAt(0) === 92) {
+        return '\\\\';
+      }
+      if (c.charCodeAt(0) === 10) {
+        return '\\n';
+      }
+      return c;
+    })
     .join('');
 }
-
 
 export function unicodeToChar(text: string) {
   return text.replace(/\\u[\dA-F]{4}/gi, function (match) {
@@ -48,11 +48,16 @@ export function unicodeToChar(text: string) {
 }
 
 export function escapedQuotesToChar(text: string) {
-  return text.replace(/\\"/gi, function (match) {
-    return '"';
-  }).replace(/\\'/gi, function (match) {
-    return "'";
-  });
+  return text
+    .replace(/\\"/gi, function (match) {
+      return '"';
+    })
+    .replace(/\\\\/gi, function (match) {
+      return '\\';
+    })
+    .replace(/\\n/gi, function (match) {
+      return String.fromCharCode(10);
+    });
 }
 
 export const convertHexStrToAscii = (hexStr: string) => {
@@ -71,11 +76,12 @@ export const convertHexStrToUtf8 = (hexStr: string) => {
 
 export const convertStrToHexStr = (code: string) => {
   let hexStr = '0x';
-  const prunedCode = escapeQuotes(escapeUnicode(code));
+  const prunedCode = escapeJSONCharacters(escapeUnicode(code));
+  console.log(prunedCode);
   for (const c of prunedCode) {
     hexStr += c.charCodeAt(0).toString(16).padStart(2, '0');
   }
-  console.log(hexStr)
+  console.log(hexStr);
   if (hexStr.length <= 2) {
     hexStr += '00';
   }

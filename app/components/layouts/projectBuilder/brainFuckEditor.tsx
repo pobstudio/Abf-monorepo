@@ -41,6 +41,11 @@ export const BrainFuckEditor: FC = () => {
     [postProcessedCode],
   );
 
+  // useEffect(() => {
+  //   if (!code) return;
+  //   convertStrToHexStr(code);
+  // }, [code]);
+
   return (
     <>
       <DetailRowsContainer>

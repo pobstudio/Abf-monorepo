@@ -38,7 +38,7 @@ export const LOOPS_LIBRARY: BfTemplateInsertLibrary = {
     }
     return `${prefix}[>`;
   },
-  repeatEnd: () => `<-]`,
+  repeatEnd: () => `<-]<`,
   for: (constant: any, ...params: any[]) => {
     const safeConstant = parseInt(constant);
     let prefix: string | undefined | null = undefined;
