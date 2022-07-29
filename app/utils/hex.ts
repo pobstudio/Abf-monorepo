@@ -26,20 +26,17 @@ export function escapeUnicode(str: string) {
 
 export function escapeQuotes(str: string) {
   return [...str]
-    .map((c) =>
-      {
-        if (c === '"') {
-          return '\\"';
-        }
-        if (c === `'`) {
-          return "\\'";
-        }
-        return c;
+    .map((c) => {
+      if (c === '"') {
+        return '\\"';
       }
-    )
+      if (c === `'`) {
+        return "\\'";
+      }
+      return c;
+    })
     .join('');
 }
-
 
 export function unicodeToChar(text: string) {
   return text.replace(/\\u[\dA-F]{4}/gi, function (match) {
@@ -48,11 +45,13 @@ export function unicodeToChar(text: string) {
 }
 
 export function escapedQuotesToChar(text: string) {
-  return text.replace(/\\"/gi, function (match) {
-    return '"';
-  }).replace(/\\'/gi, function (match) {
-    return "'";
-  });
+  return text
+    .replace(/\\"/gi, function (match) {
+      return '"';
+    })
+    .replace(/\\'/gi, function (match) {
+      return "'";
+    });
 }
 
 export const convertHexStrToAscii = (hexStr: string) => {
@@ -75,7 +74,7 @@ export const convertStrToHexStr = (code: string) => {
   for (const c of prunedCode) {
     hexStr += c.charCodeAt(0).toString(16).padStart(2, '0');
   }
-  console.log(hexStr)
+  console.log(hexStr);
   if (hexStr.length <= 2) {
     hexStr += '00';
   }
