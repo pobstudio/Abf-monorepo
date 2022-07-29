@@ -39,7 +39,7 @@ export const PixelArtTool: React.FC = () => {
 
   const [code, setCode] = useState<string | undefined>(undefined);
 
-  const [size, setSize] = useState<8 | 16 | 24>(8);
+  const [size, setSize] = useState<8 | 16 | 24>(24);
 
   const projectMetadata = useMemo(() => {
     if (!code) {
@@ -121,7 +121,7 @@ export const PixelArtTool: React.FC = () => {
       <OneColumnContainer>
         <OneColumnContentContainer>
           <DetailRowsContainer>
-            <H1>PIXEL ART TO BF</H1>
+            <H1>PIXEL ART TO BF!</H1>
             <Label>CONVERT ANY PIXEL ART TO A VALID PIECE OF BRAINFUCK!</Label>
             <InputWell>
               <FileInput onChange={(e) => setFiles(e.target.files)} />
