@@ -22,6 +22,27 @@ export const TextInput = styled.input.attrs({ type: 'text' })`
   }
 `;
 
+export const FileInput = styled.input.attrs({ type: 'file' })`
+  font-size: 12px;
+  background: none;
+  border: none;
+  border-radius: none;
+  outline: none;
+  overflow: hidden;
+  line-height: 12px;
+  flex-grow: 1;
+  ::-webkit-file-upload-button {
+    margin-right: 12px;
+    line-height: 12px;
+    font-size: 12px;
+    font-family: 'Roboto Mono', monospace;
+    border-radius: 0px;
+    padding: 6px 8px;
+    background: #e0e0e0;
+    border: none;
+  }
+`;
+
 export const NumberInput = styled.input.attrs({ type: 'number' })`
   font-size: 12px;
   background: none;
