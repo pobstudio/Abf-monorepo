@@ -259,5 +259,6 @@ export const BrainfuckCodeContainer = styled.div`
   font-size: 12px;
   line-height: 16px;
   overflow-wrap: anywhere;
+  white-space: pre-line;
   /* background: rgba(0, 0, 0, 0.05); */
 `;
