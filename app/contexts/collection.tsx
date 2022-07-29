@@ -108,7 +108,9 @@ export const CollectionProvider: React.FC<{
             setError(undefined);
           }
           if (!!currentIndexRes) {
-            setCurrentTokenId(Number(prettifyCountableNumber(currentIndexRes)));
+            setCurrentTokenId(
+              Number(prettifyCountableNumber(currentIndexRes)) - 1,
+            );
             setError(undefined);
           }
         }
@@ -130,7 +132,7 @@ export const CollectionProvider: React.FC<{
         }
       }
     }
-  }, [transactionMap, activateTxn]);
+  }, [transactionMap, activateTxn, transactionMap[activateTxn]]);
 
   useEffect(() => {
     if (address && account && collectionMetadata?.owner) {
@@ -151,7 +153,6 @@ export const CollectionProvider: React.FC<{
           type: 'toggle-activation',
         });
         setError(undefined);
-        setIsActive(true);
         setActivateTxn(res.hash);
       }
     } catch (e) {
@@ -185,14 +186,18 @@ export const CollectionProvider: React.FC<{
   }, [brainfuckCode, tokenSeed]);
 
   const incrementAmountToMint = useCallback(() => {
+    const supply = Number(collectionMetadata?.mintingSupply);
+    if (amountToMint + 1 >= supply) {
+      return;
+    }
     setAmountToMint(amountToMint + 1);
   }, [amountToMint, setAmountToMint]);
   const decrementAmountToMint = useCallback(() => {
-    if (amountToMint == 1) {
+    if (amountToMint - 1 <= 0) {
       return;
     }
     setAmountToMint(amountToMint - 1);
-  }, [amountToMint, setAmountToMint]);
+  }, [amountToMint, setAmountToMint, collectionMetadata?.mintingSupply]);
 
   const stateObject = useMemo(() => {
     return {
