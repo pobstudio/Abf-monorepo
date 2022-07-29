@@ -27,7 +27,7 @@ import { FileInput, InputWell } from '../../inputs/input';
 import { BasicModal } from '../../modal';
 import { H1, Label, Text } from '../../texts';
 
-const MAX_IMAGE_SIZE = 4_000;
+const MAX_IMAGE_SIZE = 1_000_000;
 
 const HiddenCanvas = styled.canvas`
   visibility: hidden;
