@@ -2,8 +2,12 @@ import { BigNumber, utils } from 'ethers';
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
+import { NULL_ADDRESS } from '../../../constants';
 import { ROUTES } from '../../../constants/routes';
-import { useCollectionContext } from '../../../contexts/collection';
+import {
+  useCollectionContext,
+  useCollectionMetadata,
+} from '../../../contexts/collection';
 import { useMintHistoryByCollection } from '../../../hooks/useCollections';
 import { useENSorHex } from '../../../hooks/useENS';
 import { useMintBrainfuckNFT } from '../../../hooks/useMint';
@@ -75,6 +79,19 @@ export const Collection: React.FC = () => {
                 ]}
               </DetailRow>
               <DetailRow>{['SEED', collection?.seed ?? '-']}</DetailRow>
+              {collection?.whitelistToken === NULL_ADDRESS ? (
+                <DetailRow>{['WHITELIST', 'NONE']}</DetailRow>
+              ) : (
+                <DetailAnchorRow
+                  href={getEtherscanAddressUrl(collection?.owner ?? '')}
+                >
+                  {[
+                    'WHITELIST',
+                    shortenHexString(collection?.whitelistToken ?? ''),
+                  ]}
+                </DetailAnchorRow>
+              )}
+
               {/* <DetailRow>{['CONSTANTS', collection?.constants ?? '-']}</DetailRow> */}
               {/* <DetailRow>
                 {['OUTPUT', !!output ? (output as any)['output'] : '-']}
@@ -131,7 +148,10 @@ export const Collection: React.FC = () => {
                 <CollectionTokenIdSwitcher />
               </FlexEnds> */}
               <DetailRow>
-                {['SUPPLY', `${currentTokenId} / ${collection?.mintingSupply}`]}
+                {[
+                  'SUPPLY',
+                  `${currentTokenId + 1} / ${collection?.mintingSupply}`,
+                ]}
               </DetailRow>
               <DetailRow>
                 {[
@@ -198,16 +218,26 @@ export const ThreePartMintButton: React.FC = () => {
     incrementAmountToMint,
     decrementAmountToMint,
     amountToMint,
+    currentTokenId,
   } = useCollectionContext();
+  const collectionMetadata = useCollectionMetadata();
   const { mint } = useMintBrainfuckNFT(collectionAddress);
+  const soldOut =
+    currentTokenId + 1 === Number(collectionMetadata?.mintingSupply || 0);
   return (
     <ThreePartMintButtonContainer>
       <TertiaryButton onClick={() => decrementAmountToMint()}>-</TertiaryButton>
       <PrimaryButton
-        disabled={!isActive}
+        disabled={!isActive || soldOut}
         onClick={() => (isActive ? mint(amountToMint) : confirm('fuck off'))}
       >
-        MINT: {`{{ ${amountToMint} }}`}
+        {!isActive ? (
+          <> INACTIVE</>
+        ) : soldOut ? (
+          <>SOLD OUT</>
+        ) : (
+          <>MINT: {`{{ ${amountToMint} }}`}</>
+        )}
       </PrimaryButton>
       <TertiaryButton onClick={() => incrementAmountToMint()}>+</TertiaryButton>
     </ThreePartMintButtonContainer>
