@@ -41,7 +41,7 @@ export const ZORA_API_KEY = process.env.ZORA_API_KEY || '';
 export const IPFS_LINK = `https://public-pob-studio.mypinata.cloud/ipfs`;
 
 export const IPFS_FALLBACK_LINKS = [
-  (hash: string, url: string) => `${IPFS_LINK}/${hash}/${url}`,
+  // (hash: string, url: string) => `${IPFS_LINK}/${hash}/${url}`,
   (hash: string, url: string) => `https://ipfs.io/ipfs/${hash}/${url}`,
   (hash: string, url: string) => `https://${hash}.ipfs.dweb.link/${url}`,
 ];
