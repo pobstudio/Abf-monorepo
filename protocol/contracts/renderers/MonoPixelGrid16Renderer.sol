@@ -292,7 +292,7 @@ contract MonoPixelGrid16Renderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreihys2rb343zxth7ycgeglrz4yibio4avhsubyjsbeqs726idfnjqe";
+    return "ipfs://bafkreihxmolbq6lgvwnjklzqrzarf5rjnhj5xzyqfysvafzhvmfawoz4b4";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {

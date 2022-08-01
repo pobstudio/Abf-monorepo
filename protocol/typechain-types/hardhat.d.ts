@@ -97,6 +97,10 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.RendererRegistry__factory>;
     getContractFactory(
+      name: 'AlphaFilterRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.AlphaFilterRenderer__factory>;
+    getContractFactory(
       name: 'BackgroundSvgRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.BackgroundSvgRenderer__factory>;
@@ -128,6 +132,10 @@ declare module 'hardhat/types/runtime' {
       name: 'IdentityRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IdentityRenderer__factory>;
+    getContractFactory(
+      name: 'ImageTupleDataMiddlewareRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ImageTupleDataMiddlewareRenderer__factory>;
     getContractFactory(
       name: 'MonoPixelGrid16Renderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -267,6 +275,11 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.RendererRegistry>;
     getContractAt(
+      name: 'AlphaFilterRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.AlphaFilterRenderer>;
+    getContractAt(
       name: 'BackgroundSvgRenderer',
       address: string,
       signer?: ethers.Signer,
@@ -306,6 +319,11 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.IdentityRenderer>;
+    getContractAt(
+      name: 'ImageTupleDataMiddlewareRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ImageTupleDataMiddlewareRenderer>;
     getContractAt(
       name: 'MonoPixelGrid16Renderer',
       address: string,

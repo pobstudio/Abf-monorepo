@@ -1,7 +1,9 @@
 import { task } from 'hardhat/config';
 import {
+  AlphaFilterRenderer,
+  ConfiguredGifImageRenderer,
   GifImageRenderer,
-  HSLPixelGrid16Renderer,
+  ImageTupleDataMiddlewareRenderer,
   SvgUtils,
 } from '../typechain-types';
 import { getSvgHotLoadingServer } from '../utils/svg';
@@ -63,8 +65,39 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
       },
     );
 
-    const HSLPixelGrid16Renderer = await hre.ethers.getContractFactory(
-      'HSLPixelGrid16Renderer',
+    const configuredGifRenderer = (await ConfiguredGifImageRenderer.deploy(
+      gifRenderer.address,
+    )) as ConfiguredGifImageRenderer;
+    await configuredGifRenderer.deployed();
+    await configuredGifRenderer.addConfiguration({
+      width: 4,
+      height: 4,
+      colors: '0x2C3333395B64A5C9CAE7F6F2',
+    });
+
+    const ImageTupleDataMiddlewareRenderer =
+      await hre.ethers.getContractFactory('ImageTupleDataMiddlewareRenderer', {
+        libraries: {},
+      });
+
+    const imageTupleDataMiddlewareRenderer =
+      (await ImageTupleDataMiddlewareRenderer.deploy()) as ImageTupleDataMiddlewareRenderer;
+    await imageTupleDataMiddlewareRenderer.deployed();
+
+    const BYTES =
+      '0x' +
+      '80' +
+      imageTupleDataMiddlewareRenderer.address.slice(2) +
+      configuredGifRenderer.address.slice(2) +
+      '0300' +
+      '0101' +
+      '0401' +
+      '0402' +
+      '0403' +
+      '0404';
+
+    const AlphaFilterRenderer = await hre.ethers.getContractFactory(
+      'AlphaFilterRenderer',
       {
         libraries: {
           SvgUtils: svgUtils.address,
@@ -72,26 +105,22 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
       },
     );
 
-    const BACKGROUND_SVG_BYTES = '0x00FF00FF2C3333';
-
-    const BYTES =
-      '0x00000001' +
-      '01'.repeat(4) +
-      '02'.repeat(4) +
-      '03'.repeat(4) +
-      '04'.repeat(4);
-
     const renderer =
-      (await HSLPixelGrid16Renderer.deploy()) as HSLPixelGrid16Renderer;
+      (await AlphaFilterRenderer.deploy()) as AlphaFilterRenderer;
     await renderer.deployed();
-    // await renderer.addConfiguration({
-    //   width: 4,
-    //   height: 4,
-    //   colors: '0x2C3333395B64A5C9CAE7F6F2',
-    // });
-    console.log(HSL_BYTES);
-    const res = await renderer.render(HSL_BYTES);
-    const estimation = await renderer.estimateGas.renderRaw(HSL_BYTES);
+
+    console.log(BYTES);
+    console.log(
+      'wt',
+      configuredGifRenderer.address,
+      imageTupleDataMiddlewareRenderer.address,
+    );
+    console.log('hello', await renderer.convertProps(BYTES));
+    console.log('raw', await renderer.render(BYTES));
+
+    const res = await renderer.render(BYTES);
+
+    const estimation = await renderer.estimateGas.renderRaw(BYTES);
     console.log('Gas used for call:', estimation.toNumber());
     return `<img width="500" height="500" src="${res}"></img>`;
   });

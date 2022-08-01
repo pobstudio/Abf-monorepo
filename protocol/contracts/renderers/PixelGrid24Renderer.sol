@@ -612,7 +612,7 @@ contract PixelGrid24Renderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreigpijgje7qe432abjkp45bfvuwxlsx3mw6r7cz4x6davfbxjk7k5a";
+    return "ipfs://bafkreihc4itid3ab5dn7kfkvxct4yy4zy3oergsj2ioghgjcnws2vrr6pu";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {

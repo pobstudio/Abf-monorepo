@@ -50,27 +50,48 @@ task(
     //   constructorArguments: [],
     // });
 
-    await hre.run('verify:verify', {
-      address:
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core
-          .brainFuckImplementation,
-      constructorArguments: [],
-    });
-
-    await hre.run('verify:verify', {
-      address:
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core.factory,
-      constructorArguments: [
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core
-          .brainFuckImplementation,
-      ],
-    });
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core
+    //       .brainFuckImplementation,
+    //   constructorArguments: [],
+    // });
 
     // await hre.run('verify:verify', {
     //   address:
-    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers.debug,
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core.factory,
+    //   constructorArguments: [
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].core
+    //       .brainFuckImplementation,
+    //   ],
+    // });
+
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].utilityRenderers.configuredGifImage,
+    //   constructorArguments: [
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers.gifImage,
+    //   ],
+    // });
+
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].utilityRenderers.background,
     //   constructorArguments: [],
     // });
+
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].utilityRenderers.imageTupleMiddleware,
+    //   constructorArguments: [],
+    // });
+
+    await hre.run('verify:verify', {
+      address:
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].utilityRenderers
+          .alphaFilter,
+      constructorArguments: [],
+    });
 
     // await hre.run('verify:verify', {
     //   address:

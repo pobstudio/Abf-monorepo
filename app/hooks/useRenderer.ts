@@ -82,18 +82,22 @@ export const useAllRendererMetadata = (): RendererMetadata[] => {
     if (!data.renderers) {
       return undefined;
     }
-    return data.renderers.map(
-      (r: any) =>
-        ({
-          address: r.address,
-          id: BigNumber.from(r.id),
-          propsSize: BigNumber.from(r.propsSize),
-          additionalMetadataURI: r.additionalMetadataURI,
-          registeredAt: parseInt(r.registeredAt),
-          owner: r.owner,
-          name: !!r.name ? r.name : undefined,
-        } as RendererMetadata),
-    );
+    return data.renderers
+      .map(
+        (r: any) =>
+          ({
+            address: r.address,
+            id: BigNumber.from(r.id),
+            propsSize: BigNumber.from(r.propsSize),
+            additionalMetadataURI: r.additionalMetadataURI,
+            registeredAt: parseInt(r.registeredAt),
+            owner: r.owner,
+            name: !!r.name ? r.name : undefined,
+          } as RendererMetadata),
+      )
+      .sort((r1: RendererMetadata, r2: RendererMetadata) =>
+        r1.id.sub(r2.id).toNumber(),
+      );
   }, [data]);
 };
 

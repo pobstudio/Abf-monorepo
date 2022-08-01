@@ -100,7 +100,7 @@ contract PixelGrid8Renderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreibinsghumae5miye7twzsjzx53h46lriggluhmdvqtvzr5hqpzmlu";
+    return "ipfs://bafkreiapqdvcoo5d2jbjk7dsddqbcwjw2ktm2g7t5v66hwzyjh4pr6k6oi";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {

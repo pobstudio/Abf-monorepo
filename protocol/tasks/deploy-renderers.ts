@@ -1,11 +1,6 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
-import {
-  HSLPixelGrid16Renderer,
-  HSLPixelGrid24Renderer,
-  HSLPixelGrid8Renderer,
-  RendererRegistry,
-} from '../typechain-types';
+import { AlphaFilterRenderer, RendererRegistry } from '../typechain-types';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
 
 task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
@@ -29,8 +24,27 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     rendererRegistry.address,
   );
 
-  const HSLPixelGrid8Renderer = await hre.ethers.getContractFactory(
-    'HSLPixelGrid8Renderer',
+  // const ImageTupleDataMiddlewareRenderer = await hre.ethers.getContractFactory(
+  //   'ImageTupleDataMiddlewareRenderer',
+  //   {
+  //     libraries: {
+  //       // SvgUtils:
+  //       //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
+  //       //     .svgUtils,
+  //     },
+  //   },
+  // );
+  // const imageTupleDataMiddlewareRenderer =
+  //   (await ImageTupleDataMiddlewareRenderer.deploy()) as ImageTupleDataMiddlewareRenderer;
+  // await imageTupleDataMiddlewareRenderer.deployed();
+
+  // console.log(
+  //   'ImageTupleDataMiddlewareRenderer address deployed to:',
+  //   imageTupleDataMiddlewareRenderer.address,
+  // );
+
+  const AlphaFilterRenderer = await hre.ethers.getContractFactory(
+    'AlphaFilterRenderer',
     {
       libraries: {
         SvgUtils:
@@ -39,52 +53,90 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
       },
     },
   );
-  const hsl8Renderer =
-    (await HSLPixelGrid8Renderer.deploy()) as HSLPixelGrid8Renderer;
-  await hsl8Renderer.deployed();
+  const alphaFilterRenderer =
+    (await AlphaFilterRenderer.deploy()) as AlphaFilterRenderer;
+  await alphaFilterRenderer.deployed();
 
   console.log(
-    'HSLPixelGrid8Renderer address deployed to:',
-    hsl8Renderer.address,
+    'AlphaFilterRenderer address deployed to:',
+    alphaFilterRenderer.address,
   );
 
-  const HSLPixelGrid16Renderer = await hre.ethers.getContractFactory(
-    'HSLPixelGrid16Renderer',
-    {
-      libraries: {
-        SvgUtils:
-          deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
-            .svgUtils,
-      },
-    },
-  );
-  const hsl16Renderer =
-    (await HSLPixelGrid16Renderer.deploy()) as HSLPixelGrid16Renderer;
-  await hsl8Renderer.deployed();
+  // const BackgroundSvgRenderer = await hre.ethers.getContractFactory(
+  //   'BackgroundSvgRenderer',
+  //   {
+  //     libraries: {
+  //       SvgUtils:
+  //         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
+  //           .svgUtils,
+  //     },
+  //   },
+  // );
+  // const backgroundSvgRenderer =
+  //   (await BackgroundSvgRenderer.deploy()) as BackgroundSvgRenderer;
+  // await backgroundSvgRenderer.deployed();
 
-  console.log(
-    'HSLPixelGrid16Renderer address deployed to:',
-    hsl16Renderer.address,
-  );
+  // console.log(
+  //   'BackgroundSvgRenderer address deployed to:',
+  //   backgroundSvgRenderer.address,
+  // );
 
-  const HSLPixelGrid24Renderer = await hre.ethers.getContractFactory(
-    'HSLPixelGrid24Renderer',
-    {
-      libraries: {
-        SvgUtils:
-          deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
-            .svgUtils,
-      },
-    },
-  );
-  const hsl24Renderer =
-    (await HSLPixelGrid24Renderer.deploy()) as HSLPixelGrid24Renderer;
-  await hsl8Renderer.deployed();
+  // const HSLPixelGrid8Renderer = await hre.ethers.getContractFactory(
+  //   'HSLPixelGrid8Renderer',
+  //   {
+  //     libraries: {
+  //       SvgUtils:
+  //         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
+  //           .svgUtils,
+  //     },
+  //   },
+  // );
+  // const hsl8Renderer =
+  //   (await HSLPixelGrid8Renderer.deploy()) as HSLPixelGrid8Renderer;
+  // await hsl8Renderer.deployed();
 
-  console.log(
-    'HSLPixelGrid24Renderer address deployed to:',
-    hsl24Renderer.address,
-  );
+  // console.log(
+  //   'HSLPixelGrid8Renderer address deployed to:',
+  //   hsl8Renderer.address,
+  // );
+
+  // const HSLPixelGrid16Renderer = await hre.ethers.getContractFactory(
+  //   'HSLPixelGrid16Renderer',
+  //   {
+  //     libraries: {
+  //       SvgUtils:
+  //         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
+  //           .svgUtils,
+  //     },
+  //   },
+  // );
+  // const hsl16Renderer =
+  //   (await HSLPixelGrid16Renderer.deploy()) as HSLPixelGrid16Renderer;
+  // await hsl8Renderer.deployed();
+
+  // console.log(
+  //   'HSLPixelGrid16Renderer address deployed to:',
+  //   hsl16Renderer.address,
+  // );
+
+  // const HSLPixelGrid24Renderer = await hre.ethers.getContractFactory(
+  //   'HSLPixelGrid24Renderer',
+  //   {
+  //     libraries: {
+  //       SvgUtils:
+  //         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
+  //           .svgUtils,
+  //     },
+  //   },
+  // );
+  // const hsl24Renderer =
+  //   (await HSLPixelGrid24Renderer.deploy()) as HSLPixelGrid24Renderer;
+  // await hsl8Renderer.deployed();
+
+  // console.log(
+  //   'HSLPixelGrid24Renderer address deployed to:',
+  //   hsl24Renderer.address,
+  // );
   // const IdentityRenderer = await hre.ethers.getContractFactory(
   //   'IdentityRenderer',
   //   {
@@ -278,23 +330,14 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
 
   console.log('Registering renderers');
   await (
-    await rendererRegistry.editRenderer(
-      '0x1aA75fCF9494c1445fa5194a0dC92c40e72ECb14',
-      hsl8Renderer.address,
-    )
+    await rendererRegistry.registerRenderer(alphaFilterRenderer.address)
   ).wait();
-  await (
-    await rendererRegistry.editRenderer(
-      '0x4D8ec8821f78DE8C10EBbE4E9DF767bcDF09f553',
-      hsl16Renderer.address,
-    )
-  ).wait();
-  await (
-    await rendererRegistry.editRenderer(
-      '0x77d55B1A890e2053D08e509F82633cF3DB51F822',
-      hsl24Renderer.address,
-    )
-  ).wait();
+  // await (
+  //   await rendererRegistry.registerRenderer(imageTupleDataMiddlewareRenderer.address)
+  // ).wait();
+  // await (
+  //   await rendererRegistry.registerRenderer(backgroundSvgRenderer.address)
+  // ).wait();
   // await (
   //   await rendererRegistry.registerRenderer(identityRenderer.address)
   // ).wait();

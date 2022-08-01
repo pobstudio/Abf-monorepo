@@ -7,6 +7,7 @@ export interface Deployment {
     renderer: string;
   };
   renderers: { [name: string]: string }; // deployed renderers from this repo
+  utilityRenderers: { [name: string]: string }; // deployed renderers from this repo
   libraries: {
     vm: string;
     uriConstructor: string;

@@ -58,10 +58,10 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
             if (numGroups.startsWith('variable')) {
               const params = numGroups.split('.');
               const index = parseInt(params[1] ?? '');
-              if (!!index || isNaN(index)) {
+              if (!index || isNaN(index)) {
                 return 0;
               }
-              return parseInt(output[index], 16);
+              return parseInt(output.slice(2 + index * 2, 4 + index * 2), 16);
             }
             if (!isNaN(parseInt(numGroups))) {
               return parseInt(numGroups);
@@ -69,6 +69,7 @@ export const GroupedBytes: FC<GroupedBytesProps> = ({
           }
           return numGroups;
         })();
+        console.log(label, numericalNumGroups);
         for (
           let x = 0, i = 2 + acc;
           i < output.length && x < numericalNumGroups;

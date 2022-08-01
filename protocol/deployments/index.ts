@@ -15,6 +15,7 @@ export const deployments: Deployments = {
       uriConstructor: '0x5ed8863740F4C5845EF33E6e2C505b48d09711Ae',
       svgUtils: '0x445E3b9a05F81F8fFBa8c84c9D71AF840Ebd7c8C',
     },
+    utilityRenderers: {},
     interfaceID: {
       renderer: '0x3433a79a',
     },
@@ -41,7 +42,12 @@ export const deployments: Deployments = {
       monoPixelGrid16: '0x2e95494A484a83E615E3540EC7C66364DD4A9867',
       monoPixelGrid24: '0xa360B6393bb3720889c6c7F8d795019Ac23e8BFF',
       gifImage: '0x182D57A858FcB93Be44B6d69dbB46ACD04d0E291',
+    },
+    utilityRenderers: {
       configuredGifImage: '0x6f6cAf3012896bA475838eC0a8A273776828ff3A',
+      background: '0x8a7a388cB06DcB6902716D005fcFd3fa66465302',
+      imageTupleMiddleware: '0x0DC630775Be87129A24ACdc1b8427edB905eD77a',
+      alphaFilter: '0x4e8F9A844c4F53cFEfBfe065a44Fd1Fa6EC3d7E7',
     },
     registries: {
       renderer: '0x3Dbc4D243Cd20ff99D640DEA8D5b361106F50bB5',
@@ -74,6 +80,7 @@ export const deployments: Deployments = {
       monoPixelGrid16: '0xD94ef232b562609a84f4c80455C077DAe3B19e93',
       monoPixelGrid24: '0x0CD410939F2cAbAEDC5b12aB4d072BA1F3E13095',
     },
+    utilityRenderers: {},
     registries: {
       renderer: '0x9E150e10F0a866C99c66A6955DDf9568AC9309b5',
     },
