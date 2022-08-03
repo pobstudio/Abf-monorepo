@@ -16,24 +16,13 @@ const client = new NFTStorage({ token: NFT_STORAGE_API_KEY ?? '' });
 
   const obj = {
     description:
-      'Tuple data middleware renderer. Provide a source renderer address and renderer props formatted in the following: (# of times to repeat byte, byte to repeat). Designed as a lightweight data compact standard.',
+      'Layering composite render. Use "encodeProps" to encode a collection of renderers + renderers props. Each renderer provided output is layerd on top of each other with the lowest index being in the foreground.',
     sampleOptions: {
       input:
-        '0x6f6cAf3012896bA475838eC0a8A273776828ff3A030001010401040204030404',
+        '0x182D57A858FcB93Be44B6d69dbB46ACD04d0E291000000000000000000000000000000000000000000000000000000000000001f040404ff1e00e8f9fd59ce8f00000000000000030303030000000000000000182D57A858FcB93Be44B6d69dbB46ACD04d0E291000000000000000000000000000000000000000000000000000000000000001f0404042c3333395b64a5c9cae7f6f201010101020202020303030304040404',
     },
     previewOptions: {
-      byteGroups: [
-        {
-          numGroups: '1',
-          groupBytesIn: 20,
-          label: 'Source Renderer',
-        },
-        {
-          numGroups: 'infinity',
-          groupBytesIn: 1,
-          label: 'Source Renderer Props',
-        },
-      ],
+      byteGroups: [],
     },
   };
 

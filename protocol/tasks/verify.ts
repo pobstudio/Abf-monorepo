@@ -86,10 +86,17 @@ task(
     //   constructorArguments: [],
     // });
 
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].utilityRenderers
+    //       .compactDataMiddleware,
+    //   constructorArguments: [],
+    // });
+
     await hre.run('verify:verify', {
       address:
         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].utilityRenderers
-          .alphaFilter,
+          .compositeLayer,
       constructorArguments: [],
     });
 
@@ -149,13 +156,13 @@ task(
     //   constructorArguments: [],
     // });
 
-    await hre.run('verify:verify', {
-      address:
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers
-          .configuredGifImage,
-      constructorArguments: [
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers.gifImage,
-      ],
-    });
+    // await hre.run('verify:verify', {
+    //   address:
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers
+    //       .configuredGifImage,
+    //   constructorArguments: [
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers.gifImage,
+    //   ],
+    // });
   },
 );

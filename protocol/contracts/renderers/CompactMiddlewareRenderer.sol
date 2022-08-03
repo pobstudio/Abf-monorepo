@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract ImageTupleDataMiddlewareRenderer is IRenderer, Ownable, ERC165 {
+contract CompactMiddlewareRenderer is IRenderer, Ownable, ERC165 {
   using Strings for uint256;
 
   function owner() public override(Ownable, IRenderer) view returns (address) {
@@ -24,7 +24,7 @@ contract ImageTupleDataMiddlewareRenderer is IRenderer, Ownable, ERC165 {
     return 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
   }
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreihcnkignwx5qk3r5f42wo4zepunq24vtoxkvo3wfpcafoky575p4u";
+    return "ipfs://bafkreidvbeb63upgc6fdhny3rl23m42u2xoe2pwgiklzzhpyafwb33ho6m";
   }
   
   function renderAttributeKey() external override pure returns (string memory) {
@@ -32,16 +32,32 @@ contract ImageTupleDataMiddlewareRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function name() public override pure returns (string memory) {
-    return 'Tuple Data Middleware';
+    return 'Compact Data Middleware';
   }
-  
-  function convertProps(bytes calldata props) internal pure returns (bytes memory output) {
-    for (uint i = 20; i < props.length; i+=2) {
-      bytes memory tupleBytes = new bytes(uint(uint8(props[i])));
-      for (uint8 ct = 0; ct < uint8(props[i]); ++ct) {
-        tupleBytes[ct] = props[i + 1];
+
+  function convertProps(bytes calldata props) public pure returns (bytes memory output) {
+    bytes1 paddingByte = props[20];
+    uint16 totalSize = BytesUtils.toUint16(props, 21);
+    uint16 skipValues = BytesUtils.toUint16(props, 23);
+
+    output = new bytes(totalSize);
+
+    for (uint i = 0; i < skipValues; ++i) {
+      output[i] = paddingByte;
+    }
+
+    uint idx = 25;
+    uint acc = skipValues;
+    while (idx < props.length) {
+      for (uint8 ct = 0; ct < uint8(props[idx]); ct++) {
+        output[acc + ct] = props[idx + 1];
       }
-      output = abi.encodePacked(output, tupleBytes);
+      acc += uint(uint8(props[idx]));
+      idx += 2;
+    }
+    while (acc < totalSize) {
+      output[acc] = paddingByte;
+      acc++;
     }
   }
 

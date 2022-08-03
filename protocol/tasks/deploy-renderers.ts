@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
-import { AlphaFilterRenderer, RendererRegistry } from '../typechain-types';
+import { LayerCompositeRenderer, RendererRegistry } from '../typechain-types';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
 
 task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
@@ -24,43 +24,55 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     rendererRegistry.address,
   );
 
-  // const ImageTupleDataMiddlewareRenderer = await hre.ethers.getContractFactory(
-  //   'ImageTupleDataMiddlewareRenderer',
+  // const CompactMiddlewareRenderer = await hre.ethers.getContractFactory(
+  //   'CompactMiddlewareRenderer',
   //   {
   //     libraries: {
-  //       // SvgUtils:
-  //       //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
-  //       //     .svgUtils,
   //     },
   //   },
   // );
-  // const imageTupleDataMiddlewareRenderer =
-  //   (await ImageTupleDataMiddlewareRenderer.deploy()) as ImageTupleDataMiddlewareRenderer;
-  // await imageTupleDataMiddlewareRenderer.deployed();
+  // const compactDataMiddlewareRenderer =
+  //   (await CompactMiddlewareRenderer.deploy()) as CompactMiddlewareRenderer;
+  // await compactDataMiddlewareRenderer.deployed();
 
   // console.log(
-  //   'ImageTupleDataMiddlewareRenderer address deployed to:',
-  //   imageTupleDataMiddlewareRenderer.address,
+  //   'CompactMiddlewareRenderer address deployed to:',
+  //   compactDataMiddlewareRenderer.address,
   // );
 
-  const AlphaFilterRenderer = await hre.ethers.getContractFactory(
-    'AlphaFilterRenderer',
+  const LayerCompositeRenderer = await hre.ethers.getContractFactory(
+    'LayerCompositeRenderer',
     {
-      libraries: {
-        SvgUtils:
-          deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
-            .svgUtils,
-      },
+      libraries: {},
     },
   );
-  const alphaFilterRenderer =
-    (await AlphaFilterRenderer.deploy()) as AlphaFilterRenderer;
-  await alphaFilterRenderer.deployed();
+  const layerCompositeRenderer =
+    (await LayerCompositeRenderer.deploy()) as LayerCompositeRenderer;
+  await layerCompositeRenderer.deployed();
 
   console.log(
-    'AlphaFilterRenderer address deployed to:',
-    alphaFilterRenderer.address,
+    'LayerCompositeRenderer address deployed to:',
+    layerCompositeRenderer.address,
   );
+
+  // const AlphaFilterRenderer = await hre.ethers.getContractFactory(
+  //   'AlphaFilterRenderer',
+  //   {
+  //     libraries: {
+  //       SvgUtils:
+  //         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].libraries
+  //           .svgUtils,
+  //     },
+  //   },
+  // );
+  // const alphaFilterRenderer =
+  //   (await AlphaFilterRenderer.deploy()) as AlphaFilterRenderer;
+  // await alphaFilterRenderer.deployed();
+
+  // console.log(
+  //   'AlphaFilterRenderer address deployed to:',
+  //   alphaFilterRenderer.address,
+  // );
 
   // const BackgroundSvgRenderer = await hre.ethers.getContractFactory(
   //   'BackgroundSvgRenderer',
@@ -329,11 +341,14 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
   // );
 
   console.log('Registering renderers');
+  // await (
+  //   await rendererRegistry.registerRenderer(alphaFilterRenderer.address)
+  // ).wait();
   await (
-    await rendererRegistry.registerRenderer(alphaFilterRenderer.address)
+    await rendererRegistry.registerRenderer(layerCompositeRenderer.address)
   ).wait();
   // await (
-  //   await rendererRegistry.registerRenderer(imageTupleDataMiddlewareRenderer.address)
+  //   await rendererRegistry.registerRenderer(compactDataMiddlewareRenderer.address)
   // ).wait();
   // await (
   //   await rendererRegistry.registerRenderer(backgroundSvgRenderer.address)

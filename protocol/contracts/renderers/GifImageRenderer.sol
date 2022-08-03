@@ -34,7 +34,7 @@ contract GifImageRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreifhz7qi3u6kvshmmw2qojzaj5pn7hlnijpoczlupypqftliioeqlu";
+    return "ipfs://bafkreigjwztwrolwcbkbz3ombzkvxg2767bckeobrfwdjfohvxgozbepv4";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {

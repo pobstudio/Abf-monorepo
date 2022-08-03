@@ -105,6 +105,10 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.BackgroundSvgRenderer__factory>;
     getContractFactory(
+      name: 'CompactMiddlewareRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.CompactMiddlewareRenderer__factory>;
+    getContractFactory(
       name: 'ConfiguredGifImageRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ConfiguredGifImageRenderer__factory>;
@@ -133,9 +137,9 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IdentityRenderer__factory>;
     getContractFactory(
-      name: 'ImageTupleDataMiddlewareRenderer',
+      name: 'LayerCompositeRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.ImageTupleDataMiddlewareRenderer__factory>;
+    ): Promise<Contracts.LayerCompositeRenderer__factory>;
     getContractFactory(
       name: 'MonoPixelGrid16Renderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -285,6 +289,11 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.BackgroundSvgRenderer>;
     getContractAt(
+      name: 'CompactMiddlewareRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.CompactMiddlewareRenderer>;
+    getContractAt(
       name: 'ConfiguredGifImageRenderer',
       address: string,
       signer?: ethers.Signer,
@@ -320,10 +329,10 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.IdentityRenderer>;
     getContractAt(
-      name: 'ImageTupleDataMiddlewareRenderer',
+      name: 'LayerCompositeRenderer',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.ImageTupleDataMiddlewareRenderer>;
+    ): Promise<Contracts.LayerCompositeRenderer>;
     getContractAt(
       name: 'MonoPixelGrid16Renderer',
       address: string,

@@ -3,6 +3,7 @@
 /* eslint-disable */
 export type { AlphaFilterRenderer } from './AlphaFilterRenderer';
 export type { BackgroundSvgRenderer } from './BackgroundSvgRenderer';
+export type { CompactMiddlewareRenderer } from './CompactMiddlewareRenderer';
 export type { ConfiguredGifImageRenderer } from './ConfiguredGifImageRenderer';
 export type { DotMatrixRenderer } from './DotMatrixRenderer';
 export type { GifImageRenderer } from './GifImageRenderer';
@@ -10,7 +11,7 @@ export type { HSLPixelGrid16Renderer } from './HSLPixelGrid16Renderer';
 export type { HSLPixelGrid24Renderer } from './HSLPixelGrid24Renderer';
 export type { HSLPixelGrid8Renderer } from './HSLPixelGrid8Renderer';
 export type { IdentityRenderer } from './IdentityRenderer';
-export type { ImageTupleDataMiddlewareRenderer } from './ImageTupleDataMiddlewareRenderer';
+export type { LayerCompositeRenderer } from './LayerCompositeRenderer';
 export type { MonoPixelGrid16Renderer } from './MonoPixelGrid16Renderer';
 export type { MonoPixelGrid24Renderer } from './MonoPixelGrid24Renderer';
 export type { MonoPixelGrid8Renderer } from './MonoPixelGrid8Renderer';
