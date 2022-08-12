@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
+  "files": [
+    "**/*.sol"
+  ],
   "scripts": {
     "build": "hardhat compile && hardhat typechain && tsc",
     "compile": "hardhat compile",
