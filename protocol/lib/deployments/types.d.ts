@@ -7,10 +7,26 @@ export interface Deployment {
         renderer: string;
     };
     renderers: {
-        [name: string]: string;
+        identity: string;
+        dotMatrix: string;
+        path: string;
+        pixelGrid8: string;
+        pixelGrid16: string;
+        pixelGrid24: string;
+        hslPixelGrid8: string;
+        hslPixelGrid16: string;
+        hslPixelGrid24: string;
+        monoPixelGrid8: string;
+        monoPixelGrid16: string;
+        monoPixelGrid24: string;
+        gifImage: string;
     };
     utilityRenderers: {
-        [name: string]: string;
+        configuredGifImage: string;
+        background: string;
+        compactDataMiddleware: string;
+        alphaFilter: string;
+        compositeLayer: string;
     };
     libraries: {
         vm: string;
