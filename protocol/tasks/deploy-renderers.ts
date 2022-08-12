@@ -1,6 +1,9 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
-import { LayerCompositeRenderer, RendererRegistry } from '../typechain-types';
+import {
+  CompactMiddlewareRenderer,
+  RendererRegistry,
+} from '../typechain-types';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
 
 task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
@@ -24,36 +27,35 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     rendererRegistry.address,
   );
 
-  // const CompactMiddlewareRenderer = await hre.ethers.getContractFactory(
-  //   'CompactMiddlewareRenderer',
-  //   {
-  //     libraries: {
-  //     },
-  //   },
-  // );
-  // const compactDataMiddlewareRenderer =
-  //   (await CompactMiddlewareRenderer.deploy()) as CompactMiddlewareRenderer;
-  // await compactDataMiddlewareRenderer.deployed();
-
-  // console.log(
-  //   'CompactMiddlewareRenderer address deployed to:',
-  //   compactDataMiddlewareRenderer.address,
-  // );
-
-  const LayerCompositeRenderer = await hre.ethers.getContractFactory(
-    'LayerCompositeRenderer',
+  const CompactMiddlewareRenderer = await hre.ethers.getContractFactory(
+    'CompactMiddlewareRenderer',
     {
       libraries: {},
     },
   );
-  const layerCompositeRenderer =
-    (await LayerCompositeRenderer.deploy()) as LayerCompositeRenderer;
-  await layerCompositeRenderer.deployed();
+  const compactDataMiddlewareRenderer =
+    (await CompactMiddlewareRenderer.deploy()) as CompactMiddlewareRenderer;
+  await compactDataMiddlewareRenderer.deployed();
 
   console.log(
-    'LayerCompositeRenderer address deployed to:',
-    layerCompositeRenderer.address,
+    'CompactMiddlewareRenderer address deployed to:',
+    compactDataMiddlewareRenderer.address,
   );
+
+  // const LayerCompositeRenderer = await hre.ethers.getContractFactory(
+  //   'LayerCompositeRenderer',
+  //   {
+  //     libraries: {},
+  //   },
+  // );
+  // const layerCompositeRenderer =
+  //   (await LayerCompositeRenderer.deploy()) as LayerCompositeRenderer;
+  // await layerCompositeRenderer.deployed();
+
+  // console.log(
+  //   'LayerCompositeRenderer address deployed to:',
+  //   layerCompositeRenderer.address,
+  // );
 
   // const AlphaFilterRenderer = await hre.ethers.getContractFactory(
   //   'AlphaFilterRenderer',
@@ -341,9 +343,12 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
   // );
 
   console.log('Registering renderers');
-  // await (
-  //   await rendererRegistry.registerRenderer(alphaFilterRenderer.address)
-  // ).wait();
+  await (
+    await rendererRegistry.editRenderer(
+      '0x4Cb5B8B67Ed2647cfDe1D4798C22a5F16348EE3c',
+      compactDataMiddlewareRenderer.address,
+    )
+  ).wait();
   // await (
   //   await rendererRegistry.registerRenderer(layerCompositeRenderer.address)
   // ).wait();

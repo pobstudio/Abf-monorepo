@@ -1,5 +1,6 @@
 import { task } from 'hardhat/config';
 import {
+  CompactMiddlewareRenderer,
   ConfiguredGifImageRenderer,
   GifImageRenderer,
   LayerCompositeRenderer,
@@ -59,18 +60,35 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
     const BYTES_2 =
       '0x040404FF1E00E8F9FD59CE8F00000000000000030303030000000000000000';
 
-    const BYTES = await layerRenderer.encodeProps(
-      [gifRenderer.address, gifRenderer.address],
-      [BYTES_2, BYTES_1],
+    // const BYTES = await layerRenderer.encodeProps(
+    //   [gifRenderer.address, gifRenderer.address],
+    //   [BYTES_2, BYTES_1],
+    // );
+
+    const CompactMiddlewareRenderer = await hre.ethers.getContractFactory(
+      'CompactMiddlewareRenderer',
+      {
+        libraries: {},
+      },
     );
 
-    console.log(BYTES);
+    const compactRenderer =
+      (await CompactMiddlewareRenderer.deploy()) as CompactMiddlewareRenderer;
+    await compactRenderer.deployed();
 
-    const res = await layerRenderer.render(BYTES);
+    const BYTES =
+      '0x6f6cAf3012896bA475838eC0a8A273776828ff3A004004000003000101ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff01ff014001';
 
-    const estimation = await layerRenderer.estimateGas.renderRaw(BYTES);
+    const OUT = await compactRenderer.convertProps(BYTES);
+
+    console.log(OUT.slice(2).length / 2);
+    // console.log(OUT)
+
+    // const res = await layerRenderer.render(BYTES);
+
+    const estimation = await compactRenderer.estimateGas.convertProps(BYTES);
     console.log('Gas used for call:', estimation.toNumber());
-    return `<img width="500" height="500" src="${res}"></img>`;
+    return `<img width="500" height="500" src="${''}"></img>`;
   });
 
   console.log(server);

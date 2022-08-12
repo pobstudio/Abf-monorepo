@@ -2,6 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  EventFragment,
+  FunctionFragment,
+  Result,
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type {
   BaseContract,
   BigNumber,
   BigNumberish,
@@ -12,80 +18,74 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../common";
+  TypedEvent,
+  TypedEventFilter,
+  TypedListener,
+} from '../../common';
 
 export interface RendererRegistryInterface extends utils.Interface {
   functions: {
-    "addressToId(address)": FunctionFragment;
-    "editRenderer(address,address)": FunctionFragment;
-    "idCounter()": FunctionFragment;
-    "idToAddress(uint256)": FunctionFragment;
-    "registerRenderer(address)": FunctionFragment;
+    'addressToId(address)': FunctionFragment;
+    'editRenderer(address,address)': FunctionFragment;
+    'idCounter()': FunctionFragment;
+    'idToAddress(uint256)': FunctionFragment;
+    'registerRenderer(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "addressToId"
-      | "editRenderer"
-      | "idCounter"
-      | "idToAddress"
-      | "registerRenderer"
+      | 'addressToId'
+      | 'editRenderer'
+      | 'idCounter'
+      | 'idToAddress'
+      | 'registerRenderer',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "addressToId",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'addressToId',
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "editRenderer",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    functionFragment: 'editRenderer',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: "idCounter", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'idCounter', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "idToAddress",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: 'idToAddress',
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "registerRenderer",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'registerRenderer',
+    values: [PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "addressToId",
-    data: BytesLike
+    functionFragment: 'addressToId',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "editRenderer",
-    data: BytesLike
+    functionFragment: 'editRenderer',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "idCounter", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'idCounter', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "idToAddress",
-    data: BytesLike
+    functionFragment: 'idToAddress',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "registerRenderer",
-    data: BytesLike
+    functionFragment: 'registerRenderer',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "RegisteredRenderer(uint256,address,uint256,string)": EventFragment;
+    'RegisteredRenderer(uint256,address,uint256,string)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "RegisteredRenderer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RegisteredRenderer'): EventFragment;
 }
 
 export interface RegisteredRendererEventObject {
@@ -112,15 +112,15 @@ export interface RendererRegistry extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -131,138 +131,138 @@ export interface RendererRegistry extends BaseContract {
   functions: {
     addressToId(
       arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     editRenderer(
       _oldRenderer: PromiseOrValue<string>,
       _renderer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     idCounter(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     idToAddress(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     registerRenderer(
       _renderer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addressToId(
     arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   editRenderer(
     _oldRenderer: PromiseOrValue<string>,
     _renderer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
   idToAddress(
     arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   registerRenderer(
     _renderer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     addressToId(
       arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     editRenderer(
       _oldRenderer: PromiseOrValue<string>,
       _renderer: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     idToAddress(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     registerRenderer(
       _renderer: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
-    "RegisteredRenderer(uint256,address,uint256,string)"(
+    'RegisteredRenderer(uint256,address,uint256,string)'(
       id?: null,
       renderer?: null,
       propsSize?: null,
-      additionalMetadataURI?: null
+      additionalMetadataURI?: null,
     ): RegisteredRendererEventFilter;
     RegisteredRenderer(
       id?: null,
       renderer?: null,
       propsSize?: null,
-      additionalMetadataURI?: null
+      additionalMetadataURI?: null,
     ): RegisteredRendererEventFilter;
   };
 
   estimateGas: {
     addressToId(
       arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     editRenderer(
       _oldRenderer: PromiseOrValue<string>,
       _renderer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     idCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     idToAddress(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     registerRenderer(
       _renderer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addressToId(
       arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     editRenderer(
       _oldRenderer: PromiseOrValue<string>,
       _renderer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     idCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     idToAddress(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     registerRenderer(
       _renderer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

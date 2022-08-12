@@ -42,22 +42,29 @@ contract CompactMiddlewareRenderer is IRenderer, Ownable, ERC165 {
 
     output = new bytes(totalSize);
 
-    for (uint i = 0; i < skipValues; ++i) {
-      output[i] = paddingByte;
+    if (paddingByte != 0x00) {
+      for (uint i = 0; i < skipValues; ++i) {
+        output[i] = paddingByte;
+      }
     }
 
     uint idx = 25;
     uint acc = skipValues;
     while (idx < props.length) {
-      for (uint8 ct = 0; ct < uint8(props[idx]); ct++) {
-        output[acc + ct] = props[idx + 1];
+      uint8 qt = uint8(props[idx]);
+      bytes1 val = props[idx + 1];
+      for (uint8 ct = 0; ct < qt; ct++) {
+        output[acc + ct] = val;
       }
-      acc += uint(uint8(props[idx]));
+      acc += uint(qt);
       idx += 2;
     }
-    while (acc < totalSize) {
-      output[acc] = paddingByte;
-      acc++;
+
+    if (paddingByte != 0x00) {
+      while (acc < totalSize) {
+        output[acc] = paddingByte;
+        acc++;
+      }
     }
   }
 
