@@ -46,7 +46,6 @@ export const deployments: Deployments = {
     utilityRenderers: {
       configuredGifImage: '0x6f6cAf3012896bA475838eC0a8A273776828ff3A',
       background: '0x8a7a388cB06DcB6902716D005fcFd3fa66465302',
-      imageTupleMiddleware: '0x0DC630775Be87129A24ACdc1b8427edB905eD77a',
       compactDataMiddleware: '0x4Cb5B8B67Ed2647cfDe1D4798C22a5F16348EE3c',
       alphaFilter: '0x4e8F9A844c4F53cFEfBfe065a44Fd1Fa6EC3d7E7',
       compositeLayer: '0x1e5642811BB29912D48e50b4950605705564fa84',

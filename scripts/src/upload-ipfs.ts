@@ -1,9 +1,11 @@
 require('dotenv').config();
 
+import { deployments } from '@abf-monorepo/protocol';
 import { readFile, writeFile } from 'fs';
 import { Blob, NFTStorage } from 'nft.storage';
 import { promisify } from 'util';
 
+console.log(deployments);
 const writeFileAsync = promisify(writeFile);
 const readFileAsync = promisify(readFile);
 

@@ -344,9 +344,9 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
   // await (
   //   await rendererRegistry.registerRenderer(alphaFilterRenderer.address)
   // ).wait();
-  await (
-    await rendererRegistry.registerRenderer(layerCompositeRenderer.address)
-  ).wait();
+  // await (
+  //   await rendererRegistry.registerRenderer(layerCompositeRenderer.address)
+  // ).wait();
   // await (
   //   await rendererRegistry.registerRenderer(compactDataMiddlewareRenderer.address)
   // ).wait();
