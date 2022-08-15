@@ -2,6 +2,7 @@ import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
 import {
   CompactMiddlewareRenderer,
+  ConfiguredGifImageRenderer,
   RendererRegistry,
 } from '../typechain-types';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
@@ -27,20 +28,20 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     rendererRegistry.address,
   );
 
-  const CompactMiddlewareRenderer = await hre.ethers.getContractFactory(
-    'CompactMiddlewareRenderer',
-    {
-      libraries: {},
-    },
-  );
-  const compactDataMiddlewareRenderer =
-    (await CompactMiddlewareRenderer.deploy()) as CompactMiddlewareRenderer;
-  await compactDataMiddlewareRenderer.deployed();
+  // const CompactMiddlewareRenderer = await hre.ethers.getContractFactory(
+  //   'CompactMiddlewareRenderer',
+  //   {
+  //     libraries: {},
+  //   },
+  // );
+  // const compactDataMiddlewareRenderer =
+  //   (await CompactMiddlewareRenderer.deploy()) as CompactMiddlewareRenderer;
+  // await compactDataMiddlewareRenderer.deployed();
 
-  console.log(
-    'CompactMiddlewareRenderer address deployed to:',
-    compactDataMiddlewareRenderer.address,
-  );
+  // console.log(
+  //   'CompactMiddlewareRenderer address deployed to:',
+  //   compactDataMiddlewareRenderer.address,
+  // );
 
   // const LayerCompositeRenderer = await hre.ethers.getContractFactory(
   //   'LayerCompositeRenderer',
@@ -322,33 +323,27 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
   //   gifImageRenderer.address,
   // );
 
-  // const ConfiguredGifImageRenderer = await hre.ethers.getContractFactory(
-  //   'ConfiguredGifImageRenderer',
-  //   {
-  //     libraries: {},
-  //   },
-  // );
-  // const configuredGifImageRenderer = (await ConfiguredGifImageRenderer.deploy(
-  //   gifImageRenderer.address,
-  // )) as ConfiguredGifImageRenderer;
-  // await configuredGifImageRenderer.deployed();
+  const ConfiguredGifImageRenderer = await hre.ethers.getContractFactory(
+    'ConfiguredGifImageRenderer',
+    {
+      libraries: {},
+    },
+  );
+  const configuredGifImageRenderer = (await ConfiguredGifImageRenderer.deploy(
+    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers.gifImage,
+  )) as ConfiguredGifImageRenderer;
+  await configuredGifImageRenderer.deployed();
   // await configuredGifImageRenderer.addConfiguration({
   //   width: 4,
   //   height: 4,
   //   colors: '0x2C3333395B64A5C9CAE7F6F2',
   // });
-  // console.log(
-  //   'ConfiguredGifImageRenderer address deployed to:',
-  //   configuredGifImageRenderer.address,
-  // );
+  console.log(
+    'ConfiguredGifImageRenderer address deployed to:',
+    configuredGifImageRenderer.address,
+  );
 
   console.log('Registering renderers');
-  await (
-    await rendererRegistry.editRenderer(
-      '0x4Cb5B8B67Ed2647cfDe1D4798C22a5F16348EE3c',
-      compactDataMiddlewareRenderer.address,
-    )
-  ).wait();
   // await (
   //   await rendererRegistry.registerRenderer(layerCompositeRenderer.address)
   // ).wait();

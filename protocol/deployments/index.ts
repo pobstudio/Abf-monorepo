@@ -22,6 +22,7 @@ export const deployments: Deployments = {
       gifImage: 'TODO',
     },
     utilityRenderers: {
+      mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
       configuredGifImage: 'TODO',
       background: 'TODO',
       compactDataMiddleware: 'TODO',
@@ -64,6 +65,7 @@ export const deployments: Deployments = {
       gifImage: '0x182D57A858FcB93Be44B6d69dbB46ACD04d0E291',
     },
     utilityRenderers: {
+      mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
       configuredGifImage: '0x6f6cAf3012896bA475838eC0a8A273776828ff3A',
       background: '0x8a7a388cB06DcB6902716D005fcFd3fa66465302',
       compactDataMiddleware: '0xcFEB5e2157CaAbfdA75faFF764f51180a66F3409',
@@ -106,6 +108,7 @@ export const deployments: Deployments = {
       gifImage: 'TODO',
     },
     utilityRenderers: {
+      mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
       configuredGifImage: 'TODO',
       background: 'TODO',
       compactDataMiddleware: 'TODO',

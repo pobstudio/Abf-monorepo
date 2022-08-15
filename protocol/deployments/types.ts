@@ -22,6 +22,7 @@ export interface Deployment {
     gifImage: string;
   };
   utilityRenderers: {
+    mergeConfiguredGifImage: string;
     configuredGifImage: string;
     background: string;
     compactDataMiddleware: string;
