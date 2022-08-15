@@ -23,6 +23,7 @@ exports.deployments = {
             gifImage: 'TODO',
         },
         utilityRenderers: {
+            mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
             configuredGifImage: 'TODO',
             background: 'TODO',
             compactDataMiddleware: 'TODO',
@@ -65,9 +66,10 @@ exports.deployments = {
             gifImage: '0x182D57A858FcB93Be44B6d69dbB46ACD04d0E291',
         },
         utilityRenderers: {
+            mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
             configuredGifImage: '0x6f6cAf3012896bA475838eC0a8A273776828ff3A',
             background: '0x8a7a388cB06DcB6902716D005fcFd3fa66465302',
-            compactDataMiddleware: '0x4Cb5B8B67Ed2647cfDe1D4798C22a5F16348EE3c',
+            compactDataMiddleware: '0xcFEB5e2157CaAbfdA75faFF764f51180a66F3409',
             alphaFilter: '0x4e8F9A844c4F53cFEfBfe065a44Fd1Fa6EC3d7E7',
             compositeLayer: '0x1e5642811BB29912D48e50b4950605705564fa84',
         },
@@ -107,6 +109,7 @@ exports.deployments = {
             gifImage: 'TODO',
         },
         utilityRenderers: {
+            mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
             configuredGifImage: 'TODO',
             background: 'TODO',
             compactDataMiddleware: 'TODO',
