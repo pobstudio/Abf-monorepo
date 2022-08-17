@@ -34,7 +34,7 @@ contract GifImageRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreigjwztwrolwcbkbz3ombzkvxg2767bckeobrfwdjfohvxgozbepv4";
+    return "ipfs://bafkreid63nuzy5wy4l42mevl73dvknxpxq35dwarj47gnmms754inbngra";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
@@ -96,8 +96,8 @@ contract GifImageRenderer is IRenderer, Ownable, ERC165 {
 
   function colorTable(bytes calldata props) internal view returns (bytes memory) {
     uint8 numColors = uint8(props[NUM_COLORS_INDEX]);
-    bytes memory paddedZeros = new bytes((getBestColorTableSize(numColors + 1) - numColors - 1) * 3);
-    return abi.encodePacked(hex"000000", props[3:3 + (numColors * 3)], paddedZeros);
+    bytes memory paddedZeros = new bytes((getBestColorTableSize(numColors + 1) - numColors) * 3);
+    return abi.encodePacked(props[3:3 + (numColors * 3)], paddedZeros);
   }
 
   function imageDescriptor(bytes calldata props) internal view returns (bytes memory) {

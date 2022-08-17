@@ -63,11 +63,11 @@ exports.deployments = {
             monoPixelGrid8: '0x17f52368fCae0550c0cA7F64C06B13b8e0fEc459',
             monoPixelGrid16: '0x2e95494A484a83E615E3540EC7C66364DD4A9867',
             monoPixelGrid24: '0xa360B6393bb3720889c6c7F8d795019Ac23e8BFF',
-            gifImage: '0x182D57A858FcB93Be44B6d69dbB46ACD04d0E291',
+            gifImage: '0xaAabf4cE8EEB5F332b3d49e4914F38D55dc923c4',
         },
         utilityRenderers: {
             mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
-            configuredGifImage: '0x6f6cAf3012896bA475838eC0a8A273776828ff3A',
+            configuredGifImage: '0x71C0bE0Db072f94954086b9B365BaC017c548549',
             background: '0x8a7a388cB06DcB6902716D005fcFd3fa66465302',
             compactDataMiddleware: '0xcFEB5e2157CaAbfdA75faFF764f51180a66F3409',
             alphaFilter: '0x4e8F9A844c4F53cFEfBfe065a44Fd1Fa6EC3d7E7',

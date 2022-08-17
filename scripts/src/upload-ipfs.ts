@@ -18,16 +18,41 @@ const client = new NFTStorage({ token: NFT_STORAGE_API_KEY ?? '' });
 
   const obj = {
     description:
-      'Layering composite render. Use "encodeProps" to encode a collection of renderers + renderers props. Each renderer provided output is layerd on top of each other with the lowest index being in the foreground.',
+      'A single frame gif renderer. Provide bytes in the following format: 1 byte width + 1 byte height + 1 byte # colors + array of RGB colors + image data. Image data is a width * height sized byte array of indexes to the RGB colors provided earlier. NOTE: colors start from index 1, the zeroth index is reserved for transparency.',
     sampleOptions: {
       input:
-        '0x182D57A858FcB93Be44B6d69dbB46ACD04d0E291000000000000000000000000000000000000000000000000000000000000001f040404ff1e00e8f9fd59ce8f00000000000000030303030000000000000000182D57A858FcB93Be44B6d69dbB46ACD04d0E291000000000000000000000000000000000000000000000000000000000000001f0404042c3333395b64a5c9cae7f6f201010101020202020303030304040404',
+        '0x0404050000002C3333395B64A5C9CAE7F6F201010101020202020303030304040404',
     },
     previewOptions: {
-      byteGroups: [],
+      byteGroups: [
+        {
+          numGroups: '1',
+          groupBytesIn: 1,
+          label: 'Width',
+        },
+        {
+          numGroups: '1',
+          groupBytesIn: 1,
+          label: 'Height',
+        },
+        {
+          numGroups: '1',
+          groupBytesIn: 1,
+          label: 'Num Colors',
+        },
+        {
+          numGroups: 'variable.2',
+          groupBytesIn: 3,
+          label: 'Colors',
+        },
+        {
+          numGroups: 'infinity',
+          groupBytesIn: 1,
+          label: 'Image Data',
+        },
+      ],
     },
   };
-
   const metadataBlob = new Blob([JSON.stringify(obj)]);
   const rootCid = await client.storeBlob(metadataBlob);
   console.log(rootCid, JSON.stringify(obj));

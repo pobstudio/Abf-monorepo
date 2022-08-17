@@ -1,8 +1,8 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
 import {
-  CompactMiddlewareRenderer,
   ConfiguredGifImageRenderer,
+  GifImageRenderer,
   RendererRegistry,
 } from '../typechain-types';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
@@ -308,20 +308,20 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
   //   monoPixelGrid24Renderer.address,
   // );
 
-  // const GifImageRenderer = await hre.ethers.getContractFactory(
-  //   'GifImageRenderer',
-  //   {
-  //     libraries: {},
-  //   },
-  // );
-  // const gifImageRenderer =
-  //   (await GifImageRenderer.deploy()) as GifImageRenderer;
-  // await gifImageRenderer.deployed();
+  const GifImageRenderer = await hre.ethers.getContractFactory(
+    'GifImageRenderer',
+    {
+      libraries: {},
+    },
+  );
+  const gifImageRenderer =
+    (await GifImageRenderer.deploy()) as GifImageRenderer;
+  await gifImageRenderer.deployed();
 
-  // console.log(
-  //   'GifImageRenderer address deployed to:',
-  //   gifImageRenderer.address,
-  // );
+  console.log(
+    'GifImageRenderer address deployed to:',
+    gifImageRenderer.address,
+  );
 
   const ConfiguredGifImageRenderer = await hre.ethers.getContractFactory(
     'ConfiguredGifImageRenderer',
@@ -330,14 +330,14 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     },
   );
   const configuredGifImageRenderer = (await ConfiguredGifImageRenderer.deploy(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].renderers.gifImage,
+    gifImageRenderer.address,
   )) as ConfiguredGifImageRenderer;
   await configuredGifImageRenderer.deployed();
-  // await configuredGifImageRenderer.addConfiguration({
-  //   width: 4,
-  //   height: 4,
-  //   colors: '0x2C3333395B64A5C9CAE7F6F2',
-  // });
+  await configuredGifImageRenderer.addConfiguration({
+    width: 4,
+    height: 4,
+    colors: '0x0000002C3333395B64A5C9CAE7F6F2',
+  });
   console.log(
     'ConfiguredGifImageRenderer address deployed to:',
     configuredGifImageRenderer.address,
