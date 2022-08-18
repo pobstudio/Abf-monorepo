@@ -1,6 +1,7 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
 import {
+  CompactMiddlewareRenderer,
   ConfiguredGifImageRenderer,
   GifImageRenderer,
   RendererRegistry,
@@ -308,20 +309,20 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
   //   monoPixelGrid24Renderer.address,
   // );
 
-  const GifImageRenderer = await hre.ethers.getContractFactory(
-    'GifImageRenderer',
-    {
-      libraries: {},
-    },
-  );
-  const gifImageRenderer =
-    (await GifImageRenderer.deploy()) as GifImageRenderer;
-  await gifImageRenderer.deployed();
+  // const GifImageRenderer = await hre.ethers.getContractFactory(
+  //   'GifImageRenderer',
+  //   {
+  //     libraries: {},
+  //   },
+  // );
+  // const gifImageRenderer =
+  //   (await GifImageRenderer.deploy()) as GifImageRenderer;
+  // await gifImageRenderer.deployed();
 
-  console.log(
-    'GifImageRenderer address deployed to:',
-    gifImageRenderer.address,
-  );
+  // console.log(
+  //   'GifImageRenderer address deployed to:',
+  //   gifImageRenderer.address,
+  // );
 
   const ConfiguredGifImageRenderer = await hre.ethers.getContractFactory(
     'ConfiguredGifImageRenderer',
@@ -330,20 +331,23 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     },
   );
   const configuredGifImageRenderer = (await ConfiguredGifImageRenderer.deploy(
-    gifImageRenderer.address,
+    '0xaAabf4cE8EEB5F332b3d49e4914F38D55dc923c4',
   )) as ConfiguredGifImageRenderer;
   await configuredGifImageRenderer.deployed();
-  await configuredGifImageRenderer.addConfiguration({
-    width: 4,
-    height: 4,
-    colors: '0x0000002C3333395B64A5C9CAE7F6F2',
-  });
+  // await configuredGifImageRenderer.addConfiguration({
+  //   width: 4,
+  //   height: 4,
+  //   colors: '0x0000002C3333395B64A5C9CAE7F6F2',
+  // });
   console.log(
     'ConfiguredGifImageRenderer address deployed to:',
     configuredGifImageRenderer.address,
   );
 
   console.log('Registering renderers');
+  // await (
+  //   await rendererRegistry.editRenderer('0xcFEB5e2157CaAbfdA75faFF764f51180a66F3409', compactDataMiddlewareRenderer.address)
+  // ).wait();
   // await (
   //   await rendererRegistry.registerRenderer(layerCompositeRenderer.address)
   // ).wait();

@@ -66,10 +66,10 @@ exports.deployments = {
             gifImage: '0xaAabf4cE8EEB5F332b3d49e4914F38D55dc923c4',
         },
         utilityRenderers: {
-            mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
+            mergeConfiguredGifImage: '0xfd90057A326557520Ac40BF88ACf322617594c6B',
             configuredGifImage: '0x71C0bE0Db072f94954086b9B365BaC017c548549',
             background: '0x8a7a388cB06DcB6902716D005fcFd3fa66465302',
-            compactDataMiddleware: '0xcFEB5e2157CaAbfdA75faFF764f51180a66F3409',
+            compactDataMiddleware: '0x0Cb0475C7CEb543f1292965b1CB4899410584189',
             alphaFilter: '0x4e8F9A844c4F53cFEfBfe065a44Fd1Fa6EC3d7E7',
             compositeLayer: '0x1e5642811BB29912D48e50b4950605705564fa84',
         },
