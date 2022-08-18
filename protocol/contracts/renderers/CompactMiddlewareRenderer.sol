@@ -36,20 +36,18 @@ contract CompactMiddlewareRenderer is IRenderer, Ownable, ERC165 {
   }
 
   function convertProps(bytes calldata props) public pure returns (bytes memory output) {
-    bytes1 paddingByte = props[20];
+    uint8 numBytesPrefix = uint8(props[20]);
     uint16 totalSize = BytesUtils.toUint16(props, 21);
     uint16 skipValues = BytesUtils.toUint16(props, 23);
 
     output = new bytes(totalSize);
 
-    if (paddingByte != 0x00) {
-      for (uint i = 0; i < skipValues; ++i) {
-        output[i] = paddingByte;
-      }
-    }
-
     uint idx = 25;
-    uint acc = skipValues;
+    for (uint i = 0; i < numBytesPrefix; ++i) {
+      output[i] = props[idx + i];
+    }
+    idx += numBytesPrefix;
+    uint acc = skipValues + numBytesPrefix;
     while (idx < props.length) {
       uint8 qt = uint8(props[idx]);
       bytes1 val = props[idx + 1];
@@ -58,13 +56,6 @@ contract CompactMiddlewareRenderer is IRenderer, Ownable, ERC165 {
       }
       acc += uint(qt);
       idx += 2;
-    }
-
-    if (paddingByte != 0x00) {
-      while (acc < totalSize) {
-        output[acc] = paddingByte;
-        acc++;
-      }
     }
   }
 
