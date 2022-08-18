@@ -24,7 +24,7 @@ contract CompactMiddlewareRenderer is IRenderer, Ownable, ERC165 {
     return 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
   }
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreidvbeb63upgc6fdhny3rl23m42u2xoe2pwgiklzzhpyafwb33ho6m";
+    return "ipfs://bafkreifio7i4ixmw4dpvhn3xpvinmgne4hgyuze53aa3hss3padz3qawui";
   }
   
   function renderAttributeKey() external override pure returns (string memory) {
@@ -51,8 +51,10 @@ contract CompactMiddlewareRenderer is IRenderer, Ownable, ERC165 {
     while (idx < props.length) {
       uint8 qt = uint8(props[idx]);
       bytes1 val = props[idx + 1];
-      for (uint8 ct = 0; ct < qt; ct++) {
-        output[acc + ct] = val;
+      if (val != 0) {
+        for (uint8 ct = 0; ct < qt; ct++) {
+          output[acc + ct] = val;
+        }
       }
       acc += uint(qt);
       idx += 2;
