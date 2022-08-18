@@ -2,61 +2,61 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import type { Provider } from '@ethersproject/providers';
+import { Contract, Signer, utils } from 'ethers';
 import type {
   ERC2981,
   ERC2981Interface,
-} from "../../../../../@openzeppelin/contracts/token/common/ERC2981";
+} from '../../../../../@openzeppelin/contracts/token/common/ERC2981';
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "_tokenId",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '_tokenId',
+        type: 'uint256',
       },
       {
-        internalType: "uint256",
-        name: "_salePrice",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '_salePrice',
+        type: 'uint256',
       },
     ],
-    name: "royaltyInfo",
+    name: 'royaltyInfo',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "bytes4",
-        name: "interfaceId",
-        type: "bytes4",
+        internalType: 'bytes4',
+        name: 'interfaceId',
+        type: 'bytes4',
       },
     ],
-    name: "supportsInterface",
+    name: 'supportsInterface',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ];
 
@@ -67,7 +67,7 @@ export class ERC2981__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): ERC2981 {
     return new Contract(address, _abi, signerOrProvider) as ERC2981;
   }
