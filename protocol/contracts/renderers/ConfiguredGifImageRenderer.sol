@@ -44,6 +44,18 @@ contract ConfiguredGifImageRenderer is IRenderer, Ownable, ERC165 {
     return maxConfigurationIndex;
   }
 
+  function batchAddConfiguration(Configuration[] memory configs) public returns (uint) {
+    for (uint i = 0; i < configs.length; ++i) {
+      Configuration memory config = configs[i];
+      require (config.colors.length % 3 == 0, "colors must come in r,g,b tuples");
+      SSTORE2Map.write(bytes32(maxConfigurationIndex), abi.encodePacked(config.width, config.height, uint8(config.colors.length / 3), config.colors));
+      emit AddedConfiguration(maxConfigurationIndex);
+      maxConfigurationIndex++;
+      require(maxConfigurationIndex <= MAX_NUM_CONFIGURATIONS, "Max number of configurations allowed.");
+    }
+    return maxConfigurationIndex;
+  }
+
   function getConfiguration(uint index) public view returns (bytes memory) {
     return SSTORE2Map.read(bytes32(index));
   }

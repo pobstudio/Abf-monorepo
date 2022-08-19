@@ -47,6 +47,7 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
     "addConfiguration((uint8,uint8,bytes))": FunctionFragment;
     "additionalMetadataURI()": FunctionFragment;
     "attributes(bytes)": FunctionFragment;
+    "batchAddConfiguration((uint8,uint8,bytes)[])": FunctionFragment;
     "getConfiguration(uint256)": FunctionFragment;
     "maxConfigurationIndex()": FunctionFragment;
     "name()": FunctionFragment;
@@ -66,6 +67,7 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
       | "addConfiguration"
       | "additionalMetadataURI"
       | "attributes"
+      | "batchAddConfiguration"
       | "getConfiguration"
       | "maxConfigurationIndex"
       | "name"
@@ -94,6 +96,10 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "attributes",
     values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "batchAddConfiguration",
+    values: [ConfiguredGifImageRenderer.ConfigurationStruct[]]
   ): string;
   encodeFunctionData(
     functionFragment: "getConfiguration",
@@ -144,6 +150,10 @@ export interface ConfiguredGifImageRendererInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "attributes", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "batchAddConfiguration",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getConfiguration",
     data: BytesLike
@@ -247,6 +257,11 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    batchAddConfiguration(
+      configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     getConfiguration(
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -301,6 +316,11 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  batchAddConfiguration(
+    configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   getConfiguration(
     index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -354,6 +374,11 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    batchAddConfiguration(
+      configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getConfiguration(
       index: PromiseOrValue<BigNumberish>,
@@ -422,6 +447,11 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    batchAddConfiguration(
+      configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     getConfiguration(
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -479,6 +509,11 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
     attributes(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    batchAddConfiguration(
+      configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getConfiguration(

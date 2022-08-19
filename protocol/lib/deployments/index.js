@@ -23,7 +23,7 @@ exports.deployments = {
             gifImage: 'TODO',
         },
         utilityRenderers: {
-            mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
+            mergeConfiguredGifImage: 'TODO',
             configuredGifImage: 'TODO',
             background: 'TODO',
             compactDataMiddleware: 'TODO',
@@ -109,7 +109,7 @@ exports.deployments = {
             gifImage: 'TODO',
         },
         utilityRenderers: {
-            mergeConfiguredGifImage: '0xcA64Bea0a9481086DeD0E9DCb6c7b4BDB9C748E0',
+            mergeConfiguredGifImage: 'TODO',
             configuredGifImage: 'TODO',
             background: 'TODO',
             compactDataMiddleware: 'TODO',
