@@ -1,9 +1,7 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
 import {
-  CompactMiddlewareRenderer,
   ConfiguredGifImageRenderer,
-  GifImageRenderer,
   RendererRegistry,
 } from '../typechain-types';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
