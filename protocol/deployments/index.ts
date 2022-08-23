@@ -65,7 +65,7 @@ export const deployments: Deployments = {
       gifImage: '0xDe2e7E5fA47AdF78cc7CF456D69a4C5b2a9Ad60a',
     },
     utilityRenderers: {
-      mergeConfiguredGifImage: '0xfd90057A326557520Ac40BF88ACf322617594c6B',
+      mergeConfiguredGifImage: '0x1544AbeeE9eb02819a5262779E728EE2D03a0b60',
       configuredGifImage: '0x1544AbeeE9eb02819a5262779E728EE2D03a0b60',
       background: '0x8a7a388cB06DcB6902716D005fcFd3fa66465302',
       compactDataMiddleware: '0x20aDe4CaAc3Fc05557b1786d4c74eF4172027c26',
