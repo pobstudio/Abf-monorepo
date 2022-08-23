@@ -13,7 +13,7 @@
     "@abf-monorepo/protocol": "1.0.0",
     "@abf-monorepo/sketch-utils": "1.0.0",
     "dotenv": "^8.2.0",
-    "ethers": "^5.6.9",
+    "ethers": "^5.7.0",
     "isomorphic-fetch": "^3.0.0"
   },
   "dependencies": {
