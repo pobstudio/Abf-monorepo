@@ -40,6 +40,8 @@ contract CompactMiddlewareRenderer is IRenderer, Ownable, ERC165 {
     uint16 totalSize = BytesUtils.toUint16(props, 21);
     uint16 skipValues = BytesUtils.toUint16(props, 23);
 
+    // TODO build color table array 
+    
     output = new bytes(totalSize);
 
     uint idx = 25;
