@@ -39,7 +39,9 @@ contract LayerCompositeRenderer is IRenderer, Ownable, ERC165 {
 
   function encodeProps(address[] memory renderers, bytes[] memory rendererProps) public pure returns (bytes memory output) {
     for (uint i = 0; i < renderers.length; ++i) {
-      output = abi.encodePacked(output, renderers[i], rendererProps[i].length, rendererProps[i]);
+      if (renderers[i] != address(0)) {
+        output = abi.encodePacked(output, renderers[i], rendererProps[i].length, rendererProps[i]);
+      }
     }
   }
 
