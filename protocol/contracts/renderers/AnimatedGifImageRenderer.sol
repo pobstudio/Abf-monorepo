@@ -36,7 +36,7 @@ contract AnimatedGifImageRenderer is IRenderer, Ownable, ERC165 {
   }
   
   function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreid63nuzy5wy4l42mevl73dvknxpxq35dwarj47gnmms754inbngra";
+    return "ipfs://bafkreicoe7rlsewtos62vt765vrdrlkm4q5lx7p3j53mf5kf3xy3cez2dy";
   }
 
   function renderAttributeKey() external override pure returns (string memory) {
@@ -44,7 +44,7 @@ contract AnimatedGifImageRenderer is IRenderer, Ownable, ERC165 {
   }
 
   function name() public override pure returns (string memory) {
-    return 'Single frame gif';
+    return 'Multi Frame gif';
   }
 
   function getBestColorTableSize(uint8 numColors) internal pure returns (uint) {

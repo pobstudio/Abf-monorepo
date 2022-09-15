@@ -3,6 +3,7 @@ import { deployments } from '../deployments';
 import {
   ConfiguredGifImageRenderer,
   RendererRegistry,
+  AnimatedGifImageRenderer
 } from '../typechain-types';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
 
@@ -27,15 +28,15 @@ task('deploy-renderers', 'Deploys Renderer Contracts', async (args, hre) => {
     rendererRegistry.address,
   );
 
-  // const CompactMiddlewareRenderer = await hre.ethers.getContractFactory(
-  //   'CompactMiddlewareRenderer',
-  //   {
-  //     libraries: {},
-  //   },
-  // );
-  // const compactDataMiddlewareRenderer =
-  //   (await CompactMiddlewareRenderer.deploy()) as CompactMiddlewareRenderer;
-  // await compactDataMiddlewareRenderer.deployed();
+  const AnimatedGifImageRenderer = await hre.ethers.getContractFactory(
+    'AnimatedGifImageRenderer',
+    {
+      libraries: {},
+    },
+  );
+  const animatedGifImageRenderer =
+    (await AnimatedGifImageRenderer.deploy()) as AnimatedGifImageRenderer;
+  await animatedGifImageRenderer.deployed();
 
   // console.log(
   //   'CompactMiddlewareRenderer address deployed to:',
