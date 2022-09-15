@@ -1,4 +1,5 @@
 export { AlphaFilterRenderer__factory } from "./AlphaFilterRenderer__factory";
+export { AnimatedGifImageRenderer__factory } from "./AnimatedGifImageRenderer__factory";
 export { BackgroundSvgRenderer__factory } from "./BackgroundSvgRenderer__factory";
 export { CompactMiddlewareRenderer__factory } from "./CompactMiddlewareRenderer__factory";
 export { ConfiguredGifImageRenderer__factory } from "./ConfiguredGifImageRenderer__factory";

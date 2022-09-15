@@ -2,12 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
-  EventFragment,
-  FunctionFragment,
-  Result,
-} from '@ethersproject/abi';
-import type { Listener, Provider } from '@ethersproject/providers';
-import type {
   BaseContract,
   BigNumber,
   BigNumberish,
@@ -18,14 +12,20 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from 'ethers';
+} from "ethers";
 import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type {
+  TypedEventFilter,
+  TypedEvent,
+  TypedListener,
   OnEvent,
   PromiseOrValue,
-  TypedEvent,
-  TypedEventFilter,
-  TypedListener,
-} from '../../common';
+} from "../../common";
 
 export declare namespace ConfiguredGifImageRenderer {
   export type ConfigurationStruct = {
@@ -43,154 +43,154 @@ export declare namespace ConfiguredGifImageRenderer {
 
 export interface ConfiguredGifImageRendererInterface extends utils.Interface {
   functions: {
-    'MAX_NUM_CONFIGURATIONS()': FunctionFragment;
-    'addConfiguration((uint8,uint8,bytes))': FunctionFragment;
-    'additionalMetadataURI()': FunctionFragment;
-    'attributes(bytes)': FunctionFragment;
-    'batchAddConfiguration((uint8,uint8,bytes)[])': FunctionFragment;
-    'getConfiguration(uint256)': FunctionFragment;
-    'maxConfigurationIndex()': FunctionFragment;
-    'name()': FunctionFragment;
-    'owner()': FunctionFragment;
-    'propsSize()': FunctionFragment;
-    'render(bytes)': FunctionFragment;
-    'renderAttributeKey()': FunctionFragment;
-    'renderRaw(bytes)': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'supportsInterface(bytes4)': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
+    "MAX_NUM_CONFIGURATIONS()": FunctionFragment;
+    "addConfiguration((uint8,uint8,bytes))": FunctionFragment;
+    "additionalMetadataURI()": FunctionFragment;
+    "attributes(bytes)": FunctionFragment;
+    "batchAddConfiguration((uint8,uint8,bytes)[])": FunctionFragment;
+    "getConfiguration(uint256)": FunctionFragment;
+    "maxConfigurationIndex()": FunctionFragment;
+    "name()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "propsSize()": FunctionFragment;
+    "render(bytes)": FunctionFragment;
+    "renderAttributeKey()": FunctionFragment;
+    "renderRaw(bytes)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'MAX_NUM_CONFIGURATIONS'
-      | 'addConfiguration'
-      | 'additionalMetadataURI'
-      | 'attributes'
-      | 'batchAddConfiguration'
-      | 'getConfiguration'
-      | 'maxConfigurationIndex'
-      | 'name'
-      | 'owner'
-      | 'propsSize'
-      | 'render'
-      | 'renderAttributeKey'
-      | 'renderRaw'
-      | 'renounceOwnership'
-      | 'supportsInterface'
-      | 'transferOwnership',
+      | "MAX_NUM_CONFIGURATIONS"
+      | "addConfiguration"
+      | "additionalMetadataURI"
+      | "attributes"
+      | "batchAddConfiguration"
+      | "getConfiguration"
+      | "maxConfigurationIndex"
+      | "name"
+      | "owner"
+      | "propsSize"
+      | "render"
+      | "renderAttributeKey"
+      | "renderRaw"
+      | "renounceOwnership"
+      | "supportsInterface"
+      | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: 'MAX_NUM_CONFIGURATIONS',
-    values?: undefined,
+    functionFragment: "MAX_NUM_CONFIGURATIONS",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'addConfiguration',
-    values: [ConfiguredGifImageRenderer.ConfigurationStruct],
+    functionFragment: "addConfiguration",
+    values: [ConfiguredGifImageRenderer.ConfigurationStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: 'additionalMetadataURI',
-    values?: undefined,
+    functionFragment: "additionalMetadataURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'attributes',
-    values: [PromiseOrValue<BytesLike>],
+    functionFragment: "attributes",
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: 'batchAddConfiguration',
-    values: [ConfiguredGifImageRenderer.ConfigurationStruct[]],
+    functionFragment: "batchAddConfiguration",
+    values: [ConfiguredGifImageRenderer.ConfigurationStruct[]]
   ): string;
   encodeFunctionData(
-    functionFragment: 'getConfiguration',
-    values: [PromiseOrValue<BigNumberish>],
+    functionFragment: "getConfiguration",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: 'maxConfigurationIndex',
-    values?: undefined,
+    functionFragment: "maxConfigurationIndex",
+    values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'propsSize', values?: undefined): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: "propsSize", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'render',
-    values: [PromiseOrValue<BytesLike>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'renderAttributeKey',
-    values?: undefined,
+    functionFragment: "render",
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: 'renderRaw',
-    values: [PromiseOrValue<BytesLike>],
+    functionFragment: "renderAttributeKey",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'renounceOwnership',
-    values?: undefined,
+    functionFragment: "renderRaw",
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: 'supportsInterface',
-    values: [PromiseOrValue<BytesLike>],
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferOwnership',
-    values: [PromiseOrValue<string>],
+    functionFragment: "supportsInterface",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: 'MAX_NUM_CONFIGURATIONS',
-    data: BytesLike,
+    functionFragment: "MAX_NUM_CONFIGURATIONS",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'addConfiguration',
-    data: BytesLike,
+    functionFragment: "addConfiguration",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'additionalMetadataURI',
-    data: BytesLike,
+    functionFragment: "additionalMetadataURI",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "attributes", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'batchAddConfiguration',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'getConfiguration',
-    data: BytesLike,
+    functionFragment: "batchAddConfiguration",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'maxConfigurationIndex',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'renderAttributeKey',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'renounceOwnership',
-    data: BytesLike,
+    functionFragment: "getConfiguration",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'supportsInterface',
-    data: BytesLike,
+    functionFragment: "maxConfigurationIndex",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "propsSize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "render", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renderAttributeKey",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "renderRaw", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'transferOwnership',
-    data: BytesLike,
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
   ): Result;
 
   events: {
-    'AddedConfiguration(uint256)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
+    "AddedConfiguration(uint256)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'AddedConfiguration'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AddedConfiguration"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
 export interface AddedConfigurationEventObject {
@@ -226,15 +226,15 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
+    eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
+    eventFilter: TypedEventFilter<TEvent>
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -247,24 +247,24 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
     addConfiguration(
       config: ConfiguredGifImageRenderer.ConfigurationStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
     attributes(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     batchAddConfiguration(
       configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getConfiguration(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     maxConfigurationIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -277,28 +277,28 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
     render(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
 
     renderRaw(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
@@ -306,24 +306,24 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
   addConfiguration(
     config: ConfiguredGifImageRenderer.ConfigurationStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
   attributes(
     props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
   batchAddConfiguration(
     configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getConfiguration(
     index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
   maxConfigurationIndex(overrides?: CallOverrides): Promise<BigNumber>;
@@ -336,28 +336,28 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
   render(
     props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
   renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
   renderRaw(
     props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   supportsInterface(
     interfaceId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -365,24 +365,24 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
     addConfiguration(
       config: ConfiguredGifImageRenderer.ConfigurationStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
     attributes(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     batchAddConfiguration(
       configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getConfiguration(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     maxConfigurationIndex(overrides?: CallOverrides): Promise<BigNumber>;
@@ -395,40 +395,40 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
     render(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
     renderRaw(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
-    'AddedConfiguration(uint256)'(index?: null): AddedConfigurationEventFilter;
+    "AddedConfiguration(uint256)"(index?: null): AddedConfigurationEventFilter;
     AddedConfiguration(index?: null): AddedConfigurationEventFilter;
 
-    'OwnershipTransferred(address,address)'(
+    "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
   };
 
@@ -437,24 +437,24 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
     addConfiguration(
       config: ConfiguredGifImageRenderer.ConfigurationStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     attributes(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     batchAddConfiguration(
       configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getConfiguration(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     maxConfigurationIndex(overrides?: CallOverrides): Promise<BigNumber>;
@@ -467,62 +467,62 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
     render(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
 
     renderRaw(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     MAX_NUM_CONFIGURATIONS(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     addConfiguration(
       config: ConfiguredGifImageRenderer.ConfigurationStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     additionalMetadataURI(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     attributes(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     batchAddConfiguration(
       configs: ConfiguredGifImageRenderer.ConfigurationStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getConfiguration(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxConfigurationIndex(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -533,30 +533,30 @@ export interface ConfiguredGifImageRenderer extends BaseContract {
 
     render(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     renderAttributeKey(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     renderRaw(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

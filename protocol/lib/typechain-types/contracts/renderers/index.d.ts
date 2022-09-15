@@ -1,4 +1,5 @@
 export type { AlphaFilterRenderer } from "./AlphaFilterRenderer";
+export type { AnimatedGifImageRenderer } from "./AnimatedGifImageRenderer";
 export type { BackgroundSvgRenderer } from "./BackgroundSvgRenderer";
 export type { CompactMiddlewareRenderer } from "./CompactMiddlewareRenderer";
 export type { ConfiguredGifImageRenderer } from "./ConfiguredGifImageRenderer";

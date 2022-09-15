@@ -47,6 +47,8 @@ export type { RendererRegistry } from "./contracts/registries/RendererRegistry";
 export { RendererRegistry__factory } from "./factories/contracts/registries/RendererRegistry__factory";
 export type { AlphaFilterRenderer } from "./contracts/renderers/AlphaFilterRenderer";
 export { AlphaFilterRenderer__factory } from "./factories/contracts/renderers/AlphaFilterRenderer__factory";
+export type { AnimatedGifImageRenderer } from "./contracts/renderers/AnimatedGifImageRenderer";
+export { AnimatedGifImageRenderer__factory } from "./factories/contracts/renderers/AnimatedGifImageRenderer__factory";
 export type { BackgroundSvgRenderer } from "./contracts/renderers/BackgroundSvgRenderer";
 export { BackgroundSvgRenderer__factory } from "./factories/contracts/renderers/BackgroundSvgRenderer__factory";
 export type { CompactMiddlewareRenderer } from "./contracts/renderers/CompactMiddlewareRenderer";
