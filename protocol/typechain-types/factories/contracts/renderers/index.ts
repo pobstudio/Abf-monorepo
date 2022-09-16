@@ -6,7 +6,7 @@ export { AnimatedGifImageRenderer__factory } from './AnimatedGifImageRenderer__f
 export { BackgroundSvgRenderer__factory } from './BackgroundSvgRenderer__factory';
 export { CompactMiddlewareRenderer__factory } from './CompactMiddlewareRenderer__factory';
 export { CompressedAnimatedGifRenderer__factory } from './CompressedAnimatedGifRenderer__factory';
-export { ConfiguredGifImageRenderer__factory } from './ConfiguredGifImageRenderer__factory';
+export * as configuredGifImageRendererSol from './ConfiguredGifImageRenderer.sol';
 export { DotMatrixRenderer__factory } from './DotMatrixRenderer__factory';
 export { GifImageRenderer__factory } from './GifImageRenderer__factory';
 export { HSLPixelGrid16Renderer__factory } from './HSLPixelGrid16Renderer__factory';

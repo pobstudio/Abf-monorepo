@@ -73,9 +73,9 @@ contract CompressedAnimatedGifRenderer is IRenderer, Ownable, ERC165 {
     uint frameDataSize = BytesUtils.toUint8(props, WIDTH_INDEX) * BytesUtils.toUint8(props, HEIGHT_INDEX);
 
     bytes memory frame = new bytes(frameDataSize);
-    uint frameIndex = 0;
+    uint frameIndex = BytesUtils.toUint16(props, IMAGE_DATA_START_INDEX);
     bytes1 lastVal = 0; 
-    for(uint i = IMAGE_DATA_START_INDEX; i < props.length; ++i) {
+    for(uint i = IMAGE_DATA_START_INDEX + 2; i < props.length; ++i) {
       bytes1 val = props[i];
       uint intVal = uint8(val);
       if (intVal < COMPRESSED_DATA_MIN_INDEX) {
@@ -103,14 +103,19 @@ contract CompressedAnimatedGifRenderer is IRenderer, Ownable, ERC165 {
   }
 
   function renderRaw(bytes calldata props) public override view returns (bytes memory) {
-    return animatedGifImageRenderer.renderRaw(abi.encodePacked(
+    return animatedGifImageRenderer.renderRaw
+    (abi.encodePacked(
       props[WIDTH_INDEX],
       props[HEIGHT_INDEX],
-      SSTORE2Map.read(bytes32(uint(BytesUtils.toUint32(props, COLOR_CONFIGURATION_INDEX)))), convertProps(props[IMAGE_DATA_START_INDEX: props.length])));
+      SSTORE2Map.read(bytes32(uint(BytesUtils.toUint32(props, COLOR_CONFIGURATION_INDEX)))), convertProps(props)));
   }
 
   function render(bytes calldata props) external override view returns (string memory) {
-    return animatedGifImageRenderer.render(abi.encodePacked(SSTORE2Map.read(bytes32(uint(BytesUtils.toUint32(props, 0)))), props[4: props.length]));
+       return animatedGifImageRenderer.render
+    (abi.encodePacked(
+      props[WIDTH_INDEX],
+      props[HEIGHT_INDEX],
+      SSTORE2Map.read(bytes32(uint(BytesUtils.toUint32(props, COLOR_CONFIGURATION_INDEX)))), convertProps(props)));
   }
 
   function attributes(bytes calldata props) external override pure returns (string memory) {

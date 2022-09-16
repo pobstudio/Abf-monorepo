@@ -117,9 +117,9 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.CompressedAnimatedGifRenderer__factory>;
     getContractFactory(
-      name: 'ConfiguredGifImageRenderer',
+      name: 'CompressedAnimatedGifRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.ConfiguredGifImageRenderer__factory>;
+    ): Promise<Contracts.CompressedAnimatedGifRenderer__factory>;
     getContractFactory(
       name: 'DotMatrixRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -312,10 +312,10 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.CompressedAnimatedGifRenderer>;
     getContractAt(
-      name: 'ConfiguredGifImageRenderer',
+      name: 'CompressedAnimatedGifRenderer',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.ConfiguredGifImageRenderer>;
+    ): Promise<Contracts.CompressedAnimatedGifRenderer>;
     getContractAt(
       name: 'DotMatrixRenderer',
       address: string,

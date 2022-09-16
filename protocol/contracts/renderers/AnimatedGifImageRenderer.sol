@@ -12,7 +12,7 @@ contract AnimatedGifImageRenderer is IRenderer, Ownable, ERC165 {
   
   bytes public constant GIF_89_A = hex"474946383961";
   bytes public constant APPLICATION_EXTENSION = hex"21FF0B4E45545343415045322E300301FFFF00";
-  bytes public constant GRAPHIC_CONTROL_EXTENSION = hex"21F904040A000000";
+  bytes public constant GRAPHIC_CONTROL_EXTENSION = hex"21F904050A000000";
   bytes public constant IMAGE_DESCRIPTOR = hex"2C00000000800080000007";
 
   uint public IMAGE_DATA_CHUNK_SIZE = 126;

@@ -1,9 +1,10 @@
+import type * as configuredGifImageRendererSol from "./ConfiguredGifImageRenderer.sol";
+export type { configuredGifImageRendererSol };
 export type { AlphaFilterRenderer } from "./AlphaFilterRenderer";
 export type { AnimatedGifImageRenderer } from "./AnimatedGifImageRenderer";
 export type { BackgroundSvgRenderer } from "./BackgroundSvgRenderer";
 export type { CompactMiddlewareRenderer } from "./CompactMiddlewareRenderer";
 export type { CompressedAnimatedGifRenderer } from "./CompressedAnimatedGifRenderer";
-export type { ConfiguredGifImageRenderer } from "./ConfiguredGifImageRenderer";
 export type { DotMatrixRenderer } from "./DotMatrixRenderer";
 export type { GifImageRenderer } from "./GifImageRenderer";
 export type { HSLPixelGrid16Renderer } from "./HSLPixelGrid16Renderer";
