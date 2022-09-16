@@ -1,11 +1,5 @@
 import { task } from 'hardhat/config';
-import {
-  CompactMiddlewareRenderer,
-  AnimatedGifImageRenderer,
-  GifImageRenderer,
-  LayerCompositeRenderer,
-  SvgUtils,
-} from '../typechain-types';
+import { AnimatedGifImageRenderer, SvgUtils } from '../typechain-types';
 import { getSvgHotLoadingServer } from '../utils/svg';
 
 task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
@@ -22,11 +16,11 @@ task('develop-svg', 'Watches and hot-loads svg', async (args, hre) => {
       'AnimatedGifImageRenderer',
     );
 
-    const animatedGifImageRenderer = (await AnimatedGifImageRenderer.deploy()) as AnimatedGifImageRenderer;
+    const animatedGifImageRenderer =
+      (await AnimatedGifImageRenderer.deploy()) as AnimatedGifImageRenderer;
     await animatedGifImageRenderer.deployed();
 
-    const HEADER_BYTES =
-      '0x0404042C3333395B64A5C9CAE7F6F2';
+    const HEADER_BYTES = '0x0404042C3333395B64A5C9CAE7F6F2';
 
     const FRAME_1 = '01010101020202020303030304040404';
     const FRAME_2 = '02020202030303030404040401010101';

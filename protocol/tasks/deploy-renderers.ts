@@ -1,9 +1,9 @@
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
 import {
+  AnimatedGifImageRenderer,
   ConfiguredGifImageRenderer,
   RendererRegistry,
-  AnimatedGifImageRenderer
 } from '../typechain-types';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
 

@@ -2,6 +2,7 @@ export type { AlphaFilterRenderer } from "./AlphaFilterRenderer";
 export type { AnimatedGifImageRenderer } from "./AnimatedGifImageRenderer";
 export type { BackgroundSvgRenderer } from "./BackgroundSvgRenderer";
 export type { CompactMiddlewareRenderer } from "./CompactMiddlewareRenderer";
+export type { CompressedAnimatedGifRenderer } from "./CompressedAnimatedGifRenderer";
 export type { ConfiguredGifImageRenderer } from "./ConfiguredGifImageRenderer";
 export type { DotMatrixRenderer } from "./DotMatrixRenderer";
 export type { GifImageRenderer } from "./GifImageRenderer";

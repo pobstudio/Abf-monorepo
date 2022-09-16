@@ -2,6 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  EventFragment,
+  FunctionFragment,
+  Result,
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type {
   BaseContract,
   BigNumber,
   BytesLike,
@@ -11,203 +17,197 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../common";
+  TypedEvent,
+  TypedEventFilter,
+  TypedListener,
+} from '../../common';
 
 export interface AnimatedGifImageRendererInterface extends utils.Interface {
   functions: {
-    "APPLICATION_EXTENSION()": FunctionFragment;
-    "GIF_89_A()": FunctionFragment;
-    "GRAPHIC_CONTROL_EXTENSION()": FunctionFragment;
-    "HEIGHT_INDEX()": FunctionFragment;
-    "IMAGE_DATA_CHUNK_SIZE()": FunctionFragment;
-    "IMAGE_DESCRIPTOR()": FunctionFragment;
-    "NUM_COLORS_INDEX()": FunctionFragment;
-    "WIDTH_INDEX()": FunctionFragment;
-    "additionalMetadataURI()": FunctionFragment;
-    "attributes(bytes)": FunctionFragment;
-    "getImageData(bytes,bytes)": FunctionFragment;
-    "name()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "propsSize()": FunctionFragment;
-    "render(bytes)": FunctionFragment;
-    "renderAttributeKey()": FunctionFragment;
-    "renderRaw(bytes)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    'APPLICATION_EXTENSION()': FunctionFragment;
+    'GIF_89_A()': FunctionFragment;
+    'GRAPHIC_CONTROL_EXTENSION()': FunctionFragment;
+    'HEIGHT_INDEX()': FunctionFragment;
+    'IMAGE_DATA_CHUNK_SIZE()': FunctionFragment;
+    'IMAGE_DESCRIPTOR()': FunctionFragment;
+    'NUM_COLORS_INDEX()': FunctionFragment;
+    'WIDTH_INDEX()': FunctionFragment;
+    'additionalMetadataURI()': FunctionFragment;
+    'attributes(bytes)': FunctionFragment;
+    'getImageData(bytes,bytes)': FunctionFragment;
+    'name()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'propsSize()': FunctionFragment;
+    'render(bytes)': FunctionFragment;
+    'renderAttributeKey()': FunctionFragment;
+    'renderRaw(bytes)': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "APPLICATION_EXTENSION"
-      | "GIF_89_A"
-      | "GRAPHIC_CONTROL_EXTENSION"
-      | "HEIGHT_INDEX"
-      | "IMAGE_DATA_CHUNK_SIZE"
-      | "IMAGE_DESCRIPTOR"
-      | "NUM_COLORS_INDEX"
-      | "WIDTH_INDEX"
-      | "additionalMetadataURI"
-      | "attributes"
-      | "getImageData"
-      | "name"
-      | "owner"
-      | "propsSize"
-      | "render"
-      | "renderAttributeKey"
-      | "renderRaw"
-      | "renounceOwnership"
-      | "supportsInterface"
-      | "transferOwnership"
+      | 'APPLICATION_EXTENSION'
+      | 'GIF_89_A'
+      | 'GRAPHIC_CONTROL_EXTENSION'
+      | 'HEIGHT_INDEX'
+      | 'IMAGE_DATA_CHUNK_SIZE'
+      | 'IMAGE_DESCRIPTOR'
+      | 'NUM_COLORS_INDEX'
+      | 'WIDTH_INDEX'
+      | 'additionalMetadataURI'
+      | 'attributes'
+      | 'getImageData'
+      | 'name'
+      | 'owner'
+      | 'propsSize'
+      | 'render'
+      | 'renderAttributeKey'
+      | 'renderRaw'
+      | 'renounceOwnership'
+      | 'supportsInterface'
+      | 'transferOwnership',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "APPLICATION_EXTENSION",
-    values?: undefined
+    functionFragment: 'APPLICATION_EXTENSION',
+    values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "GIF_89_A", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'GIF_89_A', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "GRAPHIC_CONTROL_EXTENSION",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "HEIGHT_INDEX",
-    values?: undefined
+    functionFragment: 'GRAPHIC_CONTROL_EXTENSION',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "IMAGE_DATA_CHUNK_SIZE",
-    values?: undefined
+    functionFragment: 'HEIGHT_INDEX',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "IMAGE_DESCRIPTOR",
-    values?: undefined
+    functionFragment: 'IMAGE_DATA_CHUNK_SIZE',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "NUM_COLORS_INDEX",
-    values?: undefined
+    functionFragment: 'IMAGE_DESCRIPTOR',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "WIDTH_INDEX",
-    values?: undefined
+    functionFragment: 'NUM_COLORS_INDEX',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "additionalMetadataURI",
-    values?: undefined
+    functionFragment: 'WIDTH_INDEX',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "attributes",
-    values: [PromiseOrValue<BytesLike>]
+    functionFragment: 'additionalMetadataURI',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "getImageData",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "propsSize", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "render",
-    values: [PromiseOrValue<BytesLike>]
+    functionFragment: 'attributes',
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "renderAttributeKey",
-    values?: undefined
+    functionFragment: 'getImageData',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'propsSize', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'render',
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "renderRaw",
-    values: [PromiseOrValue<BytesLike>]
+    functionFragment: 'renderAttributeKey',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: 'renderRaw',
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'supportsInterface',
+    values: [PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "APPLICATION_EXTENSION",
-    data: BytesLike
+    functionFragment: 'APPLICATION_EXTENSION',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "GIF_89_A", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'GIF_89_A', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "GRAPHIC_CONTROL_EXTENSION",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "HEIGHT_INDEX",
-    data: BytesLike
+    functionFragment: 'GRAPHIC_CONTROL_EXTENSION',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "IMAGE_DATA_CHUNK_SIZE",
-    data: BytesLike
+    functionFragment: 'HEIGHT_INDEX',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "IMAGE_DESCRIPTOR",
-    data: BytesLike
+    functionFragment: 'IMAGE_DATA_CHUNK_SIZE',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "NUM_COLORS_INDEX",
-    data: BytesLike
+    functionFragment: 'IMAGE_DESCRIPTOR',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "WIDTH_INDEX",
-    data: BytesLike
+    functionFragment: 'NUM_COLORS_INDEX',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "additionalMetadataURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "attributes", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getImageData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "propsSize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "render", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renderAttributeKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "renderRaw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
+    functionFragment: 'WIDTH_INDEX',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
+    functionFragment: 'additionalMetadataURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'getImageData',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'renderAttributeKey',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
+    functionFragment: 'supportsInterface',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
@@ -232,15 +232,15 @@ export interface AnimatedGifImageRenderer extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -269,13 +269,13 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     attributes(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     getImageData(
       imageDescriptor: PromiseOrValue<BytesLike>,
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -286,28 +286,28 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     render(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
 
     renderRaw(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -331,13 +331,13 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
   attributes(
     props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   getImageData(
     imageDescriptor: PromiseOrValue<BytesLike>,
     props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -348,28 +348,28 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
   render(
     props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
   renderRaw(
     props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   supportsInterface(
     interfaceId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -393,13 +393,13 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     attributes(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     getImageData(
       imageDescriptor: PromiseOrValue<BytesLike>,
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     name(overrides?: CallOverrides): Promise<string>;
@@ -410,37 +410,37 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     render(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<string>;
 
     renderRaw(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
   };
 
@@ -465,13 +465,13 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     attributes(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getImageData(
       imageDescriptor: PromiseOrValue<BytesLike>,
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -482,46 +482,46 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     render(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
 
     renderRaw(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     APPLICATION_EXTENSION(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     GIF_89_A(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     GRAPHIC_CONTROL_EXTENSION(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     HEIGHT_INDEX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     IMAGE_DATA_CHUNK_SIZE(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     IMAGE_DESCRIPTOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -531,18 +531,18 @@ export interface AnimatedGifImageRenderer extends BaseContract {
     WIDTH_INDEX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     additionalMetadataURI(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     attributes(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getImageData(
       imageDescriptor: PromiseOrValue<BytesLike>,
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -553,30 +553,30 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     render(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renderAttributeKey(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renderRaw(
       props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

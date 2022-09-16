@@ -53,6 +53,8 @@ export type { BackgroundSvgRenderer } from "./contracts/renderers/BackgroundSvgR
 export { BackgroundSvgRenderer__factory } from "./factories/contracts/renderers/BackgroundSvgRenderer__factory";
 export type { CompactMiddlewareRenderer } from "./contracts/renderers/CompactMiddlewareRenderer";
 export { CompactMiddlewareRenderer__factory } from "./factories/contracts/renderers/CompactMiddlewareRenderer__factory";
+export type { CompressedAnimatedGifRenderer } from "./contracts/renderers/CompressedAnimatedGifRenderer";
+export { CompressedAnimatedGifRenderer__factory } from "./factories/contracts/renderers/CompressedAnimatedGifRenderer__factory";
 export type { ConfiguredGifImageRenderer } from "./contracts/renderers/ConfiguredGifImageRenderer";
 export { ConfiguredGifImageRenderer__factory } from "./factories/contracts/renderers/ConfiguredGifImageRenderer__factory";
 export type { DotMatrixRenderer } from "./contracts/renderers/DotMatrixRenderer";
