@@ -69,6 +69,10 @@ contract CompressedAnimatedGifRenderer is IRenderer, Ownable, ERC165 {
     return maxConfigurationIndex;
   }
 
+  function getColorTable(uint index) public view returns (bytes memory) {
+    return SSTORE2Map.read(bytes32(index));
+  }
+
   function convertProps(bytes calldata props) public pure returns (bytes memory output) {
     uint frameDataSize = BytesUtils.toUint8(props, WIDTH_INDEX) * BytesUtils.toUint8(props, HEIGHT_INDEX);
 
