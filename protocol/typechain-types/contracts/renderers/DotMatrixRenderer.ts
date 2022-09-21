@@ -31,13 +31,12 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     'RADIUS_MAX()': FunctionFragment;
     'RADIUS_MIN()': FunctionFragment;
     'additionalMetadataURI()': FunctionFragment;
-    'attributes(bytes)': FunctionFragment;
     'name()': FunctionFragment;
     'owner()': FunctionFragment;
     'propsSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
-    'renderAttributeKey()': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
+    'renderType()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
@@ -48,13 +47,12 @@ export interface DotMatrixRendererInterface extends utils.Interface {
       | 'RADIUS_MAX'
       | 'RADIUS_MIN'
       | 'additionalMetadataURI'
-      | 'attributes'
       | 'name'
       | 'owner'
       | 'propsSize'
       | 'render'
-      | 'renderAttributeKey'
       | 'renderRaw'
+      | 'renderType'
       | 'renounceOwnership'
       | 'supportsInterface'
       | 'transferOwnership',
@@ -72,10 +70,6 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     functionFragment: 'additionalMetadataURI',
     values?: undefined,
   ): string;
-  encodeFunctionData(
-    functionFragment: 'attributes',
-    values: [PromiseOrValue<BytesLike>],
-  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'propsSize', values?: undefined): string;
@@ -84,12 +78,12 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'renderAttributeKey',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
     functionFragment: 'renderRaw',
     values: [PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renderType',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'renounceOwnership',
@@ -110,16 +104,12 @@ export interface DotMatrixRendererInterface extends utils.Interface {
     functionFragment: 'additionalMetadataURI',
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'renderAttributeKey',
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renderType', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'renounceOwnership',
     data: BytesLike,
@@ -185,11 +175,6 @@ export interface DotMatrixRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
-
     name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -201,12 +186,12 @@ export interface DotMatrixRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    renderType(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -229,11 +214,6 @@ export interface DotMatrixRenderer extends BaseContract {
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  attributes(
-    props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides,
-  ): Promise<string>;
-
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
@@ -245,12 +225,12 @@ export interface DotMatrixRenderer extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  renderAttributeKey(overrides?: CallOverrides): Promise<string>;
-
   renderRaw(
     props: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  renderType(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -273,11 +253,6 @@ export interface DotMatrixRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
@@ -289,12 +264,12 @@ export interface DotMatrixRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<string>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    renderType(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -327,11 +302,6 @@ export interface DotMatrixRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -343,12 +313,12 @@ export interface DotMatrixRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    renderType(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -374,11 +344,6 @@ export interface DotMatrixRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -390,14 +355,12 @@ export interface DotMatrixRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    renderAttributeKey(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    renderType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },

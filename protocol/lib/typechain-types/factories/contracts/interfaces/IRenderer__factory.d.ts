@@ -1,5 +1,5 @@
-import { Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
+import { Signer } from "ethers";
 import type { IRenderer, IRendererInterface } from "../../../contracts/interfaces/IRenderer";
 export declare class IRenderer__factory {
     static readonly abi: {

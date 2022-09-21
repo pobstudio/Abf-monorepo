@@ -29,14 +29,13 @@ import type {
 export interface LayerCompositeRendererInterface extends utils.Interface {
   functions: {
     'additionalMetadataURI()': FunctionFragment;
-    'attributes(bytes)': FunctionFragment;
     'encodeProps(address[],bytes[])': FunctionFragment;
     'name()': FunctionFragment;
     'owner()': FunctionFragment;
     'propsSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
-    'renderAttributeKey()': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
+    'renderType()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
@@ -45,14 +44,13 @@ export interface LayerCompositeRendererInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | 'additionalMetadataURI'
-      | 'attributes'
       | 'encodeProps'
       | 'name'
       | 'owner'
       | 'propsSize'
       | 'render'
-      | 'renderAttributeKey'
       | 'renderRaw'
+      | 'renderType'
       | 'renounceOwnership'
       | 'supportsInterface'
       | 'transferOwnership',
@@ -61,10 +59,6 @@ export interface LayerCompositeRendererInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'additionalMetadataURI',
     values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'attributes',
-    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
     functionFragment: 'encodeProps',
@@ -78,12 +72,12 @@ export interface LayerCompositeRendererInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'renderAttributeKey',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
     functionFragment: 'renderRaw',
     values: [PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renderType',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'renounceOwnership',
@@ -102,7 +96,6 @@ export interface LayerCompositeRendererInterface extends utils.Interface {
     functionFragment: 'additionalMetadataURI',
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'encodeProps',
     data: BytesLike,
@@ -111,11 +104,8 @@ export interface LayerCompositeRendererInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'renderAttributeKey',
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renderType', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'renounceOwnership',
     data: BytesLike,
@@ -177,11 +167,6 @@ export interface LayerCompositeRenderer extends BaseContract {
   functions: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    attributes(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
-
     encodeProps(
       renderers: PromiseOrValue<string>[],
       rendererProps: PromiseOrValue<BytesLike>[],
@@ -199,12 +184,12 @@ export interface LayerCompositeRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    renderType(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -223,11 +208,6 @@ export interface LayerCompositeRenderer extends BaseContract {
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  attributes(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides,
-  ): Promise<string>;
-
   encodeProps(
     renderers: PromiseOrValue<string>[],
     rendererProps: PromiseOrValue<BytesLike>[],
@@ -245,12 +225,12 @@ export interface LayerCompositeRenderer extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  renderAttributeKey(overrides?: CallOverrides): Promise<string>;
-
   renderRaw(
     props: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  renderType(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -269,11 +249,6 @@ export interface LayerCompositeRenderer extends BaseContract {
   callStatic: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    attributes(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
     encodeProps(
       renderers: PromiseOrValue<string>[],
       rendererProps: PromiseOrValue<BytesLike>[],
@@ -291,12 +266,12 @@ export interface LayerCompositeRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<string>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    renderType(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -325,11 +300,6 @@ export interface LayerCompositeRenderer extends BaseContract {
   estimateGas: {
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    attributes(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     encodeProps(
       renderers: PromiseOrValue<string>[],
       rendererProps: PromiseOrValue<BytesLike>[],
@@ -347,12 +317,12 @@ export interface LayerCompositeRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    renderType(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -374,11 +344,6 @@ export interface LayerCompositeRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    attributes(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     encodeProps(
       renderers: PromiseOrValue<string>[],
       rendererProps: PromiseOrValue<BytesLike>[],
@@ -396,14 +361,12 @@ export interface LayerCompositeRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    renderAttributeKey(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    renderType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },

@@ -30,24 +30,62 @@ import type {
 export interface RendererRegistryInterface extends utils.Interface {
   functions: {
     'addressToId(address)': FunctionFragment;
+    'createPackage(string)': FunctionFragment;
+    'editPackageByNamesAndIds(string,string[],uint256[])': FunctionFragment;
+    'editPackageByNamesAndRenderers(string,string[],address[])': FunctionFragment;
+    'editPackageByRenderer(string,address[])': FunctionFragment;
     'editRenderer(address,address)': FunctionFragment;
     'idCounter()': FunctionFragment;
     'idToAddress(uint256)': FunctionFragment;
+    'packageManager(string)': FunctionFragment;
+    'packages(string,string)': FunctionFragment;
     'registerRenderer(address)': FunctionFragment;
+    'transferPackageManager(string,address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'addressToId'
+      | 'createPackage'
+      | 'editPackageByNamesAndIds'
+      | 'editPackageByNamesAndRenderers'
+      | 'editPackageByRenderer'
       | 'editRenderer'
       | 'idCounter'
       | 'idToAddress'
-      | 'registerRenderer',
+      | 'packageManager'
+      | 'packages'
+      | 'registerRenderer'
+      | 'transferPackageManager',
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: 'addressToId',
     values: [PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'createPackage',
+    values: [PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'editPackageByNamesAndIds',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'editPackageByNamesAndRenderers',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'editPackageByRenderer',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>[]],
   ): string;
   encodeFunctionData(
     functionFragment: 'editRenderer',
@@ -59,12 +97,40 @@ export interface RendererRegistryInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
+    functionFragment: 'packageManager',
+    values: [PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'packages',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'registerRenderer',
     values: [PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferPackageManager',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
     functionFragment: 'addressToId',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'createPackage',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'editPackageByNamesAndIds',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'editPackageByNamesAndRenderers',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'editPackageByRenderer',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -77,7 +143,16 @@ export interface RendererRegistryInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'packageManager',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'packages', data: BytesLike): Result;
+  decodeFunctionResult(
     functionFragment: 'registerRenderer',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferPackageManager',
     data: BytesLike,
   ): Result;
 
@@ -134,6 +209,31 @@ export interface RendererRegistry extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
+    createPackage(
+      packageName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    editPackageByNamesAndIds(
+      packageName: PromiseOrValue<string>,
+      names: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    editPackageByNamesAndRenderers(
+      packageName: PromiseOrValue<string>,
+      names: PromiseOrValue<string>[],
+      renderers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    editPackageByRenderer(
+      packageName: PromiseOrValue<string>,
+      renderers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     editRenderer(
       _oldRenderer: PromiseOrValue<string>,
       _renderer: PromiseOrValue<string>,
@@ -147,8 +247,25 @@ export interface RendererRegistry extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
+    packageManager(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
+    packages(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
+
     registerRenderer(
       _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    transferPackageManager(
+      packageName: PromiseOrValue<string>,
+      newManager: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
@@ -157,6 +274,31 @@ export interface RendererRegistry extends BaseContract {
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
+
+  createPackage(
+    packageName: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  editPackageByNamesAndIds(
+    packageName: PromiseOrValue<string>,
+    names: PromiseOrValue<string>[],
+    ids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  editPackageByNamesAndRenderers(
+    packageName: PromiseOrValue<string>,
+    names: PromiseOrValue<string>[],
+    renderers: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  editPackageByRenderer(
+    packageName: PromiseOrValue<string>,
+    renderers: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   editRenderer(
     _oldRenderer: PromiseOrValue<string>,
@@ -171,8 +313,25 @@ export interface RendererRegistry extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
+  packageManager(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  packages(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
+
   registerRenderer(
     _renderer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  transferPackageManager(
+    packageName: PromiseOrValue<string>,
+    newManager: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -181,6 +340,31 @@ export interface RendererRegistry extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    createPackage(
+      packageName: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    editPackageByNamesAndIds(
+      packageName: PromiseOrValue<string>,
+      names: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    editPackageByNamesAndRenderers(
+      packageName: PromiseOrValue<string>,
+      names: PromiseOrValue<string>[],
+      renderers: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    editPackageByRenderer(
+      packageName: PromiseOrValue<string>,
+      renderers: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     editRenderer(
       _oldRenderer: PromiseOrValue<string>,
@@ -195,8 +379,25 @@ export interface RendererRegistry extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<string>;
 
+    packageManager(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    packages(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     registerRenderer(
       _renderer: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    transferPackageManager(
+      packageName: PromiseOrValue<string>,
+      newManager: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
   };
@@ -222,6 +423,31 @@ export interface RendererRegistry extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    createPackage(
+      packageName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    editPackageByNamesAndIds(
+      packageName: PromiseOrValue<string>,
+      names: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    editPackageByNamesAndRenderers(
+      packageName: PromiseOrValue<string>,
+      names: PromiseOrValue<string>[],
+      renderers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    editPackageByRenderer(
+      packageName: PromiseOrValue<string>,
+      renderers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     editRenderer(
       _oldRenderer: PromiseOrValue<string>,
       _renderer: PromiseOrValue<string>,
@@ -235,8 +461,25 @@ export interface RendererRegistry extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    packageManager(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    packages(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     registerRenderer(
       _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    transferPackageManager(
+      packageName: PromiseOrValue<string>,
+      newManager: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
@@ -245,6 +488,31 @@ export interface RendererRegistry extends BaseContract {
     addressToId(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    createPackage(
+      packageName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    editPackageByNamesAndIds(
+      packageName: PromiseOrValue<string>,
+      names: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    editPackageByNamesAndRenderers(
+      packageName: PromiseOrValue<string>,
+      names: PromiseOrValue<string>[],
+      renderers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    editPackageByRenderer(
+      packageName: PromiseOrValue<string>,
+      renderers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     editRenderer(
@@ -260,8 +528,25 @@ export interface RendererRegistry extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    packageManager(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    packages(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     registerRenderer(
       _renderer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    transferPackageManager(
+      packageName: PromiseOrValue<string>,
+      newManager: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };

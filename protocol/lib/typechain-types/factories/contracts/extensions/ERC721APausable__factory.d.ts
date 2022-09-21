@@ -1,5 +1,5 @@
-import { Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
+import { Signer } from "ethers";
 import type { ERC721APausable, ERC721APausableInterface } from "../../../contracts/extensions/ERC721APausable";
 export declare class ERC721APausable__factory {
     static readonly abi: ({

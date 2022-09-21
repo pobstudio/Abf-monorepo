@@ -1,5 +1,5 @@
-import { Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
+import { Signer } from "ethers";
 import type { IERC2981, IERC2981Interface } from "../../../../@openzeppelin/contracts/interfaces/IERC2981";
 export declare class IERC2981__factory {
     static readonly abi: {

@@ -13,7 +13,7 @@
   "dependencies": {
     "@abf-monorepo/protocol": "1.0.0",
     "@abf-monorepo/types": "1.0.0",
-    "@alch/alchemy-sdk": "^1.2.0",
+    "alchemy-sdk": "^2.0.3",
     "@apollo/client": "^3.6.9",
     "@ethersproject/providers": "^5.7.0",
     "@walletconnect/ethereum-provider": "^1.8.0",

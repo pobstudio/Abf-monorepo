@@ -1,5 +1,5 @@
-import { Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
+import { Signer } from "ethers";
 import type { IERC165, IERC165Interface } from "../../../../../@openzeppelin/contracts/utils/introspection/IERC165";
 export declare class IERC165__factory {
     static readonly abi: {

@@ -10,6 +10,7 @@ import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -36,16 +37,16 @@ export interface CompressedAnimatedGifRendererInterface
     'MAX_NUM_CONFIGURATIONS()': FunctionFragment;
     'WIDTH_INDEX()': FunctionFragment;
     'additionalMetadataURI()': FunctionFragment;
-    'attributes(bytes)': FunctionFragment;
     'batchAddColorTables(bytes[])': FunctionFragment;
     'convertProps(bytes)': FunctionFragment;
+    'getColorTable(uint256)': FunctionFragment;
     'maxConfigurationIndex()': FunctionFragment;
     'name()': FunctionFragment;
     'owner()': FunctionFragment;
     'propsSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
-    'renderAttributeKey()': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
+    'renderType()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
@@ -60,16 +61,16 @@ export interface CompressedAnimatedGifRendererInterface
       | 'MAX_NUM_CONFIGURATIONS'
       | 'WIDTH_INDEX'
       | 'additionalMetadataURI'
-      | 'attributes'
       | 'batchAddColorTables'
       | 'convertProps'
+      | 'getColorTable'
       | 'maxConfigurationIndex'
       | 'name'
       | 'owner'
       | 'propsSize'
       | 'render'
-      | 'renderAttributeKey'
       | 'renderRaw'
+      | 'renderType'
       | 'renounceOwnership'
       | 'supportsInterface'
       | 'transferOwnership',
@@ -104,16 +105,16 @@ export interface CompressedAnimatedGifRendererInterface
     values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: 'attributes',
-    values: [PromiseOrValue<BytesLike>],
-  ): string;
-  encodeFunctionData(
     functionFragment: 'batchAddColorTables',
     values: [PromiseOrValue<BytesLike>[]],
   ): string;
   encodeFunctionData(
     functionFragment: 'convertProps',
     values: [PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getColorTable',
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'maxConfigurationIndex',
@@ -127,12 +128,12 @@ export interface CompressedAnimatedGifRendererInterface
     values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'renderAttributeKey',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
     functionFragment: 'renderRaw',
     values: [PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renderType',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'renounceOwnership',
@@ -175,13 +176,16 @@ export interface CompressedAnimatedGifRendererInterface
     functionFragment: 'additionalMetadataURI',
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'batchAddColorTables',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: 'convertProps',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'getColorTable',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -192,11 +196,8 @@ export interface CompressedAnimatedGifRendererInterface
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'renderAttributeKey',
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renderType', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'renounceOwnership',
     data: BytesLike,
@@ -283,11 +284,6 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
-
     batchAddColorTables(
       colorTables: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -297,6 +293,11 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string] & { output: string }>;
+
+    getColorTable(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     maxConfigurationIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -311,12 +312,12 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    renderType(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -347,11 +348,6 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  attributes(
-    props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides,
-  ): Promise<string>;
-
   batchAddColorTables(
     colorTables: PromiseOrValue<BytesLike>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -359,6 +355,11 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
 
   convertProps(
     props: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  getColorTable(
+    index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
@@ -375,12 +376,12 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  renderAttributeKey(overrides?: CallOverrides): Promise<string>;
-
   renderRaw(
     props: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  renderType(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -411,11 +412,6 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
     batchAddColorTables(
       colorTables: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
@@ -423,6 +419,11 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
 
     convertProps(
       props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    getColorTable(
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
@@ -439,12 +440,12 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<string>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    renderType(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -488,11 +489,6 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     batchAddColorTables(
       colorTables: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -500,6 +496,11 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
 
     convertProps(
       props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    getColorTable(
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -516,12 +517,12 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    renderType(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -563,11 +564,6 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     batchAddColorTables(
       colorTables: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -575,6 +571,11 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
 
     convertProps(
       props: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    getColorTable(
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -593,14 +594,12 @@ export interface CompressedAnimatedGifRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    renderAttributeKey(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    renderType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },

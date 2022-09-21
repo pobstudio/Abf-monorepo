@@ -18,20 +18,20 @@ error ContractPaused();
  * event of a large bug.
  */
 abstract contract ERC721APausable is ERC721A, Pausable {
-    /**
-     * @dev See {ERC721A-_beforeTokenTransfers}.
-     *
-     * Requirements:
-     *
-     * - the contract must not be paused.
-     */
-    function _beforeTokenTransfers(
-        address from,
-        address to,
-        uint256 startTokenId,
-        uint256 quantity
-    ) internal virtual override {
-        super._beforeTokenTransfers(from, to, startTokenId, quantity);
-        if (paused()) revert ContractPaused();
-    }
+  /**
+   * @dev See {ERC721A-_beforeTokenTransfers}.
+   *
+   * Requirements:
+   *
+   * - the contract must not be paused.
+   */
+  function _beforeTokenTransfers(
+    address from,
+    address to,
+    uint256 startTokenId,
+    uint256 quantity
+  ) internal virtual override {
+    super._beforeTokenTransfers(from, to, startTokenId, quantity);
+    if (paused()) revert ContractPaused();
+  }
 }

@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.4;
-import "../interfaces/IRenderer.sol";
-import "../libraries/SvgUtils.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
-import "@openzeppelin/contracts/utils/Base64.sol";
+import '../interfaces/IRenderer.sol';
+import '../libraries/SvgUtils.sol';
+import '@openzeppelin/contracts/utils/Strings.sol';
+import '@openzeppelin/contracts/utils/Base64.sol';
 import '@openzeppelin/contracts/utils/introspection/ERC165.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
+import '../libraries/AbsBrainFuckConstants.sol';
 
 contract PixelGrid16Renderer is IRenderer, Ownable, ERC165 {
   using Strings for uint256;
@@ -270,66 +271,90 @@ contract PixelGrid16Renderer is IRenderer, Ownable, ERC165 {
     'y="15" x="12"',
     'y="15" x="13"',
     'y="15" x="14"',
-    'y="15" x="15"' 
+    'y="15" x="15"'
   ];
 
-  function name() public override pure returns (string memory) {
+  function name() public pure override returns (string memory) {
     return 'Pixel Grid 16';
   }
 
-  function owner() public override(Ownable, IRenderer) view returns (address) {
+  function owner() public view override(Ownable, IRenderer) returns (address) {
     return super.owner();
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
+  function supportsInterface(bytes4 interfaceId)
+    public
+    view
+    virtual
+    override(ERC165, IERC165)
+    returns (bool)
+  {
     return
       interfaceId == type(IRenderer).interfaceId ||
       super.supportsInterface(interfaceId);
   }
 
-  function propsSize() external override pure returns (uint256) {
+  function propsSize() external pure override returns (uint256) {
     return 256 * 3;
   }
-  
-  function additionalMetadataURI() external override pure returns (string memory) {
-    return "ipfs://bafkreiap44qgpibtdkgxda6p7da2b7vdtfjhc4kj6luxeromkrvnfjmmei";
+
+  function additionalMetadataURI()
+    external
+    pure
+    override
+    returns (string memory)
+  {
+    return 'ipfs://bafkreiap44qgpibtdkgxda6p7da2b7vdtfjhc4kj6luxeromkrvnfjmmei';
   }
 
-  function renderAttributeKey() external override pure returns (string memory) {
-    return "image";
+  function renderType() external pure override returns (string memory) {
+    return AbsBrainFuckConstants.IMAGE_RENDER_TYPE;
   }
 
-  function renderRaw(bytes calldata props) public override view returns (bytes memory) {
+  function renderRaw(bytes calldata props)
+    public
+    view
+    override
+    returns (bytes memory)
+  {
     string memory content = '';
-    for (uint i = 0; i < 256; ++i) {
-      content = string(abi.encodePacked(content, rectPrefix, rects[i], ' fill="', SvgUtils.toColorHexStringByBytes(props[i * 3], props[i * 3 + 1], props[i * 3 + 2]), rectSuffix));
+    for (uint256 i = 0; i < 256; ++i) {
+      content = string(
+        abi.encodePacked(
+          content,
+          rectPrefix,
+          rects[i],
+          ' fill="',
+          SvgUtils.toColorHexStringByBytes(
+            props[i * 3],
+            props[i * 3 + 1],
+            props[i * 3 + 2]
+          ),
+          rectSuffix
+        )
+      );
     }
 
-    return abi.encodePacked(
-      '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="background:#F1F1F1">',
-        content,
-      '</svg>'
-    );
-  }
-
-  function render(bytes calldata props) external override view returns (string memory) {
-    return string(
+    return
       abi.encodePacked(
-        'data:image/svg+xml;base64,',
-        Base64.encode(renderRaw(props)) 
-      )
-    );
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="background:#F1F1F1">',
+        content,
+        '</svg>'
+      );
   }
 
-  function attributes(bytes calldata props) external override pure returns (string memory) {
-    uint i = 0;
-    while(props[i] != 0x00) {
-      i++;
-    }
-      return string(
-            abi.encodePacked(
-              '{"trait_type": "Data Length", "value":', i.toString(), '}'
-            )
-          );
+  function render(bytes calldata props)
+    external
+    view
+    override
+    returns (string memory)
+  {
+    return
+      string(
+        abi.encodePacked(
+          'data:image/svg+xml;base64,',
+          Base64.encode(renderRaw(props))
+        )
+      );
   }
 }

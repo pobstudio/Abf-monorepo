@@ -29,6 +29,18 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC2981__factory>;
     getContractFactory(
+      name: 'ERC20',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ERC20__factory>;
+    getContractFactory(
+      name: 'IERC20Metadata',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IERC20Metadata__factory>;
+    getContractFactory(
+      name: 'IERC20',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
       name: 'ERC721',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721__factory>;
@@ -53,21 +65,21 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
-      name: 'BrainFuck',
+      name: 'AbsBrainFuck',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.BrainFuck__factory>;
+    ): Promise<Contracts.AbsBrainFuck__factory>;
     getContractFactory(
-      name: 'BrainFuckFactory',
+      name: 'AbsBrainFuckFactory',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.BrainFuckFactory__factory>;
+    ): Promise<Contracts.AbsBrainFuckFactory__factory>;
     getContractFactory(
-      name: 'BrainFuckURIConstructor',
+      name: 'AbsBrainFuckMinter',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.BrainFuckURIConstructor__factory>;
+    ): Promise<Contracts.AbsBrainFuckMinter__factory>;
     getContractFactory(
-      name: 'BrainFuckVM',
+      name: 'AbsBrainFuckURIConstructor',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.BrainFuckVM__factory>;
+    ): Promise<Contracts.AbsBrainFuckURIConstructor__factory>;
     getContractFactory(
       name: 'ERC721APausable',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -77,6 +89,26 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IRenderer__factory>;
     getContractFactory(
+      name: 'IRendererPayable',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IRendererPayable__factory>;
+    getContractFactory(
+      name: 'ISplitMain',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ISplitMain__factory>;
+    getContractFactory(
+      name: 'IVirtualMachine',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IVirtualMachine__factory>;
+    getContractFactory(
+      name: 'AbsBrainFuckConstants',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.AbsBrainFuckConstants__factory>;
+    getContractFactory(
+      name: 'AbsBrainFuckTreasuryUtils',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.AbsBrainFuckTreasuryUtils__factory>;
+    getContractFactory(
       name: 'Bytecode',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Bytecode__factory>;
@@ -84,6 +116,10 @@ declare module 'hardhat/types/runtime' {
       name: 'Create3',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Create3__factory>;
+    getContractFactory(
+      name: 'NftMetadataUtils',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.NftMetadataUtils__factory>;
     getContractFactory(
       name: 'SSTORE2Map',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -97,6 +133,10 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.RendererRegistry__factory>;
     getContractFactory(
+      name: 'AbfDefaultMetadataRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.AbfDefaultMetadataRenderer__factory>;
+    getContractFactory(
       name: 'AlphaFilterRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.AlphaFilterRenderer__factory>;
@@ -109,6 +149,10 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.BackgroundSvgRenderer__factory>;
     getContractFactory(
+      name: 'BrainfuckMiddlewareRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.BrainfuckMiddlewareRenderer__factory>;
+    getContractFactory(
       name: 'CompactMiddlewareRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.CompactMiddlewareRenderer__factory>;
@@ -117,9 +161,9 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.CompressedAnimatedGifRenderer__factory>;
     getContractFactory(
-      name: 'CompressedAnimatedGifRenderer',
+      name: 'ConfiguredGifImageRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.CompressedAnimatedGifRenderer__factory>;
+    ): Promise<Contracts.ConfiguredGifImageRenderer__factory>;
     getContractFactory(
       name: 'DotMatrixRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -148,6 +192,10 @@ declare module 'hardhat/types/runtime' {
       name: 'LayerCompositeRenderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.LayerCompositeRenderer__factory>;
+    getContractFactory(
+      name: 'MiddlewareRenderer',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.MiddlewareRenderer__factory>;
     getContractFactory(
       name: 'MonoPixelGrid16Renderer',
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -180,6 +228,10 @@ declare module 'hardhat/types/runtime' {
       name: 'ERC721A',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC721A__factory>;
+    getContractFactory(
+      name: 'BrainFuckVM',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.BrainFuckVM__factory>;
 
     getContractAt(
       name: 'Ownable',
@@ -201,6 +253,21 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.ERC2981>;
+    getContractAt(
+      name: 'ERC20',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ERC20>;
+    getContractAt(
+      name: 'IERC20Metadata',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IERC20Metadata>;
+    getContractAt(
+      name: 'IERC20',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IERC20>;
     getContractAt(
       name: 'ERC721',
       address: string,
@@ -232,25 +299,25 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.IERC165>;
     getContractAt(
-      name: 'BrainFuck',
+      name: 'AbsBrainFuck',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.BrainFuck>;
+    ): Promise<Contracts.AbsBrainFuck>;
     getContractAt(
-      name: 'BrainFuckFactory',
+      name: 'AbsBrainFuckFactory',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.BrainFuckFactory>;
+    ): Promise<Contracts.AbsBrainFuckFactory>;
     getContractAt(
-      name: 'BrainFuckURIConstructor',
+      name: 'AbsBrainFuckMinter',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.BrainFuckURIConstructor>;
+    ): Promise<Contracts.AbsBrainFuckMinter>;
     getContractAt(
-      name: 'BrainFuckVM',
+      name: 'AbsBrainFuckURIConstructor',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.BrainFuckVM>;
+    ): Promise<Contracts.AbsBrainFuckURIConstructor>;
     getContractAt(
       name: 'ERC721APausable',
       address: string,
@@ -262,6 +329,31 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.IRenderer>;
     getContractAt(
+      name: 'IRendererPayable',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IRendererPayable>;
+    getContractAt(
+      name: 'ISplitMain',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ISplitMain>;
+    getContractAt(
+      name: 'IVirtualMachine',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IVirtualMachine>;
+    getContractAt(
+      name: 'AbsBrainFuckConstants',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.AbsBrainFuckConstants>;
+    getContractAt(
+      name: 'AbsBrainFuckTreasuryUtils',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.AbsBrainFuckTreasuryUtils>;
+    getContractAt(
       name: 'Bytecode',
       address: string,
       signer?: ethers.Signer,
@@ -271,6 +363,11 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.Create3>;
+    getContractAt(
+      name: 'NftMetadataUtils',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.NftMetadataUtils>;
     getContractAt(
       name: 'SSTORE2Map',
       address: string,
@@ -287,6 +384,11 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.RendererRegistry>;
     getContractAt(
+      name: 'AbfDefaultMetadataRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.AbfDefaultMetadataRenderer>;
+    getContractAt(
       name: 'AlphaFilterRenderer',
       address: string,
       signer?: ethers.Signer,
@@ -302,6 +404,11 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.BackgroundSvgRenderer>;
     getContractAt(
+      name: 'BrainfuckMiddlewareRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.BrainfuckMiddlewareRenderer>;
+    getContractAt(
       name: 'CompactMiddlewareRenderer',
       address: string,
       signer?: ethers.Signer,
@@ -312,10 +419,10 @@ declare module 'hardhat/types/runtime' {
       signer?: ethers.Signer,
     ): Promise<Contracts.CompressedAnimatedGifRenderer>;
     getContractAt(
-      name: 'CompressedAnimatedGifRenderer',
+      name: 'ConfiguredGifImageRenderer',
       address: string,
       signer?: ethers.Signer,
-    ): Promise<Contracts.CompressedAnimatedGifRenderer>;
+    ): Promise<Contracts.ConfiguredGifImageRenderer>;
     getContractAt(
       name: 'DotMatrixRenderer',
       address: string,
@@ -351,6 +458,11 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.LayerCompositeRenderer>;
+    getContractAt(
+      name: 'MiddlewareRenderer',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.MiddlewareRenderer>;
     getContractAt(
       name: 'MonoPixelGrid16Renderer',
       address: string,
@@ -391,6 +503,11 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer,
     ): Promise<Contracts.ERC721A>;
+    getContractAt(
+      name: 'BrainFuckVM',
+      address: string,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.BrainFuckVM>;
 
     // default types
     getContractFactory(

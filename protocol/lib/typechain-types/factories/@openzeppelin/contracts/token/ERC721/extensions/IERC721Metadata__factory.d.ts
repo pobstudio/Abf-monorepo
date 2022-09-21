@@ -1,5 +1,5 @@
-import { Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
+import { Signer } from "ethers";
 import type { IERC721Metadata, IERC721MetadataInterface } from "../../../../../../@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata";
 export declare class IERC721Metadata__factory {
     static readonly abi: ({

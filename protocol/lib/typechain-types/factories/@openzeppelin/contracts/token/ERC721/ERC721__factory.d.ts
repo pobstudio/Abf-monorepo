@@ -1,7 +1,7 @@
-import { Signer, ContractFactory, Overrides } from "ethers";
 import type { Provider, TransactionRequest } from "@ethersproject/providers";
-import type { PromiseOrValue } from "../../../../../common";
+import { ContractFactory, Overrides, Signer } from "ethers";
 import type { ERC721, ERC721Interface } from "../../../../../@openzeppelin/contracts/token/ERC721/ERC721";
+import type { PromiseOrValue } from "../../../../../common";
 declare type ERC721ConstructorParams = [signer?: Signer] | ConstructorParameters<typeof ContractFactory>;
 export declare class ERC721__factory extends ContractFactory {
     constructor(...args: ERC721ConstructorParams);

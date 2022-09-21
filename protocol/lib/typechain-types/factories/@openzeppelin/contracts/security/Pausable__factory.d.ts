@@ -1,5 +1,5 @@
-import { Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
+import { Signer } from "ethers";
 import type { Pausable, PausableInterface } from "../../../../@openzeppelin/contracts/security/Pausable";
 export declare class Pausable__factory {
     static readonly abi: ({

@@ -325,7 +325,7 @@ const _abi = [
     },
     {
         inputs: [],
-        name: "renderAttributeKey",
+        name: "renderType",
         outputs: [
             {
                 internalType: "string",

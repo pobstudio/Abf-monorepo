@@ -244,7 +244,7 @@ interface IRenderer is IERC165 {
   function owner() external view returns (address);
   function propsSize() external view returns (uint256);
   function additionalMetadataURI() external view returns (string memory);
-  function renderAttributeKey() external view returns (string memory);
+  function renderType() external view returns (string memory);
   function renderRaw(bytes calldata props) external view returns (bytes memory);
   function render(bytes calldata props) external view returns (string memory);
   function attributes(bytes calldata props) external view returns (string memory);
@@ -282,8 +282,8 @@ interface IRenderer is IERC165 {
               </A>
             </P>
             <P>
-              <Code>renderAttributeKey</Code>: the key within the NFT metadata
-              JSON that will map to the output of <Code>renderRaw</Code>. (i.e{' '}
+              <Code>renderType</Code>: the key within the NFT metadata JSON that
+              will map to the output of <Code>renderRaw</Code>. (i.e{' '}
               <Code>image</Code>, <Code>animation_url</Code>)
             </P>
             <P>

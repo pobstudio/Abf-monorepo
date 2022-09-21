@@ -110,7 +110,7 @@
   },
   {
     "inputs": [],
-    "name": "renderAttributeKey",
+    "name": "renderType",
     "outputs": [
       {
         "internalType": "string",

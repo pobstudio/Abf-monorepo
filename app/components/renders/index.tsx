@@ -98,9 +98,7 @@ export const Render: FC<{
   const [renderedBy, setRenderedBy] = useState<
     'local' | 'on-chain' | undefined
   >();
-  const [renderAttributeKey, setRenderAttributeKey] = useState<
-    string | undefined
-  >(undefined);
+  const [renderType, setrenderType] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (output?.status !== 'success' || !output.output) {
       return;
@@ -121,7 +119,7 @@ export const Render: FC<{
             `data:image/svg+xml;utf8,${encodeURIComponent(renderRaw)}`,
           );
           setRenderedBy('local');
-          setRenderAttributeKey('image');
+          setrenderType('image');
         } else if (!chainId) {
           throw new Error(NO_CONNECTED_WALLET);
         } else if (chainId !== CHAIN_ID) {
@@ -137,11 +135,11 @@ export const Render: FC<{
           // console.log('node render', renderer.address);
           setIsRenderLoading(true);
           const render = await renderer.render(output.output);
-          const renderAttribute = await renderer.renderAttributeKey();
+          const renderAttribute = await renderer.renderType();
           setRenderOutput(render);
           setIsRenderLoading(false);
           setRenderedBy('on-chain');
-          setRenderAttributeKey(renderAttribute);
+          setrenderType(renderAttribute);
         } else {
           throw new Error(RENDERER_NOT_FOUND);
         }
@@ -180,14 +178,14 @@ export const Render: FC<{
       )}`;
     }
     return renderOutput;
-  }, [renderOutput, renderAttributeKey]);
+  }, [renderOutput, renderType]);
 
   useEffect(() => {
     // console.log('renderedBy', renderedBy);
-    // console.log('renderAttributeKey', renderAttributeKey);
-  }, [renderedBy, renderAttributeKey]);
+    // console.log('renderType', renderType);
+  }, [renderedBy, renderType]);
 
-  if (renderAttributeKey === 'image') {
+  if (renderType === 'image') {
     return (
       <>
         <RenderContainer>
@@ -208,7 +206,7 @@ export const Render: FC<{
     );
   }
 
-  if (renderAttributeKey === 'animation_url') {
+  if (renderType === 'animation_url') {
     return (
       <>
         <RenderContainer>
@@ -244,8 +242,8 @@ export const Render: FC<{
             background: 'rgba(255, 255, 255, 0.75)',
           }}
         >
-          {!!renderAttributeKey && (
-            <MultiLineText>{`"${renderAttributeKey}" is not recognized.`}</MultiLineText>
+          {!!renderType && (
+            <MultiLineText>{`"${renderType}" is not recognized.`}</MultiLineText>
           )}
           {errorMessage && <MultiLineText>{errorMessage}</MultiLineText>}
         </RenderImageCover>

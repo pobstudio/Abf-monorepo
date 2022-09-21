@@ -37,14 +37,13 @@ export interface AnimatedGifImageRendererInterface extends utils.Interface {
     'NUM_COLORS_INDEX()': FunctionFragment;
     'WIDTH_INDEX()': FunctionFragment;
     'additionalMetadataURI()': FunctionFragment;
-    'attributes(bytes)': FunctionFragment;
     'getImageData(bytes,bytes)': FunctionFragment;
     'name()': FunctionFragment;
     'owner()': FunctionFragment;
     'propsSize()': FunctionFragment;
     'render(bytes)': FunctionFragment;
-    'renderAttributeKey()': FunctionFragment;
     'renderRaw(bytes)': FunctionFragment;
+    'renderType()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
@@ -61,14 +60,13 @@ export interface AnimatedGifImageRendererInterface extends utils.Interface {
       | 'NUM_COLORS_INDEX'
       | 'WIDTH_INDEX'
       | 'additionalMetadataURI'
-      | 'attributes'
       | 'getImageData'
       | 'name'
       | 'owner'
       | 'propsSize'
       | 'render'
-      | 'renderAttributeKey'
       | 'renderRaw'
+      | 'renderType'
       | 'renounceOwnership'
       | 'supportsInterface'
       | 'transferOwnership',
@@ -108,10 +106,6 @@ export interface AnimatedGifImageRendererInterface extends utils.Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: 'attributes',
-    values: [PromiseOrValue<BytesLike>],
-  ): string;
-  encodeFunctionData(
     functionFragment: 'getImageData',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
   ): string;
@@ -123,12 +117,12 @@ export interface AnimatedGifImageRendererInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'renderAttributeKey',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
     functionFragment: 'renderRaw',
     values: [PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renderType',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'renounceOwnership',
@@ -176,7 +170,6 @@ export interface AnimatedGifImageRendererInterface extends utils.Interface {
     functionFragment: 'additionalMetadataURI',
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: 'attributes', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'getImageData',
     data: BytesLike,
@@ -185,11 +178,8 @@ export interface AnimatedGifImageRendererInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'propsSize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'render', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'renderAttributeKey',
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: 'renderRaw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renderType', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'renounceOwnership',
     data: BytesLike,
@@ -267,11 +257,6 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
-
     getImageData(
       imageDescriptor: PromiseOrValue<BytesLike>,
       props: PromiseOrValue<BytesLike>,
@@ -289,12 +274,12 @@ export interface AnimatedGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<[string]>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    renderType(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -329,11 +314,6 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
   additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  attributes(
-    props: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides,
-  ): Promise<string>;
-
   getImageData(
     imageDescriptor: PromiseOrValue<BytesLike>,
     props: PromiseOrValue<BytesLike>,
@@ -351,12 +331,12 @@ export interface AnimatedGifImageRenderer extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  renderAttributeKey(overrides?: CallOverrides): Promise<string>;
-
   renderRaw(
     props: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  renderType(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -391,11 +371,6 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
     getImageData(
       imageDescriptor: PromiseOrValue<BytesLike>,
       props: PromiseOrValue<BytesLike>,
@@ -413,12 +388,12 @@ export interface AnimatedGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<string>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    renderType(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -463,11 +438,6 @@ export interface AnimatedGifImageRenderer extends BaseContract {
 
     additionalMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     getImageData(
       imageDescriptor: PromiseOrValue<BytesLike>,
       props: PromiseOrValue<BytesLike>,
@@ -485,12 +455,12 @@ export interface AnimatedGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    renderAttributeKey(overrides?: CallOverrides): Promise<BigNumber>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    renderType(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -534,11 +504,6 @@ export interface AnimatedGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    attributes(
-      props: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     getImageData(
       imageDescriptor: PromiseOrValue<BytesLike>,
       props: PromiseOrValue<BytesLike>,
@@ -556,14 +521,12 @@ export interface AnimatedGifImageRenderer extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    renderAttributeKey(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     renderRaw(
       props: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    renderType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },

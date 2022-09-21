@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "./Create3.sol";
+import './Create3.sol';
 
-import "./Bytecode.sol";
-
+import './Bytecode.sol';
 
 /**
   @title A write-once key-value storage for storing chunks of data with a lower write & read cost.
@@ -15,7 +14,8 @@ library SSTORE2Map {
   error WriteError();
 
   //                                         keccak256(bytes('@0xSequence.SSTORE2Map.slot'))
-  bytes32 private constant SLOT_KEY_PREFIX = 0xd351a9253491dfef66f53115e9e3afda3b5fdef08a1de6937da91188ec553be5;
+  bytes32 private constant SLOT_KEY_PREFIX =
+    0xd351a9253491dfef66f53115e9e3afda3b5fdef08a1de6937da91188ec553be5;
 
   function internalKey(bytes32 _key) internal pure returns (bytes32) {
     // Mutate the key so it doesn't collide
@@ -30,7 +30,10 @@ library SSTORE2Map {
     @param _key unique string key for accessing the written data (can only be used once)
     @return pointer Pointer to the written `_data`
   */
-  function write(string memory _key, bytes memory _data) internal returns (address pointer) {
+  function write(string memory _key, bytes memory _data)
+    internal
+    returns (address pointer)
+  {
     return write(keccak256(bytes(_key)), _data);
   }
 
@@ -41,14 +44,14 @@ library SSTORE2Map {
     @param _key unique bytes32 key for accessing the written data (can only be used once)
     @return pointer Pointer to the written `_data`
   */
-  function write(bytes32 _key, bytes memory _data) internal returns (address pointer) {
+  function write(bytes32 _key, bytes memory _data)
+    internal
+    returns (address pointer)
+  {
     // Append 00 to _data so contract can't be called
     // Build init code
     bytes memory code = Bytecode.creationCodeFor(
-      abi.encodePacked(
-        hex'00',
-        _data
-      )
+      abi.encodePacked(hex'00', _data)
     );
 
     // Deploy contract using create3
@@ -72,7 +75,11 @@ library SSTORE2Map {
     @param _start number of bytes to skip
     @return data read from contract associated with `_key`
   */
-  function read(string memory _key, uint256 _start) internal view returns (bytes memory) {
+  function read(string memory _key, uint256 _start)
+    internal
+    view
+    returns (bytes memory)
+  {
     return read(keccak256(bytes(_key)), _start);
   }
 
@@ -84,7 +91,11 @@ library SSTORE2Map {
     @param _end index before which to end extraction
     @return data read from contract associated with `_key`
   */
-  function read(string memory _key, uint256 _start, uint256 _end) internal view returns (bytes memory) {
+  function read(
+    string memory _key,
+    uint256 _start,
+    uint256 _end
+  ) internal view returns (bytes memory) {
     return read(keccak256(bytes(_key)), _start, _end);
   }
 
@@ -95,7 +106,12 @@ library SSTORE2Map {
     @return data read from contract associated with `_key`
   */
   function read(bytes32 _key) internal view returns (bytes memory) {
-    return Bytecode.codeAt(Create3.addressOf(internalKey(_key)), 1, type(uint256).max);
+    return
+      Bytecode.codeAt(
+        Create3.addressOf(internalKey(_key)),
+        1,
+        type(uint256).max
+      );
   }
 
   /**
@@ -105,8 +121,17 @@ library SSTORE2Map {
     @param _start number of bytes to skip
     @return data read from contract associated with `_key`
   */
-  function read(bytes32 _key, uint256 _start) internal view returns (bytes memory) {
-    return Bytecode.codeAt(Create3.addressOf(internalKey(_key)), _start + 1, type(uint256).max);
+  function read(bytes32 _key, uint256 _start)
+    internal
+    view
+    returns (bytes memory)
+  {
+    return
+      Bytecode.codeAt(
+        Create3.addressOf(internalKey(_key)),
+        _start + 1,
+        type(uint256).max
+      );
   }
 
   /**
@@ -117,7 +142,16 @@ library SSTORE2Map {
     @param _end index before which to end extraction
     @return data read from contract associated with `_key`
   */
-  function read(bytes32 _key, uint256 _start, uint256 _end) internal view returns (bytes memory) {
-    return Bytecode.codeAt(Create3.addressOf(internalKey(_key)), _start + 1, _end + 1);
+  function read(
+    bytes32 _key,
+    uint256 _start,
+    uint256 _end
+  ) internal view returns (bytes memory) {
+    return
+      Bytecode.codeAt(
+        Create3.addressOf(internalKey(_key)),
+        _start + 1,
+        _end + 1
+      );
   }
 }

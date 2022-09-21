@@ -1,5 +1,5 @@
-import { Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
+import { Signer } from "ethers";
 import type { Ownable, OwnableInterface } from "../../../../@openzeppelin/contracts/access/Ownable";
 export declare class Ownable__factory {
     static readonly abi: ({
