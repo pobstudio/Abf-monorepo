@@ -24,11 +24,12 @@ export interface BrainFuckVMInterface extends utils.Interface {
   functions: {
     'LOOPING_STACK_SIZE()': FunctionFragment;
     'TAPE_SIZE()': FunctionFragment;
+    'name()': FunctionFragment;
     'run(bytes,bytes)': FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: 'LOOPING_STACK_SIZE' | 'TAPE_SIZE' | 'run',
+    nameOrSignatureOrTopic: 'LOOPING_STACK_SIZE' | 'TAPE_SIZE' | 'name' | 'run',
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -36,6 +37,7 @@ export interface BrainFuckVMInterface extends utils.Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(functionFragment: 'TAPE_SIZE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'run',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
@@ -46,6 +48,7 @@ export interface BrainFuckVMInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'TAPE_SIZE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'run', data: BytesLike): Result;
 
   events: {};
@@ -82,6 +85,8 @@ export interface BrainFuckVM extends BaseContract {
 
     TAPE_SIZE(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    name(overrides?: CallOverrides): Promise<[string]>;
+
     run(
       code: PromiseOrValue<BytesLike>,
       input: PromiseOrValue<BytesLike>,
@@ -93,6 +98,8 @@ export interface BrainFuckVM extends BaseContract {
 
   TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
+  name(overrides?: CallOverrides): Promise<string>;
+
   run(
     code: PromiseOrValue<BytesLike>,
     input: PromiseOrValue<BytesLike>,
@@ -103,6 +110,8 @@ export interface BrainFuckVM extends BaseContract {
     LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
     TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<string>;
 
     run(
       code: PromiseOrValue<BytesLike>,
@@ -118,6 +127,8 @@ export interface BrainFuckVM extends BaseContract {
 
     TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
+    name(overrides?: CallOverrides): Promise<BigNumber>;
+
     run(
       code: PromiseOrValue<BytesLike>,
       input: PromiseOrValue<BytesLike>,
@@ -131,6 +142,8 @@ export interface BrainFuckVM extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     TAPE_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     run(
       code: PromiseOrValue<BytesLike>,

@@ -22,16 +22,19 @@ import type {
 
 export interface IVirtualMachineInterface extends utils.Interface {
   functions: {
+    'name()': FunctionFragment;
     'run(bytes,bytes)': FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: 'run'): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: 'name' | 'run'): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'run',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
   ): string;
 
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'run', data: BytesLike): Result;
 
   events: {};
@@ -64,22 +67,28 @@ export interface IVirtualMachine extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    name(overrides?: CallOverrides): Promise<[string]>;
+
     run(
-      constants: PromiseOrValue<BytesLike>,
+      code: PromiseOrValue<BytesLike>,
       input: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string] & { out: string }>;
   };
 
+  name(overrides?: CallOverrides): Promise<string>;
+
   run(
-    constants: PromiseOrValue<BytesLike>,
+    code: PromiseOrValue<BytesLike>,
     input: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   callStatic: {
+    name(overrides?: CallOverrides): Promise<string>;
+
     run(
-      constants: PromiseOrValue<BytesLike>,
+      code: PromiseOrValue<BytesLike>,
       input: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
@@ -88,16 +97,20 @@ export interface IVirtualMachine extends BaseContract {
   filters: {};
 
   estimateGas: {
+    name(overrides?: CallOverrides): Promise<BigNumber>;
+
     run(
-      constants: PromiseOrValue<BytesLike>,
+      code: PromiseOrValue<BytesLike>,
       input: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     run(
-      constants: PromiseOrValue<BytesLike>,
+      code: PromiseOrValue<BytesLike>,
       input: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;

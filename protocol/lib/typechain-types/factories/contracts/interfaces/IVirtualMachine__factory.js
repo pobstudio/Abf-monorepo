@@ -7,10 +7,23 @@ exports.IVirtualMachine__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        inputs: [],
+        name: "name",
+        outputs: [
+            {
+                internalType: "string",
+                name: "",
+                type: "string",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
         inputs: [
             {
                 internalType: "bytes",
-                name: "constants",
+                name: "code",
                 type: "bytes",
             },
             {

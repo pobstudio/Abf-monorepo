@@ -27,131 +27,159 @@ import type {
   TypedListener,
 } from '../common';
 
-export declare namespace AbsBrainFuck {
-  export type CreateAbsBrainFuckConfigStruct = {
+export declare namespace ERC721Z {
+  export type InitConfigStruct = {
     name: PromiseOrValue<string>;
     symbol: PromiseOrValue<string>;
     seed: PromiseOrValue<BytesLike>;
-    suffix: PromiseOrValue<BytesLike>;
-    prefix: PromiseOrValue<BytesLike>;
-    renderer: PromiseOrValue<string>;
+    contractMetadataRenderer: PromiseOrValue<string>;
     metadataRenderer: PromiseOrValue<string>;
+    allowRendererSwapping: PromiseOrValue<boolean>;
     adminMinter: PromiseOrValue<string>;
     mintingSupply: PromiseOrValue<BigNumberish>;
-    royaltyFraction: PromiseOrValue<BigNumberish>;
-    tokenDescriptionKey: PromiseOrValue<BytesLike>;
-    allowRendererSwapping: PromiseOrValue<boolean>;
-    tokenDescription: PromiseOrValue<BytesLike>;
   };
 
-  export type CreateAbsBrainFuckConfigStructOutput = [
+  export type InitConfigStructOutput = [
     string,
     string,
     string,
     string,
-    string,
-    string,
-    string,
-    string,
-    BigNumber,
-    BigNumber,
     string,
     boolean,
     string,
+    BigNumber,
   ] & {
     name: string;
     symbol: string;
     seed: string;
-    suffix: string;
-    prefix: string;
-    renderer: string;
+    contractMetadataRenderer: string;
     metadataRenderer: string;
+    allowRendererSwapping: boolean;
     adminMinter: string;
     mintingSupply: BigNumber;
-    royaltyFraction: BigNumber;
-    tokenDescriptionKey: string;
-    allowRendererSwapping: boolean;
-    tokenDescription: string;
   };
 }
 
-export declare namespace AbsBrainFuckMinter {
-  export type CreateAbsBrainFuckMinterConfigStruct = {
-    price: PromiseOrValue<BigNumberish>;
-    rendererRoyaltyFraction: PromiseOrValue<BigNumberish>;
-    whitelistToken: PromiseOrValue<string>;
+export declare namespace AbsBrainFuckMetadataRenderer {
+  export type AbsBrainFuckMetadataConfigStruct = {
+    vm: PromiseOrValue<string>;
+    outputRenderer: PromiseOrValue<string>;
+    code: PromiseOrValue<BytesLike>;
+    input: PromiseOrValue<BytesLike>;
   };
 
-  export type CreateAbsBrainFuckMinterConfigStructOutput = [
+  export type AbsBrainFuckMetadataConfigStructOutput = [
+    string,
+    string,
+    string,
+    string,
+  ] & { vm: string; outputRenderer: string; code: string; input: string };
+}
+
+export declare namespace AbsBrainFuckFactory {
+  export type CreateNFTAdditionalConfigStruct = {
+    royaltyFraction: PromiseOrValue<BigNumberish>;
+  };
+
+  export type CreateNFTAdditionalConfigStructOutput = [BigNumber] & {
+    royaltyFraction: BigNumber;
+  };
+}
+
+export declare namespace ERC721ZMinter {
+  export type InitConfigStruct = {
+    price: PromiseOrValue<BigNumberish>;
+    royaltyFraction: PromiseOrValue<BigNumberish>;
+    whitelistToken: PromiseOrValue<string>;
+    claimMerkleRoot: PromiseOrValue<BytesLike>;
+    claimMerkleTreeURI: PromiseOrValue<string>;
+  };
+
+  export type InitConfigStructOutput = [
     BigNumber,
     BigNumber,
     string,
+    string,
+    string,
   ] & {
     price: BigNumber;
-    rendererRoyaltyFraction: BigNumber;
+    royaltyFraction: BigNumber;
     whitelistToken: string;
+    claimMerkleRoot: string;
+    claimMerkleTreeURI: string;
   };
 }
 
 export interface AbsBrainFuckFactoryInterface extends utils.Interface {
   functions: {
-    'abfImplementation()': FunctionFragment;
-    'abfMinterImplementation()': FunctionFragment;
-    'createNFT((string,string,bytes32,bytes,bytes,address,address,address,uint256,uint96,bytes32,bool,bytes),(uint256,uint96,address))': FunctionFragment;
+    'absBrainFuckMetadataRenderer()': FunctionFragment;
+    'createNFT((string,string,bytes32,address,address,bool,address,uint256),(address,address,bytes,bytes),(uint96),(uint256,uint96,address,bytes32,string))': FunctionFragment;
+    'erc721ZImplementation()': FunctionFragment;
+    'erc721ZMinterImplementation()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'abfImplementation'
-      | 'abfMinterImplementation'
-      | 'createNFT',
+      | 'absBrainFuckMetadataRenderer'
+      | 'createNFT'
+      | 'erc721ZImplementation'
+      | 'erc721ZMinterImplementation',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: 'abfImplementation',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'abfMinterImplementation',
+    functionFragment: 'absBrainFuckMetadataRenderer',
     values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'createNFT',
     values: [
-      AbsBrainFuck.CreateAbsBrainFuckConfigStruct,
-      AbsBrainFuckMinter.CreateAbsBrainFuckMinterConfigStruct,
+      ERC721Z.InitConfigStruct,
+      AbsBrainFuckMetadataRenderer.AbsBrainFuckMetadataConfigStruct,
+      AbsBrainFuckFactory.CreateNFTAdditionalConfigStruct,
+      ERC721ZMinter.InitConfigStruct,
     ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'erc721ZImplementation',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'erc721ZMinterImplementation',
+    values?: undefined,
   ): string;
 
   decodeFunctionResult(
-    functionFragment: 'abfImplementation',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'abfMinterImplementation',
+    functionFragment: 'absBrainFuckMetadataRenderer',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'createNFT', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'erc721ZImplementation',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'erc721ZMinterImplementation',
+    data: BytesLike,
+  ): Result;
 
   events: {
-    'CreatedAbsBrainFuckNFT(address,address,address)': EventFragment;
+    'CreatedNFT(address,address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'CreatedAbsBrainFuckNFT'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CreatedNFT'): EventFragment;
 }
 
-export interface CreatedAbsBrainFuckNFTEventObject {
+export interface CreatedNFTEventObject {
   nft: string;
   minter: string;
   creator: string;
 }
-export type CreatedAbsBrainFuckNFTEvent = TypedEvent<
+export type CreatedNFTEvent = TypedEvent<
   [string, string, string],
-  CreatedAbsBrainFuckNFTEventObject
+  CreatedNFTEventObject
 >;
 
-export type CreatedAbsBrainFuckNFTEventFilter =
-  TypedEventFilter<CreatedAbsBrainFuckNFTEvent>;
+export type CreatedNFTEventFilter = TypedEventFilter<CreatedNFTEvent>;
 
 export interface AbsBrainFuckFactory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -180,75 +208,99 @@ export interface AbsBrainFuckFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    abfImplementation(overrides?: CallOverrides): Promise<[string]>;
-
-    abfMinterImplementation(overrides?: CallOverrides): Promise<[string]>;
+    absBrainFuckMetadataRenderer(overrides?: CallOverrides): Promise<[string]>;
 
     createNFT(
-      config: AbsBrainFuck.CreateAbsBrainFuckConfigStruct,
-      minterConfig: AbsBrainFuckMinter.CreateAbsBrainFuckMinterConfigStruct,
+      config: ERC721Z.InitConfigStruct,
+      metadataConfig: AbsBrainFuckMetadataRenderer.AbsBrainFuckMetadataConfigStruct,
+      additionalConfig: AbsBrainFuckFactory.CreateNFTAdditionalConfigStruct,
+      minterConfig: ERC721ZMinter.InitConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    erc721ZImplementation(overrides?: CallOverrides): Promise<[string]>;
+
+    erc721ZMinterImplementation(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  abfImplementation(overrides?: CallOverrides): Promise<string>;
-
-  abfMinterImplementation(overrides?: CallOverrides): Promise<string>;
+  absBrainFuckMetadataRenderer(overrides?: CallOverrides): Promise<string>;
 
   createNFT(
-    config: AbsBrainFuck.CreateAbsBrainFuckConfigStruct,
-    minterConfig: AbsBrainFuckMinter.CreateAbsBrainFuckMinterConfigStruct,
+    config: ERC721Z.InitConfigStruct,
+    metadataConfig: AbsBrainFuckMetadataRenderer.AbsBrainFuckMetadataConfigStruct,
+    additionalConfig: AbsBrainFuckFactory.CreateNFTAdditionalConfigStruct,
+    minterConfig: ERC721ZMinter.InitConfigStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  callStatic: {
-    abfImplementation(overrides?: CallOverrides): Promise<string>;
+  erc721ZImplementation(overrides?: CallOverrides): Promise<string>;
 
-    abfMinterImplementation(overrides?: CallOverrides): Promise<string>;
+  erc721ZMinterImplementation(overrides?: CallOverrides): Promise<string>;
+
+  callStatic: {
+    absBrainFuckMetadataRenderer(overrides?: CallOverrides): Promise<string>;
 
     createNFT(
-      config: AbsBrainFuck.CreateAbsBrainFuckConfigStruct,
-      minterConfig: AbsBrainFuckMinter.CreateAbsBrainFuckMinterConfigStruct,
+      config: ERC721Z.InitConfigStruct,
+      metadataConfig: AbsBrainFuckMetadataRenderer.AbsBrainFuckMetadataConfigStruct,
+      additionalConfig: AbsBrainFuckFactory.CreateNFTAdditionalConfigStruct,
+      minterConfig: ERC721ZMinter.InitConfigStruct,
       overrides?: CallOverrides,
     ): Promise<[string, string]>;
+
+    erc721ZImplementation(overrides?: CallOverrides): Promise<string>;
+
+    erc721ZMinterImplementation(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    'CreatedAbsBrainFuckNFT(address,address,address)'(
+    'CreatedNFT(address,address,address)'(
       nft?: null,
       minter?: null,
       creator?: null,
-    ): CreatedAbsBrainFuckNFTEventFilter;
-    CreatedAbsBrainFuckNFT(
+    ): CreatedNFTEventFilter;
+    CreatedNFT(
       nft?: null,
       minter?: null,
       creator?: null,
-    ): CreatedAbsBrainFuckNFTEventFilter;
+    ): CreatedNFTEventFilter;
   };
 
   estimateGas: {
-    abfImplementation(overrides?: CallOverrides): Promise<BigNumber>;
-
-    abfMinterImplementation(overrides?: CallOverrides): Promise<BigNumber>;
+    absBrainFuckMetadataRenderer(overrides?: CallOverrides): Promise<BigNumber>;
 
     createNFT(
-      config: AbsBrainFuck.CreateAbsBrainFuckConfigStruct,
-      minterConfig: AbsBrainFuckMinter.CreateAbsBrainFuckMinterConfigStruct,
+      config: ERC721Z.InitConfigStruct,
+      metadataConfig: AbsBrainFuckMetadataRenderer.AbsBrainFuckMetadataConfigStruct,
+      additionalConfig: AbsBrainFuckFactory.CreateNFTAdditionalConfigStruct,
+      minterConfig: ERC721ZMinter.InitConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
+
+    erc721ZImplementation(overrides?: CallOverrides): Promise<BigNumber>;
+
+    erc721ZMinterImplementation(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    abfImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    abfMinterImplementation(
+    absBrainFuckMetadataRenderer(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     createNFT(
-      config: AbsBrainFuck.CreateAbsBrainFuckConfigStruct,
-      minterConfig: AbsBrainFuckMinter.CreateAbsBrainFuckMinterConfigStruct,
+      config: ERC721Z.InitConfigStruct,
+      metadataConfig: AbsBrainFuckMetadataRenderer.AbsBrainFuckMetadataConfigStruct,
+      additionalConfig: AbsBrainFuckFactory.CreateNFTAdditionalConfigStruct,
+      minterConfig: ERC721ZMinter.InitConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    erc721ZImplementation(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    erc721ZMinterImplementation(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

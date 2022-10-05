@@ -2,36 +2,59 @@
 
 pragma solidity ^0.8.4;
 
-import './AbsBrainFuck.sol';
-import './AbsBrainFuckMinter.sol';
+import './tokens/ERC721Z.sol';
+import './ERC721ZMinter.sol';
+import './renderers/AbsBrainFuckMetadataRenderer.sol';
 import '@openzeppelin/contracts/proxy/Clones.sol';
 
 contract AbsBrainFuckFactory {
-  address public immutable abfImplementation;
-  address public immutable abfMinterImplementation;
+  address public immutable erc721ZImplementation;
+  address public immutable erc721ZMinterImplementation;
+  AbsBrainFuckMetadataRenderer public immutable absBrainFuckMetadataRenderer;
 
-  event CreatedAbsBrainFuckNFT(address nft, address minter, address creator);
+  event CreatedNFT(address nft, address minter, address creator);
 
-  constructor(address _abfImplementation, address _abfMinterImplementation) {
-    abfImplementation = _abfImplementation;
-    abfMinterImplementation = _abfMinterImplementation;
+  struct CreateNFTAdditionalConfig {
+    uint96 royaltyFraction;
+  }
+
+  constructor(
+    address _erc721ZImplementation,
+    address _erc721ZMinterImplementation,
+    address _absBrainFuckMetadataRenderer
+  ) {
+    absBrainFuckMetadataRenderer = AbsBrainFuckMetadataRenderer(
+      _absBrainFuckMetadataRenderer
+    );
+    erc721ZImplementation = _erc721ZImplementation;
+    erc721ZMinterImplementation = _erc721ZMinterImplementation;
   }
 
   function createNFT(
-    AbsBrainFuck.CreateAbsBrainFuckConfig memory config,
-    AbsBrainFuckMinter.CreateAbsBrainFuckMinterConfig memory minterConfig
+    ERC721Z.InitConfig memory config,
+    AbsBrainFuckMetadataRenderer.AbsBrainFuckMetadataConfig
+      memory metadataConfig,
+    CreateNFTAdditionalConfig memory additionalConfig,
+    ERC721ZMinter.InitConfig memory minterConfig
   ) public returns (address, address) {
-    AbsBrainFuck nft = AbsBrainFuck(Clones.clone(abfImplementation));
+    // requires the use of the ABF renderer
+    config.metadataRenderer = address(absBrainFuckMetadataRenderer);
+
+    ERC721Z nft = ERC721Z(Clones.clone(erc721ZImplementation));
     nft.init(address(this), config);
-    nft.setRoyalty(msg.sender, config.royaltyFraction);
-    AbsBrainFuckMinter minter = AbsBrainFuckMinter(
-      Clones.clone(abfMinterImplementation)
+    nft.setRoyalty(msg.sender, additionalConfig.royaltyFraction);
+    ERC721ZMinter minter = ERC721ZMinter(
+      Clones.clone(erc721ZMinterImplementation)
     );
     minter.init(msg.sender, address(nft), minterConfig);
     nft.setAdminMinter(address(minter));
+    absBrainFuckMetadataRenderer.addMetadataConfig(
+      address(nft),
+      metadataConfig
+    );
     nft.transferOwnership(msg.sender);
 
-    emit CreatedAbsBrainFuckNFT(address(nft), address(minter), msg.sender);
+    emit CreatedNFT(address(nft), address(minter), msg.sender);
 
     return (address(nft), address(minter));
   }

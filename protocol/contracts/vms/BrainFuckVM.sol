@@ -8,6 +8,10 @@ contract BrainFuckVM is IVirtualMachine {
   uint256 public constant TAPE_SIZE = 300_000;
   uint256 public constant LOOPING_STACK_SIZE = 8192;
 
+  function name() external pure override returns (string memory) {
+    return 'Brainfuck!';
+  }
+
   function run(bytes calldata code, bytes calldata input)
     public
     pure

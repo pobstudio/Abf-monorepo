@@ -50,7 +50,6 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
   functions: {
     'MAX_MINTING_PER_TX()': FunctionFragment;
     'abf()': FunctionFragment;
-    'donate()': FunctionFragment;
     'init(address,address,(uint256,uint96,address))': FunctionFragment;
     'isActive()': FunctionFragment;
     'isInit()': FunctionFragment;
@@ -58,12 +57,11 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
     'owner()': FunctionFragment;
     'price()': FunctionFragment;
     'rendererRoyaltyFraction()': FunctionFragment;
+    'rendererRoyaltyTreasury()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'setIsActive(bool)': FunctionFragment;
-    'setTreasury()': FunctionFragment;
     'setWhitelistToken(address)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
-    'treasury()': FunctionFragment;
     'treasuryProps()': FunctionFragment;
     'whitelistToken()': FunctionFragment;
   };
@@ -72,7 +70,6 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'MAX_MINTING_PER_TX'
       | 'abf'
-      | 'donate'
       | 'init'
       | 'isActive'
       | 'isInit'
@@ -80,12 +77,11 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
       | 'owner'
       | 'price'
       | 'rendererRoyaltyFraction'
+      | 'rendererRoyaltyTreasury'
       | 'renounceOwnership'
       | 'setIsActive'
-      | 'setTreasury'
       | 'setWhitelistToken'
       | 'transferOwnership'
-      | 'treasury'
       | 'treasuryProps'
       | 'whitelistToken',
   ): FunctionFragment;
@@ -95,7 +91,6 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(functionFragment: 'abf', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'donate', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'init',
     values: [
@@ -117,16 +112,16 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
+    functionFragment: 'rendererRoyaltyTreasury',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: 'renounceOwnership',
     values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'setIsActive',
     values: [PromiseOrValue<boolean>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'setTreasury',
-    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'setWhitelistToken',
@@ -136,7 +131,6 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
     functionFragment: 'transferOwnership',
     values: [PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'treasuryProps',
     values?: undefined,
@@ -151,7 +145,6 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'abf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'donate', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'init', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isActive', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isInit', data: BytesLike): Result;
@@ -163,15 +156,15 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'rendererRoyaltyTreasury',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'renounceOwnership',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: 'setIsActive',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'setTreasury',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -182,7 +175,6 @@ export interface AbsBrainFuckMinterInterface extends utils.Interface {
     functionFragment: 'transferOwnership',
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'treasuryProps',
     data: BytesLike,
@@ -254,10 +246,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
 
     abf(overrides?: CallOverrides): Promise<[string]>;
 
-    donate(
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
     init(
       owner: PromiseOrValue<string>,
       _abf: PromiseOrValue<string>,
@@ -281,16 +269,14 @@ export interface AbsBrainFuckMinter extends BaseContract {
 
     rendererRoyaltyFraction(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    rendererRoyaltyTreasury(overrides?: CallOverrides): Promise<[string]>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setIsActive(
       _isActive: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setTreasury(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -304,8 +290,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    treasury(overrides?: CallOverrides): Promise<[string]>;
-
     treasuryProps(overrides?: CallOverrides): Promise<[string]>;
 
     whitelistToken(overrides?: CallOverrides): Promise<[string]>;
@@ -314,10 +298,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
   MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
   abf(overrides?: CallOverrides): Promise<string>;
-
-  donate(
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
 
   init(
     owner: PromiseOrValue<string>,
@@ -342,16 +322,14 @@ export interface AbsBrainFuckMinter extends BaseContract {
 
   rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
+  rendererRoyaltyTreasury(overrides?: CallOverrides): Promise<string>;
+
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setIsActive(
     _isActive: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setTreasury(
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -365,8 +343,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  treasury(overrides?: CallOverrides): Promise<string>;
-
   treasuryProps(overrides?: CallOverrides): Promise<string>;
 
   whitelistToken(overrides?: CallOverrides): Promise<string>;
@@ -375,8 +351,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
     MAX_MINTING_PER_TX(overrides?: CallOverrides): Promise<BigNumber>;
 
     abf(overrides?: CallOverrides): Promise<string>;
-
-    donate(overrides?: CallOverrides): Promise<void>;
 
     init(
       owner: PromiseOrValue<string>,
@@ -401,14 +375,14 @@ export interface AbsBrainFuckMinter extends BaseContract {
 
     rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
+    rendererRoyaltyTreasury(overrides?: CallOverrides): Promise<string>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setIsActive(
       _isActive: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
-
-    setTreasury(overrides?: CallOverrides): Promise<void>;
 
     setWhitelistToken(
       _whitelistToken: PromiseOrValue<string>,
@@ -419,8 +393,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
-
-    treasury(overrides?: CallOverrides): Promise<string>;
 
     treasuryProps(overrides?: CallOverrides): Promise<string>;
 
@@ -446,10 +418,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
 
     abf(overrides?: CallOverrides): Promise<BigNumber>;
 
-    donate(
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
     init(
       owner: PromiseOrValue<string>,
       _abf: PromiseOrValue<string>,
@@ -473,16 +441,14 @@ export interface AbsBrainFuckMinter extends BaseContract {
 
     rendererRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
+    rendererRoyaltyTreasury(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setIsActive(
       _isActive: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setTreasury(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -496,8 +462,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    treasury(overrides?: CallOverrides): Promise<BigNumber>;
-
     treasuryProps(overrides?: CallOverrides): Promise<BigNumber>;
 
     whitelistToken(overrides?: CallOverrides): Promise<BigNumber>;
@@ -509,10 +473,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     abf(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    donate(
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
 
     init(
       owner: PromiseOrValue<string>,
@@ -539,16 +499,16 @@ export interface AbsBrainFuckMinter extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    rendererRoyaltyTreasury(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setIsActive(
       _isActive: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setTreasury(
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -561,8 +521,6 @@ export interface AbsBrainFuckMinter extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     treasuryProps(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

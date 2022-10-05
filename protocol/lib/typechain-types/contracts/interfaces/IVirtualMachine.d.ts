@@ -4,10 +4,13 @@ import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransa
 import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from "../../common";
 export interface IVirtualMachineInterface extends utils.Interface {
     functions: {
+        "name()": FunctionFragment;
         "run(bytes,bytes)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "run"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "name" | "run"): FunctionFragment;
+    encodeFunctionData(functionFragment: "name", values?: undefined): string;
     encodeFunctionData(functionFragment: "run", values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]): string;
+    decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "run", data: BytesLike): Result;
     events: {};
 }
@@ -26,20 +29,25 @@ export interface IVirtualMachine extends BaseContract {
     once: OnEvent<this>;
     removeListener: OnEvent<this>;
     functions: {
-        run(constants: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & {
+        name(overrides?: CallOverrides): Promise<[string]>;
+        run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & {
             out: string;
         }>;
     };
-    run(constants: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+    name(overrides?: CallOverrides): Promise<string>;
+    run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
     callStatic: {
-        run(constants: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+        name(overrides?: CallOverrides): Promise<string>;
+        run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
     };
     filters: {};
     estimateGas: {
-        run(constants: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+        name(overrides?: CallOverrides): Promise<BigNumber>;
+        run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
     };
     populateTransaction: {
-        run(constants: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
     };
 }
 //# sourceMappingURL=IVirtualMachine.d.ts.map

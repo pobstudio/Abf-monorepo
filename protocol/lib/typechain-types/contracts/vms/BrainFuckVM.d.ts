@@ -6,14 +6,17 @@ export interface BrainFuckVMInterface extends utils.Interface {
     functions: {
         "LOOPING_STACK_SIZE()": FunctionFragment;
         "TAPE_SIZE()": FunctionFragment;
+        "name()": FunctionFragment;
         "run(bytes,bytes)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "LOOPING_STACK_SIZE" | "TAPE_SIZE" | "run"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "LOOPING_STACK_SIZE" | "TAPE_SIZE" | "name" | "run"): FunctionFragment;
     encodeFunctionData(functionFragment: "LOOPING_STACK_SIZE", values?: undefined): string;
     encodeFunctionData(functionFragment: "TAPE_SIZE", values?: undefined): string;
+    encodeFunctionData(functionFragment: "name", values?: undefined): string;
     encodeFunctionData(functionFragment: "run", values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]): string;
     decodeFunctionResult(functionFragment: "LOOPING_STACK_SIZE", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "TAPE_SIZE", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "run", data: BytesLike): Result;
     events: {};
 }
@@ -34,27 +37,32 @@ export interface BrainFuckVM extends BaseContract {
     functions: {
         LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<[BigNumber]>;
         TAPE_SIZE(overrides?: CallOverrides): Promise<[BigNumber]>;
+        name(overrides?: CallOverrides): Promise<[string]>;
         run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & {
             out: string;
         }>;
     };
     LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
     TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+    name(overrides?: CallOverrides): Promise<string>;
     run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
     callStatic: {
         LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
         TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+        name(overrides?: CallOverrides): Promise<string>;
         run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
     };
     filters: {};
     estimateGas: {
         LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
         TAPE_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+        name(overrides?: CallOverrides): Promise<BigNumber>;
         run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
     };
     populateTransaction: {
         LOOPING_STACK_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         TAPE_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         run(code: PromiseOrValue<BytesLike>, input: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
     };
 }
